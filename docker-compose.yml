@@ -1,0 +1,52 @@
+services:
+  n8n:
+    image: n8nio/n8n:latest
+    container_name: n8n-jobs-automation
+    restart: unless-stopped
+    ports:
+      - "5678:5678"
+    environment:
+      # Basic
+      - N8N_HOST=${N8N_HOST:-localhost}
+      - N8N_PORT=5678
+      - N8N_PROTOCOL=http
+
+      # Database (SQLite)
+      - DB_TYPE=sqlite
+      - DB_SQLITE_DATABASE=/home/node/.n8n/database.sqlite
+      - DB_SQLITE_POOL_SIZE=2
+
+      # Executions
+      - EXECUTIONS_DATA_SAVE_ON_SUCCESS=all
+      - EXECUTIONS_DATA_SAVE_ON_ERROR=all
+      - EXECUTIONS_DATA_PRUNE=true
+      - EXECUTIONS_DATA_MAX_AGE=168
+
+      # Security
+      - N8N_BASIC_AUTH_ACTIVE=true
+      - N8N_BASIC_AUTH_USER=${N8N_USER:-admin}
+      - N8N_BASIC_AUTH_PASSWORD=${N8N_PASSWORD:-Krudi@2025}
+      - N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=true
+      - N8N_GIT_NODE_DISABLE_BARE_REPOS=true
+      - N8N_BLOCK_ENV_ACCESS_IN_NODE=false
+
+      # Runners (future default)
+      - N8N_RUNNERS_ENABLED=true
+
+      # Timezone / Memory
+      - GENERIC_TIMEZONE=Asia/Kolkata
+      - TZ=Asia/Kolkata
+      - NODE_OPTIONS=--max-old-space-size=2048
+
+      # License (optional)
+      # - N8N_LICENSE_ACTIVATION_KEY=${N8N_LICENSE_KEY}
+
+    volumes:
+      - ./data/n8n:/home/node/.n8n
+      - ./data/resumes:/data/resumes:ro
+      - ./data/jobs:/data/jobs
+      - ./workflows:/workflows
+
+networks:
+  default:
+    name: jobs-automation-network

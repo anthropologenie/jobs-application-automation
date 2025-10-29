@@ -1,0 +1,129 @@
+{
+  "name": "01. Job Scraper - RemoteOK",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 6
+            }
+          ]
+        }
+      },
+      "id": "schedule-trigger",
+      "name": "Every 6 Hours",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [250, 300]
+    },
+    {
+      "parameters": {
+        "url": "https://remoteok.com/api",
+        "options": {
+          "timeout": 10000,
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "id": "http-request",
+      "name": "Fetch RemoteOK Jobs",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [450, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Get all jobs from API\nconst allJobs = $input.first().json;\n\n// Keywords to search for (case-insensitive)\nconst keywords = ['qa', 'quality assurance', 'testing', 'test engineer', \n                  'etl', 'data testing', 'database', 'quality engineer',\n                  'sdet', 'automation', 'manual testing', 'data quality'];\n\n// Filter and map jobs\nconst relevantJobs = [];\n\nfor (const job of allJobs) {\n  // Skip if not a job object (first item is metadata)\n  if (!job.position || !job.company) continue;\n  \n  // Combine searchable text\n  const searchText = (\n    (job.position || '') + ' ' + \n    (job.description || '') + ' ' + \n    (job.tags || []).join(' ')\n  ).toLowerCase();\n  \n  // Check if any keyword matches\n  const matches = keywords.some(keyword => searchText.includes(keyword));\n  \n  if (matches) {\n    relevantJobs.push({\n      json: {\n        id: job.id || job.slug,\n        title: job.position,\n        company: job.company,\n        url: `https://remoteok.com/remote-jobs/${job.slug || job.id}`,\n        location: job.location || 'Remote',\n        posted_date: job.date || new Date().toISOString().split('T')[0],\n        description: (job.description || '').substring(0, 2000),\n        tags: (job.tags || []).join(', '),\n        salary: job.salary_max ? `$${job.salary_max}` : 'Not specified',\n        source: 'RemoteOK',\n        scraped_at: new Date().toISOString(),\n        status: 'new',\n        match_score: null,\n        applied: false\n      }\n    });\n  }\n}\n\nconsole.log(`Found ${relevantJobs.length} relevant jobs out of ${allJobs.length} total`);\n\nreturn relevantJobs;"
+      },
+      "id": "code-filter",
+      "name": "Filter QA Jobs",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [650, 300]
+    },
+    {
+      "parameters": {
+        "operation": "toJson",
+        "options": {
+          "fileName": "=jobs_{{ $now.toFormat('yyyy-MM-dd_HH-mm') }}.json"
+        }
+      },
+      "id": "convert-json",
+      "name": "Save to JSON",
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [850, 300]
+    },
+    {
+      "parameters": {
+        "fileName": "=/data/jobs/{{ $binary.data.fileName }}",
+        "options": {}
+      },
+      "id": "write-binary",
+      "name": "Write Binary File",
+      "type": "n8n-nodes-base.writeBinaryFile",
+      "typeVersion": 1,
+      "position": [1050, 300]
+    }
+  ],
+  "connections": {
+    "Every 6 Hours": {
+      "main": [
+        [
+          {
+            "node": "Fetch RemoteOK Jobs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch RemoteOK Jobs": {
+      "main": [
+        [
+          {
+            "node": "Filter QA Jobs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter QA Jobs": {
+      "main": [
+        [
+          {
+            "node": "Save to JSON",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save to JSON": {
+      "main": [
+        [
+          {
+            "node": "Write Binary File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2024-10-29T14:00:00.000Z",
+  "versionId": "1"
+}

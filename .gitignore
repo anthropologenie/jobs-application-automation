@@ -1,0 +1,34 @@
+# Environment variables
+.env
+.env.local
+
+# n8n data (contains credentials)
+data/n8n/
+*.sqlite
+*.sqlite-journal
+
+# Local job data
+data/jobs/*.json
+data/jobs/*.csv
+
+# Logs
+*.log
+logs/
+
+# Node modules (if you add any)
+node_modules/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Backup files
+*.backup
+*.bak
+
+# Personal resume with sensitive info
+data/resumes/personal_info.json

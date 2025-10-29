@@ -1,0 +1,41 @@
+{
+  "personal": {
+    "name": "Karthik Shetty",
+    "email": "karthikkattemane7@gmail.com",
+    "phone": "+91-9380410692",
+    "location": "Bengaluru, Karnataka, India",
+    "linkedin": "https://www.linkedin.com/in/karthiksrqalead/",
+    "github": "https://github.com/anthropologenie"
+  },
+  "summary": "QA/Data Engineer with 6.5+ years across platform testing, data engineering (ETL/data warehousing), and GenAI testing (AWS Bedrock/Google Bard). Strong in test strategy, SQL, automation, and JIRA reporting. Currently seeking remote QA Lead and Data QA roles.",
+  "skills": {
+    "testing": ["Manual QA", "API Testing", "ETL/Data Validation", "Database Testing", "Test Strategy", "CI/CD QA", "GenAI Testing"],
+    "tools": ["Postman", "JMeter", "JIRA", "GitHub Actions", "Selenium", "SQL", "Python"],
+    "languages": ["Python", "SQL", "JavaScript (basic)"],
+    "databases": ["PostgreSQL", "MySQL", "Oracle"],
+    "cloud_ai": ["AWS Bedrock", "GCP", "GenAI Platforms"],
+    "methodologies": ["Agile/Scrum", "Risk-based Testing", "DevOps"]
+  },
+  "experience": [
+    {
+      "title": "QA / Data QA Engineer",
+      "company": "Various Projects",
+      "duration": "2018 - 2025 (6.5 years)",
+      "achievements": [
+        "Designed end-to-end test strategies for API/UI and ETL pipelines",
+        "Identified critical production bugs reducing defect leakage by 40%",
+        "Led JIRA reporting and stakeholder communication for multiple releases",
+        "Tested GenAI integrations (AWS Bedrock, Google Bard) for production deployment"
+      ]
+    }
+  ],
+  "education": {
+    "degree": "Bachelor of Engineering",
+    "field": "Electronics and Communication",
+    "year": "2018"
+  },
+  "certifications": [
+    "ISTQB Certified Tester (in progress)",
+    "GA4/GTM Analytics (in progress)"
+  ]
+}

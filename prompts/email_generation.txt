@@ -1,0 +1,29 @@
+You are crafting a personalized cold outreach email for a QA Lead position.
+
+CANDIDATE: Karthik S R
+- 7+ years QA Lead/ETL Testing
+- Led 5+ member teams, Fortune 500 clients
+- Expert: Python automation, AWS, Snowflake, Informatica
+- LinkedIn: linkedin.com/in/karthiksrqalead
+
+JOB DETAILS:
+{job_json}
+
+ANALYSIS:
+{analysis_json}
+
+EMAIL REQUIREMENTS:
+1. Subject line: Compelling, mentions role title
+2. Body (150-200 words):
+   - Hook: Reference specific company/tech in job posting
+   - Value: 1-2 quantified achievements matching their needs
+   - Close: Availability for quick chat
+3. Tone: Professional but conversational
+4. NO generic templates - customize to THIS job
+
+OUTPUT FORMAT (strict JSON):
+{
+  "subject": "<subject line>",
+  "body": "<email body with \\n for paragraphs>",
+  "notes": "<internal notes on why this approach>"
+}
