@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Job Search Tracker</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>📊 Job Search Tracker</h1>
+      <div class="header-actions">
+        <button onclick="refreshData()" class="btn-refresh">🔄 Refresh</button>
+        <button onclick="showAddModal()" class="btn-add">➕ Add Opportunity</button>
+      </div>
+    </header>
+
+    <!-- Metrics Cards -->
+    <section class="metrics">
+      <div class="metric-card">
+        <div class="metric-label">Active Opportunities</div>
+        <div class="metric-value" id="active-count">0</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Interviews This Week</div>
+        <div class="metric-value" id="interview-count">0</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Remote Focused</div>
+        <div class="metric-value" id="remote-count">0</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">High Priority</div>
+        <div class="metric-value" id="priority-count">0</div>
+      </div>
+    </section>
+
+    <!-- Today's Agenda -->
+    <section class="agenda">
+      <h2>📅 Tomorrow's Agenda</h2>
+      <div id="today-agenda" class="agenda-list">
+        <p class="empty-state">Loading...</p>
+      </div>
+    </section>
+
+    <!-- Pipeline Overview -->
+    <section class="pipeline">
+      <h2>🎯 Active Pipeline</h2>
+      <div class="pipeline-table-wrapper">
+        <table id="pipeline-table">
+          <thead>
+            <tr>
+              <th>Company</th>
+              <th>Role</th>
+              <th>Status</th>
+              <th>Remote</th>
+              <th>Priority</th>
+              <th>Tech Stack</th>
+              <th>Last Update</th>
+            </tr>
+          </thead>
+          <tbody id="pipeline-body">
+            <tr>
+              <td colspan="7" class="empty-state">Loading pipeline data...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+
+  <!-- Add Opportunity Modal -->
+  <div id="add-modal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeAddModal()">&times;</span>
+      <h2>Add New Opportunity</h2>
+      <form id="add-form" onsubmit="addOpportunity(event)">
+        <div class="form-group">
+          <label>Company *</label>
+          <input type="text" id="company" required>
+        </div>
+        <div class="form-group">
+          <label>Role *</label>
+          <input type="text" id="role" required>
+        </div>
+        <div class="form-group">
+          <label>Source</label>
+          <select id="source">
+            <option value="LinkedIn">LinkedIn</option>
+            <option value="Naukri">Naukri</option>
+            <option value="Direct">Direct</option>
+            <option value="Referral">Referral</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>
+            <input type="checkbox" id="is_remote" checked>
+            Remote Role
+          </label>
+        </div>
+        <div class="form-group">
+          <label>Tech Stack</label>
+          <input type="text" id="tech_stack" placeholder="AWS, Python, ETL">
+        </div>
+        <div class="form-group">
+          <label>Recruiter Phone</label>
+          <input type="text" id="recruiter_phone" placeholder="+91 XXXXX XXXXX">
+        </div>
+        <div class="form-group">
+          <label>Notes</label>
+          <textarea id="notes" rows="3"></textarea>
+        </div>
+        <button type="submit" class="btn-primary">Add Opportunity</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,212 @@
+{
+  "name": "Dashboard Data API (Bash)",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "GET",
+        "path": "todays-agenda",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "webhook-agenda",
+      "name": "Webhook - Today's Agenda",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [240, 300],
+      "webhookId": "todays-agenda"
+    },
+    {
+      "parameters": {
+        "command": "sqlite3 /data/jobs-tracker.db -json \"SELECT i.id, i.type, i.date, i.time, i.meet_link, o.company, o.role, o.status, i.participants, i.summary FROM interactions i JOIN opportunities o ON i.opportunity_id = o.id WHERE i.date BETWEEN DATE('now') AND DATE('now', '+7 days') AND i.type = 'Interview' ORDER BY i.date, i.time ASC\""
+      },
+      "id": "query-agenda",
+      "name": "Query Upcoming Interviews",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [460, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Parse the SQLite JSON output\nconst output = $input.first().json.stdout;\n\nif (!output || output.trim() === '') {\n  return [{ json: [] }];\n}\n\ntry {\n  const data = JSON.parse(output);\n  return data.map(item => ({ json: item }));\n} catch (error) {\n  console.error('Error parsing SQLite output:', error);\n  return [{ json: [] }];\n}"
+      },
+      "id": "parse-agenda",
+      "name": "Parse JSON Output",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [680, 300]
+    },
+    {
+      "parameters": {
+        "respondWith": "allIncomingItems",
+        "options": {
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "name": "Access-Control-Allow-Origin",
+                "value": "*"
+              }
+            ]
+          }
+        }
+      },
+      "id": "respond-agenda",
+      "name": "Respond with Agenda",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [900, 300]
+    },
+    {
+      "parameters": {
+        "httpMethod": "GET",
+        "path": "pipeline",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "webhook-pipeline",
+      "name": "Webhook - Pipeline",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [240, 540],
+      "webhookId": "pipeline"
+    },
+    {
+      "parameters": {
+        "command": "sqlite3 /data/jobs-tracker.db -json \"SELECT o.id, o.company, o.role, o.status, o.is_remote, o.priority, o.tech_stack, o.salary_range, o.recruiter_name, o.recruiter_phone, o.notes, o.discovered_date, o.last_interaction_date, o.updated_at FROM opportunities o WHERE o.status NOT IN ('Rejected', 'Declined', 'Ghosted', 'Accepted') ORDER BY CASE o.priority WHEN 'High' THEN 1 WHEN 'Medium' THEN 2 WHEN 'Low' THEN 3 END, o.updated_at DESC LIMIT 50\""
+      },
+      "id": "query-pipeline",
+      "name": "Query Active Pipeline",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [460, 540]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Parse the SQLite JSON output\nconst output = $input.first().json.stdout;\n\nif (!output || output.trim() === '') {\n  return [{ json: [] }];\n}\n\ntry {\n  const data = JSON.parse(output);\n  return data.map(item => ({ json: item }));\n} catch (error) {\n  console.error('Error parsing SQLite output:', error);\n  return [{ json: [] }];\n}"
+      },
+      "id": "parse-pipeline",
+      "name": "Parse JSON Output",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [680, 540]
+    },
+    {
+      "parameters": {
+        "respondWith": "allIncomingItems",
+        "options": {
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "name": "Access-Control-Allow-Origin",
+                "value": "*"
+              }
+            ]
+          }
+        }
+      },
+      "id": "respond-pipeline",
+      "name": "Respond with Pipeline",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [900, 540]
+    },
+    {
+      "parameters": {
+        "httpMethod": "GET",
+        "path": "metrics",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "webhook-metrics",
+      "name": "Webhook - Metrics",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [240, 780],
+      "webhookId": "metrics"
+    },
+    {
+      "parameters": {
+        "command": "sqlite3 /data/jobs-tracker.db -json \"SELECT (SELECT COUNT(*) FROM opportunities WHERE status NOT IN ('Rejected', 'Declined', 'Ghosted', 'Accepted')) as active_count, (SELECT COUNT(*) FROM interactions WHERE date BETWEEN DATE('now') AND DATE('now', '+7 days') AND type = 'Interview') as interview_count, (SELECT COUNT(*) FROM opportunities WHERE is_remote = 1 AND status NOT IN ('Rejected', 'Declined', 'Ghosted', 'Accepted')) as remote_count, (SELECT COUNT(*) FROM opportunities WHERE priority = 'High' AND status NOT IN ('Rejected', 'Declined', 'Ghosted', 'Accepted')) as priority_count\""
+      },
+      "id": "query-metrics",
+      "name": "Query Metrics",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [460, 780]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Parse the SQLite JSON output\nconst output = $input.first().json.stdout;\n\nif (!output || output.trim() === '') {\n  return [{\n    json: {\n      active_count: 0,\n      interview_count: 0,\n      remote_count: 0,\n      priority_count: 0\n    }\n  }];\n}\n\ntry {\n  const data = JSON.parse(output);\n  return [{ json: data[0] }];\n} catch (error) {\n  console.error('Error parsing SQLite output:', error);\n  return [{\n    json: {\n      active_count: 0,\n      interview_count: 0,\n      remote_count: 0,\n      priority_count: 0\n    }\n  }];\n}"
+      },
+      "id": "parse-metrics",
+      "name": "Parse JSON Output",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [680, 780]
+    },
+    {
+      "parameters": {
+        "respondWith": "firstEntryJson",
+        "options": {
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "name": "Access-Control-Allow-Origin",
+                "value": "*"
+              }
+            ]
+          }
+        }
+      },
+      "id": "respond-metrics",
+      "name": "Respond with Metrics",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [900, 780]
+    }
+  ],
+  "connections": {
+    "Webhook - Today's Agenda": {
+      "main": [[{"node": "Query Upcoming Interviews", "type": "main", "index": 0}]]
+    },
+    "Query Upcoming Interviews": {
+      "main": [[{"node": "Parse JSON Output", "type": "main", "index": 0}]]
+    },
+    "Parse JSON Output": {
+      "main": [[{"node": "Respond with Agenda", "type": "main", "index": 0}]]
+    },
+    "Webhook - Pipeline": {
+      "main": [[{"node": "Query Active Pipeline", "type": "main", "index": 0}]]
+    },
+    "Query Active Pipeline": {
+      "main": [[{"node": "Parse JSON Output", "type": "main", "index": 0}]]
+    },
+    "Parse JSON Output": {
+      "main": [[{"node": "Respond with Pipeline", "type": "main", "index": 0}]]
+    },
+    "Webhook - Metrics": {
+      "main": [[{"node": "Query Metrics", "type": "main", "index": 0}]]
+    },
+    "Query Metrics": {
+      "main": [[{"node": "Parse JSON Output", "type": "main", "index": 0}]]
+    },
+    "Parse JSON Output": {
+      "main": [[{"node": "Respond with Metrics", "type": "main", "index": 0}]]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "active": false
+}

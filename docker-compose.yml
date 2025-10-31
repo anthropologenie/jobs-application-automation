@@ -5,6 +5,8 @@ services:
     restart: unless-stopped
     ports:
       - "5678:5678"
+    env_file:
+      - .env
     environment:
       # Basic
       - N8N_HOST=${N8N_HOST:-localhost}
@@ -37,6 +39,15 @@ services:
       - GENERIC_TIMEZONE=Asia/Kolkata
       - TZ=Asia/Kolkata
       - NODE_OPTIONS=--max-old-space-size=2048
+
+      # Explicit API key mapping
+      - CLAUDE_API_KEY=${CLAUDE_API_KEY}
+      - SENDGRID_API_KEY=${SENDGRID_API_KEY}
+      - MIN_MATCH_SCORE=${MIN_MATCH_SCORE:-70}
+      - YOUR_NAME=${YOUR_NAME}
+      - YOUR_EMAIL=${YOUR_EMAIL}
+      - YOUR_LINKEDIN=${YOUR_LINKEDIN}
+
 
       # License (optional)
       # - N8N_LICENSE_ACTIVATION_KEY=${N8N_LICENSE_KEY}
