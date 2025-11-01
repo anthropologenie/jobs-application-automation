@@ -2,8 +2,23 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Learning Tracker</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learning & Interview Tracker</title>
     <link rel="stylesheet" href="dashboard/styles.css">
+    <style>
+        .add-question-btn {
+            background: #16a34a;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        .add-question-btn:hover {
+            background: #15803d;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -11,7 +26,8 @@
             <h1>📚 Learning & Interview Tracker</h1>
             <div class="header-actions">
                 <button onclick="location.reload()" class="btn-refresh">🔄 Refresh</button>
-                <a href="http://localhost:8082" class="btn-add">🏠 Main Dashboard</a>
+                <button onclick="showAddQuestionModal()" class="add-question-btn">➕ Add Question</button>
+                <a href="http://localhost:8082" class="btn-add" style="text-decoration: none;">🏠 Main Dashboard</a>
             </div>
         </header>
 
@@ -72,26 +88,111 @@
                             <th>Company</th>
                             <th>Difficulty</th>
                             <th>Your Rating</th>
+                            <th>Tags</th>
                         </tr>
                     </thead>
                     <tbody id="questions-body">
-                        <tr><td colspan="5" class="empty-state">Loading...</td></tr>
+                        <tr><td colspan="6" class="empty-state">Loading...</td></tr>
                     </tbody>
                 </table>
             </div>
         </section>
     </div>
 
+    <!-- Add Question Modal -->
+    <div id="add-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close" onclick="closeAddQuestionModal()">&times;</span>
+            <h2>Add Interview Question</h2>
+            <form id="add-question-form" onsubmit="addQuestion(event)">
+                <div class="form-group">
+                    <label>Question Text *</label>
+                    <textarea id="question-text" rows="3" required placeholder="Enter the interview question..."></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label>Question Type *</label>
+                    <select id="question-type" required>
+                        <option value="">-- Select Type --</option>
+                        <option value="Technical SQL">Technical SQL</option>
+                        <option value="Data Warehouse">Data Warehouse</option>
+                        <option value="ETL Tools">ETL Tools</option>
+                        <option value="Python">Python</option>
+                        <option value="System Design">System Design</option>
+                        <option value="Behavioral">Behavioral</option>
+                        <option value="Cloud Services">Cloud Services</option>
+                        <option value="Architecture">Architecture</option>
+                        <option value="Coding">Coding</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Difficulty *</label>
+                    <select id="difficulty" required>
+                        <option value="">-- Select Difficulty --</option>
+                        <option value="Easy">Easy</option>
+                        <option value="Medium" selected>Medium</option>
+                        <option value="Hard">Hard</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Company (Optional)</label>
+                    <select id="company-select">
+                        <option value="">-- Not linked to company --</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Your Rating (1-5) *</label>
+                    <div style="display: flex; gap: 10px; align-items: center;">
+                        <input type="range" id="rating" min="1" max="5" value="3" style="flex: 1;">
+                        <span id="rating-display" style="font-weight: bold; font-size: 18px;">3</span>
+                    </div>
+                    <small style="color: #64748b;">1 = Struggled heavily, 5 = Answered perfectly</small>
+                </div>
+
+                <div class="form-group">
+                    <label>Tags (comma-separated)</label>
+                    <input type="text" id="tags" placeholder="sql, window-functions, optimization">
+                </div>
+
+                <div class="form-group">
+                    <label>My Response (Optional)</label>
+                    <textarea id="my-response" rows="3" placeholder="What you answered..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Ideal Response (Optional)</label>
+                    <textarea id="ideal-response" rows="3" placeholder="What the correct answer should be..."></textarea>
+                </div>
+
+                <button type="submit" class="btn-primary">💾 Save Question</button>
+            </form>
+        </div>
+    </div>
+
     <script>
         const API = 'http://localhost:8081/api';
 
+        // Update rating display
+        document.getElementById('rating').addEventListener('input', (e) => {
+            document.getElementById('rating-display').textContent = e.target.value;
+        });
+
         async function loadData() {
             try {
-                const [gaps, topics, questions] = await Promise.all([
+                const [gaps, topics, questions, companies] = await Promise.all([
                     fetch(`${API}/learning-gaps`).then(r => r.json()),
                     fetch(`${API}/study-priority`).then(r => r.json()),
-                    fetch(`${API}/recent-questions`).then(r => r.json())
+                    fetch(`${API}/recent-questions`).then(r => r.json()),
+                    fetch(`${API}/pipeline`).then(r => r.json())
                 ]);
+
+                // Populate company dropdown
+                const companySelect = document.getElementById('company-select');
+                companySelect.innerHTML = '<option value="">-- Not linked to company --</option>' + 
+                    companies.map(c => `<option value="${c.id}">${c.company}</option>`).join('');
 
                 // Update metrics
                 document.getElementById('weak-count').textContent = gaps.filter(g => g.weak_percentage > 50).length;
@@ -102,7 +203,7 @@
                 // Render gaps
                 const gapsContainer = document.getElementById('gaps-container');
                 if (gaps.length === 0) {
-                    gapsContainer.innerHTML = '<p class="empty-state">No learning gaps yet - add interview questions to see analysis</p>';
+                    gapsContainer.innerHTML = '<p class="empty-state">No learning gaps yet</p>';
                 } else {
                     gapsContainer.innerHTML = gaps.map(g => `
                         <div style="background: ${g.avg_performance <= 2 ? '#fef2f2' : '#f0fdf4'}; padding: 15px; margin: 10px 0; border-left: 4px solid ${g.avg_performance <= 2 ? '#dc2626' : '#16a34a'}; border-radius: 8px;">
@@ -114,45 +215,92 @@
 
                 // Render study topics
                 const studyBody = document.getElementById('study-body');
-                if (topics.length === 0) {
-                    studyBody.innerHTML = '<tr><td colspan="5" class="empty-state">No study topics yet</td></tr>';
-                } else {
-                    studyBody.innerHTML = topics.map(t => `
-                        <tr>
-                            <td><strong>${t.name}</strong></td>
-                            <td>${t.category}</td>
-                            <td><span style="background: ${t.priority >= 5 ? '#dc2626' : t.priority >= 4 ? '#f59e0b' : '#0ea5e9'}; color: white; padding: 4px 8px; border-radius: 6px; font-size: 12px; font-weight: 600;">${t.priority}/5</span></td>
-                            <td>${t.progress_percentage || 0}% (${t.total_study_hours || 0}h / ${t.estimated_hours}h)</td>
-                            <td>${t.deadline || 'No deadline'}</td>
-                        </tr>
-                    `).join('');
-                }
+                studyBody.innerHTML = topics.map(t => `
+                    <tr>
+                        <td><strong>${t.name}</strong></td>
+                        <td>${t.category}</td>
+                        <td><span style="background: ${t.priority >= 5 ? '#dc2626' : t.priority >= 4 ? '#f59e0b' : '#0ea5e9'}; color: white; padding: 4px 8px; border-radius: 6px; font-size: 12px;">${t.priority}/5</span></td>
+                        <td>${t.progress_percentage || 0}% (${t.total_study_hours || 0}h / ${t.estimated_hours}h)</td>
+                        <td>${t.deadline || 'No deadline'}</td>
+                    </tr>
+                `).join('');
 
                 // Render questions
                 const questionsBody = document.getElementById('questions-body');
-                if (questions.length === 0) {
-                    questionsBody.innerHTML = '<tr><td colspan="5" class="empty-state">No questions logged yet</td></tr>';
-                } else {
-                    questionsBody.innerHTML = questions.map(q => `
-                        <tr>
-                            <td style="max-width: 400px;">${q.question_text}</td>
-                            <td>${q.question_type}</td>
-                            <td>${q.company || 'N/A'}</td>
-                            <td><span class="status-badge status-${q.difficulty.toLowerCase()}">${q.difficulty}</span></td>
-                            <td>${'⭐'.repeat(q.my_rating || 0)}${'☆'.repeat(5 - (q.my_rating || 0))}</td>
-                        </tr>
-                    `).join('');
-                }
+                questionsBody.innerHTML = questions.map(q => `
+                    <tr>
+                        <td style="max-width: 350px;">${q.question_text}</td>
+                        <td>${q.question_type}</td>
+                        <td>${q.company || 'N/A'}</td>
+                        <td><span class="status-badge status-${q.difficulty.toLowerCase()}">${q.difficulty}</span></td>
+                        <td>${'⭐'.repeat(q.my_rating || 0)}${'☆'.repeat(5 - (q.my_rating || 0))}</td>
+                        <td><small>${q.tags || 'No tags'}</small></td>
+                    </tr>
+                `).join('');
             } catch (error) {
                 console.error('Error loading data:', error);
-                alert('Error loading data. Make sure API server is running on port 8081.');
+                alert('Error loading data. Make sure API server is running.');
+            }
+        }
+
+        function showAddQuestionModal() {
+            document.getElementById('add-modal').style.display = 'block';
+        }
+
+        function closeAddQuestionModal() {
+            document.getElementById('add-modal').style.display = 'none';
+            document.getElementById('add-question-form').reset();
+            document.getElementById('rating-display').textContent = '3';
+        }
+
+        async function addQuestion(event) {
+            event.preventDefault();
+
+            const companyId = document.getElementById('company-select').value;
+            
+            const data = {
+                opportunity_id: companyId || null,
+                question_text: document.getElementById('question-text').value,
+                question_type: document.getElementById('question-type').value,
+                difficulty: document.getElementById('difficulty').value,
+                my_rating: parseInt(document.getElementById('rating').value),
+                tags: document.getElementById('tags').value,
+                my_response: document.getElementById('my-response').value,
+                ideal_response: document.getElementById('ideal-response').value
+            };
+
+            try {
+                const response = await fetch(`${API}/add-question`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    alert('✅ Question added successfully!');
+                    closeAddQuestionModal();
+                    loadData();
+                } else {
+                    alert('❌ Error: ' + (result.error || 'Unknown error'));
+                }
+            } catch (error) {
+                console.error('Error adding question:', error);
+                alert('❌ Error connecting to server. Make sure API is running on port 8081.');
+            }
+        }
+
+        // Close modal on outside click
+        window.onclick = function(event) {
+            const modal = document.getElementById('add-modal');
+            if (event.target === modal) {
+                closeAddQuestionModal();
             }
         }
 
         // Load on page load
         loadData();
-        
-        // Auto-refresh every 2 minutes
         setInterval(loadData, 2 * 60 * 1000);
     </script>
 </body>
