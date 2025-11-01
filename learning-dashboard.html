@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Learning Tracker</title>
+    <link rel="stylesheet" href="dashboard/styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📚 Learning & Interview Tracker</h1>
+            <div class="header-actions">
+                <button onclick="location.reload()" class="btn-refresh">🔄 Refresh</button>
+                <a href="http://localhost:8082" class="btn-add">🏠 Main Dashboard</a>
+            </div>
+        </header>
+
+        <section class="metrics">
+            <div class="metric-card">
+                <div class="metric-label">Weak Areas</div>
+                <div class="metric-value" id="weak-count">0</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Study Topics</div>
+                <div class="metric-value" id="topic-count">0</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Questions Logged</div>
+                <div class="metric-value" id="question-count">0</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Study Hours</div>
+                <div class="metric-value" id="study-hours">0</div>
+            </div>
+        </section>
+
+        <section class="pipeline">
+            <h2>🎯 Learning Gaps (What You Struggled With)</h2>
+            <div id="gaps-container" style="padding: 20px;">
+                <p class="empty-state">Loading...</p>
+            </div>
+        </section>
+
+        <section class="pipeline">
+            <h2>📚 Study Priority Queue</h2>
+            <div class="pipeline-table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Topic</th>
+                            <th>Category</th>
+                            <th>Priority</th>
+                            <th>Progress</th>
+                            <th>Deadline</th>
+                        </tr>
+                    </thead>
+                    <tbody id="study-body">
+                        <tr><td colspan="5" class="empty-state">Loading...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="pipeline">
+            <h2>❓ Your Interview Questions</h2>
+            <div class="pipeline-table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Question</th>
+                            <th>Type</th>
+                            <th>Company</th>
+                            <th>Difficulty</th>
+                            <th>Your Rating</th>
+                        </tr>
+                    </thead>
+                    <tbody id="questions-body">
+                        <tr><td colspan="5" class="empty-state">Loading...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        const API = 'http://localhost:8081/api';
+
+        async function loadData() {
+            try {
+                const [gaps, topics, questions] = await Promise.all([
+                    fetch(`${API}/learning-gaps`).then(r => r.json()),
+                    fetch(`${API}/study-priority`).then(r => r.json()),
+                    fetch(`${API}/recent-questions`).then(r => r.json())
+                ]);
+
+                // Update metrics
+                document.getElementById('weak-count').textContent = gaps.filter(g => g.weak_percentage > 50).length;
+                document.getElementById('topic-count').textContent = topics.length;
+                document.getElementById('question-count').textContent = questions.length;
+                document.getElementById('study-hours').textContent = Math.round(topics.reduce((sum, t) => sum + (t.total_study_hours || 0), 0));
+
+                // Render gaps
+                const gapsContainer = document.getElementById('gaps-container');
+                if (gaps.length === 0) {
+                    gapsContainer.innerHTML = '<p class="empty-state">No learning gaps yet - add interview questions to see analysis</p>';
+                } else {
+                    gapsContainer.innerHTML = gaps.map(g => `
+                        <div style="background: ${g.avg_performance <= 2 ? '#fef2f2' : '#f0fdf4'}; padding: 15px; margin: 10px 0; border-left: 4px solid ${g.avg_performance <= 2 ? '#dc2626' : '#16a34a'}; border-radius: 8px;">
+                            <strong>${g.question_type}</strong> (${g.difficulty})<br>
+                            <small>Performance: ${g.avg_performance.toFixed(1)}/5 ⭐ | Questions: ${g.question_count} | Weak: ${g.weak_percentage}%</small>
+                        </div>
+                    `).join('');
+                }
+
+                // Render study topics
+                const studyBody = document.getElementById('study-body');
+                if (topics.length === 0) {
+                    studyBody.innerHTML = '<tr><td colspan="5" class="empty-state">No study topics yet</td></tr>';
+                } else {
+                    studyBody.innerHTML = topics.map(t => `
+                        <tr>
+                            <td><strong>${t.name}</strong></td>
+                            <td>${t.category}</td>
+                            <td><span style="background: ${t.priority >= 5 ? '#dc2626' : t.priority >= 4 ? '#f59e0b' : '#0ea5e9'}; color: white; padding: 4px 8px; border-radius: 6px; font-size: 12px; font-weight: 600;">${t.priority}/5</span></td>
+                            <td>${t.progress_percentage || 0}% (${t.total_study_hours || 0}h / ${t.estimated_hours}h)</td>
+                            <td>${t.deadline || 'No deadline'}</td>
+                        </tr>
+                    `).join('');
+                }
+
+                // Render questions
+                const questionsBody = document.getElementById('questions-body');
+                if (questions.length === 0) {
+                    questionsBody.innerHTML = '<tr><td colspan="5" class="empty-state">No questions logged yet</td></tr>';
+                } else {
+                    questionsBody.innerHTML = questions.map(q => `
+                        <tr>
+                            <td style="max-width: 400px;">${q.question_text}</td>
+                            <td>${q.question_type}</td>
+                            <td>${q.company || 'N/A'}</td>
+                            <td><span class="status-badge status-${q.difficulty.toLowerCase()}">${q.difficulty}</span></td>
+                            <td>${'⭐'.repeat(q.my_rating || 0)}${'☆'.repeat(5 - (q.my_rating || 0))}</td>
+                        </tr>
+                    `).join('');
+                }
+            } catch (error) {
+                console.error('Error loading data:', error);
+                alert('Error loading data. Make sure API server is running on port 8081.');
+            }
+        }
+
+        // Load on page load
+        loadData();
+        
+        // Auto-refresh every 2 minutes
+        setInterval(loadData, 2 * 60 * 1000);
+    </script>
+</body>
+</html>
