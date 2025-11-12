@@ -50,6 +50,64 @@
             </div>
         </section>
 
+        <!-- SQL PRACTICE STATS - NEW SECTION -->
+        <section class="pipeline">
+            <h2>💻 SQL Practice Stats</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; padding: 20px;">
+                <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                    <div style="font-size: 14px; opacity: 0.9;">Total Sessions</div>
+                    <div style="font-size: 36px; font-weight: bold;" id="practice-total">0</div>
+                </div>
+                <div style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                    <div style="font-size: 14px; opacity: 0.9;">Accuracy</div>
+                    <div style="font-size: 36px; font-weight: bold;" id="practice-accuracy">0%</div>
+                </div>
+                <div style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); color: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                    <div style="font-size: 14px; opacity: 0.9;">Practice Time</div>
+                    <div style="font-size: 36px; font-weight: bold;" id="practice-minutes">0min</div>
+                </div>
+                <div style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); color: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                    <div style="font-size: 14px; opacity: 0.9;">Platforms Used</div>
+                    <div style="font-size: 36px; font-weight: bold;" id="practice-platforms">0</div>
+                </div>
+            </div>
+
+            <!-- Difficulty Breakdown -->
+            <div style="padding: 0 20px 20px 20px;">
+                <h3 style="margin-bottom: 10px;">Difficulty Breakdown</h3>
+                <div style="display: flex; gap: 15px; background: #f8fafc; padding: 15px; border-radius: 8px;">
+                    <div style="flex: 1; text-align: center;">
+                        <div style="color: #10b981; font-size: 24px; font-weight: bold;" id="practice-easy">0</div>
+                        <div style="color: #64748b; font-size: 12px;">Easy</div>
+                    </div>
+                    <div style="flex: 1; text-align: center;">
+                        <div style="color: #f59e0b; font-size: 24px; font-weight: bold;" id="practice-medium">0</div>
+                        <div style="color: #64748b; font-size: 12px;">Medium</div>
+                    </div>
+                    <div style="flex: 1; text-align: center;">
+                        <div style="color: #dc2626; font-size: 24px; font-weight: bold;" id="practice-hard">0</div>
+                        <div style="color: #64748b; font-size: 12px;">Hard</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SQL KEYWORDS MASTERY -->
+        <section class="pipeline">
+            <h2>🔑 SQL Keywords Mastery</h2>
+            <div id="keywords-container" style="padding: 20px;">
+                <p class="empty-state">No practice data yet. Use ./log-sql-practice.py to start!</p>
+            </div>
+        </section>
+
+        <!-- COMMON MISTAKES -->
+        <section class="pipeline">
+            <h2>⚠️ Common Mistakes to Avoid</h2>
+            <div id="mistakes-container" style="padding: 20px;">
+                <p class="empty-state">No mistakes logged yet</p>
+            </div>
+        </section>
+
         <section class="pipeline">
             <h2>🎯 Learning Gaps (What You Struggled With)</h2>
             <div id="gaps-container" style="padding: 20px;">
@@ -182,16 +240,19 @@
 
         async function loadData() {
             try {
-                const [gaps, topics, questions, companies] = await Promise.all([
+                const [gaps, topics, questions, companies, practiceStats, keywords, mistakes] = await Promise.all([
                     fetch(`${API}/learning-gaps`).then(r => r.json()),
                     fetch(`${API}/study-priority`).then(r => r.json()),
                     fetch(`${API}/recent-questions`).then(r => r.json()),
-                    fetch(`${API}/pipeline`).then(r => r.json())
+                    fetch(`${API}/pipeline`).then(r => r.json()),
+                    fetch(`${API}/sql-practice-stats`).then(r => r.json()),
+                    fetch(`${API}/sql-keyword-mastery`).then(r => r.json()),
+                    fetch(`${API}/common-mistakes`).then(r => r.json())
                 ]);
 
                 // Populate company dropdown
                 const companySelect = document.getElementById('company-select');
-                companySelect.innerHTML = '<option value="">-- Not linked to company --</option>' + 
+                companySelect.innerHTML = '<option value="">-- Not linked to company --</option>' +
                     companies.map(c => `<option value="${c.id}">${c.company}</option>`).join('');
 
                 // Update metrics
@@ -199,6 +260,15 @@
                 document.getElementById('topic-count').textContent = topics.length;
                 document.getElementById('question-count').textContent = questions.length;
                 document.getElementById('study-hours').textContent = Math.round(topics.reduce((sum, t) => sum + (t.total_study_hours || 0), 0));
+
+                // Update SQL practice stats
+                document.getElementById('practice-total').textContent = practiceStats.total_sessions || 0;
+                document.getElementById('practice-accuracy').textContent = (practiceStats.accuracy_percentage || 0) + '%';
+                document.getElementById('practice-minutes').textContent = (practiceStats.total_minutes || 0) + 'min';
+                document.getElementById('practice-platforms').textContent = practiceStats.platforms_used || 0;
+                document.getElementById('practice-easy').textContent = practiceStats.easy_count || 0;
+                document.getElementById('practice-medium').textContent = practiceStats.medium_count || 0;
+                document.getElementById('practice-hard').textContent = practiceStats.hard_count || 0;
 
                 // Render gaps
                 const gapsContainer = document.getElementById('gaps-container');
@@ -237,6 +307,42 @@
                         <td><small>${q.tags || 'No tags'}</small></td>
                     </tr>
                 `).join('');
+
+                // Render SQL Keywords Mastery
+                const keywordsContainer = document.getElementById('keywords-container');
+                if (keywords.length === 0) {
+                    keywordsContainer.innerHTML = '<p class="empty-state">No practice data yet. Use ./log-sql-practice.py to start!</p>';
+                } else {
+                    keywordsContainer.innerHTML = '<div style="display: flex; flex-wrap: wrap; gap: 12px;">' +
+                        keywords.slice(0, 10).map(k => {
+                            const color = k.accuracy_percentage >= 80 ? '#10b981' : k.accuracy_percentage >= 60 ? '#f59e0b' : '#dc2626';
+                            return `
+                                <div style="background: white; border: 2px solid ${color}; border-radius: 8px; padding: 12px 16px; min-width: 150px;">
+                                    <div style="font-weight: bold; color: ${color}; font-size: 16px;">${k.keyword}</div>
+                                    <div style="font-size: 12px; color: #64748b; margin-top: 4px;">
+                                        ${k.practice_count} practices | ${k.accuracy_percentage}% accuracy
+                                    </div>
+                                </div>
+                            `;
+                        }).join('') + '</div>';
+                }
+
+                // Render Common Mistakes
+                const mistakesContainer = document.getElementById('mistakes-container');
+                if (mistakes.length === 0) {
+                    mistakesContainer.innerHTML = '<p class="empty-state">No mistakes logged yet</p>';
+                } else {
+                    mistakesContainer.innerHTML = mistakes.map(m => `
+                        <div style="background: #fef2f2; border-left: 4px solid #dc2626; padding: 15px; margin: 10px 0; border-radius: 8px;">
+                            <div style="font-weight: bold; color: #dc2626; margin-bottom: 5px;">
+                                ⚠️ ${m.error_made} <span style="background: #dc2626; color: white; padding: 2px 8px; border-radius: 12px; font-size: 11px; margin-left: 8px;">${m.occurrence_count}x</span>
+                            </div>
+                            <div style="font-size: 12px; color: #64748b;">
+                                Concepts: ${m.concepts_affected || 'Various'} | Avg recovery time: ${m.avg_recovery_time || 'N/A'}min
+                            </div>
+                        </div>
+                    `).join('');
+                }
             } catch (error) {
                 console.error('Error loading data:', error);
                 alert('Error loading data. Make sure API server is running.');

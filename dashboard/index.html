@@ -16,6 +16,17 @@
       </div>
     </header>
 
+    <!-- Navigation Tabs -->
+    <nav class="tab-navigation">
+      <ul class="tab-list">
+        <li><a href="#overview" class="tab-link active">Overview</a></li>
+        <li><a href="#sacred-work" class="tab-link">Sacred Work 🌺</a></li>
+      </ul>
+    </nav>
+
+    <!-- Overview Tab -->
+    <div id="overview" class="tab-content" style="display: block;">
+
     <!-- Metrics Cards -->
     <section class="metrics">
       <div class="metric-card">
@@ -68,6 +79,8 @@
         </table>
       </div>
     </section>
+
+    </div><!-- End Overview Tab -->
   </div>
 
   <!-- Add Opportunity Modal -->
@@ -116,6 +129,56 @@
       </form>
     </div>
   </div>
+
+  <!-- Sacred Work Tab -->
+  <section id="sacred-work" class="tab-content" style="display: none;">
+    <div class="section-header">
+      <h2>Sacred Work Progress</h2>
+      <p class="subtitle">Temple stones, placed one by one</p>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat-card">
+        <h3 id="total-stones">0</h3>
+        <p>Stones Placed</p>
+      </div>
+      <div class="stat-card">
+        <h3 id="total-sacred-hours">0</h3>
+        <p>Sacred Hours</p>
+      </div>
+      <div class="stat-card">
+        <h3 id="avg-stone-time">0</h3>
+        <p>Avg Minutes/Stone</p>
+      </div>
+      <div class="stat-card">
+        <h3 id="days-building">0</h3>
+        <p>Days Building</p>
+      </div>
+    </div>
+
+    <div class="stones-timeline">
+      <h3>Stones Placed</h3>
+      <div id="stones-list" class="stones-container">
+        <p style="text-align: center; color: #888; padding: 2rem;">No stones placed yet. Begin with Stone 1.</p>
+      </div>
+    </div>
+
+    <div class="add-stone-form">
+      <h3>Place New Stone</h3>
+      <form id="sacred-work-form">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+          <input type="number" id="stone-number" placeholder="Stone Number" required min="1">
+          <input type="number" id="stone-time" placeholder="Time Spent (minutes)" required min="1">
+        </div>
+        <input type="text" id="stone-title" placeholder="Stone Title (e.g., AGQ Framework v0.1)" required>
+        <textarea id="what-built" placeholder="What got built today..." required rows="4"></textarea>
+        <textarea id="insights" placeholder="Insights (optional)" rows="3"></textarea>
+        <textarea id="next-stone" placeholder="Next stone to place (optional)" rows="2"></textarea>
+        <textarea id="felt-sense" placeholder="Felt sense / reflection (optional)" rows="3"></textarea>
+        <button type="submit" class="btn-primary">Place Stone 🌺</button>
+      </form>
+    </div>
+  </section>
 
   <script src="app.js"></script>
 </body>

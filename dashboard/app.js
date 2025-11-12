@@ -1,5 +1,6 @@
 // Configuration
 const DB_PATH = '../data/jobs-tracker.db';
+const API_BASE_URL = 'http://localhost:8081';
 
 // Initialize dashboard
 document.addEventListener('DOMContentLoaded', () => {
@@ -245,3 +246,143 @@ window.onclick = function(event) {
     closeAddModal();
   }
 }
+
+// ============================================================================
+// SACRED WORK FUNCTIONS
+// ============================================================================
+
+async function loadSacredWorkStats() {
+    try {
+        const response = await fetch(`${API_BASE_URL}/api/sacred-work-stats`);
+        const stats = await response.json();
+
+        document.getElementById('total-stones').textContent = stats.total_stones || 0;
+        document.getElementById('total-sacred-hours').textContent = stats.total_hours || 0;
+        document.getElementById('avg-stone-time').textContent = Math.round(stats.avg_minutes_per_stone || 0);
+
+        if (stats.first_stone_date) {
+            const first = new Date(stats.first_stone_date);
+            const now = new Date();
+            const days = Math.floor((now - first) / (1000 * 60 * 60 * 24)) + 1;
+            document.getElementById('days-building').textContent = days;
+        } else {
+            document.getElementById('days-building').textContent = 0;
+        }
+    } catch (error) {
+        console.error('Failed to load sacred work stats:', error);
+    }
+}
+
+async function loadSacredWorkProgress() {
+    try {
+        const response = await fetch(`${API_BASE_URL}/api/sacred-work-progress`);
+        const stones = await response.json();
+
+        const stonesList = document.getElementById('stones-list');
+
+        if (stones.length === 0) {
+            stonesList.innerHTML = '<p style="text-align: center; color: #888; padding: 2rem;">No stones placed yet. Begin with Stone 1.</p>';
+            return;
+        }
+
+        stonesList.innerHTML = '';
+
+        stones.forEach(stone => {
+            const stoneCard = document.createElement('div');
+            stoneCard.className = 'stone-card';
+            const statusClass = stone.status === 'Complete' ? 'status-complete' : 'status-progress';
+
+            stoneCard.innerHTML = `
+                <div class="stone-header">
+                    <div class="stone-number">Stone ${stone.stone_number}</div>
+                    <div class="stone-status ${statusClass}">${stone.status}</div>
+                </div>
+                <div class="stone-title">${stone.stone_title}</div>
+                <div class="stone-meta">
+                    <span class="stone-date">📅 ${stone.date}</span>
+                    <span class="stone-duration">⏱️ ${stone.time_spent_minutes} min</span>
+                </div>
+                <div class="stone-what-built">${stone.what_built}</div>
+                ${stone.insights ? `<div class="stone-insights"><strong>💡 Insights:</strong> ${stone.insights}</div>` : ''}
+            `;
+            stonesList.appendChild(stoneCard);
+        });
+    } catch (error) {
+        console.error('Failed to load sacred work progress:', error);
+    }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    const sacredWorkForm = document.getElementById('sacred-work-form');
+
+    if (sacredWorkForm) {
+        sacredWorkForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const data = {
+                stone_number: parseInt(document.getElementById('stone-number').value),
+                stone_title: document.getElementById('stone-title').value,
+                time_spent_minutes: parseInt(document.getElementById('stone-time').value),
+                what_built: document.getElementById('what-built').value,
+                insights: document.getElementById('insights').value || null,
+                next_stone: document.getElementById('next-stone').value || null,
+                felt_sense: document.getElementById('felt-sense').value || null
+            };
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/add-sacred-work`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    alert(`Sacred stone ${data.stone_number} placed! 🌺`);
+                    sacredWorkForm.reset();
+                    loadSacredWorkStats();
+                    loadSacredWorkProgress();
+                } else {
+                    alert(result.error || 'Failed to place stone');
+                }
+            } catch (error) {
+                alert('Network error: ' + error.message);
+            }
+        });
+    }
+
+    // Tab switching logic
+    const tabLinks = document.querySelectorAll('.tab-link');
+    tabLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+
+            // Get target tab ID
+            const tabId = e.target.getAttribute('href').substring(1);
+
+            // Remove active class from all links
+            tabLinks.forEach(l => l.classList.remove('active'));
+
+            // Add active class to clicked link
+            e.target.classList.add('active');
+
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.style.display = 'none';
+            });
+
+            // Show target tab content
+            const targetTab = document.getElementById(tabId);
+            if (targetTab) {
+                targetTab.style.display = 'block';
+            }
+
+            // Load sacred work data if switching to that tab
+            if (tabId === 'sacred-work') {
+                loadSacredWorkStats();
+                loadSacredWorkProgress();
+            }
+        });
+    });
+});
