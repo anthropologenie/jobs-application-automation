@@ -1,34 +1,48 @@
-# Environment variables
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+*.egg-info/
+
+# Process IDs
+*.pid
+
+# Logs
+logs/*.log
+daily-logs/*.log
+
+# Database WAL files (SQLite temp files)
+*.db-shm
+*.db-wal
+
+# Backups
+*.backup*
+*.pre-migration
+backup-*/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*.sublime-*
+
+# OS
+.DS_Store
+Thumbs.db
+.AppleDouble
+.LSOverride
+
+# Test results
+test-results.log
+
+# Environment
 .env
 .env.local
 
 # n8n data (contains credentials)
 data/n8n/
-*.sqlite
-*.sqlite-journal
-
-# Local job data
-data/jobs/*.json
-data/jobs/*.csv
-
-# Logs
-*.log
-logs/
-
-# Node modules (if you add any)
-node_modules/
-
-# OS files
-.DS_Store
-Thumbs.db
-
-# IDE
-.vscode/
-.idea/
-
-# Backup files
-*.backup
-*.bak
-
-# Personal resume with sensitive info
-data/resumes/personal_info.json

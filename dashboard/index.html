@@ -21,6 +21,7 @@
       <ul class="tab-list">
         <li><a href="#overview" class="tab-link active">Overview</a></li>
         <li><a href="#sacred-work" class="tab-link">Sacred Work 🌺</a></li>
+        <li><a href="#job-matches" class="tab-link">Job Matches 🎯</a></li>
       </ul>
     </nav>
 
@@ -69,11 +70,38 @@
               <th>Priority</th>
               <th>Tech Stack</th>
               <th>Last Update</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody id="pipeline-body">
             <tr>
-              <td colspan="7" class="empty-state">Loading pipeline data...</td>
+              <td colspan="8" class="empty-state">Loading pipeline data...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Archived Pipeline -->
+    <section class="pipeline">
+      <h2>📦 Archived Pipeline</h2>
+      <div class="pipeline-table-wrapper">
+        <table id="archived-table">
+          <thead>
+            <tr>
+              <th>Company</th>
+              <th>Role</th>
+              <th>Status</th>
+              <th>Remote</th>
+              <th>Priority</th>
+              <th>Tech Stack</th>
+              <th>Last Update</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="archived-body">
+            <tr>
+              <td colspan="8" class="empty-state">Loading archived opportunities...</td>
             </tr>
           </tbody>
         </table>
@@ -100,12 +128,12 @@
         <div class="form-group">
           <label>Source</label>
           <select id="source">
-            <option value="LinkedIn">LinkedIn</option>
-            <option value="Naukri">Naukri</option>
-            <option value="Direct">Direct</option>
-            <option value="Referral">Referral</option>
-            <option value="Other">Other</option>
+            <option value="">Loading...</option>
           </select>
+        </div>
+        <div class="form-group" id="new-source-group" style="display: none;">
+          <label>New Source Name</label>
+          <input type="text" id="new-source-name" placeholder="e.g., Wellfound, TestDevJobs">
         </div>
         <div class="form-group">
           <label>
@@ -118,8 +146,9 @@
           <input type="text" id="tech_stack" placeholder="AWS, Python, ETL">
         </div>
         <div class="form-group">
-          <label>Recruiter Phone</label>
-          <input type="text" id="recruiter_phone" placeholder="+91 XXXXX XXXXX">
+          <label>Recruiter Contact</label>
+          <input type="text" id="recruiter_contact" placeholder="Phone or Email">
+          <small style="color: #64748b; font-size: 12px;">Enter phone number or email address</small>
         </div>
         <div class="form-group">
           <label>Notes</label>
@@ -179,6 +208,105 @@
       </form>
     </div>
   </section>
+
+  <!-- Job Matches Tab -->
+  <div id="job-matches" class="tab-content" style="display:none;">
+    <h2>Job Matches - AI-Powered Scoring</h2>
+
+    <!-- Stats Section -->
+    <section class="metrics">
+      <div class="metric-card">
+        <h3 id="scraped-total">0</h3>
+        <p>Total Scraped</p>
+      </div>
+      <div class="metric-card">
+        <h3 id="scraped-excellent">0</h3>
+        <p>Excellent (85+)</p>
+      </div>
+      <div class="metric-card">
+        <h3 id="scraped-high-fit">0</h3>
+        <p>High Fit (75+)</p>
+      </div>
+      <div class="metric-card">
+        <h3 id="scraped-medium">0</h3>
+        <p>Medium (65+)</p>
+      </div>
+      <div class="metric-card">
+        <h3 id="scraped-avg-score">0%</h3>
+        <p>Avg Score</p>
+      </div>
+    </section>
+
+    <!-- Filters Section -->
+    <section class="filters-section" style="margin: 20px 0; padding: 15px; background: white; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); display: flex; gap: 15px; align-items: center; flex-wrap: wrap;">
+      <div>
+        <label for="score-filter" style="margin-right: 8px; font-weight: 500;">Min Score:</label>
+        <select id="score-filter" style="padding: 8px; border-radius: 4px; border: 1px solid #ddd; font-size: 14px;">
+          <option value="0">All Jobs</option>
+          <option value="40">Low Fit (40+)</option>
+          <option value="50">Decent (50+)</option>
+          <option value="60" selected>Good (60+)</option>
+          <option value="65">Medium Fit (65+)</option>
+          <option value="75">High Fit (75+)</option>
+          <option value="85">Excellent (85+)</option>
+        </select>
+      </div>
+      <button onclick="loadScrapedJobs()" style="padding: 8px 16px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: 500;">
+        🔄 Refresh Jobs
+      </button>
+      <button onclick="runScraper()" style="padding: 8px 16px; background: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: 500;">
+        🚀 Run Scraper
+      </button>
+      <div style="margin-left: auto; color: #666; font-size: 14px;">
+        <span id="jobs-count">0 jobs loaded</span>
+      </div>
+    </section>
+
+    <!-- Jobs Table -->
+    <table style="width: 100%; border-collapse: collapse; margin-top: 20px; background: white; box-shadow: 0 2px 4px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+      <thead>
+        <tr style="background: #f8f9fa;">
+          <th style="padding: 12px; text-align: left; border-bottom: 2px solid #dee2e6; font-weight: 600;">Score</th>
+          <th style="padding: 12px; text-align: left; border-bottom: 2px solid #dee2e6; font-weight: 600;">Company</th>
+          <th style="padding: 12px; text-align: left; border-bottom: 2px solid #dee2e6; font-weight: 600;">Job Title</th>
+          <th style="padding: 12px; text-align: left; border-bottom: 2px solid #dee2e6; font-weight: 600;">Location</th>
+          <th style="padding: 12px; text-align: left; border-bottom: 2px solid #dee2e6; font-weight: 600;">Skills Matched</th>
+          <th style="padding: 12px; text-align: center; border-bottom: 2px solid #dee2e6; font-weight: 600;">Red Flags</th>
+          <th style="padding: 12px; text-align: left; border-bottom: 2px solid #dee2e6; font-weight: 600;">Actions</th>
+        </tr>
+      </thead>
+      <tbody id="scraped-jobs-body">
+        <tr>
+          <td colspan="7" style="padding: 40px; text-align: center; color: #666;">
+            Click "Refresh Jobs" to load scraped opportunities...
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Notes Editing Modal -->
+  <div id="notes-modal" class="modal" style="display: none;">
+    <div class="modal-content">
+      <span class="close" onclick="closeNotesModal()">&times;</span>
+      <h2>Edit Notes</h2>
+      <form id="notes-form" onsubmit="saveNotes(event)">
+        <input type="hidden" id="notes-opp-id">
+        <div class="form-group">
+          <label>Company</label>
+          <input type="text" id="notes-company" disabled>
+        </div>
+        <div class="form-group">
+          <label>Notes</label>
+          <textarea id="notes-text" rows="8" placeholder="Add notes about this opportunity..."></textarea>
+        </div>
+        <button type="submit" class="btn-primary">💾 Save Notes</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container"></div>
 
   <script src="app.js"></script>
 </body>

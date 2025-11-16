@@ -1,0 +1,268 @@
+{
+  "profile": {
+    "name": "Karthik Shetty",
+    "years_experience": 7,
+    "current_title": "QA Lead / Data QA Engineer",
+    "min_salary_inr": 1800000,
+    "location_preference": "Remote",
+    "email": "karthikkattemane7@gmail.com",
+    "linkedin": "https://www.linkedin.com/in/karthiksrqalead/",
+    "preferred_work_type": "Full-time",
+    "notice_period_days": 30
+  },
+  "skills": {
+    "critical": {
+      "description": "Must-have skills with highest impact on matching (weight 8-10)",
+      "items": {
+        "ETL Testing": 10,
+        "Data Warehouse Testing": 10,
+        "SQL": 10,
+        "Data Quality": 10,
+        "Python": 9,
+        "AWS": 9,
+        "Snowflake": 9,
+        "Test Automation": 9,
+        "Database Testing": 9,
+        "Data Validation": 9,
+        "PostgreSQL": 8,
+        "MySQL": 8,
+        "Oracle": 8,
+        "Data Pipeline Testing": 8,
+        "Analytics QA": 8
+      }
+    },
+    "high_value": {
+      "description": "Strong differentiators (weight 6-7)",
+      "items": {
+        "API Testing": 7,
+        "REST API": 7,
+        "Postman": 7,
+        "BigQuery": 7,
+        "Redshift": 7,
+        "Azure Data Factory": 7,
+        "Apache Airflow": 7,
+        "Kafka": 7,
+        "Spark": 7,
+        "dbt": 7,
+        "GenAI Testing": 7,
+        "LLM Validation": 7,
+        "AWS Bedrock": 7,
+        "CI/CD": 6,
+        "GitHub Actions": 6,
+        "Jenkins": 6,
+        "Docker": 6,
+        "Kubernetes": 6,
+        "JIRA": 6,
+        "Agile": 6,
+        "Test Strategy": 6,
+        "Pytest": 6,
+        "JMeter": 6,
+        "Performance Testing": 6,
+        "GCP": 6
+      }
+    },
+    "nice_to_have": {
+      "description": "Beneficial but not critical (weight 4-5)",
+      "items": {
+        "Power BI": 5,
+        "Tableau": 5,
+        "Looker": 5,
+        "Great Expectations": 5,
+        "Pandas": 5,
+        "NumPy": 5,
+        "GraphQL": 5,
+        "MongoDB": 5,
+        "Elasticsearch": 5,
+        "Git": 5,
+        "Linux": 5,
+        "Bash": 5,
+        "Test Case Design": 4,
+        "Risk-based Testing": 4,
+        "Regression Testing": 4,
+        "Scrum": 4,
+        "Confluence": 4,
+        "TestRail": 4,
+        "Selenium": 4
+      }
+    }
+  },
+  "red_flags": {
+    "description": "Negative scoring for unwanted skills, roles, or job types",
+    "deal_breakers": {
+      "description": "Frontend/UI-heavy roles - avoid (weight -10 to -15)",
+      "items": {
+        "Cypress": -15,
+        "Selenium UI": -12,
+        "Frontend Testing": -12,
+        "React": -15,
+        "Angular": -15,
+        "Vue.js": -15,
+        "UI Automation": -12,
+        "Browser Testing": -10,
+        "E2E UI Testing": -12,
+        "JavaScript Heavy": -10,
+        "TypeScript Heavy": -10
+      }
+    },
+    "consultancy_signals": {
+      "description": "Consulting/body shopping indicators - strong avoid (weight -15 to -20)",
+      "items": {
+        "Client Placement": -20,
+        "Third Party": -20,
+        "Bench Sales": -20,
+        "Vendor": -18,
+        "Staff Augmentation": -18,
+        "Resource Augmentation": -18,
+        "Contract to Hire": -15,
+        "C2H": -15,
+        "Onsite Client Location": -15,
+        "Body Shopping": -20,
+        "Consulting Firm": -12
+      }
+    },
+    "manual_testing_only": {
+      "description": "Purely manual testing roles without automation/data focus (weight -5 to -8)",
+      "items": {
+        "Manual Testing Only": -8,
+        "No Automation": -8,
+        "Excel-based Testing": -7,
+        "Defect Logging Only": -6,
+        "Test Case Execution Only": -6,
+        "Entry Level QA": -5,
+        "Junior Tester": -5
+      }
+    },
+    "outdated_tech": {
+      "description": "Legacy tools/technologies (weight -3 to -5)",
+      "items": {
+        "QTP": -5,
+        "UFT": -5,
+        "LoadRunner": -4,
+        "Watir": -4,
+        "Protractor": -3,
+        "RFT": -5,
+        "Silk Test": -5
+      }
+    }
+  },
+  "domains": {
+    "description": "Industry domains and testing specializations with high relevance (weight 7-8)",
+    "items": {
+      "AI/ML Testing": 8,
+      "LLM Validation": 8,
+      "GenAI Testing": 8,
+      "Data Quality": 8,
+      "ETL/DWH": 8,
+      "Data Warehouse": 8,
+      "Analytics QA": 8,
+      "Data Engineering": 8,
+      "Business Intelligence": 7,
+      "Data Science": 7,
+      "Big Data": 7,
+      "Real-time Analytics": 7,
+      "Data Platform": 7,
+      "Cloud Data": 7,
+      "SaaS": 7,
+      "Platform Testing": 7,
+      "API-first": 7,
+      "Microservices": 7
+    }
+  },
+  "scoring_weights": {
+    "description": "Weight distribution for overall match score calculation (must sum to 1.0)",
+    "skills_match": 0.40,
+    "experience_match": 0.20,
+    "domain_match": 0.20,
+    "location_match": 0.10,
+    "red_flags": 0.10
+  },
+  "auto_import_threshold": 75,
+  "filters": {
+    "min_match_score": 65,
+    "preferred_experience_range": {
+      "min_years": 5,
+      "max_years": 10
+    },
+    "preferred_salary_range": {
+      "min_inr": 1800000,
+      "max_inr": 4000000
+    },
+    "location_keywords": {
+      "preferred": ["Remote", "Work from Home", "WFH", "Hybrid"],
+      "acceptable": ["Bangalore", "Bengaluru", "Remote India"],
+      "avoid": ["Onsite only", "No remote", "Office-based only"]
+    },
+    "company_size_preference": {
+      "preferred": ["Startup", "Mid-size", "Product Company"],
+      "acceptable": ["Enterprise"],
+      "avoid": ["Consulting", "Outsourcing", "Body Shopping"]
+    }
+  },
+  "job_title_keywords": {
+    "preferred": {
+      "description": "Job titles that are ideal matches (boost score by +10)",
+      "items": [
+        "QA Lead",
+        "Data QA Engineer",
+        "ETL Test Lead",
+        "Data Quality Engineer",
+        "Data Warehouse Tester",
+        "Analytics QA Lead",
+        "Test Lead - Data",
+        "Senior QA Engineer - Data",
+        "QA Automation Lead",
+        "Testing Lead - ETL",
+        "AI/ML QA Engineer",
+        "GenAI Testing",
+        "LLM Test Engineer"
+      ]
+    },
+    "acceptable": {
+      "description": "Acceptable job titles (neutral scoring)",
+      "items": [
+        "Senior QA Engineer",
+        "QA Engineer",
+        "Test Engineer",
+        "Automation Engineer",
+        "Quality Engineer",
+        "QA Analyst",
+        "Test Automation Engineer",
+        "SDET"
+      ]
+    },
+    "avoid": {
+      "description": "Job titles to avoid (penalty -10 to -15)",
+      "items": [
+        "Manual Tester",
+        "Test Analyst - Manual",
+        "Junior QA",
+        "Trainee Tester",
+        "QA Intern",
+        "UI Tester",
+        "Frontend QA",
+        "Cypress Automation Engineer"
+      ]
+    }
+  },
+  "keyword_synonyms": {
+    "description": "Mapping of synonyms for fuzzy matching",
+    "ETL": ["ETL", "Extract Transform Load", "Data Pipeline", "Data Integration"],
+    "SQL": ["SQL", "Structured Query Language", "T-SQL", "PL/SQL", "PostgreSQL", "MySQL"],
+    "Python": ["Python", "Python3", "Python Scripting", "PyTest", "Python Automation"],
+    "AWS": ["AWS", "Amazon Web Services", "Amazon Cloud", "EC2", "S3", "Redshift", "Glue"],
+    "Data Warehouse": ["Data Warehouse", "DWH", "Data Warehousing", "EDW", "Enterprise Data Warehouse"],
+    "Test Automation": ["Test Automation", "Automated Testing", "Automation Framework", "QA Automation"],
+    "API Testing": ["API Testing", "REST API Testing", "API QA", "Web Service Testing", "Microservices Testing"],
+    "GenAI": ["GenAI", "Generative AI", "LLM", "Large Language Models", "AI/ML", "Machine Learning Testing"]
+  },
+  "meta": {
+    "version": "1.0.0",
+    "created_date": "2025-11-14",
+    "last_updated": "2025-11-14",
+    "description": "Resume configuration for AI-powered job matching with scoring weights, red flags, and domain preferences optimized for Data QA/ETL Testing roles",
+    "total_critical_skills": 15,
+    "total_high_value_skills": 24,
+    "total_nice_to_have_skills": 19,
+    "total_red_flag_items": 33
+  }
+}
