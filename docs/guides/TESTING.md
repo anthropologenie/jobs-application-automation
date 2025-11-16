@@ -36,11 +36,12 @@ curl http://localhost:8082
 ### Run All Tests
 
 ```bash
-# Full system validation (recommended)
-./tests/test-complete-system.sh
+# ✨ NEW: Master test runner - runs all test suites
+./tests/run-all-tests.sh
 
-# Quick health check
-./tests/validate-system.sh
+# Or run individual tests:
+./tests/test-complete-system.sh  # Core system functionality
+./tests/validate-system.sh        # Quick health check
 ```
 
 ---
@@ -51,14 +52,114 @@ All test scripts are located in the `tests/` folder. Here's a complete reference
 
 | Script | Purpose | Runtime | Coverage |
 |--------|---------|---------|----------|
+| **`run-all-tests.sh`** ✨ | **Master test runner (all suites)** | **~20s** | **All tests** |
 | `test-complete-system.sh` | Full system validation | ~5s | All critical endpoints |
-| `validate-system.sh` | Quick health check | ~2s | Basic connectivity |
-| `test-new-pipeline-features.sh` | Archived pipeline & inline editing | ~3s | Pipeline features |
+| `test-new-pipeline-features.sh` | Archived pipeline & inline editing | ~4s | Pipeline features |
 | `test-scraped-jobs-api.sh` | Job scraper & scoring | ~4s | Scraping system |
 | `test-sql-practice-system.sh` | Learning system | ~3s | SQL practice features |
-| `test-new-features.sh` | Dynamic sources & parsing | ~3s | Source management |
+| `validate-system.sh` | Quick health check | ~2s | Basic connectivity |
 | `final-validation-tests.sh` | Pre-deployment checks | ~5s | Production readiness |
+| `test-new-features.sh` | Dynamic sources & parsing | ~3s | Source management |
 | `show-practice-summary.sh` | SQL practice report | ~1s | Learning analytics |
+
+---
+
+## Master Test Runner (run-all-tests.sh)
+
+**Purpose:** Run all test suites in sequence and generate a comprehensive summary report.
+
+**Recommended for:**
+- Pre-commit validation
+- Pre-deployment checks
+- CI/CD pipelines
+- Weekly system health checks
+
+### How to Run
+
+```bash
+./tests/run-all-tests.sh
+```
+
+### What It Does
+
+1. **Pre-flight Checks:**
+   - Verifies API server is running (port 8081)
+   - Verifies Dashboard is running (port 8082)
+   - Checks database file exists
+
+2. **Runs 5 Test Suites:**
+   - Complete System Test (7 core tests)
+   - Pipeline Features Test (15 inline editing tests)
+   - Scraped Jobs API Test (scraping & scoring)
+   - SQL Practice System Test (10 learning tests)
+   - System Validation Test (health checks)
+
+3. **Generates Reports:**
+   - Real-time console output with color coding
+   - Detailed log file: `tests/last-test-run.log`
+   - Summary report with pass/fail breakdown
+
+### Expected Output
+
+**All Tests Pass:**
+```
+╔════════════════════════════════════════════════════════╗
+║               📊  TEST SUMMARY REPORT                  ║
+╚════════════════════════════════════════════════════════╝
+
+Test Suites:
+  Total Suites Run:    5
+  Passed:              5
+  Failed:              0
+
+Individual Tests:
+  Total Tests:         45+
+  Passed:              45
+  Failed:              0
+
+Overall Results:
+  Pass Rate:           100% ✨
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✅ ALL TEST SUITES PASSED!
+
+🎉 Your system is working perfectly!
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+```
+
+**Some Tests Fail:**
+```
+Test Suites: 4/5 passed
+Individual Tests: 40/45 passed
+Pass Rate: 89% ⚠️
+
+Failed Tests:
+  • Complete System Test: 2 test(s) failed
+    └─ FAIL: API server not responding
+
+❌ SOME TESTS FAILED
+
+📋 Recommendations:
+  1. Review failed test output above
+  2. Check detailed log: tests/last-test-run.log
+  3. Fix issues and re-run: ./tests/run-all-tests.sh
+  4. Run individual suite: ./tests/<test-name>.sh
+```
+
+### Exit Codes
+
+- **Exit 0:** All tests passed ✅
+- **Exit 1:** One or more tests failed ❌
+
+### Features
+
+✅ **Automatic error recovery** - Makes scripts executable if needed
+✅ **Smart result parsing** - Adapts to different test output formats
+✅ **Detailed logging** - Saves complete run to log file
+✅ **Color-coded output** - Easy to scan results
+✅ **Failure diagnosis** - Lists specific failed tests
+✅ **Duration tracking** - Shows time per suite
+✅ **Pass rate calculation** - Overall quality metric
 
 ---
 
@@ -155,12 +256,23 @@ All test scripts are located in the `tests/` folder. Here's a complete reference
 **Purpose:** Validate archived pipeline and inline editing functionality.
 
 **What it tests:**
-- `GET /api/archived-pipeline` returns correct data
-- `PATCH /api/update-opportunity/:id` works
-- Status changes move opportunities between active/archived
-- Remote flag toggling
-- Notes update functionality
-- Toast notification triggers
+- Part 1: Archived Pipeline
+  - `GET /api/archived-pipeline` returns correct data
+  - Archiving via status change (Declined)
+  - Movement between active/archived pipelines
+- Part 2-3: Inline Editing
+  - Status dropdown updates
+  - Remote flag toggling (true/false)
+- Part 4: Notes Editing
+  - Notes modal save functionality
+- Part 5: Multiple field updates at once
+- Part 6: Error handling (non-existent IDs, empty updates)
+- Part 7: State restoration (cleanup)
+
+**Recent improvements (Nov 16, 2025):**
+- ✅ Flexible JSON matching (handles `"success": true` and `"success":true`)
+- ✅ Direct database verification with API fallback
+- ✅ Better error messages showing expected vs actual
 
 **How to run:**
 ```bash
@@ -169,21 +281,60 @@ All test scripts are located in the `tests/` folder. Here's a complete reference
 
 **Expected output:**
 ```
-Testing Archived Pipeline Feature...
-✅ GET /api/archived-pipeline endpoint exists
-✅ Returns array of archived opportunities
-✅ Filters only Rejected/Declined/Ghosted/Accepted statuses
+╔════════════════════════════════════════════════════════╗
+║  🧪 TESTING NEW PIPELINE FEATURES                     ║
+╚════════════════════════════════════════════════════════╝
 
-Testing Inline Editing Feature...
-✅ PATCH /api/update-opportunity/1 endpoint works
-✅ Status update successful
-✅ Remote flag toggle successful
-✅ Notes update successful
+═══════════════════════════════════════════════════════════
+PART 1: ARCHIVED PIPELINE TESTING
+═══════════════════════════════════════════════════════════
 
-All pipeline features working correctly!
+1️⃣  GET /api/archived-pipeline - Retrieve archived opportunities
+   ✅ PASS: Archived pipeline returns JSON array
+   📦 Found 10 archived opportunit(y/ies)
+
+2️⃣  PATCH /api/update-opportunity/3 - Archive opportunity (status=Declined)
+   ✅ PASS: Archive via status change successful
+   Response: {"success": true, "message": "Opportunity updated successfully"}
+
+3️⃣  Verify opportunity #3 appears in archived pipeline
+   ✅ PASS: Opportunity #3 in archived pipeline
+
+4️⃣  Verify opportunity #3 NOT in active pipeline
+   ✅ PASS: Opportunity #3 correctly removed from active
+
+═══════════════════════════════════════════════════════════
+PART 2: INLINE EDITING - STATUS UPDATE
+═══════════════════════════════════════════════════════════
+
+5️⃣  PATCH /api/update-opportunity/1 - Update status to 'Technical'
+   ✅ PASS: Status update successful
+   ✅ PASS: Updated fields includes status
+
+6️⃣  Verify status updated in database
+   ✅ PASS: Status is Technical
+
+... [14 total tests]
+
+╔════════════════════════════════════════════════════════╗
+║                  TEST SUMMARY                          ║
+╚════════════════════════════════════════════════════════╝
+
+   ✅ PASSED: 14
+   ❌ FAILED: 0
+
+   🎉 ALL TESTS PASSED!
+
+📊 Features Validated:
+   ✅ Archived Pipeline Section
+   ✅ Inline Status Editing (dropdown)
+   ✅ Inline Remote Toggle
+   ✅ Notes Modal Editing
+   ✅ Multiple Field Updates
+   ✅ Error Handling
 ```
 
-**Pass criteria:** All inline editing and archive operations succeed
+**Pass criteria:** All 14 tests pass (FAILED: 0)
 
 ---
 
@@ -229,14 +380,19 @@ All scraping features working!
 **Purpose:** Validate SQL practice tracking and learning analytics.
 
 **What it tests:**
-- `sql_practice_sessions` table exists
-- 4 views created: `sql_keyword_mastery`, `weekly_practice_summary`, `common_practice_mistakes`, `practice_progress_by_difficulty`
-- Sample data insertion
-- Keyword mastery view query
-- CLI tool executable
-- Summary script executable
-- Migration file exists
-- API endpoints responsive
+- Test 1: `sql_practice_sessions` table exists
+- Test 2: 4 views exist (`sql_keyword_mastery`, `weekly_practice_summary`, `common_practice_mistakes`, `practice_progress_by_difficulty`)
+- Test 3: Sample data insertion works
+- Test 4: Keyword mastery view query works
+- Test 5: CLI tool (`log-sql-practice.py`) is executable
+- Test 6: Summary script (`tests/show-practice-summary.sh`) is executable
+- Test 7: Migration file exists
+- Test 8: Weekly summary query exists
+- Test 9: API server has practice endpoints
+- Test 10: Dashboard has practice section
+
+**Recent improvements (Nov 16, 2025):**
+- ✅ Fixed path check for `show-practice-summary.sh` (now correctly checks `tests/` folder)
 
 **How to run:**
 ```bash
@@ -245,22 +401,37 @@ All scraping features working!
 
 **Expected output:**
 ```
-Testing SQL Practice System...
-✅ 1. sql_practice_sessions table exists
-✅ 2. sql_keyword_mastery view exists
-✅ 3. weekly_practice_summary view exists
-✅ 4. common_practice_mistakes view exists
-✅ 5. practice_progress_by_difficulty view exists
-✅ 6. Sample data inserted successfully
-✅ 7. log-sql-practice.py is executable
-✅ 8. show-practice-summary.sh is executable
-✅ 9. API endpoints respond correctly
-✅ 10. Learning dashboard updated
+==========================================
+  SQL Practice System - Integration Test
+==========================================
 
-All 10 tests passed!
+1. Checking if sql_practice_sessions table exists... ✓ PASS
+2. Checking if views exist... ✓ PASS
+3. Checking if sample data was inserted... ✓ PASS (15 sessions)
+4. Testing sql_keyword_mastery view... ✓ PASS (8 keywords)
+5. Checking if log-sql-practice.py is executable... ✓ PASS
+6. Checking if show-practice-summary.sh exists... ✓ PASS
+7. Checking migration file... ✓ PASS
+8. Checking weekly summary query... ✓ PASS
+9. Checking if API server has practice endpoints... ✓ PASS
+10. Checking if dashboard has practice section... ✓ PASS
+
+==========================================
+  Test Results
+==========================================
+Passed: 10
+Failed: 0
+
+✓ All tests passed! System is ready to use.
+
+Next steps:
+  1. Start API server: python3 api-server.py
+  2. Open dashboard: http://localhost:8081/learning-dashboard.html
+  3. Log practice: ./log-sql-practice.py
+  4. View summary: ./tests/show-practice-summary.sh
 ```
 
-**Pass criteria:** All 10 tests return ✅
+**Pass criteria:** All 10 tests pass (Failed: 0)
 
 ---
 
@@ -1226,6 +1397,233 @@ sleep 2  # Wait for services to fully start
 # - Add proper sleep delays after async operations
 # - Ensure database commits complete before queries
 ```
+
+---
+
+## Known Issues and Workarounds
+
+### Recently Fixed Issues
+
+#### ✅ Fixed: Test Assertion Failures in Pipeline Features Test
+
+**Issue:** `tests/test-new-pipeline-features.sh` was incorrectly marking successful API responses as failures due to strict JSON format matching.
+
+**Cause:** API returns `"success": true` (with space) but test expected `"success":true` (no space).
+
+**Fix Applied (Nov 16, 2025):**
+- Implemented flexible JSON matching by normalizing both expected and actual strings
+- Updated `test_endpoint()` function to remove spaces before comparison
+- Tests now handle whitespace variations correctly
+
+```bash
+# Updated test function
+local normalized_actual=$(echo "$actual" | tr -d ' ')
+local normalized_expected=$(echo "$expected" | tr -d ' ')
+if [[ "$normalized_actual" == *"$normalized_expected"* ]]; then
+    echo "   ✅ PASS: $test_name"
+```
+
+**Impact:** Tests 2, 3, 5, 7, 8, 9, 11 now pass reliably.
+
+#### ✅ Fixed: Database Verification Using Fragile Grep Parsing
+
+**Issue:** Tests 6 and 10 in `test-new-pipeline-features.sh` used complex grep patterns on JSON which could fail intermittently.
+
+**Fix Applied (Nov 16, 2025):**
+- Direct database queries with API fallback
+- More reliable verification method
+
+```bash
+# Direct database query
+VERIFY_STATUS=$(sqlite3 data/jobs-tracker.db "SELECT status FROM opportunities WHERE id=1" 2>/dev/null)
+if [ -z "$VERIFY_STATUS" ]; then
+    # Fallback to API parsing if database unavailable
+    VERIFY_STATUS=$(curl -s ${API}/api/pipeline | grep -A 10 '"id":1' | grep -o '"status":"[^"]*"')
+fi
+```
+
+**Impact:** Tests 6 and 10 now pass reliably with better error messages.
+
+#### ✅ Fixed: Wrong Path for SQL Practice Summary Script
+
+**Issue:** `tests/test-sql-practice-system.sh` looked for `show-practice-summary.sh` in root directory, but file was moved to `tests/` during reorganization.
+
+**Fix Applied (Nov 16, 2025):**
+- Updated Test 6 to check `tests/show-practice-summary.sh`
+- Updated usage instructions to reflect correct path
+
+**Impact:** Test 6 now passes correctly.
+
+### Current Known Limitations
+
+#### 1. Services Must Be Running
+
+**Limitation:** Most tests require API server and dashboard to be running on ports 8081 and 8082.
+
+**Workaround:**
+```bash
+# Always start services before running tests
+./start-tracker.sh
+
+# Wait for services to be fully ready
+sleep 3
+
+# Then run tests
+./tests/run-all-tests.sh
+```
+
+**Alternative:** Run only database-focused tests without services:
+```bash
+# Test SQL practice system (mostly database queries)
+./tests/test-sql-practice-system.sh
+```
+
+#### 2. Database State Dependencies
+
+**Limitation:** Tests may modify database state (archiving opportunities, updating fields), which can affect subsequent test runs.
+
+**Workaround:**
+```bash
+# Option 1: Restore from backup before critical tests
+cp data/jobs-tracker.db.backup data/jobs-tracker.db
+
+# Option 2: Run cleanup after tests
+sqlite3 data/jobs-tracker.db "
+  UPDATE opportunities
+  SET status = 'Screening'
+  WHERE id IN (3, 4);
+"
+
+# Option 3: Use fresh database for each test run
+./tests/reset-test-database.sh  # If available
+```
+
+**Best Practice:** Tests are designed to restore state (e.g., Test 14 in pipeline features test restores opportunity #3), but interrupting tests can leave database in modified state.
+
+#### 3. Test Order Dependencies
+
+**Limitation:** Some tests depend on previous tests' state changes.
+
+**Example:** In `test-new-pipeline-features.sh`:
+- Test 3 depends on Test 2 archiving opportunity #3
+- Test 4 depends on Test 2 removing #3 from active pipeline
+
+**Workaround:**
+- Always run complete test suite, don't skip tests
+- If running individual tests, check database state first
+
+```bash
+# Check if opportunity #3 is in expected state
+sqlite3 data/jobs-tracker.db "SELECT id, status FROM opportunities WHERE id=3;"
+```
+
+#### 4. Port Conflicts
+
+**Limitation:** If ports 8081 or 8082 are in use by other processes, services won't start and tests will fail.
+
+**Workaround:**
+```bash
+# Check what's using the ports
+lsof -i :8081
+lsof -i :8082
+
+# Kill existing processes
+kill $(lsof -t -i:8081)
+kill $(lsof -t -i:8082)
+
+# Or use stop script
+./stop-tracker.sh
+
+# Then restart
+./start-tracker.sh
+```
+
+#### 5. Master Test Runner Parsing Limitations
+
+**Limitation:** `run-all-tests.sh` uses heuristics to parse test results. If test scripts use unexpected output formats, counts may be inaccurate.
+
+**Expected Patterns:**
+- `PASSED: N` or `Passed: N`
+- `FAILED: N` or `Failed: N`
+- `✅ PASS` or `❌ FAIL`
+- `ALL TESTS PASSED`
+
+**Workaround:** Ensure new test scripts follow one of these output patterns, or update `run-all-tests.sh` parsing logic.
+
+### Workarounds for Common Scenarios
+
+#### Running Tests Without API Server
+
+```bash
+# Only database-focused tests will work
+./tests/test-sql-practice-system.sh
+
+# Skip API-dependent tests in custom runs
+sqlite3 data/jobs-tracker.db "SELECT COUNT(*) FROM opportunities;"
+```
+
+#### Testing on Clean Database
+
+```bash
+# Create backup first
+cp data/jobs-tracker.db data/jobs-tracker.db.backup
+
+# Run tests
+./tests/run-all-tests.sh
+
+# Restore original state
+cp data/jobs-tracker.db.backup data/jobs-tracker.db
+```
+
+#### Running Only Specific Test Suites
+
+```bash
+# Run just the pipeline features test
+./tests/test-new-pipeline-features.sh
+
+# Run just the SQL practice test
+./tests/test-sql-practice-system.sh
+
+# Run just the system validation
+./tests/validate-system.sh
+```
+
+#### Debugging Test Failures
+
+```bash
+# Run with verbose output (if test script supports -v flag)
+bash -x ./tests/test-complete-system.sh
+
+# Check detailed log after master test runner
+cat tests/last-test-run.log
+
+# Query database state directly
+sqlite3 data/jobs-tracker.db "SELECT * FROM opportunities WHERE id=1;"
+
+# Check API responses manually
+curl -s http://localhost:8081/api/pipeline | jq '.'
+```
+
+#### Adding New Tests to Master Runner
+
+To add a new test to `run-all-tests.sh`:
+
+1. Create test script in `tests/` folder
+2. Make it executable: `chmod +x tests/your-new-test.sh`
+3. Edit `run-all-tests.sh` and add:
+
+```bash
+# Update TOTAL_SUITES_COUNT
+TOTAL_SUITES_COUNT=6  # Increment this
+
+# Add new test suite call
+run_test_suite \
+    "Your New Test Description" \
+    "tests/your-new-test.sh" \
+    6  # Suite number
+```
+
+4. Ensure your test script outputs results in a parseable format (see Test Script Template below)
 
 ---
 

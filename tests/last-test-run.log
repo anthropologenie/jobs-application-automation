@@ -1,0 +1,351 @@
+╔════════════════════════════════════════════════════════╗
+║         Test Run Log - Job Application Tracker        ║
+╚════════════════════════════════════════════════════════╝
+
+Timestamp: 2025-11-16 14:13:03
+Command: ./tests/run-all-tests.sh 
+User: katte
+Working Directory: /home/katte/projects/jobs-application-automation
+
+
+═══════════════════════════════════════════════════════
+Test Suite: Complete System Test
+Script: tests/test-complete-system.sh
+Duration: 2s
+Result: Passed=, Failed=0, Exit=0
+═══════════════════════════════════════════════════════
+╔════════════════════════════════════════════════════════╗
+║     🧪 COMPLETE SYSTEM TEST                            ║
+╚════════════════════════════════════════════════════════╝
+
+1️⃣  DATABASE TEST
+   ✅ Database accessible: 16 opportunities
+
+2️⃣  DASHBOARD TEST
+   ✅ Dashboard responding at http://localhost:8082
+
+3️⃣  PYTHON API TEST
+   ✅ API server responding at http://localhost:8081
+
+4️⃣  METRICS ENDPOINT TEST
+   ✅ Metrics endpoint working
+   📊 {"active_count":8,"interview_count":0,"remote_count":8,"priority_count":5}
+
+5️⃣  AGENDA ENDPOINT TEST
+   ✅ Agenda endpoint working
+   📅 0 upcoming interviews
+
+6️⃣  PIPELINE ENDPOINT TEST
+   ✅ Pipeline endpoint working
+   🎯 8 active opportunities
+
+7️⃣  ADD OPPORTUNITY ENDPOINT TEST
+   ✅ Add opportunity endpoint working
+   ✨ {"success":true,"message":"Opportunity added successfully","id":26}
+   ✅ Verified in database
+   🧹 Test entry cleaned up
+
+╔════════════════════════════════════════════════════════╗
+║     ✅ ALL TESTS PASSED!                               ║
+╚════════════════════════════════════════════════════════╝
+
+🎉 Your job tracker is fully operational!
+
+📍 Access Points:
+   Dashboard:  http://localhost:8082
+   API Server: http://localhost:8081
+
+📊 Current Stats:
+   • 16 total opportunities
+   • 8 active in pipeline
+   • 0 upcoming interviews
+
+
+═══════════════════════════════════════════════════════
+Test Suite: Pipeline Features Test
+Script: tests/test-new-pipeline-features.sh
+Duration: 3s
+Result: Passed=17, Failed=0, Exit=0
+═══════════════════════════════════════════════════════
+╔════════════════════════════════════════════════════════╗
+║  🧪 TESTING NEW PIPELINE FEATURES                     ║
+╚════════════════════════════════════════════════════════╝
+
+═══════════════════════════════════════════════════════════
+PART 1: ARCHIVED PIPELINE TESTING
+═══════════════════════════════════════════════════════════
+
+1️⃣  GET /api/archived-pipeline - Retrieve archived opportunities
+   ✅ PASS: Archived pipeline returns JSON array
+   📦 Found 8 archived opportunit(y/ies)
+
+2️⃣  PATCH /api/update-opportunity/3 - Archive opportunity (status=Declined)
+   ✅ PASS: Archive via status change successful
+   Response: {"success": true, "message": "Opportunity updated successfully", "id": 3, "updated_fields": ["status"]}
+
+3️⃣  Verify opportunity #3 appears in archived pipeline
+   ✅ PASS: Opportunity #3 in archived pipeline
+
+4️⃣  Verify opportunity #3 NOT in active pipeline
+   ✅ PASS: Opportunity #3 correctly removed from active
+
+═══════════════════════════════════════════════════════════
+PART 2: INLINE EDITING - STATUS UPDATE
+═══════════════════════════════════════════════════════════
+
+5️⃣  PATCH /api/update-opportunity/1 - Update status to 'Technical'
+   ✅ PASS: Status update successful
+   ✅ PASS: Updated fields includes status
+
+6️⃣  Verify status updated in database
+   ✅ PASS: Status is Technical
+
+═══════════════════════════════════════════════════════════
+PART 3: INLINE EDITING - REMOTE TOGGLE
+═══════════════════════════════════════════════════════════
+
+7️⃣  PATCH /api/update-opportunity/1 - Toggle remote to false
+   ✅ PASS: Remote toggle successful
+
+8️⃣  PATCH /api/update-opportunity/1 - Toggle remote back to true
+   ✅ PASS: Remote toggle back successful
+
+═══════════════════════════════════════════════════════════
+PART 4: NOTES EDITING
+═══════════════════════════════════════════════════════════
+
+9️⃣  PATCH /api/update-opportunity/1 - Update notes
+   ✅ PASS: Notes update successful
+
+🔟  Verify notes updated in database
+   ✅ PASS: Notes contain test text
+
+═══════════════════════════════════════════════════════════
+PART 5: MULTIPLE FIELD UPDATES
+═══════════════════════════════════════════════════════════
+
+1️⃣1️⃣  PATCH /api/update-opportunity/4 - Update status AND remote
+   ✅ PASS: Multiple field update successful
+   ✅ PASS: Updated fields includes both
+
+═══════════════════════════════════════════════════════════
+PART 6: ERROR HANDLING
+═══════════════════════════════════════════════════════════
+
+1️⃣2️⃣  PATCH /api/update-opportunity/99999 - Non-existent ID
+   ✅ PASS: Returns error for non-existent ID
+
+1️⃣3️⃣  PATCH /api/update-opportunity/1 - Empty update
+   ✅ PASS: Returns error for empty update
+   Response: {"error": "No valid fields to update"}
+
+═══════════════════════════════════════════════════════════
+PART 7: CLEANUP & RESTORE
+═══════════════════════════════════════════════════════════
+
+1️⃣4️⃣  Restore opportunity #3 to active pipeline
+   ✅ PASS: Restore successful
+
+   ✅ PASS: Opportunity #3 back in active pipeline
+
+╔════════════════════════════════════════════════════════╗
+║                  TEST SUMMARY                          ║
+╚════════════════════════════════════════════════════════╝
+
+   ✅ PASSED: 17
+   ❌ FAILED: 0
+
+   🎉 ALL TESTS PASSED!
+
+📊 Features Validated:
+   ✅ Archived Pipeline Section
+   ✅ Inline Status Editing (dropdown)
+   ✅ Inline Remote Toggle
+   ✅ Notes Modal Editing
+   ✅ Multiple Field Updates
+   ✅ Error Handling
+
+
+═══════════════════════════════════════════════════════
+Test Suite: Scraped Jobs API Test
+Script: tests/test-scraped-jobs-api.sh
+Duration: 1s
+Result: Passed=0, Failed=0, Exit=0
+═══════════════════════════════════════════════════════
+========================================================================
+🧪 TESTING SCRAPED JOBS API ENDPOINTS
+========================================================================
+
+1️⃣ Testing /api/scraped-jobs/stats
+Command: curl "http://localhost:8081/api/scraped-jobs/stats"
+{
+    "success": true,
+    "stats": {
+        "total_jobs": 77,
+        "excellent": 0,
+        "high_fit": 0,
+        "medium_fit": 0,
+        "low_fit": 9,
+        "no_fit": 68,
+        "avg_score": 29.4,
+        "last_scrape": "2025-11-14 19:32:33",
+        "imported_count": 0
+    },
+    "sources": [
+        {
+            "source": "RemoteOK",
+            "count": 77,
+            "avg_score": 29.4
+        }
+    ]
+}
+
+========================================================================
+2️⃣ Testing /api/scraped-jobs with default params
+Command: curl "http://localhost:8081/api/scraped-jobs"
+Success: True
+Count: 0
+Filters: {'min_score': 70.0, 'classification': None, 'source': None, 'limit': 50}
+
+Top 5 Jobs:
+
+========================================================================
+3️⃣ Testing /api/scraped-jobs with min_score=60
+Command: curl "http://localhost:8081/api/scraped-jobs?min_score=60&limit=10"
+Found 2 jobs with score >= 60%
+  • [64.0%] YLD - Contract Senior Software Engineer (Remote)
+  • [62.4%] Loop - Data Engineer (Remote)
+
+========================================================================
+4️⃣ Testing /api/scraped-jobs with classification filter
+Command: curl "http://localhost:8081/api/scraped-jobs?classification=LOW_FIT&limit=5"
+Found 0 LOW_FIT jobs
+
+========================================================================
+5️⃣ Testing /api/scraped-jobs with source filter
+Command: curl "http://localhost:8081/api/scraped-jobs?source=RemoteOK&limit=3"
+Found 0 jobs from RemoteOK
+
+========================================================================
+6️⃣ Testing combined filters
+Command: curl "http://localhost:8081/api/scraped-jobs?min_score=50&classification=LOW_FIT&source=RemoteOK&limit=5"
+Applied Filters: {'min_score': 50.0, 'classification': 'LOW_FIT', 'source': 'RemoteOK', 'limit': 5}
+Results: 5 jobs
+
+  [64.0%] YLD - Contract Senior Software Engineer
+  Domains: None
+  Recommendation: ❌ WEAK MATCH - Likely not worth time (64.0%)
+
+  [62.4%] Loop - Data Engineer
+  Domains: Data Quality, ETL/DWH
+  Recommendation: ❌ WEAK MATCH - Likely not worth time (62.4%)
+
+  [59.2%] TextNow - Senior Data Analyst
+  Domains: Data Quality, ETL/DWH
+  Recommendation: ❌ WEAK MATCH - Likely not worth time (59.2%)
+
+  [58.4%] Tether Operations Limited - Technical Project Manager
+  Domains: None
+  Recommendation: ❌ WEAK MATCH - Likely not worth time (58.4%)
+
+  [51.0%] Adyen - Senior Data Engineer Reporting
+  Domains: Data Engineering, Big Data
+  Recommendation: ❌ WEAK MATCH - Likely not worth time (51.0%)
+
+========================================================================
+✅ ALL TESTS COMPLETED
+========================================================================
+
+📚 AVAILABLE QUERY PARAMETERS:
+   • min_score    - Minimum match score (default: 70)
+   • limit        - Maximum number of results (default: 50)
+   • classification - Filter by classification (EXCELLENT, HIGH_FIT, MEDIUM_FIT, LOW_FIT, NO_FIT)
+   • source       - Filter by source (RemoteOK, LinkedIn, etc.)
+
+📖 EXAMPLE QUERIES:
+   # Get all high-scoring jobs
+   curl "http://localhost:8081/api/scraped-jobs?min_score=75"
+
+   # Get top 10 jobs from any source
+   curl "http://localhost:8081/api/scraped-jobs?limit=10"
+
+   # Get statistics
+   curl "http://localhost:8081/api/scraped-jobs/stats"
+
+
+═══════════════════════════════════════════════════════
+Test Suite: SQL Practice System Test
+Script: tests/test-sql-practice-system.sh
+Duration: 0s
+Result: Passed=0, Failed=0, Exit=0
+═══════════════════════════════════════════════════════
+==========================================
+  SQL Practice System - Integration Test
+==========================================
+
+1. Checking if sql_practice_sessions table exists... [0;32m✓ PASS[0m
+2. Checking if views exist... [0;32m✓ PASS[0m
+3. Checking if sample data was inserted... [0;32m✓ PASS (7 sessions)[0m
+4. Testing sql_keyword_mastery view... [0;32m✓ PASS (14 keywords)[0m
+5. Checking if log-sql-practice.py is executable... [0;32m✓ PASS[0m
+6. Checking if show-practice-summary.sh exists... [0;32m✓ PASS[0m
+7. Checking migration file... [0;32m✓ PASS[0m
+8. Checking weekly summary query... [0;32m✓ PASS[0m
+9. Checking if API server has practice endpoints... [0;32m✓ PASS[0m
+10. Checking if dashboard has practice section... [0;32m✓ PASS[0m
+
+==========================================
+  Test Results
+==========================================
+[0;32mPassed: 10[0m
+[0;31mFailed: 0[0m
+
+[0;32m✓ All tests passed! System is ready to use.[0m
+
+Next steps:
+  1. Start API server: python3 api-server.py
+  2. Open dashboard: http://localhost:8081/learning-dashboard.html
+  3. Log practice: ./log-sql-practice.py
+  4. View summary: ./tests/show-practice-summary.sh
+
+═══════════════════════════════════════════════════════
+Test Suite: System Validation Test
+Script: tests/validate-system.sh
+Duration: 0s
+Result: Passed=0, Failed=0, Exit=0
+═══════════════════════════════════════════════════════
+
+1️⃣ Checking Database...
+   ✅ Tables: 11 | Scraped Jobs: 77
+
+2️⃣ Checking API Server...
+   ✅ API Server responding on port 8081
+
+3️⃣ Checking Dashboard...
+   ✅ Dashboard responding on port 8082
+
+4️⃣ Testing Scraped Jobs API...
+   ❌ Scraped jobs API failed!
+
+5️⃣ Performance Check...
+   ✅ API response time: 0.001268s
+
+╔════════════════════════════════════════════════════════════╗
+║                    ✅ VALIDATION COMPLETE                   ║
+╚════════════════════════════════════════════════════════════╝
+
+🌐 Access URLs:
+   Dashboard: http://localhost:8082
+   API Docs:  http://localhost:8081/api/metrics
+
+
+╔════════════════════════════════════════════════════════╗
+║                  SUMMARY REPORT                        ║
+╚════════════════════════════════════════════════════════╝
+
+Test Suites: 5/5 passed
+Individual Tests: 17/17 passed
+Pass Rate: 100%
+
+
+Completed: 2025-11-16 14:13:10

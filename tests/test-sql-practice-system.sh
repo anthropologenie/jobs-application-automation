@@ -71,7 +71,7 @@ fi
 
 # Test 6: Weekly summary script exists
 echo -n "6. Checking if show-practice-summary.sh exists... "
-if [ -x "show-practice-summary.sh" ]; then
+if [ -x "tests/show-practice-summary.sh" ]; then
   echo -e "${GREEN}✓ PASS${NC}"
   ((PASSED++))
 else
@@ -135,7 +135,7 @@ if [ "$FAILED" -eq "0" ]; then
   echo "  1. Start API server: python3 api-server.py"
   echo "  2. Open dashboard: http://localhost:8081/learning-dashboard.html"
   echo "  3. Log practice: ./log-sql-practice.py"
-  echo "  4. View summary: ./show-practice-summary.sh"
+  echo "  4. View summary: ./tests/show-practice-summary.sh"
   exit 0
 else
   echo -e "${RED}✗ Some tests failed. Please review errors above.${NC}"
