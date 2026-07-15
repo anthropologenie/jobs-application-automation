@@ -2,6 +2,7 @@
 import http.server
 import socketserver
 import json
+import re
 import sqlite3
 from urllib.parse import urlparse, parse_qs
 import sys
@@ -10,6 +11,8 @@ from datetime import datetime
 
 PORT = 8081
 DB_PATH = './data/jobs-tracker.db'
+
+SCRAPED_JOB_IMPORT_RE = re.compile(r'^/api/import-scraped-job/(\d+)$')
 
 # Thread-local storage for database connections
 thread_local = threading.local()
@@ -226,6 +229,11 @@ class APIHandler(http.server.BaseHTTPRequestHandler):
             self._send_json_response({"error": str(e)})
 
     def do_POST(self):
+        match = SCRAPED_JOB_IMPORT_RE.match(self.path)
+        if match:
+            self._handle_import_scraped_job(int(match.group(1)))
+            return
+
         if self.path == '/api/add-opportunity':
             try:
                 content_length = int(self.headers['Content-Length'])
@@ -496,6 +504,58 @@ class APIHandler(http.server.BaseHTTPRequestHandler):
         self.send_header('Access-Control-Allow-Methods', 'GET, POST, PATCH, OPTIONS')
         self.send_header('Access-Control-Allow-Headers', 'Content-Type')
         self.end_headers()
+
+    def _handle_import_scraped_job(self, scraped_job_id):
+        conn = get_db()
+        cur = conn.cursor()
+        try:
+            cur.execute("SELECT * FROM scraped_jobs WHERE id = ?", (scraped_job_id,))
+            job = cur.fetchone()
+            if job is None:
+                self._send_json_response({"error": "scraped job not found"}, 404)
+                return
+
+            if job["imported_to_opportunities"]:
+                cur.execute(
+                    "SELECT id FROM opportunities WHERE scraped_job_id = ?",
+                    (scraped_job_id,),
+                )
+                existing = cur.fetchone()
+                self._send_json_response({
+                    "error": "already imported",
+                    "opportunity_id": existing["id"] if existing else None,
+                }, 409)
+                return
+
+            cur.execute("BEGIN")
+            cur.execute(
+                """
+                INSERT INTO opportunities
+                    (company, role, job_url, salary_range, source,
+                     tech_stack, status, scraped_job_id)
+                VALUES (?, ?, ?, ?, ?, ?, 'Lead', ?)
+                """,
+                (
+                    job["company"], job["job_title"], job["job_url"],
+                    job["salary_range"], job["source"], job["tags"],
+                    scraped_job_id,
+                ),
+            )
+            new_opportunity_id = cur.lastrowid
+            cur.execute(
+                "UPDATE scraped_jobs SET imported_to_opportunities = 1 WHERE id = ?",
+                (scraped_job_id,),
+            )
+            conn.commit()
+
+            self._send_json_response({
+                "opportunity_id": new_opportunity_id,
+                "scraped_job_id": scraped_job_id,
+                "status": "imported",
+            })
+        except Exception as e:
+            conn.rollback()
+            self._send_json_response({"error": str(e)}, 500)
 
     def _send_json_response(self, data, status_code=200):
         """Helper method to send JSON response"""

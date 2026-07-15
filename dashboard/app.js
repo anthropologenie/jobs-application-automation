@@ -1,6 +1,6 @@
 // Configuration
 const DB_PATH = '../data/jobs-tracker.db';
-const API_BASE_URL = 'http://localhost:8081';
+const API_BASE_URL = `${window.location.protocol}//${window.location.hostname}:8081`;
 
 // Global sources cache
 let allSources = [];
@@ -841,7 +841,7 @@ function renderScrapedJobs(jobs) {
               🔗 View Job
             </button>
             ${!job.imported_to_opportunities ? `
-              <button onclick="importScrapedJob(${job.id}, '${job.company.replace(/'/g, "\\'")}', '${job.job_title.replace(/'/g, "\\'")}')"
+              <button onclick="importScrapedJob(this, ${job.id}, '${job.company.replace(/'/g, "\\'")}', '${job.job_title.replace(/'/g, "\\'")}')"
                       style="padding: 6px 12px; background: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 13px; font-weight: 500;">
                 ➕ Import
               </button>
@@ -863,16 +863,43 @@ After scraping completes, click "Refresh Jobs" to see the new results.`;
   alert(message);
 }
 
-function importScrapedJob(jobId, company, title) {
-  // Placeholder for import functionality
-  const message = `Import functionality coming soon!
+async function importScrapedJob(btn, jobId, company, title) {
+  if (btn) {
+    btn.disabled = true;
+    btn.textContent = 'Importing...';
+  }
 
-This will add:
-${company} - ${title}
+  try {
+    const res = await fetch(`${API_BASE_URL}/api/import-scraped-job/${jobId}`, {
+      method: 'POST',
+    });
+    const data = await res.json();
 
-...to your opportunities pipeline.`;
+    if (res.status === 200) {
+      showToast(`Imported: ${company} — ${title}`, 'success');
+    } else if (res.status === 409) {
+      showToast(`${company} was already imported`, 'info');
+    } else {
+      showToast(`Import failed: ${data.error || 'unknown error'}`, 'error');
+      if (btn) {
+        btn.disabled = false;
+        btn.textContent = '➕ Import';
+      }
+      return;
+    }
 
-  alert(message);
+    if (btn) btn.textContent = '✓ Imported';
+
+    if (typeof loadMetrics === 'function') loadMetrics();
+    if (typeof loadScrapedJobs === 'function') loadScrapedJobs();
+
+  } catch (err) {
+    showToast('Import failed: network error', 'error');
+    if (btn) {
+      btn.disabled = false;
+      btn.textContent = '➕ Import';
+    }
+  }
 }
 
 function showErrorMessage(message) {
