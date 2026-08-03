@@ -51,3 +51,7 @@ data/n8n/
 .aider.chat.history.md
 .aider.input.history
 .aider.tags.cache.v4/
+
+# Generated inventory snapshots
+docs/inventory/db_inventory_*.md
+
