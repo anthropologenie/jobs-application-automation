@@ -3,18 +3,31 @@
 --
 -- Purpose:
 --   Introduce a unified practice_sessions table for recording
---   interview preparation across multiple domains including
---   SQL, Python, ETL, Data Warehouse, AI Quality and
---   System Design.
+--   interview preparation across SQL, Python, ETL,
+--   Data Warehouse, AI Quality, System Design and other
+--   learning domains.
+--
+-- Design Philosophy:
+--   Keep the schema intentionally simple. Capture evidence
+--   first, refine later based on actual usage.
 --
 -- Notes:
---   - Existing sql_practice_sessions remains unchanged and
---     continues to represent historical SQL-specific practice.
---   - This migration introduces a generalized practice model
---     for future learning sessions.
+--   - Existing sql_practice_sessions remains unchanged.
+--   - No CHECK constraints in v1.
+--   - No FOREIGN KEY relationships in v1.
+--   - Validation will be driven by usage before introducing
+--     stricter schema constraints.
 --
 -- Author: Karthik Kattemane
 -- Date: 2026-08-03
+-- ==========================================================
+-- Version History
+--
+-- v1.0 (2026-08-03)
+--   Initial simplified schema validated against SQLite.
+--   Constraints intentionally deferred until sufficient
+--   practice data has been collected.
+-- ==========================================================
 -- ==========================================================
 
 BEGIN TRANSACTION;
@@ -25,90 +38,61 @@ BEGIN TRANSACTION;
 
 CREATE TABLE IF NOT EXISTS practice_sessions (
 
-    -- Primary Key
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-
     -- ------------------------------------------------------
     -- Identity
     -- ------------------------------------------------------
-    practice_date DATE NOT NULL
+
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+
+    practice_date DATE
         DEFAULT (DATE('now')),
 
-    created_at TIMESTAMP NOT NULL
+    created_at TIMESTAMP
         DEFAULT CURRENT_TIMESTAMP,
 
     -- ------------------------------------------------------
     -- Context
     -- ------------------------------------------------------
-    source TEXT NOT NULL
-        DEFAULT 'Practice'
-        CHECK (
-            source IN (
-                'Practice',
-                'Interview'
-            )
-        ),
 
-    domain TEXT NOT NULL
-        CHECK (
-            domain IN (
-                'SQL',
-                'Python',
-                'ETL',
-                'Data Warehouse',
-                'AI Quality',
-                'System Design',
-                'Other'
-            )
-        ),
+    source TEXT,
+
+    domain TEXT,
 
     platform TEXT,
-
-    related_opportunity_id INTEGER,
 
     -- ------------------------------------------------------
     -- Problem
     -- ------------------------------------------------------
-    question_text TEXT NOT NULL,
 
-    my_solution TEXT NOT NULL,
+    question_text TEXT,
+
+    my_solution TEXT,
 
     correct_solution TEXT,
 
     -- ------------------------------------------------------
     -- Outcome
     -- ------------------------------------------------------
-    is_correct BOOLEAN NOT NULL
+
+    is_correct INTEGER
         DEFAULT 0,
 
-    difficulty TEXT
-        CHECK (
-            difficulty IN (
-                'Easy',
-                'Medium',
-                'Hard'
-            )
-        ),
+    difficulty TEXT,
 
     time_spent_minutes INTEGER,
 
     -- ------------------------------------------------------
     -- Reflection
     -- ------------------------------------------------------
+
     error_made TEXT,
 
     lesson_learned TEXT,
 
     concepts_used TEXT,
 
-    notes TEXT,
+    notes TEXT
 
-    -- ------------------------------------------------------
-    -- Relationships
-    -- ------------------------------------------------------
-    FOREIGN KEY (related_opportunity_id)
-        REFERENCES opportunities(id)
-        ON DELETE SET NULL
 );
 
 -- ==========================================================
@@ -130,16 +114,4 @@ ON practice_sessions(difficulty);
 CREATE INDEX IF NOT EXISTS idx_practice_sessions_correct
 ON practice_sessions(is_correct);
 
-CREATE INDEX IF NOT EXISTS idx_practice_sessions_opportunity
-ON practice_sessions(related_opportunity_id);
-
 COMMIT;
-
--- ==========================================================
--- Verification (Optional)
---
--- SELECT name
--- FROM sqlite_master
--- WHERE type = 'table'
---   AND name = 'practice_sessions';
--- ==========================================================
