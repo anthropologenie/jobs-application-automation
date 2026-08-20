@@ -2,7 +2,7 @@
 
 **Complete guide to all documentation in the Job Application Tracker & Learning System**
 
-Last Updated: November 16, 2025
+Last Updated: August 20, 2026
 
 ---
 
@@ -89,6 +89,23 @@ weekly_practice_summary (view)
 common_practice_mistakes (view)
 practice_progress_by_difficulty (view)
 ```
+
+---
+
+### Experiment Definitions
+
+- [COMPANY_RADAR_EXPERIMENT.md](COMPANY_RADAR_EXPERIMENT.md) — Living experiment definition for the Company Radar funnel; freezes the two-funnel comparison, target criteria, Phase 1 discovery ontology, phased roadmap, and exit gates.
+
+**When to use:** Before starting, extending, or automating any company-discovery work — this document is the authoritative scope boundary for that effort.
+
+**Key topics:**
+- Funnel A (conventional job board) vs. Funnel B (Company Radar) comparison
+- Target company and target people (POC) criteria
+- Phase 1 frozen discovery terms and Channels A–D
+- Per-company worksheet schema (basis for the future `companies` table)
+- Phased roadmap with hard exit gates, and explicitly deferred items
+
+**Working artifact:** [Phase 1 Manual Discovery Worksheet](reports/COMPANY_RADAR_PHASE1_WORKSHEET.md)
 
 ---
 
@@ -279,13 +296,15 @@ sqlite3 data/jobs-tracker.db "PRAGMA journal_mode;"  # Should output: wal
 | Document | Last Modified | Category | Status |
 |----------|---------------|----------|--------|
 | **SYSTEM_SUMMARY.md** | 2025-11-03 | System Docs | ✅ Current |
+| **COMPANY_RADAR_EXPERIMENT.md** | 2026-08-20 | System Docs | ✅ Current |
+| **COMPANY_RADAR_PHASE1_WORKSHEET.md** | 2026-08-20 | Development | 🟡 In progress (Phase 1) |
 | **QUICK_REFERENCE.md** | 2025-11-14 | Getting Started | ✅ Current |
 | **SQL_PRACTICE_GUIDE.md** | 2025-11-03 | Getting Started | ✅ Current |
 | **NEW_FEATURES_REPORT.md** | 2025-11-14 | Development | ✅ Current |
 | **SESSION_CHANGES_SUMMARY.md** | 2025-11-14 | Development | ✅ Current |
 | **SCORER_IMPLEMENTATION_SUMMARY.md** | 2025-11-14 | Development | ✅ Current |
 | **TEST_REPORT.md** | 2025-11-14 | Testing | ✅ Current |
-| **INDEX.md** (this file) | 2025-11-16 | Navigation | ✅ Current |
+| **INDEX.md** (this file) | 2026-08-20 | Navigation | ✅ Current |
 
 ### Documentation Coverage
 
@@ -354,12 +373,14 @@ When adding new documentation:
 
 ```
 docs/
+├── COMPANY_RADAR_EXPERIMENT.md # Company Radar experiment definition
 ├── INDEX.md                    # This file - master navigation
 ├── SYSTEM_SUMMARY.md           # Architecture and system design
 ├── guides/
 │   ├── QUICK_REFERENCE.md      # Command cheat sheet
 │   └── SQL_PRACTICE_GUIDE.md   # Feature-specific guide
 └── reports/
+    ├── COMPANY_RADAR_PHASE1_WORKSHEET.md  # Phase 1 manual discovery baseline
     ├── NEW_FEATURES_REPORT.md  # Implementation details
     ├── SESSION_CHANGES_SUMMARY.md  # Detailed changelogs
     ├── SCORER_IMPLEMENTATION_SUMMARY.md  # Technical specs
@@ -410,6 +431,6 @@ Found an issue with the documentation? Have suggestions for improvement?
 
 **Navigation Tip:** Use your editor's table of contents feature or Ctrl+F to quickly find specific topics in this index.
 
-**Last Reviewed:** November 16, 2025
+**Last Reviewed:** August 20, 2026
 **Maintained by:** Karthik S R
 **Version:** 1.0.0
