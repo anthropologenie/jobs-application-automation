@@ -109,6 +109,21 @@ practice_progress_by_difficulty (view)
 
 ---
 
+### Career Policy
+
+- [Career_Strategy_and_Search_Preferences.md](Career_Strategy_and_Search_Preferences.md) — Canonical reference for current situation, strategic positioning, and search preferences. Authoritative source for work-mode, compensation, engagement-type, company-type, role-targeting, and exclusion rules.
+
+**When to use:** Before tailoring a resume, answering a recruiter, evaluating an offer, or defining any automated filtering, gating, or fit-scoring behaviour — this document is the authoritative career-policy boundary for that work.
+
+**Key topics:**
+- Current situation, search capacity, and the Three-Track Model allocation
+- Strategic positioning narrative (specialization, not a pivot)
+- Track A preferences: compensation, work mode (hard constraint), employment type, company type
+- Four target search buckets, and explicit technology/role exclusions
+- Track B learning scope and Track C (Krapheno) separation
+
+---
+
 ## Feature Documentation
 
 Detailed guides for specific features.
