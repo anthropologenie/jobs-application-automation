@@ -1,0 +1,1788 @@
+{
+  "artifact": {
+    "id": "jobops-policy",
+    "version": "0.2.0",
+    "ruleset_version": "jobops-policy@0.2.0",
+    "status": "DRAFT — INACTIVE. Deliberately stored outside policy/ so policy.ruleset.load_ruleset() cannot load it; policy/ruleset.py also pins EXPECTED_RULESET_VERSION = jobops-policy@0.1.0.",
+    "created": "2026-09-29",
+    "spec": "docs/architecture/JOBOPS_V2_OWNER_POLICY_SPEC.md",
+    "open_items": "docs/architecture/JOBOPS_V2_OPEN_ITEMS.md",
+    "rulings": "OWNER_RULINGS_LOG.md OR-11 .. OR-30",
+    "golden_cases": "tests/fixtures/policy_v02_golden_cases.json",
+    "activation_requires": [
+      "All owner_confirmed=false rules ruled (OI-001..OI-005) or explicitly deferred",
+      "Implementation of a data-driven dimension loop in policy/gate.py (audit D2)",
+      "Golden cases passing, with OPEN cases skipped",
+      "A separately authorized session that copies this file into policy/ as jobops-policy-0.2.0.json and bumps EXPECTED_RULESET_VERSION"
+    ],
+    "immutability": "Verdicts written under 0.1.0 are never rewritten; replay under 0.2.0 produces new evaluation records (EVAL-R01)."
+  },
+  "candidate_profile": {
+    "relevant_ai_experience_years": 3,
+    "relevant_employers": [
+      "Bosch",
+      "Happiest Minds",
+      "Ascendion"
+    ],
+    "employment_location": "India",
+    "historical_profile_note": "The earlier QA Lead / ETL / Data Warehouse profile is historical and is not an input to any rule in this draft.",
+    "owner_confirmed": true
+  },
+  "scope": {
+    "search": "GLOBAL discovery, REMOTE-FROM-INDIA employment, plus BENGALURU HYBRID",
+    "not_sought": [
+      "relocation abroad",
+      "overseas on-site",
+      "overseas hybrid",
+      "visa-sponsored relocation"
+    ],
+    "owner_confirmed": true
+  },
+  "parameters": {
+    "compensation_floor_inr_annual_base": 1800000,
+    "compensation_target_band_inr": {
+      "min": 2400000,
+      "max": 2800000
+    },
+    "compensation_expected_ask_inr": 2600000,
+    "single_floor_across_currencies": true,
+    "fx_refresh_cadence": "weekly (design only; R2 open)",
+    "bengaluru_hybrid_max_office_days_pass": 3,
+    "short_term_contract_months": 6,
+    "language_detection_confidence_threshold": null,
+    "language_detection_confidence_threshold_note": "Not ruled (OI-023). Draft proposal in the spec: 0.95.",
+    "review_daily_cap": 10,
+    "review_daily_cap_owner_confirmed": false,
+    "review_carry_days": 3,
+    "review_carry_days_owner_confirmed": false
+  },
+  "dimensions": {
+    "eligibility": [
+      "geography",
+      "language",
+      "compensation",
+      "employment_type",
+      "employment_relationship",
+      "employer_type"
+    ],
+    "eligibility_verdicts": [
+      "PASS",
+      "FAIL",
+      "UNKNOWN"
+    ],
+    "non_verdict_attributes": [
+      "timezone"
+    ],
+    "relevance": {
+      "labels": [
+        "STRONG",
+        "MODERATE",
+        "WEAK"
+      ],
+      "states": [
+        "NOT_ASSESSED"
+      ],
+      "capability_clusters": {
+        "A": "AI application engineering",
+        "B": "Retrieval / knowledge systems",
+        "C": "AI evaluation / reliability",
+        "D": "AI infrastructure",
+        "E": "Agentic / AI-SDLC",
+        "F": "Governance / trust"
+      },
+      "title_tiers": [
+        "TIER_1",
+        "TIER_2",
+        "TIER_3",
+        "NONE"
+      ]
+    },
+    "fit_signals": {
+      "experience": [
+        "DIRECT",
+        "REASONABLE",
+        "STRETCH",
+        "UNKNOWN_FIT"
+      ],
+      "seniority": [
+        "NONE",
+        "SENIOR",
+        "LEAD",
+        "STAFF",
+        "PRINCIPAL",
+        "ARCHITECT"
+      ]
+    },
+    "preference": [
+      "compensation_band",
+      "employer_preference"
+    ],
+    "newness": [
+      "NEW",
+      "UPDATED",
+      "SEEN_BEFORE"
+    ],
+    "lanes": [
+      "SHORTLIST",
+      "REVIEW",
+      "PARKED",
+      "EXCLUDED",
+      "SUPPRESSED_DUPLICATE"
+    ],
+    "separation_invariant": "Eligibility, relevance, preference, newness and review are separate outputs. None is folded into another; there is no composite score."
+  },
+  "title_families": {
+    "TIER_1": [
+      "AI Engineer",
+      "Applied AI Engineer",
+      "Agentic AI Engineer",
+      "Generative AI Engineer",
+      "AI/LLM Engineer",
+      "RAG Engineer",
+      "Retrieval Engineer",
+      "AI Evaluation Engineer",
+      "LLM Evaluation Engineer",
+      "AI Quality Engineer",
+      "AI Reliability Engineer",
+      "AI Testing Engineer",
+      "GenAI Quality Engineer",
+      "AI Platform Engineer",
+      "GenAI Backend Engineer",
+      "AI Solutions Engineer",
+      "AI Automation Engineer",
+      "AI-SDLC / Developer Productivity Engineer",
+      "LLMOps / AI Operations Engineer",
+      "AI Governance / AI Reliability Engineer"
+    ],
+    "TIER_2": [
+      "Machine Learning Engineer",
+      "ML Engineer",
+      "NLP Engineer",
+      "MLOps Engineer",
+      "ML Platform Engineer",
+      "LLM Application Engineer",
+      "AI Application Engineer",
+      "AI Software Engineer",
+      "AI Backend Engineer",
+      "AI Integration Engineer",
+      "AI Product Engineer",
+      "AI Developer",
+      "Intelligent Automation Engineer",
+      "Data/AI Engineer",
+      "ML Infrastructure Engineer",
+      "AI Solutions Architect (only when genuinely hands-on)"
+    ],
+    "TIER_3": "Any other title whose JD contains substantial real AI-engineering work (e.g. Software Engineer - AI, Backend Engineer - GenAI, Platform Engineer - AI, Developer Productivity Engineer, Quality Engineering - GenAI, Test Engineering - AI/LLM, Data Engineer - RAG/LLM).",
+    "owner_confirmed": true
+  },
+  "rules": [
+    {
+      "rule_id": "GEO-N01",
+      "dimension": "geography",
+      "description": "Normalize Bengaluru aliases (Bengaluru, Bangalore, Bangalore Urban, Bengaluru Urban, Greater Bengaluru Area, Bengaluru East/North/South and any Bengaluru locality) to geo:city:IN-bengaluru via the geo alias table before any rule runs.",
+      "verdict": "NORMALIZATION",
+      "flags": [],
+      "evidence_required": "Verbatim location span plus the alias-table entry that matched.",
+      "owner_confirmed": true,
+      "supersedes": [],
+      "open_items": [],
+      "source": "Owner Phase A specification §11/§29",
+      "notes": "Bengaluru logic lives in geo/ data, not in gate code."
+    },
+    {
+      "rule_id": "GEO-R01",
+      "dimension": "geography",
+      "description": "Remote, worldwide.",
+      "verdict": "PASS",
+      "flags": [],
+      "evidence_required": "Quoted span stating remote with worldwide/anywhere eligibility.",
+      "owner_confirmed": true,
+      "supersedes": [
+        "jobops-policy@0.1.0 WM-R1 (partially: remote no longer needs to be India-confirmed when worldwide)"
+      ],
+      "open_items": [],
+      "source": "Owner Phase A specification §10",
+      "notes": ""
+    },
+    {
+      "rule_id": "GEO-R02",
+      "dimension": "geography",
+      "description": "Remote with India explicitly eligible (e.g. 'Remote - India', 'India / US / UK', 'eligible countries including India', 'APAC (India, ...)').",
+      "verdict": "PASS",
+      "flags": [],
+      "evidence_required": "Quoted span naming India (or a geo alias resolving to India) among eligible locations.",
+      "owner_confirmed": true,
+      "supersedes": [
+        "jobops-policy@0.1.0 WM-R1"
+      ],
+      "open_items": [],
+      "source": "Owner Phase A specification §10",
+      "notes": ""
+    },
+    {
+      "rule_id": "GEO-R03",
+      "dimension": "geography",
+      "description": "Remote region-locked to regions or countries that exclude India (US only, EU only, EEA only, UK only, ...).",
+      "verdict": "FAIL",
+      "flags": [],
+      "evidence_required": "Quoted restriction span; the geo region table must show India outside the named region.",
+      "owner_confirmed": true,
+      "supersedes": [],
+      "open_items": [
+        "OI-029"
+      ],
+      "source": "Owner Phase A specification §10",
+      "notes": "EMEA is not in the owner's example list; see OI-029."
+    },
+    {
+      "rule_id": "GEO-R04",
+      "dimension": "geography",
+      "description": "Posting requires authorization to work in another country and does not make India employment possible.",
+      "verdict": "FAIL",
+      "flags": [],
+      "evidence_required": "Quoted work-authorization span (e.g. 'Must be authorized to work in the United States').",
+      "owner_confirmed": true,
+      "supersedes": [],
+      "open_items": [],
+      "source": "Owner Phase A specification §10",
+      "notes": ""
+    },
+    {
+      "rule_id": "GEO-R05",
+      "dimension": "geography",
+      "description": "Remote eligibility ambiguous (e.g. 'Remote - APAC' with India not named).",
+      "verdict": "UNKNOWN",
+      "flags": [
+        "GEO_REGION_AMBIGUOUS"
+      ],
+      "evidence_required": "Quoted span; recorded reason why India eligibility is not established.",
+      "owner_confirmed": true,
+      "supersedes": [],
+      "open_items": [
+        "OI-011",
+        "OI-012"
+      ],
+      "source": "Owner Phase A specification §10",
+      "notes": "APAC is never assumed to include India."
+    },
+    {
+      "rule_id": "GEO-R06",
+      "dimension": "geography",
+      "description": "Bengaluru hybrid with 0-3 office days per week.",
+      "verdict": "PASS",
+      "flags": [],
+      "evidence_required": "Quoted span stating hybrid and an office-day count <= 3; normalized city = Bengaluru.",
+      "owner_confirmed": true,
+      "supersedes": [
+        "jobops-policy@0.1.0 WM-R2 (HYBRID -> FAIL)",
+        "OR-04 (hybrid veto clause)",
+        "Career Strategy §4 Work Mode hard constraint"
+      ],
+      "open_items": [],
+      "source": "Owner Phase A specification §11",
+      "notes": ""
+    },
+    {
+      "rule_id": "GEO-R07",
+      "dimension": "geography",
+      "description": "Bengaluru hybrid with 4-5 office days per week.",
+      "verdict": "FAIL",
+      "flags": [],
+      "evidence_required": "Quoted span with office-day count >= 4.",
+      "owner_confirmed": true,
+      "supersedes": [],
+      "open_items": [
+        "OI-013"
+      ],
+      "source": "Owner Phase A specification §11",
+      "notes": ""
+    },
+    {
+      "rule_id": "GEO-R08",
+      "dimension": "geography",
+      "description": "Bengaluru hybrid, office days unspecified.",
+      "verdict": "UNKNOWN",
+      "flags": [
+        "HYBRID_DAYS_UNSPECIFIED"
+      ],
+      "evidence_required": "Quoted hybrid span without a day count.",
+      "owner_confirmed": true,
+      "supersedes": [],
+      "open_items": [],
+      "source": "Owner Phase A specification §11",
+      "notes": ""
+    },
+    {
+      "rule_id": "GEO-R09",
+      "dimension": "geography",
+      "description": "Bengaluru 'flexible hybrid'.",
+      "verdict": "UNKNOWN",
+      "flags": [
+        "HYBRID_FLEXIBLE"
+      ],
+      "evidence_required": "Quoted span.",
+      "owner_confirmed": true,
+      "supersedes": [],
+      "open_items": [],
+      "source": "Owner Phase A specification §11",
+      "notes": ""
+    },
+    {
+      "rule_id": "GEO-R10",
+      "dimension": "geography",
+      "description": "Bengaluru onsite.",
+      "verdict": "UNKNOWN",
+      "flags": [
+        "BENGALURU_ONSITE"
+      ],
+      "evidence_required": "Quoted onsite/work-from-office span; normalized city = Bengaluru.",
+      "owner_confirmed": true,
+      "supersedes": [
+        "jobops-policy@0.1.0 WM-R3 (ONSITE -> FAIL) for Bengaluru"
+      ],
+      "open_items": [
+        "OI-013"
+      ],
+      "source": "Owner Phase A specification §11",
+      "notes": "Human-reviewable, not an automatic FAIL."
+    },
+    {
+      "rule_id": "GEO-R11",
+      "dimension": "geography",
+      "description": "Hybrid outside Bengaluru.",
+      "verdict": "FAIL",
+      "flags": [],
+      "evidence_required": "Quoted hybrid span; normalized city is not Bengaluru.",
+      "owner_confirmed": true,
+      "supersedes": [],
+      "open_items": [],
+      "source": "Owner Phase A specification §11",
+      "notes": ""
+    },
+    {
+      "rule_id": "GEO-R12",
+      "dimension": "geography",
+      "description": "Onsite in India outside Bengaluru.",
+      "verdict": "FAIL",
+      "flags": [],
+      "evidence_required": "Quoted onsite span; normalized city in India, not Bengaluru.",
+      "owner_confirmed": true,
+      "supersedes": [],
+      "open_items": [],
+      "source": "Owner Phase A specification §11",
+      "notes": ""
+    },
+    {
+      "rule_id": "GEO-R13",
+      "dimension": "geography",
+      "description": "Onsite abroad.",
+      "verdict": "FAIL",
+      "flags": [],
+      "evidence_required": "Quoted onsite span; normalized country is not India.",
+      "owner_confirmed": true,
+      "supersedes": [],
+      "open_items": [],
+      "source": "Owner Phase A specification §11",
+      "notes": ""
+    },
+    {
+      "rule_id": "GEO-R14",
+      "dimension": "geography",
+      "description": "Relocation abroad required.",
+      "verdict": "FAIL",
+      "flags": [],
+      "evidence_required": "Quoted relocation span.",
+      "owner_confirmed": true,
+      "supersedes": [],
+      "open_items": [],
+      "source": "Owner Phase A specification §9/§11",
+      "notes": ""
+    },
+    {
+      "rule_id": "GEO-R15",
+      "dimension": "geography",
+      "description": "Visa-supported relocation.",
+      "verdict": "FAIL",
+      "flags": [],
+      "evidence_required": "Quoted visa/relocation span.",
+      "owner_confirmed": true,
+      "supersedes": [],
+      "open_items": [],
+      "source": "Owner Phase A specification §9/§11",
+      "notes": ""
+    },
+    {
+      "rule_id": "GEO-R16",
+      "dimension": "geography",
+      "description": "No work-arrangement statement found in any observation.",
+      "verdict": "UNKNOWN",
+      "flags": [
+        "WORK_ARRANGEMENT_ABSENT"
+      ],
+      "evidence_required": "Record that the arrangement was sought and not found (absent, not not-captured).",
+      "owner_confirmed": true,
+      "supersedes": [],
+      "open_items": [],
+      "source": "Owner Phase A specification §24 (unknown is not FAIL)",
+      "notes": "Carried from jobops-policy@0.1.0 WM-R5 and OR-03b's unknown-handling principle."
+    },
+    {
+      "rule_id": "GEO-P01",
+      "dimension": "geography",
+      "description": "Precedence inside geography: FAIL rules (R03, R04, R07, R11-R15) are checked before PASS rules; ambiguity (R05, R08, R09, R10, R16) yields UNKNOWN; a qualified phrase never resolves to PASS.",
+      "verdict": "PRECEDENCE",
+      "flags": [],
+      "evidence_required": "n/a",
+      "owner_confirmed": true,
+      "supersedes": [],
+      "open_items": [],
+      "source": "Owner Phase A specification §10-§11",
+      "notes": "Mirrors the v0.1 discipline that ambiguous work-mode language never resolves to remote."
+    },
+    {
+      "rule_id": "TZ-R01",
+      "dimension": "timezone",
+      "description": "Time-zone overlap requirements (US, UK, European, APAC, ...) are recorded as timezone_requirement, timezone_overlap_flag, detected_timezone and evidence. Never an eligibility verdict.",
+      "verdict": "FLAG_ONLY",
+      "flags": [
+        "TIMEZONE_OVERLAP_<REGION>"
+      ],
+      "evidence_required": "Quoted overlap span.",
+      "owner_confirmed": true,
+      "supersedes": [],
+      "open_items": [
+        "OI-014"
+      ],
+      "source": "Owner Phase A specification §12",
+      "notes": ""
+    },
+    {
+      "rule_id": "LANG-R01",
+      "dimension": "language",
+      "description": "English-language posting with no other language required.",
+      "verdict": "PASS",
+      "flags": [],
+      "evidence_required": "Document language detection result, or a quoted working-language span.",
+      "owner_confirmed": true,
+      "supersedes": [],
+      "open_items": [],
+      "source": "Owner Phase A specification §13",
+      "notes": ""
+    },
+    {
+      "rule_id": "LANG-R02",
+      "dimension": "language",
+      "description": "A non-English language is explicitly required ('German required', 'French mandatory').",
+      "verdict": "FAIL",
+      "flags": [],
+      "evidence_required": "Quoted requirement span.",
+      "owner_confirmed": true,
+      "supersedes": [],
+      "open_items": [],
+      "source": "Owner Phase A specification §13",
+      "notes": ""
+    },
+    {
+      "rule_id": "LANG-R03",
+      "dimension": "language",
+      "description": "A non-English language is nice-to-have / preferred / a bonus.",
+      "verdict": "FLAG_ONLY",
+      "flags": [
+        "LANGUAGE_PREFERENCE"
+      ],
+      "evidence_required": "Quoted span.",
+      "owner_confirmed": true,
+      "supersedes": [],
+      "open_items": [
+        "OI-014"
+      ],
+      "source": "Owner Phase A specification §13",
+      "notes": ""
+    },
+    {
+      "rule_id": "LANG-R04",
+      "dimension": "language",
+      "description": "The entire JD is non-English and language detection is confident.",
+      "verdict": "FAIL",
+      "flags": [],
+      "evidence_required": "detected_language, confidence, detector id and version, content_hash.",
+      "owner_confirmed": true,
+      "supersedes": [],
+      "open_items": [
+        "OI-023"
+      ],
+      "source": "Owner Phase A specification §13",
+      "notes": ""
+    },
+    {
+      "rule_id": "LANG-R05",
+      "dimension": "language",
+      "description": "Language detection is uncertain.",
+      "verdict": "UNKNOWN",
+      "flags": [
+        "LANGUAGE_UNCERTAIN"
+      ],
+      "evidence_required": "detected_language, confidence below threshold.",
+      "owner_confirmed": true,
+      "supersedes": [],
+      "open_items": [
+        "OI-023"
+      ],
+      "source": "Owner Phase A specification §13",
+      "notes": ""
+    },
+    {
+      "rule_id": "COMP-N01",
+      "dimension": "compensation",
+      "description": "Record original_currency, original_amount (min/max), original_period, compensation_type (BASE | CTC | TOTAL | BONUS | EQUITY | UNSPECIFIED), base_or_total, and, when converted, fx_rate, fx_source, fx_snapshot_date, normalized_inr_annual_base.",
+      "verdict": "NORMALIZATION",
+      "flags": [],
+      "evidence_required": "Verbatim compensation span plus the parse result.",
+      "owner_confirmed": true,
+      "supersedes": [],
+      "open_items": [],
+      "source": "Owner Phase A specification §14-§15",
+      "notes": ""
+    },
+    {
+      "rule_id": "COMP-N02",
+      "dimension": "compensation",
+      "description": "'Up to X' is an upper bound only: min is not established.",
+      "verdict": "NORMALIZATION",
+      "flags": [],
+      "evidence_required": "Quoted span.",
+      "owner_confirmed": true,
+      "supersedes": [],
+      "open_items": [],
+      "source": "Owner Phase A specification §16",
+      "notes": "Fixes audit finding C3 (policy/normalization.py:383-386 treated 'up to 30 LPA' as a point figure)."
+    },
+    {
+      "rule_id": "COMP-R01",
+      "dimension": "compensation",
+      "description": "Stated annual base clearly below ₹18L (range max < ₹18L, or point < ₹18L).",
+      "verdict": "FAIL",
+      "flags": [],
+      "evidence_required": "Admissible figure: explicit point or range with currency and annual period.",
+      "owner_confirmed": true,
+      "supersedes": [
+        "OR-03a (₹20 LPA floor)",
+        "jobops-policy@0.1.0 COMP-R2 threshold T=2000000"
+      ],
+      "open_items": [],
+      "source": "Owner Phase A specification §16",
+      "notes": ""
+    },
+    {
+      "rule_id": "COMP-R02",
+      "dimension": "compensation",
+      "description": "Stated annual base >= ₹24L (point, or range min >= ₹24L).",
+      "verdict": "PASS",
+      "flags": [],
+      "evidence_required": "Admissible figure.",
+      "owner_confirmed": true,
+      "supersedes": [],
+      "open_items": [
+        "OI-022"
+      ],
+      "source": "Owner Phase A specification §16",
+      "notes": "Preference band IN_TARGET_BAND (24-28L) or ABOVE_TARGET_BAND (>28L)."
+    },
+    {
+      "rule_id": "COMP-R03",
+      "dimension": "compensation",
+      "description": "Stated annual base >= ₹18L and < ₹24L (point, or range wholly inside [₹18L, ₹24L)).",
+      "verdict": "PASS",
+      "flags": [
+        "BELOW_TARGET_BAND"
+      ],
+      "evidence_required": "Admissible figure.",
+      "owner_confirmed": true,
+      "supersedes": [],
+      "open_items": [
+        "OI-008"
+      ],
+      "source": "Owner Phase A specification §16",
+      "notes": "Eligibility PASS. Preference BELOW_TARGET_BAND. Lane REVIEW. Never an eligibility failure."
+    },
+    {
+      "rule_id": "COMP-R04",
+      "dimension": "compensation",
+      "description": "Range overlapping the ₹18L floor (e.g. ₹15-20L, ₹18-25L).",
+      "verdict": "UNKNOWN",
+      "flags": [
+        "COMP_RANGE_OVERLAPS_FLOOR"
+      ],
+      "evidence_required": "Admissible range.",
+      "owner_confirmed": true,
+      "supersedes": [
+        "OQ-01 (straddle anchored at ₹20L)"
+      ],
+      "open_items": [
+        "OI-006"
+      ],
+      "source": "Owner Phase A specification §16",
+      "notes": "Owner example: ₹18-25L = UNKNOWN even though min equals the floor (OI-006)."
+    },
+    {
+      "rule_id": "COMP-R05",
+      "dimension": "compensation",
+      "description": "'Up to ₹X' with no minimum.",
+      "verdict": "UNKNOWN",
+      "flags": [
+        "COMP_UPPER_BOUND_ONLY"
+      ],
+      "evidence_required": "Quoted span.",
+      "owner_confirmed": true,
+      "supersedes": [],
+      "open_items": [],
+      "source": "Owner Phase A specification §16",
+      "notes": ""
+    },
+    {
+      "rule_id": "COMP-R06",
+      "dimension": "compensation",
+      "description": "Compensation undisclosed.",
+      "verdict": "UNKNOWN",
+      "flags": [
+        "COMP_UNDISCLOSED"
+      ],
+      "evidence_required": "Record that compensation was sought and not found.",
+      "owner_confirmed": true,
+      "supersedes": [],
+      "open_items": [],
+      "source": "Owner Phase A specification §16",
+      "notes": "Reaffirms OR-03b."
+    },
+    {
+      "rule_id": "COMP-R07",
+      "dimension": "compensation",
+      "description": "Variable, unclear or non-numeric compensation ('competitive', 'as per industry').",
+      "verdict": "UNKNOWN",
+      "flags": [
+        "COMP_NON_NUMERIC"
+      ],
+      "evidence_required": "Quoted span.",
+      "owner_confirmed": true,
+      "supersedes": [],
+      "open_items": [],
+      "source": "Owner Phase A specification §16",
+      "notes": ""
+    },
+    {
+      "rule_id": "COMP-R08",
+      "dimension": "compensation",
+      "description": "Only equity, stock, bonus, commission or sign-on information is given.",
+      "verdict": "UNKNOWN",
+      "flags": [
+        "COMP_NON_BASE_ONLY"
+      ],
+      "evidence_required": "Quoted span.",
+      "owner_confirmed": true,
+      "supersedes": [],
+      "open_items": [],
+      "source": "Owner Phase A specification §15",
+      "notes": ""
+    },
+    {
+      "rule_id": "COMP-R09",
+      "dimension": "compensation",
+      "description": "India CTC is stored as compensation_type = CTC and never silently treated as gross base.",
+      "verdict": "NORMALIZATION",
+      "flags": [],
+      "evidence_required": "Quoted span containing 'CTC' or equivalent.",
+      "owner_confirmed": true,
+      "supersedes": [],
+      "open_items": [
+        "OI-007"
+      ],
+      "source": "Owner Phase A specification §15",
+      "notes": "How a CTC figure compares with the ₹18L/₹24L thresholds is not ruled (OI-007)."
+    },
+    {
+      "rule_id": "COMP-R10",
+      "dimension": "compensation",
+      "description": "When the posting gives an India-specific band, that band is used, even if other country bands are present.",
+      "verdict": "SELECTION",
+      "flags": [],
+      "evidence_required": "Quoted India band span.",
+      "owner_confirmed": true,
+      "supersedes": [],
+      "open_items": [],
+      "source": "Owner Phase A specification §15",
+      "notes": ""
+    },
+    {
+      "rule_id": "COMP-R11",
+      "dimension": "compensation",
+      "description": "Foreign posting with location-adjusted pay and no India-specific band.",
+      "verdict": "UNKNOWN",
+      "flags": [
+        "COMP_LOCATION_ADJUSTED_NO_INDIA_BAND"
+      ],
+      "evidence_required": "Quoted span.",
+      "owner_confirmed": true,
+      "supersedes": [],
+      "open_items": [],
+      "source": "Owner Phase A specification §15",
+      "notes": "The foreign number is never assumed to be the India offer."
+    },
+    {
+      "rule_id": "COMP-R12",
+      "dimension": "compensation",
+      "description": "Foreign annual base is converted to INR with a dated weekly FX snapshot and compared against the single ₹18L floor and ₹24L target; no separate USD/EUR floors.",
+      "verdict": "DEFER_TO_COMP-R01..R04",
+      "flags": [],
+      "evidence_required": "fx_rate, fx_source, fx_snapshot_date recorded on the evaluation.",
+      "owner_confirmed": false,
+      "supersedes": [
+        "OQ-02 (non-INR -> UNKNOWN while no FX source is configured)"
+      ],
+      "open_items": [
+        "OI-002",
+        "OI-030"
+      ],
+      "source": "Owner Phase A specification §14/§36 R2",
+      "notes": "Until R2 is confirmed AND an FX source exists, non-INR figures remain UNKNOWN (COMP-UNKNOWN-NO-INR-BASIS behaviour of v0.1). No live FX fetching in any phase before P1 implementation."
+    },
+    {
+      "rule_id": "COMP-R13",
+      "dimension": "compensation",
+      "description": "Non-annual figure without a stated annualization basis.",
+      "verdict": "UNKNOWN",
+      "flags": [
+        "COMP_NOT_ANNUALIZABLE"
+      ],
+      "evidence_required": "Quoted span.",
+      "owner_confirmed": true,
+      "supersedes": [],
+      "open_items": [
+        "OI-035"
+      ],
+      "source": "Owner Phase A specification carried from OQ-02",
+      "notes": ""
+    },
+    {
+      "rule_id": "EMP-R01",
+      "dimension": "employment_type",
+      "description": "Permanent direct employment.",
+      "verdict": "PASS",
+      "flags": [],
+      "evidence_required": "Quoted span.",
+      "owner_confirmed": true,
+      "supersedes": [],
+      "open_items": [],
+      "source": "Owner Phase A specification §17",
+      "notes": ""
+    },
+    {
+      "rule_id": "EMP-R02",
+      "dimension": "employment_type",
+      "description": "Plain full-time.",
+      "verdict": "PASS",
+      "flags": [],
+      "evidence_required": "Quoted span.",
+      "owner_confirmed": true,
+      "supersedes": [],
+      "open_items": [],
+      "source": "Owner Phase A specification §17",
+      "notes": ""
+    },
+    {
+      "rule_id": "EMP-R03",
+      "dimension": "employment_type",
+      "description": "Contract.",
+      "verdict": "FAIL",
+      "flags": [],
+      "evidence_required": "Quoted span.",
+      "owner_confirmed": true,
+      "supersedes": [
+        "Career Strategy §4 Employment Type (contract acceptable if >= 6 months at a product company)"
+      ],
+      "open_items": [
+        "OI-021"
+      ],
+      "source": "Owner Phase A specification §17",
+      "notes": ""
+    },
+    {
+      "rule_id": "EMP-R04",
+      "dimension": "employment_type",
+      "description": "Contract-to-hire.",
+      "verdict": "FAIL",
+      "flags": [],
+      "evidence_required": "Quoted span.",
+      "owner_confirmed": true,
+      "supersedes": [],
+      "open_items": [],
+      "source": "Owner Phase A specification §17/§18",
+      "notes": ""
+    },
+    {
+      "rule_id": "EMP-R05",
+      "dimension": "employment_type",
+      "description": "Temporary.",
+      "verdict": "FAIL",
+      "flags": [],
+      "evidence_required": "Quoted span.",
+      "owner_confirmed": true,
+      "supersedes": [],
+      "open_items": [],
+      "source": "Owner Phase A specification §17",
+      "notes": ""
+    },
+    {
+      "rule_id": "EMP-R06",
+      "dimension": "employment_type",
+      "description": "Freelance.",
+      "verdict": "FAIL",
+      "flags": [],
+      "evidence_required": "Quoted span.",
+      "owner_confirmed": true,
+      "supersedes": [],
+      "open_items": [],
+      "source": "Owner Phase A specification §17/§18",
+      "notes": ""
+    },
+    {
+      "rule_id": "EMP-R07",
+      "dimension": "employment_type",
+      "description": "Part-time.",
+      "verdict": "FAIL",
+      "flags": [],
+      "evidence_required": "Quoted span.",
+      "owner_confirmed": true,
+      "supersedes": [],
+      "open_items": [],
+      "source": "Owner Phase A specification §17",
+      "notes": ""
+    },
+    {
+      "rule_id": "EMP-R08",
+      "dimension": "employment_type",
+      "description": "Internship.",
+      "verdict": "FAIL",
+      "flags": [],
+      "evidence_required": "Quoted span.",
+      "owner_confirmed": true,
+      "supersedes": [],
+      "open_items": [],
+      "source": "Owner Phase A specification §17",
+      "notes": ""
+    },
+    {
+      "rule_id": "EMP-R09",
+      "dimension": "employment_type",
+      "description": "Short-term contract: stated duration < short_term_contract_months (default 6).",
+      "verdict": "FAIL",
+      "flags": [],
+      "evidence_required": "Quoted duration span.",
+      "owner_confirmed": true,
+      "supersedes": [],
+      "open_items": [],
+      "source": "Owner Phase A specification §17",
+      "notes": "Threshold configurable: parameters.short_term_contract_months."
+    },
+    {
+      "rule_id": "EMP-R10",
+      "dimension": "employment_type",
+      "description": "Long-term (>= threshold) contract directly with the hiring company.",
+      "verdict": "UNKNOWN",
+      "flags": [
+        "LONG_TERM_DIRECT_CONTRACT"
+      ],
+      "evidence_required": "Quoted span showing direct engagement and duration.",
+      "owner_confirmed": true,
+      "supersedes": [],
+      "open_items": [],
+      "source": "Owner Phase A specification §17",
+      "notes": ""
+    },
+    {
+      "rule_id": "EMP-R11",
+      "dimension": "employment_type",
+      "description": "Mixed wording ('Full-Time / Contractual').",
+      "verdict": "UNKNOWN",
+      "flags": [
+        "EMPLOYMENT_MIXED"
+      ],
+      "evidence_required": "Quoted span.",
+      "owner_confirmed": true,
+      "supersedes": [],
+      "open_items": [],
+      "source": "Owner Phase A specification §17",
+      "notes": ""
+    },
+    {
+      "rule_id": "EMP-R12",
+      "dimension": "employment_type",
+      "description": "Employment type unstated.",
+      "verdict": "UNKNOWN",
+      "flags": [
+        "EMPLOYMENT_UNSTATED"
+      ],
+      "evidence_required": "Record that it was sought and not found.",
+      "owner_confirmed": true,
+      "supersedes": [],
+      "open_items": [],
+      "source": "Owner Phase A specification §17",
+      "notes": ""
+    },
+    {
+      "rule_id": "EOR-R01",
+      "dimension": "employment_relationship",
+      "description": "Permanent employment through a genuine Employer of Record while working for the hiring company.",
+      "verdict": "UNKNOWN",
+      "flags": [
+        "EOR"
+      ],
+      "evidence_required": "Quoted EOR span.",
+      "owner_confirmed": false,
+      "supersedes": [],
+      "open_items": [
+        "OI-001"
+      ],
+      "source": "Owner Phase A specification §18/§36 R1",
+      "notes": "EOR is never collapsed into staffing/placement."
+    },
+    {
+      "rule_id": "REL-R01",
+      "dimension": "employment_relationship",
+      "description": "Direct employment by the hiring company.",
+      "verdict": "PASS",
+      "flags": [],
+      "evidence_required": "Employer is the hiring company; no third-party relationship stated.",
+      "owner_confirmed": true,
+      "supersedes": [],
+      "open_items": [],
+      "source": "Owner Phase A specification §18-§19",
+      "notes": ""
+    },
+    {
+      "rule_id": "REL-R02",
+      "dimension": "employment_relationship",
+      "description": "Independent contractor.",
+      "verdict": "FAIL",
+      "flags": [],
+      "evidence_required": "Quoted span.",
+      "owner_confirmed": true,
+      "supersedes": [],
+      "open_items": [],
+      "source": "Owner Phase A specification §18",
+      "notes": ""
+    },
+    {
+      "rule_id": "REL-R03",
+      "dimension": "employment_relationship",
+      "description": "B2B engagement.",
+      "verdict": "FAIL",
+      "flags": [],
+      "evidence_required": "Quoted span.",
+      "owner_confirmed": true,
+      "supersedes": [],
+      "open_items": [],
+      "source": "Owner Phase A specification §18",
+      "notes": ""
+    },
+    {
+      "rule_id": "REL-R04",
+      "dimension": "employment_relationship",
+      "description": "Invoice-based engagement.",
+      "verdict": "FAIL",
+      "flags": [],
+      "evidence_required": "Quoted span.",
+      "owner_confirmed": true,
+      "supersedes": [],
+      "open_items": [],
+      "source": "Owner Phase A specification §18",
+      "notes": ""
+    },
+    {
+      "rule_id": "REL-R05",
+      "dimension": "employment_relationship",
+      "description": "Hourly contractor.",
+      "verdict": "FAIL",
+      "flags": [],
+      "evidence_required": "Quoted span.",
+      "owner_confirmed": true,
+      "supersedes": [],
+      "open_items": [],
+      "source": "Owner Phase A specification §18",
+      "notes": ""
+    },
+    {
+      "rule_id": "REL-R06",
+      "dimension": "employment_relationship",
+      "description": "Staffing agency hires and places the candidate at another client.",
+      "verdict": "FAIL",
+      "flags": [],
+      "evidence_required": "Quoted placement span.",
+      "owner_confirmed": true,
+      "supersedes": [
+        "OR-04 (staffing is not a veto) for the placement case"
+      ],
+      "open_items": [],
+      "source": "Owner Phase A specification §19",
+      "notes": ""
+    },
+    {
+      "rule_id": "REL-R07",
+      "dimension": "employment_relationship",
+      "description": "Third-party payroll / body-shopping placement.",
+      "verdict": "FAIL",
+      "flags": [],
+      "evidence_required": "Quoted span.",
+      "owner_confirmed": true,
+      "supersedes": [],
+      "open_items": [],
+      "source": "Owner Phase A specification §19",
+      "notes": ""
+    },
+    {
+      "rule_id": "REL-R08",
+      "dimension": "employment_relationship",
+      "description": "Staffing/placement agency is the employer and the relationship is not yet sufficiently known.",
+      "verdict": "UNKNOWN",
+      "flags": [
+        "EMPLOYER_TYPE_REVIEW"
+      ],
+      "evidence_required": "Quoted span or registry classification STAFFING.",
+      "owner_confirmed": true,
+      "supersedes": [],
+      "open_items": [],
+      "source": "Owner Phase A specification §19",
+      "notes": ""
+    },
+    {
+      "rule_id": "EMPR-R01",
+      "dimension": "employer_type",
+      "description": "Employer classified STAFFING.",
+      "verdict": "UNKNOWN",
+      "flags": [
+        "STAFFING"
+      ],
+      "evidence_required": "Company registry classification with evidence.",
+      "owner_confirmed": true,
+      "supersedes": [
+        "OR-04 (company type non-gating)",
+        "jobops-policy@0.1.0 dimensions.company_type (gating: false)"
+      ],
+      "open_items": [],
+      "source": "Owner Phase A specification §20",
+      "notes": ""
+    },
+    {
+      "rule_id": "EMPR-R02",
+      "dimension": "employer_type",
+      "description": "Employer classified CONSULTANCY.",
+      "verdict": "UNKNOWN",
+      "flags": [
+        "CONSULTANCY"
+      ],
+      "evidence_required": "Registry classification with evidence.",
+      "owner_confirmed": true,
+      "supersedes": [],
+      "open_items": [],
+      "source": "Owner Phase A specification §20",
+      "notes": ""
+    },
+    {
+      "rule_id": "EMPR-R03",
+      "dimension": "employer_type",
+      "description": "Employer classified IT_SERVICES.",
+      "verdict": "UNKNOWN",
+      "flags": [
+        "IT_SERVICES"
+      ],
+      "evidence_required": "Registry classification with evidence.",
+      "owner_confirmed": true,
+      "supersedes": [],
+      "open_items": [],
+      "source": "Owner Phase A specification §20",
+      "notes": "IT services companies are never failed wholesale."
+    },
+    {
+      "rule_id": "EMPR-R04",
+      "dimension": "employer_type",
+      "description": "Employer unclassified / unknown.",
+      "verdict": "UNKNOWN",
+      "flags": [
+        "EMPLOYER_UNCLASSIFIED"
+      ],
+      "evidence_required": "Registry shows no classification.",
+      "owner_confirmed": true,
+      "supersedes": [],
+      "open_items": [
+        "OI-020",
+        "OI-026"
+      ],
+      "source": "Owner Phase A specification §20",
+      "notes": ""
+    },
+    {
+      "rule_id": "EMPR-R05",
+      "dimension": "employer_type",
+      "description": "Employer classified PRODUCT, AI_NATIVE, GCC or ENGINEERING_LED.",
+      "verdict": "PASS",
+      "flags": [],
+      "evidence_required": "Registry classification with evidence.",
+      "owner_confirmed": true,
+      "supersedes": [],
+      "open_items": [],
+      "source": "Owner Phase A specification §20",
+      "notes": "Also yields a positive preference signal (PREF-R02)."
+    },
+    {
+      "rule_id": "EMPR-R06",
+      "dimension": "employer_type",
+      "description": "An owner-confirmed classification overrides an inferred one.",
+      "verdict": "PRECEDENCE",
+      "flags": [],
+      "evidence_required": "Owner confirmation record (who, when, basis).",
+      "owner_confirmed": true,
+      "supersedes": [],
+      "open_items": [],
+      "source": "Owner Phase A specification §20",
+      "notes": ""
+    },
+    {
+      "rule_id": "EXP-R01",
+      "dimension": "experience_fit",
+      "description": "JD asks 2-3 years, exactly 3 years, or '3+' years.",
+      "verdict": "DIRECT",
+      "flags": [],
+      "evidence_required": "Quoted experience span.",
+      "owner_confirmed": true,
+      "supersedes": [
+        "data/resume_config.json profile.years_experience=7",
+        "scrapers/simple_scorer.py experience scoring"
+      ],
+      "open_items": [],
+      "source": "Owner Phase A specification §21",
+      "notes": ""
+    },
+    {
+      "rule_id": "EXP-R02",
+      "dimension": "experience_fit",
+      "description": "JD asks 4-6 years.",
+      "verdict": "STRETCH",
+      "flags": [
+        "EXPERIENCE_STRETCH"
+      ],
+      "evidence_required": "Quoted span.",
+      "owner_confirmed": true,
+      "supersedes": [],
+      "open_items": [],
+      "source": "Owner Phase A specification §21",
+      "notes": ""
+    },
+    {
+      "rule_id": "EXP-R03",
+      "dimension": "experience_fit",
+      "description": "JD asks 7+ years.",
+      "verdict": "STRETCH",
+      "flags": [
+        "EXPERIENCE_STRETCH"
+      ],
+      "evidence_required": "Quoted span.",
+      "owner_confirmed": true,
+      "supersedes": [],
+      "open_items": [],
+      "source": "Owner Phase A specification §21",
+      "notes": ""
+    },
+    {
+      "rule_id": "EXP-R04",
+      "dimension": "experience_fit",
+      "description": "JD experience unspecified.",
+      "verdict": "UNKNOWN_FIT",
+      "flags": [],
+      "evidence_required": "Record that it was sought and not found.",
+      "owner_confirmed": true,
+      "supersedes": [],
+      "open_items": [],
+      "source": "Owner Phase A specification §21",
+      "notes": ""
+    },
+    {
+      "rule_id": "EXP-R05",
+      "dimension": "experience_fit",
+      "description": "REASONABLE: definition not provided by the owner (e.g. 2-5, 3-5 years).",
+      "verdict": "OPEN",
+      "flags": [],
+      "evidence_required": "Quoted span.",
+      "owner_confirmed": false,
+      "supersedes": [],
+      "open_items": [
+        "OI-016"
+      ],
+      "source": "Owner Phase A specification §21",
+      "notes": ""
+    },
+    {
+      "rule_id": "EXP-R06",
+      "dimension": "experience_fit",
+      "description": "Experience is never an eligibility veto.",
+      "verdict": "INVARIANT",
+      "flags": [],
+      "evidence_required": "n/a",
+      "owner_confirmed": true,
+      "supersedes": [],
+      "open_items": [],
+      "source": "Owner Phase A specification §21",
+      "notes": ""
+    },
+    {
+      "rule_id": "SEN-R01",
+      "dimension": "seniority_signal",
+      "description": "Senior / Lead / Staff / Principal / Architect are recorded as seniority signals and never cause FAIL or automatic PARKED.",
+      "verdict": "INVARIANT",
+      "flags": [
+        "SENIORITY_<LEVEL>"
+      ],
+      "evidence_required": "Quoted title span.",
+      "owner_confirmed": true,
+      "supersedes": [],
+      "open_items": [],
+      "source": "Owner Phase A specification §22",
+      "notes": ""
+    },
+    {
+      "rule_id": "RELV-R01",
+      "dimension": "relevance",
+      "description": "Title is a weak prior: Tier 1 (primary family), Tier 2 (adjacent AI engineering), Tier 3 (other titles with substantial AI work), NONE.",
+      "verdict": "SIGNAL",
+      "flags": [],
+      "evidence_required": "Quoted title.",
+      "owner_confirmed": true,
+      "supersedes": [
+        "Career Strategy §4 Target Search Buckets",
+        "ingestion/linkedin-ingestion-0.1.0.json query_seeds.buckets"
+      ],
+      "open_items": [],
+      "source": "Owner Phase A specification §5-§6",
+      "notes": ""
+    },
+    {
+      "rule_id": "RELV-R02",
+      "dimension": "relevance",
+      "description": "The JD is the primary evidence; no job is rejected for a non-matching title.",
+      "verdict": "INVARIANT",
+      "flags": [],
+      "evidence_required": "n/a",
+      "owner_confirmed": true,
+      "supersedes": [],
+      "open_items": [],
+      "source": "Owner Phase A specification §5",
+      "notes": ""
+    },
+    {
+      "rule_id": "RELV-R03",
+      "dimension": "relevance",
+      "description": "Relevance label STRONG | MODERATE | WEAK, with evidence spans per capability cluster A-F.",
+      "verdict": "LABEL",
+      "flags": [],
+      "evidence_required": "At least one quoted span per claimed cluster; relevance_label, capability_clusters, title_signal, experience_signal, confidence, evaluator/model/prompt versions.",
+      "owner_confirmed": true,
+      "supersedes": [],
+      "open_items": [],
+      "source": "Owner Phase A specification §7/§23",
+      "notes": ""
+    },
+    {
+      "rule_id": "RELV-R04",
+      "dimension": "relevance",
+      "description": "Concrete engineering evidence is required; generic mentions ('experience with AI tools') alone cannot yield STRONG or MODERATE.",
+      "verdict": "CONSTRAINT",
+      "flags": [],
+      "evidence_required": "Quoted spans.",
+      "owner_confirmed": true,
+      "supersedes": [],
+      "open_items": [],
+      "source": "Owner Phase A specification §7",
+      "notes": ""
+    },
+    {
+      "rule_id": "RELV-R05",
+      "dimension": "relevance",
+      "description": "AI Quality involving LLM/RAG/agent evaluation, hallucination/groundedness, AI observability is in the target universe; traditional QA without substantial AI engineering is generally WEAK.",
+      "verdict": "LABEL_GUIDANCE",
+      "flags": [],
+      "evidence_required": "Quoted spans.",
+      "owner_confirmed": true,
+      "supersedes": [
+        "data/resume_config.json QA/ETL skill weights",
+        "prompts/job_analysis.txt QA Lead criteria"
+      ],
+      "open_items": [],
+      "source": "Owner Phase A specification §8",
+      "notes": ""
+    },
+    {
+      "rule_id": "RELV-R06",
+      "dimension": "relevance",
+      "description": "Relevance never produces an eligibility FAIL.",
+      "verdict": "INVARIANT",
+      "flags": [],
+      "evidence_required": "n/a",
+      "owner_confirmed": true,
+      "supersedes": [],
+      "open_items": [],
+      "source": "Owner Phase A specification §8/§23",
+      "notes": ""
+    },
+    {
+      "rule_id": "RELV-R07",
+      "dimension": "relevance",
+      "description": "LLM output is evidence extraction/classification only; store model_id, prompt_version, content_hash.",
+      "verdict": "CONSTRAINT",
+      "flags": [],
+      "evidence_required": "Model and prompt metadata.",
+      "owner_confirmed": true,
+      "supersedes": [],
+      "open_items": [],
+      "source": "Owner Phase A specification §23",
+      "notes": ""
+    },
+    {
+      "rule_id": "RELV-R08",
+      "dimension": "relevance",
+      "description": "No JD text available (title/snippet only): relevance_label = NOT_ASSESSED.",
+      "verdict": "STATE",
+      "flags": [],
+      "evidence_required": "Observation completeness.",
+      "owner_confirmed": false,
+      "supersedes": [],
+      "open_items": [
+        "OI-015"
+      ],
+      "source": "Owner Phase A specification design",
+      "notes": ""
+    },
+    {
+      "rule_id": "PREF-R01",
+      "dimension": "preference",
+      "description": "compensation_band: BELOW_TARGET_BAND (₹18L to <₹24L), IN_TARGET_BAND (₹24-28L), ABOVE_TARGET_BAND (>₹28L), UNKNOWN, NOT_APPLICABLE (compensation FAIL).",
+      "verdict": "ATTRIBUTE",
+      "flags": [],
+      "evidence_required": "Evaluated compensation.",
+      "owner_confirmed": true,
+      "supersedes": [],
+      "open_items": [
+        "OI-008",
+        "OI-022"
+      ],
+      "source": "Owner Phase A specification §14/§16",
+      "notes": "Preferred band ₹24-28L; expected ask ₹26L. Never anchor to ₹16L."
+    },
+    {
+      "rule_id": "PREF-R02",
+      "dimension": "preference",
+      "description": "employer_preference: PREFERRED_PRODUCT | PREFERRED_AI_NATIVE | PREFERRED_GCC | PREFERRED_ENGINEERING_LED | NEUTRAL | UNKNOWN.",
+      "verdict": "ATTRIBUTE",
+      "flags": [],
+      "evidence_required": "Registry classification.",
+      "owner_confirmed": true,
+      "supersedes": [],
+      "open_items": [],
+      "source": "Owner Phase A specification §20",
+      "notes": ""
+    },
+    {
+      "rule_id": "PREF-R03",
+      "dimension": "preference",
+      "description": "No composite 'fit' or 'best job' score exists. Preference is never an eligibility veto.",
+      "verdict": "INVARIANT",
+      "flags": [],
+      "evidence_required": "n/a",
+      "owner_confirmed": true,
+      "supersedes": [
+        "scrapers/simple_scorer.py weighted match_score",
+        "data/resume_config.json scoring_weights and auto_import_threshold"
+      ],
+      "open_items": [],
+      "source": "Owner Phase A specification §3/§23",
+      "notes": ""
+    },
+    {
+      "rule_id": "ELIG-R01",
+      "dimension": "eligibility_overall",
+      "description": "FAIL dominates UNKNOWN dominates PASS across geography, language, compensation, employment_type, employment_relationship, employer_type.",
+      "verdict": "PRECEDENCE",
+      "flags": [],
+      "evidence_required": "Dimension verdicts.",
+      "owner_confirmed": true,
+      "supersedes": [],
+      "open_items": [],
+      "source": "Owner Phase A specification §10 (PASS/FAIL/UNKNOWN)",
+      "notes": "Carried from jobops-policy@0.1.0 verdicts.precedence (OR-04, P0_SPEC §3.4)."
+    },
+    {
+      "rule_id": "LANE-R01",
+      "dimension": "queue_lane",
+      "description": "Requisition resolved as a canonical duplicate -> SUPPRESSED_DUPLICATE.",
+      "verdict": "LANE",
+      "flags": [],
+      "evidence_required": "Identity resolution record.",
+      "owner_confirmed": true,
+      "supersedes": [],
+      "open_items": [],
+      "source": "Owner Phase A specification §24",
+      "notes": ""
+    },
+    {
+      "rule_id": "LANE-R02",
+      "dimension": "queue_lane",
+      "description": "Any eligibility FAIL -> EXCLUDED.",
+      "verdict": "LANE",
+      "flags": [],
+      "evidence_required": "Failing dimension and rule id.",
+      "owner_confirmed": true,
+      "supersedes": [],
+      "open_items": [],
+      "source": "Owner Phase A specification §24",
+      "notes": ""
+    },
+    {
+      "rule_id": "LANE-R03",
+      "dimension": "queue_lane",
+      "description": "No FAIL and relevance WEAK -> PARKED.",
+      "verdict": "LANE",
+      "flags": [],
+      "evidence_required": "Relevance evidence.",
+      "owner_confirmed": true,
+      "supersedes": [],
+      "open_items": [],
+      "source": "Owner Phase A specification §24",
+      "notes": "Seniority, 7+ years or foreign origin never park a STRONG role."
+    },
+    {
+      "rule_id": "LANE-R04",
+      "dimension": "queue_lane",
+      "description": "No FAIL, relevance STRONG/MODERATE, and at least one UNKNOWN dimension or review-routing flag -> REVIEW.",
+      "verdict": "LANE",
+      "flags": [],
+      "evidence_required": "Flags and dimension verdicts.",
+      "owner_confirmed": true,
+      "supersedes": [],
+      "open_items": [
+        "OI-014",
+        "OI-019",
+        "OI-020"
+      ],
+      "source": "Owner Phase A specification §24",
+      "notes": ""
+    },
+    {
+      "rule_id": "LANE-R05",
+      "dimension": "queue_lane",
+      "description": "No FAIL, relevance STRONG/MODERATE, no UNKNOWN, no review-routing flag -> SHORTLIST.",
+      "verdict": "LANE",
+      "flags": [],
+      "evidence_required": "n/a",
+      "owner_confirmed": true,
+      "supersedes": [],
+      "open_items": [],
+      "source": "Owner Phase A specification §24",
+      "notes": ""
+    },
+    {
+      "rule_id": "LANE-R06",
+      "dimension": "queue_lane",
+      "description": "Relevance NOT_ASSESSED -> lane not ruled.",
+      "verdict": "OPEN",
+      "flags": [],
+      "evidence_required": "n/a",
+      "owner_confirmed": false,
+      "supersedes": [],
+      "open_items": [
+        "OI-015"
+      ],
+      "source": "Owner Phase A specification design",
+      "notes": ""
+    },
+    {
+      "rule_id": "LANE-R07",
+      "dimension": "queue_lane",
+      "description": "Daily REVIEW cap = parameters.review_daily_cap (10). SHORTLIST uncapped.",
+      "verdict": "CAPACITY",
+      "flags": [],
+      "evidence_required": "n/a",
+      "owner_confirmed": false,
+      "supersedes": [],
+      "open_items": [
+        "OI-003"
+      ],
+      "source": "Owner Phase A specification §25/§36 R3",
+      "notes": ""
+    },
+    {
+      "rule_id": "LANE-R08",
+      "dimension": "queue_lane",
+      "description": "REVIEW overflow carries forward up to parameters.review_carry_days (3) days, then unresolved low-priority items move to PARKED and appear in the weekly digest.",
+      "verdict": "CAPACITY",
+      "flags": [],
+      "evidence_required": "Queue-state history.",
+      "owner_confirmed": false,
+      "supersedes": [],
+      "open_items": [
+        "OI-004",
+        "OI-010"
+      ],
+      "source": "Owner Phase A specification §25/§36 R4",
+      "notes": ""
+    },
+    {
+      "rule_id": "LANE-R09",
+      "dimension": "queue_lane",
+      "description": "REVIEW ordering is deterministic: ordered categorical keys, then stable tie-breakers; no composite score.",
+      "verdict": "ORDERING",
+      "flags": [],
+      "evidence_required": "n/a",
+      "owner_confirmed": false,
+      "supersedes": [],
+      "open_items": [
+        "OI-009",
+        "OI-028"
+      ],
+      "source": "Owner Phase A specification §25 vs §39",
+      "notes": ""
+    },
+    {
+      "rule_id": "NEW-R01",
+      "dimension": "newness",
+      "description": "Newness states NEW | UPDATED | SEEN_BEFORE per canonical requisition, with first_seen_at, last_seen_at, source_first_seen_at, date_precision, newness_confidence, source_observations.",
+      "verdict": "STATE",
+      "flags": [],
+      "evidence_required": "Observation history.",
+      "owner_confirmed": true,
+      "supersedes": [],
+      "open_items": [
+        "OI-017",
+        "OI-018"
+      ],
+      "source": "Owner Phase A specification §28",
+      "notes": ""
+    },
+    {
+      "rule_id": "NEW-R02",
+      "dimension": "identity",
+      "description": "Sightings of the same requisition across LinkedIn, employer ATS, company site, Naukri and other boards are ONE canonical requisition with multiple observations.",
+      "verdict": "INVARIANT",
+      "flags": [],
+      "evidence_required": "Identity resolution record.",
+      "owner_confirmed": true,
+      "supersedes": [],
+      "open_items": [],
+      "source": "Owner Phase A specification §28",
+      "notes": ""
+    },
+    {
+      "rule_id": "NEW-R03",
+      "dimension": "identity",
+      "description": "Employer requisition URL is preferred as the canonical identity URL.",
+      "verdict": "SELECTION",
+      "flags": [],
+      "evidence_required": "ATS/company-site URL.",
+      "owner_confirmed": true,
+      "supersedes": [],
+      "open_items": [],
+      "source": "Owner Phase A specification §28",
+      "notes": ""
+    },
+    {
+      "rule_id": "ID-R01",
+      "dimension": "identity",
+      "description": "Suppression-grade identity: same source id (L1), same canonical URL (L2), same ATS system+tenant+requisition (L4), including an apply URL that resolves to an ATS requisition.",
+      "verdict": "DEFINITE_DUPLICATE",
+      "flags": [],
+      "evidence_required": "Matched keys.",
+      "owner_confirmed": true,
+      "supersedes": [],
+      "open_items": [],
+      "source": "Owner Phase A specification §28",
+      "notes": "Carried from identity/jobops-identity-0.1.0.json layers."
+    },
+    {
+      "rule_id": "ID-R02",
+      "dimension": "identity",
+      "description": "Company + title + normalized location match (after geo aliasing) without a suppression-grade key -> PROBABLE_DUPLICATE, IDENTITY_UNCERTAIN, human confirms.",
+      "verdict": "PROBABLE_DUPLICATE",
+      "flags": [],
+      "evidence_required": "Normalized keys.",
+      "owner_confirmed": false,
+      "supersedes": [],
+      "open_items": [
+        "OI-019"
+      ],
+      "source": "Owner Phase A specification design",
+      "notes": "Changes identity@0.1.0 DR-L3-LOCATION outcomes once geo aliasing exists; requires an identity ruleset version bump."
+    },
+    {
+      "rule_id": "EVAL-R01",
+      "dimension": "evaluation",
+      "description": "Evaluation key = (requisition_id, policy_version, evidence_hash). An existing key is reused, never recomputed into a second record.",
+      "verdict": "INVARIANT",
+      "flags": [],
+      "evidence_required": "n/a",
+      "owner_confirmed": true,
+      "supersedes": [],
+      "open_items": [],
+      "source": "Owner Phase A specification §27",
+      "notes": ""
+    },
+    {
+      "rule_id": "EVAL-R02",
+      "dimension": "evaluation",
+      "description": "Current evaluation is computed from the per-dimension richest valid evidence across all observations, never from the newest observation alone.",
+      "verdict": "INVARIANT",
+      "flags": [],
+      "evidence_required": "Evidence precedence record.",
+      "owner_confirmed": true,
+      "supersedes": [],
+      "open_items": [],
+      "source": "Owner Phase A specification §27",
+      "notes": "Explicit fix for audit finding F4."
+    },
+    {
+      "rule_id": "EVAL-R03",
+      "dimension": "evaluation",
+      "description": "Absent / not-captured evidence never displaces present evidence.",
+      "verdict": "INVARIANT",
+      "flags": [],
+      "evidence_required": "n/a",
+      "owner_confirmed": true,
+      "supersedes": [],
+      "open_items": [],
+      "source": "Owner Phase A specification §27",
+      "notes": "Generalizes ingestion/merge.py 'nothing never overwrites something' across observations."
+    },
+    {
+      "rule_id": "EVAL-R04",
+      "dimension": "evaluation",
+      "description": "Evidence precedence per dimension: (1) owner-confirmed company classification [employer_type only]; (2) source authority tier; (3) evidence class; (4) observation completeness; (5) recency among equals. Conflicting explicit statements across tiers set SOURCE_CONFLICT.",
+      "verdict": "PRECEDENCE",
+      "flags": [],
+      "evidence_required": "Evidence rows.",
+      "owner_confirmed": false,
+      "supersedes": [],
+      "open_items": [
+        "OI-019"
+      ],
+      "source": "Owner Phase A specification §27 (precedence to be defined)",
+      "notes": ""
+    }
+  ],
+  "flags_registry": {
+    "review_routing": [
+      "EOR",
+      "EMPLOYER_TYPE_REVIEW",
+      "STAFFING",
+      "CONSULTANCY",
+      "IT_SERVICES",
+      "EMPLOYER_UNCLASSIFIED",
+      "LONG_TERM_DIRECT_CONTRACT",
+      "EMPLOYMENT_MIXED",
+      "EMPLOYMENT_UNSTATED",
+      "BELOW_TARGET_BAND",
+      "EXPERIENCE_STRETCH",
+      "SOURCE_CONFLICT",
+      "IDENTITY_UNCERTAIN",
+      "GEO_REGION_AMBIGUOUS",
+      "HYBRID_DAYS_UNSPECIFIED",
+      "HYBRID_FLEXIBLE",
+      "BENGALURU_ONSITE",
+      "WORK_ARRANGEMENT_ABSENT",
+      "COMP_UNDISCLOSED",
+      "COMP_RANGE_OVERLAPS_FLOOR",
+      "COMP_UPPER_BOUND_ONLY",
+      "COMP_NON_NUMERIC",
+      "COMP_NON_BASE_ONLY",
+      "COMP_LOCATION_ADJUSTED_NO_INDIA_BAND",
+      "COMP_NOT_ANNUALIZABLE",
+      "LANGUAGE_UNCERTAIN"
+    ],
+    "informational": [
+      "TIMEZONE_OVERLAP_US",
+      "TIMEZONE_OVERLAP_UK",
+      "TIMEZONE_OVERLAP_EU",
+      "TIMEZONE_OVERLAP_APAC",
+      "LANGUAGE_PREFERENCE",
+      "ABOVE_TARGET_BAND",
+      "SENIORITY_SENIOR",
+      "SENIORITY_LEAD",
+      "SENIORITY_STAFF",
+      "SENIORITY_PRINCIPAL",
+      "SENIORITY_ARCHITECT"
+    ],
+    "classification_note": "Informational vs review-routing classification of TIMEZONE_* and LANGUAGE_PREFERENCE is pending OI-014; SOURCE_CONFLICT and IDENTITY_UNCERTAIN routing pending OI-019; EMPLOYER_UNCLASSIFIED routing pending OI-020."
+  },
+  "review_ordering_draft": {
+    "owner_confirmed": false,
+    "open_item": "OI-009",
+    "option_A_section_25": [
+      "relevance (STRONG > MODERATE)",
+      "newness (NEW > UPDATED > SEEN_BEFORE)",
+      "evidence_completeness (fewer UNKNOWN dimensions first)",
+      "preference_alignment (IN/ABOVE_TARGET_BAND > BELOW_TARGET_BAND > UNKNOWN; PREFERRED_* employer > NEUTRAL > UNKNOWN)"
+    ],
+    "option_B_section_39": [
+      "relevance",
+      "preference_alignment",
+      "evidence_completeness",
+      "newness"
+    ],
+    "draft_default": "option_A_section_25",
+    "tie_breakers": [
+      "first_seen_at ascending",
+      "requisition_id ascending"
+    ],
+    "tie_breaker_note": "Oldest first_seen_at first so carried-over items are not starved; requisition_id makes the order total."
+  },
+  "superseded_by_this_draft": [
+    {
+      "artifact": "policy/jobops-policy-0.1.0.json",
+      "items": [
+        "threshold T=2000000 (₹20L)",
+        "WM-R2 HYBRID->FAIL",
+        "WM-R3 ONSITE->FAIL",
+        "company_type gating:false",
+        "not_evaluated: role exclusions, contract duration"
+      ]
+    },
+    {
+      "artifact": "OWNER_RULINGS_LOG.md",
+      "items": [
+        "OR-03a (₹20L)",
+        "OR-04 (hybrid veto; staffing non-veto)",
+        "OQ-01 (straddle at ₹20L)",
+        "OQ-02 (non-INR UNKNOWN pending FX) — superseded only if R2 is confirmed"
+      ]
+    },
+    {
+      "artifact": "docs/Career_Strategy_and_Search_Preferences.md",
+      "items": [
+        "§2 narrative/7 years",
+        "§4 compensation (₹16L last drawn, ₹18L exception wording, ₹20-30+ target)",
+        "§4 Work Mode hard constraint",
+        "§4 Employment Type contract clause",
+        "§4 Target Search Buckets"
+      ]
+    },
+    {
+      "artifact": "ingestion/linkedin-ingestion-0.1.0.json",
+      "items": [
+        "query_seeds.buckets",
+        "remote_filter as the only discovery mode"
+      ]
+    },
+    {
+      "artifact": "data/resume_config.json, data/SCORING_GUIDE.md, scrapers/simple_scorer.py, prompts/*.txt, data/resumes/*",
+      "items": [
+        "QA Lead / ETL / 7-year profile",
+        "₹18L min in old config (coincidentally equal to new floor, different semantics)",
+        "weighted composite match_score"
+      ]
+    }
+  ]
+}

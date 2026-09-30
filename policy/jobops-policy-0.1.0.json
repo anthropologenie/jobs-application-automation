@@ -1,0 +1,622 @@
+{
+  "artifact": {
+    "id": "jobops-policy",
+    "version": "0.1.0",
+    "ruleset_version": "jobops-policy@0.1.0",
+    "title": "JobOps P0 Hard Eligibility Gate — policy ruleset",
+    "status": "ACTIVE",
+    "created": "2026-08-29",
+    "repository": "~/projects/jobs-application-automation",
+    "scope": "P0 hard eligibility gate ONLY. This artifact declares policy as data. It is not a gate implementation, not a scorer, and not an ingestion configuration.",
+    "task": "P0-01 / P0_IMPLEMENTATION_SPEC.md §12.1 task 1",
+    "versioning_rule": "Semantic. Any change to a rule, a threshold, a reason code, or the currency-conversion configuration is a new version. A verdict already written under an earlier ruleset_version is never rewritten; re-evaluation produces a new verdict record (P0_IMPLEMENTATION_SPEC.md §5.3).",
+    "authoring_constraint": "Every executable rule in this file cites at least one authority: a section of docs/Career_Strategy_and_Search_Preferences.md, or a ruling id in OWNER_RULINGS_LOG.md. No rule is present on inference alone."
+  },
+
+  "authority": {
+    "authoritative_sources": [
+      {
+        "id": "CAREER_DOC",
+        "path": "docs/Career_Strategy_and_Search_Preferences.md",
+        "role": "Canonical career policy. Tracked and authoritative. Not modified by this artifact.",
+        "sections_used": [
+          "§4 Compensation",
+          "§4 Work Mode — Hard Constraint (not a ranked preference)",
+          "§4 Company Type",
+          "§4 Employment Type"
+        ]
+      },
+      {
+        "id": "RULINGS_LOG",
+        "path": "OWNER_RULINGS_LOG.md",
+        "role": "Repository Owner ruling authority. Supersedes stale configuration.",
+        "rulings_in_force_for_this_artifact": ["OR-03a", "OR-03b", "OR-04", "OQ-01", "OQ-02"]
+      },
+      {
+        "id": "P0_SPEC",
+        "path": "P0_IMPLEMENTATION_SPEC.md",
+        "role": "Behaviour specification the ruleset encodes: §3 gate, §4 evidence model, §5 output contract, §6 acceptance tests.",
+        "note": "Specification, not authority. Where the spec marked a rule as derived rather than ruled (§3.3 straddling range), the ruling now in force is OQ-01."
+      }
+    ],
+    "non_authoritative_inputs": [
+      {
+        "path": "data/resume_config.json",
+        "status": "STALE CONFIGURATION — NOT AN INPUT TO THIS RULESET",
+        "values_explicitly_not_imported": {
+          "min_salary_inr": 1800000,
+          "preferred_salary_range.min_inr": 1800000
+        },
+        "authority": ["OR-03a"],
+        "statement": "The ₹18,00,000 figures in data/resume_config.json predate the current career strategy and have no policy force. This ruleset does not read that file and derives no threshold from it. The file is left unchanged; alignment is backlog item JS-29.",
+        "guarded_by_test": "P0_IMPLEMENTATION_SPEC.md §6 T-13"
+      },
+      {
+        "path": "External salary websites and market benchmarks",
+        "status": "NOT GATE EVIDENCE",
+        "authority": ["OR-03b", "P0_SPEC §4.2"],
+        "statement": "Third-party salary estimates are recorded for human context only and never change a verdict. No external source is declared authoritative compensation evidence in version 0.1.0."
+      }
+    ]
+  },
+
+  "pipeline": {
+    "statement": "The stage order is a policy invariant, not an implementation detail. Scoring never runs before the gate, and no score can alter a gate verdict.",
+    "authority": ["CAREER_DOC §4 Work Mode", "OR-04", "P0_SPEC §2.2"],
+    "career_doc_quote": "Do not collapse this into a scoring dimension. A high salary number should never be able to outbid this constraint algorithmically.",
+    "stages": [
+      { "order": 1, "stage": "HARD_ELIGIBILITY_GATE", "emits": ["PASS", "UNKNOWN", "FAIL"] },
+      { "order": 2, "stage": "HUMAN_REVIEW", "applies_to": "every UNKNOWN, and any verdict carrying unresolved evidence conflict", "authority": ["OR-03b", "OQ-01", "OQ-02"] },
+      { "order": 3, "stage": "SCORING", "input": "PASS candidates only", "note": "UNKNOWN candidates enter scoring only after a human review action resolves them; FAIL candidates never enter scoring." },
+      { "order": 4, "stage": "OPPORTUNITY_QUALITY", "note": "Downstream of scoring. Out of P0 scope. May consume non-gating signals recorded by this ruleset." }
+    ],
+    "invariants": [
+      "No scorer output is an input to any rule in this file.",
+      "A FAIL candidate never appears in a scored set or a shortlist, at any score value.",
+      "Retention is not eligibility: FAIL and UNKNOWN candidates are retained with their evidence for human visibility, which is not the same as passing the gate."
+    ]
+  },
+
+  "verdicts": {
+    "primary": ["PASS", "UNKNOWN", "FAIL"],
+    "no_fourth_verdict": {
+      "statement": "Version 0.1.0 introduces no FLAG or EXCEPTION-FLAG primary verdict. The career document's 'flagged for manual review' outcome is achieved by retention and visibility of a FAIL record, not by a distinct verdict value.",
+      "authority": ["P0_SPEC §5.2"],
+      "change_control": "Adding a fourth verdict requires a Repository Owner ruling and a new ruleset version."
+    },
+    "precedence": {
+      "rule": "FAIL dominates UNKNOWN dominates PASS.",
+      "algorithm": "if any dimension verdict == FAIL -> FAIL; elif any dimension verdict == UNKNOWN -> UNKNOWN; else PASS",
+      "authority": ["OR-04", "P0_SPEC §3.4"],
+      "consequences": [
+        "A FAIL on one dimension is final regardless of the other dimension's value.",
+        "UNKNOWN never becomes PASS by accumulation of PASSes on other dimensions."
+      ]
+    }
+  },
+
+  "unknown_semantics": {
+    "authority": ["OR-03b", "OQ-01", "OQ-02"],
+    "rules": [
+      { "id": "UNK-1", "statement": "UNKNOWN is never represented as PASS, and never satisfies the ₹20 LPA floor.", "authority": ["OR-03b", "OQ-01"] },
+      { "id": "UNK-2", "statement": "UNKNOWN receives no favourable numerical interpretation. A missing or unresolved field contributes zero, never a default, a midpoint, or a full-credit value.", "authority": ["OR-03b", "P0_SPEC §6 T-12"], "guards": "JOBOPS_SCALING_CAPABILITY_INVENTORY.md finding F4 — empty experience scored 100, empty location scored 50." },
+      { "id": "UNK-3", "statement": "An UNKNOWN candidate is never auto-shortlisted above a candidate with confirmed qualifying compensation.", "authority": ["OR-03b", "OQ-01"] },
+      { "id": "UNK-4", "statement": "Every UNKNOWN sets requires_human_review = true and remains in the funnel. UNKNOWN is not a rejection.", "authority": ["OR-03b"] },
+      { "id": "UNK-5", "statement": "Every UNKNOWN and every FAIL carries at least one reason code from the registry in this file.", "authority": ["P0_SPEC §6 T-17"] },
+      { "id": "UNK-6", "statement": "The Repository Owner reviews escalated UNKNOWN cases.", "authority": ["OR-03b"] }
+    ]
+  },
+
+  "dimensions": {
+    "work_mode": {
+      "gating": true,
+      "veto_stage": "pre-scoring",
+      "authority": ["CAREER_DOC §4 Work Mode", "OR-04"],
+      "career_doc_quotes": [
+        "Remote or remote-first: required by default.",
+        "Hybrid or on-site: excluded by default.",
+        "Do not collapse this into a scoring dimension."
+      ],
+      "not_a_weighted_preference": "Work mode is a boundary condition on the search. It must not appear as a weighted term in any scorer.",
+      "normalized_values": ["REMOTE", "HYBRID", "ONSITE", "AMBIGUOUS", "ABSENT"],
+      "rules": [
+        { "id": "WM-R1", "match": { "normalized_work_mode": "REMOTE" }, "verdict": "PASS", "reason_code": "WM-PASS-REMOTE", "authority": ["CAREER_DOC §4 Work Mode", "OR-04"] },
+        { "id": "WM-R2", "match": { "normalized_work_mode": "HYBRID" }, "verdict": "FAIL", "reason_code": "WM-FAIL-HYBRID", "authority": ["CAREER_DOC §4 Work Mode", "OR-04"] },
+        { "id": "WM-R3", "match": { "normalized_work_mode": "ONSITE" }, "verdict": "FAIL", "reason_code": "WM-FAIL-ONSITE", "authority": ["CAREER_DOC §4 Work Mode", "OR-04"] },
+        { "id": "WM-R4", "match": { "normalized_work_mode": "AMBIGUOUS" }, "verdict": "UNKNOWN", "reason_code": "WM-UNKNOWN-AMBIGUOUS", "authority": ["CAREER_DOC §4 Work Mode", "OR-03b (unknown-handling principle)", "P0_SPEC §4.3"] },
+        { "id": "WM-R5", "match": { "normalized_work_mode": "ABSENT" }, "verdict": "UNKNOWN", "reason_code": "WM-UNKNOWN-ABSENT", "authority": ["CAREER_DOC §4 Work Mode", "OR-03b (unknown-handling principle)", "P0_SPEC §4.3"] }
+      ],
+      "normalization": {
+        "hard_rule": "Ambiguous work-mode language must never resolve to REMOTE. Remote must be confirmed, not assumed.",
+        "authority": ["CAREER_DOC §4 Work Mode", "P0_SPEC §4.3"],
+        "classification": [
+          { "class": "REMOTE", "basis": "unconditional remote statement", "examples": ["Fully remote", "100% remote", "Work from anywhere", "Remote (unqualified, in a work-mode context)"] },
+          { "class": "REMOTE", "basis": "portal structured field asserting remote", "example": "linkedin-search CLI --remote remote filter echo", "provenance_requirement": "source recorded as portal_structured_field, never as jd_body" },
+          { "class": "AMBIGUOUS", "basis": "conditional or unverified remote", "examples": ["Remote-friendly", "Remote-first (without a stated on-site requirement)", "Remote depending on location", "Location-dependent", "Remote (must be within X)", "Remote with occasional travel to office"] },
+          { "class": "HYBRID", "basis": "stated hybrid or partial office attendance", "examples": ["Hybrid", "N days in office"] },
+          { "class": "ONSITE", "basis": "stated office requirement", "examples": ["On-site", "In-office", "Work from office"] },
+          { "class": "ABSENT", "basis": "no work-mode statement located in any source" }
+        ],
+        "conflict_rules": [
+          {
+            "id": "WM-N1",
+            "condition": "A portal structured field or search filter asserts remote while the posting body asserts hybrid or on-site.",
+            "resolution": "normalized_work_mode = AMBIGUOUS; both evidence items retained verbatim; an unresolved_evidence entry is written; escalated to human review.",
+            "statement": "A portal filter is not a posting assertion, and does not override posting text — in either direction.",
+            "authority": ["P0_SPEC §4.3"]
+          }
+        ],
+        "prohibited": [
+          "Inferring REMOTE from the absence of an office address.",
+          "Inferring REMOTE from a company being remote-first in general rather than the posting stating it.",
+          "Collapsing the five normalized values into a boolean. The legacy opportunities.is_remote BOOLEAN DEFAULT 0 cannot represent AMBIGUOUS or ABSENT and must not be the system of record for this decision."
+        ]
+      }
+    },
+
+    "compensation": {
+      "gating": true,
+      "veto_stage": "pre-scoring",
+      "authority": ["CAREER_DOC §4 Compensation", "OR-03a", "OR-03b", "OQ-01", "OQ-02"],
+      "threshold": {
+        "id": "T",
+        "value": 2000000,
+        "currency": "INR",
+        "period": "per_annum",
+        "display": "₹20 LPA",
+        "comparison": "inclusive — annual_min >= T passes",
+        "authority": ["OR-03a"],
+        "target_band": { "min": 2000000, "max_open_ended": true, "display": "₹20–30+ LPA", "authority": ["CAREER_DOC §4 Compensation", "OR-03a"], "gating": false, "note": "The target band informs downstream scoring. Only the ₹20 LPA floor is gating." },
+        "supersession": "Supersedes the ₹18,00,000 figure in data/resume_config.json, which is stale configuration predating the current career strategy."
+      },
+      "compensation_states": [
+        "CONFIRMED_ANNUAL_INR",
+        "NON_INR_ANNUAL",
+        "NON_ANNUAL_NOT_ANNUALIZABLE",
+        "UNIT_UNDETERMINED",
+        "NON_NUMERIC_CLAIM",
+        "EXTERNAL_BENCHMARK_ONLY",
+        "ABSENT"
+      ],
+      "rule_evaluation": "Ordered, first match wins. Every input resolves to exactly one rule.",
+      "rules": [
+        {
+          "id": "COMP-R1",
+          "match": { "compensation_state": "CONFIRMED_ANNUAL_INR", "predicate": "annual_min >= T" },
+          "verdict": "PASS",
+          "reason_code": "COMP-PASS-AT-OR-ABOVE-FLOOR",
+          "authority": ["OR-03a", "CAREER_DOC §4 Compensation"],
+          "note": "Applies to a point figure (annual_min == annual_max) and to a range wholly at or above T."
+        },
+        {
+          "id": "COMP-R2",
+          "match": { "compensation_state": "CONFIRMED_ANNUAL_INR", "predicate": "annual_max < T" },
+          "verdict": "FAIL",
+          "reason_code": "COMP-FAIL-BELOW-FLOOR",
+          "authority": ["OR-03a"],
+          "note": "Confirmed compensation wholly below the floor. Not rounded up, not rescued by any other dimension."
+        },
+        {
+          "id": "COMP-R3",
+          "match": { "compensation_state": "CONFIRMED_ANNUAL_INR", "predicate": "annual_min < T AND annual_max >= T" },
+          "verdict": "UNKNOWN",
+          "reason_code": "COMP-UNKNOWN-RANGE-STRADDLES",
+          "authority": ["OQ-01"],
+          "ruling_text": "A stated salary range that straddles the ₹20 LPA threshold — where the minimum is below ₹20 LPA and the maximum is at or above ₹20 LPA — is treated as UNKNOWN for the policy gate.",
+          "constraints": [
+            "Remains in the funnel.",
+            "Surfaced for human review.",
+            "Not treated as satisfying the ₹20 LPA floor.",
+            "Not auto-shortlisted above a posting with confirmed qualifying compensation.",
+            "Not converted into PASS merely because the maximum reaches ₹20 LPA.",
+            "Not converted into FAIL merely because the minimum is below ₹20 LPA."
+          ],
+          "purpose": "Preserve potentially viable opportunities without allowing the system to represent uncertain compensation as confirmed qualification."
+        },
+        {
+          "id": "COMP-R4",
+          "match": { "compensation_state": "NON_NUMERIC_CLAIM" },
+          "verdict": "UNKNOWN",
+          "reason_code": "COMP-UNKNOWN-NON-NUMERIC",
+          "authority": ["OR-03b", "P0_SPEC §4.2"],
+          "examples": ["competitive salary", "best in industry", "as per market", "commensurate with experience"]
+        },
+        {
+          "id": "COMP-R5",
+          "match": { "compensation_state": "ABSENT" },
+          "verdict": "UNKNOWN",
+          "reason_code": "COMP-UNKNOWN-ABSENT",
+          "authority": ["OR-03b"],
+          "ruling_text": "A posting with no stated salary receives UNKNOWN. It remains queued and is surfaced for human review."
+        },
+        {
+          "id": "COMP-R6",
+          "match": { "compensation_state": "EXTERNAL_BENCHMARK_ONLY" },
+          "verdict": "UNKNOWN",
+          "reason_code": "COMP-UNKNOWN-EXTERNAL-BENCHMARK-ONLY",
+          "authority": ["OR-03b", "P0_SPEC §4.2"],
+          "statement": "The posting itself states no compensation; the only figure available is a third-party estimate. Version 0.1.0 declares no external source authoritative, so the benchmark is recorded as human context and the gate treats compensation as unconfirmed.",
+          "derivation_note": "This reason code is authored in version 0.1.0 rather than quoted from P0_IMPLEMENTATION_SPEC.md §3.3. It distinguishes 'nothing found' from 'only inadmissible evidence found', which the reviewer needs in order to act. It is a labelling distinction only: both resolve to UNKNOWN, and neither can reach PASS."
+        },
+        {
+          "id": "COMP-R7",
+          "match": { "compensation_state": "NON_INR_ANNUAL", "predicate": "currency_conversion.status != 'CONFIGURED'" },
+          "verdict": "UNKNOWN",
+          "reason_code": "COMP-UNKNOWN-NO-INR-BASIS",
+          "authority": ["OQ-02", "P0_SPEC §4.2"],
+          "statement": "Annual compensation stated in a non-INR currency, with no configured exchange-rate source. The figure is recorded as normalized evidence with its currency and period; it is not compared against T, and no rate is invented.",
+          "active_in_this_version": true
+        },
+        {
+          "id": "COMP-R8",
+          "match": { "compensation_state": "NON_INR_ANNUAL", "predicate": "currency_conversion.status == 'CONFIGURED'" },
+          "verdict": "DEFER_TO_COMP-R1..R3",
+          "reason_code": null,
+          "authority": ["OQ-02"],
+          "statement": "When and only when currency_conversion.status is CONFIGURED, the stated annual figure is converted to an INR-equivalent using the recorded source, rate, and conversion date, and the resulting annual_min/annual_max are then evaluated by COMP-R1, COMP-R2 and COMP-R3 unchanged. The conversion record is written to the evidence trail before the comparison is made.",
+          "active_in_this_version": false,
+          "dormancy_reason": "currency_conversion.status is REQUIRES_CONFIGURATION in version 0.1.0. This rule cannot fire until a source is configured by a separately authorized action, which is a new ruleset version."
+        },
+        {
+          "id": "COMP-R9",
+          "match": { "compensation_state": "NON_ANNUAL_NOT_ANNUALIZABLE" },
+          "verdict": "UNKNOWN",
+          "reason_code": "COMP-UNKNOWN-NOT-ANNUALIZABLE",
+          "authority": ["OQ-02"],
+          "ruling_text": "If the posting provides only an hourly, daily, monthly, or otherwise non-annual figure and the annual equivalent cannot be established reliably, the salary determination is UNKNOWN and is escalated for human review.",
+          "statement": "Annualization requires a stated basis in the posting or source — contracted hours, working days, guaranteed months. Absent such a basis, no assumed working-hours or working-days constant may be applied."
+        },
+        {
+          "id": "COMP-R10",
+          "match": { "compensation_state": "UNIT_UNDETERMINED" },
+          "verdict": "UNKNOWN",
+          "reason_code": "COMP-UNKNOWN-UNIT-UNDETERMINED",
+          "authority": ["OQ-02", "P0_SPEC §4.2"],
+          "statement": "A figure whose currency or period cannot be determined from the source is UNKNOWN, not a guess."
+        }
+      ],
+      "annualization": {
+        "authority": ["OQ-02"],
+        "permitted_only_when": "The posting or its structured source states the basis required for the conversion (for example a contracted weekly-hours figure, or a stated number of guaranteed months).",
+        "recorded_fields_required": ["stated_figure", "stated_period", "stated_basis", "verbatim_text", "source", "annualization_method", "resulting_annual_value"],
+        "prohibited": [
+          "Applying an assumed 2080-hour year, 40-hour week, 22-day month, or any other constant not stated by the source.",
+          "Annualizing a monthly figure by ×12 when the posting does not state twelve guaranteed months.",
+          "Silently converting a day rate into an annual figure."
+        ],
+        "fallback": "COMP-R9 — UNKNOWN, escalated."
+      }
+    },
+
+    "company_type": {
+      "gating": false,
+      "authority": ["OR-04", "CAREER_DOC §4 Company Type"],
+      "ruling_text": "Services/staffing/company type is NOT a separate hard veto. It may influence downstream scoring (Preference Fit / Opportunity Quality). A remote role at a services/staffing company above ₹20 LPA therefore remains eligible for scoring.",
+      "statement": "Company type is normalized and recorded on every candidate. It contributes NO verdict, NO reason code, and NO veto at the gate. Version 0.1.0 defines no company-type hard gate and none may be added without a new Owner ruling and a new ruleset version.",
+      "normalized_values": ["PRODUCT", "SERVICES_STAFFING", "ENTERPRISE_DIRECT", "CONSULTING", "UNKNOWN"],
+      "field": "company_type_signal",
+      "consumer": "Downstream scoring / Opportunity Quality. Out of P0 scope.",
+      "equivalence_requirement": "Two candidates identical except for company type must receive an identical gate verdict. A divergence at the gate is a defect.",
+      "guarded_by_tests": ["P0_SPEC §6 T-08", "P0_SPEC §6 T-09"],
+      "recorded_inconsistency": {
+        "id": "F-01",
+        "status": "OPEN — flagged, not resolved by this artifact",
+        "summary": "CAREER_DOC §4 Work Mode refers to 'the engagement-type exclusion below', phrasing that implies a pre-scoring engagement-type veto which OR-04 does not establish.",
+        "disposition": "Recorded in OWNER_RULINGS_LOG.md §Flagged Inconsistencies. This ruleset follows OR-04 and creates no engagement-type or company-type gate. It does not choose between the two texts."
+      }
+    }
+  },
+
+  "gate_dimensions_summary": {
+    "gating": ["work_mode", "compensation"],
+    "non_gating_recorded": ["company_type"],
+    "not_evaluated_in_p0": [
+      { "dimension": "role_technology_exclusions", "reason": "The operational test for '-only' (Selenium-only, Cypress-only, Playwright-only, UI-heavy, Mobile QA, WordPress QA, manual-only) is not ruled. OR-05 residual is open.", "authority": ["P0_SPEC §3.5", "P0_SPEC §18"] },
+      { "dimension": "engagement_type_contract_duration", "reason": "OR-07 is open — whether OR-04 supersedes the career document's contract-scoped product-company condition is not ruled.", "authority": ["P0_SPEC §18"] },
+      { "dimension": "ai_native_company_status", "reason": "Explicitly not a P0 eligibility requirement. Retained as a future Opportunity Quality signal only — see future_signals.", "authority": ["P0_SPEC §15"] }
+    ],
+    "extension_rule": "Adding a gate dimension is a ruleset change plus tests under a new version, never a code restructure and never an undocumented default."
+  },
+
+  "currency_conversion": {
+    "authority": ["OQ-02"],
+    "status": "REQUIRES_CONFIGURATION",
+    "status_meaning": "No exchange-rate source, provider, cadence, or rate exists anywhere in this repository as of 2026-08-29 (verified by search across .md, .json, .py, .yml and .yaml files — no match). Per OQ-02, the conversion-source field is therefore explicitly marked as requiring configuration. No provider and no rate is invented here.",
+    "effect_while_unconfigured": "COMP-R7 fires for every non-INR annual figure: verdict UNKNOWN, reason COMP-UNKNOWN-NO-INR-BASIS, escalated for human review. COMP-R8 is dormant.",
+    "configuration_authority_required": "A separate, explicitly authorized action by the Repository Owner. Configuring this block is a new ruleset version.",
+    "source": {
+      "provider": null,
+      "provider_status": "REQUIRES_CONFIGURATION",
+      "cadence": null,
+      "cadence_status": "REQUIRES_CONFIGURATION",
+      "rate_table": null,
+      "rate_table_status": "REQUIRES_CONFIGURATION"
+    },
+    "required_representation": {
+      "statement": "Per OQ-02, the ruleset represents each of the following for any compensation figure. These fields are required whether or not a conversion is performed.",
+      "fields": [
+        { "field": "currency", "meaning": "ISO 4217 code as stated by the source. Never assumed." },
+        { "field": "period", "meaning": "Compensation period/unit as stated: per_annum | per_month | per_day | per_hour | undetermined." },
+        { "field": "source", "meaning": "Where the figure was found: jd_body | portal_structured_field | portal_search_result | external." },
+        { "field": "evidence", "meaning": "The verbatim span as found, never paraphrased, plus source_ref and source_fetched_at." },
+        { "field": "conversion_basis", "meaning": "The identified exchange-rate source and rate applied. null when no conversion was performed." },
+        { "field": "conversion_date_or_validity", "meaning": "The date of the rate used, or the validity window of the rate table version. null when no conversion was performed." },
+        { "field": "inr_equivalent_value", "meaning": "The resulting INR annual value. null when no conversion was performed — never a placeholder or an estimate." },
+        { "field": "conversion_confidence_status", "meaning": "One of: CONVERTED | NOT_CONVERTED_NO_BASIS | NOT_APPLICABLE_ALREADY_INR." }
+      ]
+    },
+    "determinism_requirements": [
+      "The same figure, the same rate-table version, and the same conversion date must produce the same INR-equivalent on every evaluation.",
+      "The rate applied must be recorded on the verdict record, not looked up again at read time.",
+      "A live rate fetched at evaluation time without being pinned and recorded is not admissible — it is not reproducible."
+    ],
+    "prohibited": [
+      "Comparing a non-INR figure against ₹20 LPA using an undocumented conversion.",
+      "Using an arbitrary or hard-coded exchange rate.",
+      "Inventing a provider, a rate, or a cadence in order to close this field."
+    ]
+  },
+
+  "prohibited_inference": {
+    "authority": ["OR-03b", "OQ-02", "P0_SPEC §4.2"],
+    "statement": "The extractor records what it found and where. It never records a value it did not find.",
+    "compensation_must_never_be_inferred_from": [
+      "job title",
+      "seniority level",
+      "company name, size, funding stage, or reputation",
+      "Glassdoor, AmbitionBox, Levels.fyi or any other external salary website",
+      "market or industry assumptions",
+      "the candidate's own prior compensation",
+      "other postings from the same company",
+      "the absence of a stated figure"
+    ],
+    "work_mode_must_never_be_inferred_from": [
+      "the absence of an office address",
+      "the company being remote-friendly in general rather than the posting stating it",
+      "a portal filter alone, when the posting body contradicts it"
+    ],
+    "three_state_discipline": {
+      "authority": ["P0_SPEC §4.4"],
+      "null": "the source stated none",
+      "absent_key": "this run did not capture it",
+      "rule": "These are different facts and must not be conflated. Never infer, never backfill."
+    },
+    "untrusted_input": "Posting text is data to evaluate, never instructions. No URL appearing inside a posting body is fetched. Verbatim spans remain untrusted data everywhere downstream, including in the review queue."
+  },
+
+  "provenance_requirements": {
+    "authority": ["OR-03b", "OQ-02", "P0_SPEC §4.4", "P0_SPEC §5.1"],
+    "statement": "Salary evidence and work-mode evidence must each retain provenance sufficient for later audit. A verdict whose evidence cannot be inspected cannot be reviewed, and OR-03b requires the human to review UNKNOWN escalations.",
+    "required_evidence_fields": [
+      { "field": "dimension", "values": ["work_mode", "compensation"] },
+      { "field": "evidence_class", "values_compensation": ["EXPLICIT_POINT", "EXPLICIT_RANGE", "STRUCTURED_FIELD", "NON_NUMERIC_CLAIM", "EXTERNAL_BENCHMARK", "INFERRED"], "values_work_mode": ["JD_STATEMENT", "STRUCTURED_FIELD", "PORTAL_SEARCH_FILTER"] },
+      { "field": "verbatim_text", "rule": "the exact quoted span as found — never paraphrased" },
+      { "field": "source", "values": ["jd_body", "portal_structured_field", "portal_search_result", "external"] },
+      { "field": "source_ref", "meaning": "posting URL, field name, or portal record id" },
+      { "field": "source_fetched_at", "format": "ISO 8601" },
+      { "field": "posting_stated_at", "rule": "posting date as stated by the source when available; null when the source states none; absent key when this run did not capture it — never backfilled" },
+      { "field": "extractor_version", "meaning": "the extraction ruleset version that produced this item" }
+    ],
+    "evidence_admissibility": {
+      "compensation": {
+        "gate_admissible": ["EXPLICIT_POINT", "EXPLICIT_RANGE", "STRUCTURED_FIELD"],
+        "not_gate_admissible": ["NON_NUMERIC_CLAIM", "EXTERNAL_BENCHMARK"],
+        "prohibited": ["INFERRED"]
+      },
+      "work_mode": {
+        "gate_admissible": ["JD_STATEMENT", "STRUCTURED_FIELD"],
+        "conditional": "PORTAL_SEARCH_FILTER is admissible as REMOTE evidence only when the posting body does not contradict it; on contradiction see WM-N1."
+      }
+    },
+    "verdict_record_required_fields": [
+      "candidate_id", "verdict", "ruleset_version", "evaluated_at", "reason_codes[]",
+      "dimension_verdicts{}", "evidence[]", "normalized_compensation{}", "compensation_provenance",
+      "normalized_work_mode", "work_mode_provenance", "requires_human_review", "unresolved_evidence[]",
+      "company_type_signal (optional, non-gating)"
+    ],
+    "immutability": "A verdict written under this ruleset_version is immutable against later ruleset changes. Re-evaluation under a new version produces a new record and does not rewrite the old one."
+  },
+
+  "reason_code_registry": [
+    { "code": "WM-PASS-REMOTE", "dimension": "work_mode", "verdict": "PASS", "authority": ["OR-04"] },
+    { "code": "WM-FAIL-HYBRID", "dimension": "work_mode", "verdict": "FAIL", "authority": ["OR-04"] },
+    { "code": "WM-FAIL-ONSITE", "dimension": "work_mode", "verdict": "FAIL", "authority": ["OR-04"] },
+    { "code": "WM-UNKNOWN-AMBIGUOUS", "dimension": "work_mode", "verdict": "UNKNOWN", "authority": ["CAREER_DOC §4 Work Mode", "P0_SPEC §4.3"] },
+    { "code": "WM-UNKNOWN-ABSENT", "dimension": "work_mode", "verdict": "UNKNOWN", "authority": ["CAREER_DOC §4 Work Mode", "P0_SPEC §4.3"] },
+    { "code": "COMP-PASS-AT-OR-ABOVE-FLOOR", "dimension": "compensation", "verdict": "PASS", "authority": ["OR-03a"] },
+    { "code": "COMP-FAIL-BELOW-FLOOR", "dimension": "compensation", "verdict": "FAIL", "authority": ["OR-03a"] },
+    { "code": "COMP-UNKNOWN-RANGE-STRADDLES", "dimension": "compensation", "verdict": "UNKNOWN", "authority": ["OQ-01"] },
+    { "code": "COMP-UNKNOWN-NON-NUMERIC", "dimension": "compensation", "verdict": "UNKNOWN", "authority": ["OR-03b"] },
+    { "code": "COMP-UNKNOWN-ABSENT", "dimension": "compensation", "verdict": "UNKNOWN", "authority": ["OR-03b"] },
+    { "code": "COMP-UNKNOWN-EXTERNAL-BENCHMARK-ONLY", "dimension": "compensation", "verdict": "UNKNOWN", "authority": ["OR-03b", "P0_SPEC §4.2"], "authored_in": "0.1.0" },
+    { "code": "COMP-UNKNOWN-NO-INR-BASIS", "dimension": "compensation", "verdict": "UNKNOWN", "authority": ["OQ-02"] },
+    { "code": "COMP-UNKNOWN-NOT-ANNUALIZABLE", "dimension": "compensation", "verdict": "UNKNOWN", "authority": ["OQ-02"], "authored_in": "0.1.0" },
+    { "code": "COMP-UNKNOWN-UNIT-UNDETERMINED", "dimension": "compensation", "verdict": "UNKNOWN", "authority": ["OQ-02", "P0_SPEC §4.2"], "authored_in": "0.1.0" }
+  ],
+
+  "future_signals": {
+    "statement": "Recorded here so the intent is preserved and versioned. NONE of this is part of the P0 hard gate, and none of it may be read as an eligibility requirement.",
+    "ai_native_ai_in_production": {
+      "id": "FS-01",
+      "gating": false,
+      "p0_scope": false,
+      "stage": "Opportunity Quality — future",
+      "authority": ["P0_SPEC §15"],
+      "signal": "Companies demonstrating deployed AI systems should receive additional Opportunity Quality consideration where evidence shows AI operating in real production workflows, particularly customer-facing or consequential systems.",
+      "example_system_classes": [
+        "AI agents",
+        "customer-support agents",
+        "automated approvals",
+        "refunds or waivers",
+        "account actions",
+        "escalation decisions",
+        "other systems where an AI system can materially affect a customer or business outcome"
+      ],
+      "explicit_non_requirement": "AI-native company status is NOT a P0 eligibility requirement. A posting is not vetoed, downgraded, or preferred at the gate on this basis."
+    },
+    "ai_quality_reference_case": {
+      "id": "FS-02",
+      "gating": false,
+      "p0_scope": false,
+      "case": "The Ria cancellation-fee transcript is retained as an example/evidence candidate for future AI Quality Engineering evaluation work.",
+      "authority": ["P0_SPEC §16"],
+      "metric_mapping_status": "NOT MAPPED. No ALTM metric id is asserted for this case. No claim is made that existing ALTM metrics cover agent action authorization, sycophancy, scope overreach, or consequential tool use — that would require verifying such metrics exist in ai-quality-engineering, which this artifact does not do and does not assume.",
+      "boundary": "ai-quality-engineering is not modified, read into, or depended upon by this ruleset."
+    }
+  },
+
+  "validation_cases": {
+    "statement": "Conformance vectors for this ruleset version. Each case names the rules that fire and the expected verdict. These are policy assertions carried by the artifact — they are not a test implementation and no gate code is implied by their presence.",
+    "threshold_reference": "T = 2000000 INR per annum, inclusive",
+    "cases": [
+      {
+        "id": "V-01", "input": "Remote + ₹22 LPA",
+        "work_mode": { "normalized": "REMOTE", "rule": "WM-R1", "verdict": "PASS" },
+        "compensation": { "state": "CONFIRMED_ANNUAL_INR", "annual_min": 2200000, "annual_max": 2200000, "rule": "COMP-R1", "verdict": "PASS" },
+        "expected_verdict": "PASS", "requires_human_review": false,
+        "expected_reason_codes": ["WM-PASS-REMOTE", "COMP-PASS-AT-OR-ABOVE-FLOOR"],
+        "eligible_for_scoring": true
+      },
+      {
+        "id": "V-02", "input": "Remote + ₹20 LPA (exactly at threshold)",
+        "work_mode": { "normalized": "REMOTE", "rule": "WM-R1", "verdict": "PASS" },
+        "compensation": { "state": "CONFIRMED_ANNUAL_INR", "annual_min": 2000000, "annual_max": 2000000, "rule": "COMP-R1", "verdict": "PASS" },
+        "expected_verdict": "PASS", "requires_human_review": false,
+        "expected_reason_codes": ["WM-PASS-REMOTE", "COMP-PASS-AT-OR-ABOVE-FLOOR"],
+        "eligible_for_scoring": true,
+        "asserts": "The threshold is inclusive."
+      },
+      {
+        "id": "V-03", "input": "Remote + ₹19 LPA",
+        "work_mode": { "normalized": "REMOTE", "rule": "WM-R1", "verdict": "PASS" },
+        "compensation": { "state": "CONFIRMED_ANNUAL_INR", "annual_min": 1900000, "annual_max": 1900000, "rule": "COMP-R2", "verdict": "FAIL" },
+        "expected_verdict": "FAIL", "requires_human_review": false,
+        "expected_reason_codes": ["COMP-FAIL-BELOW-FLOOR"],
+        "eligible_for_scoring": false,
+        "asserts": "Below-floor is vetoed, not rounded up. Also asserts the ₹18L value in resume_config.json has no effect — under that stale figure ₹19 LPA would have passed."
+      },
+      {
+        "id": "V-04", "input": "Remote + salary unstated",
+        "work_mode": { "normalized": "REMOTE", "rule": "WM-R1", "verdict": "PASS" },
+        "compensation": { "state": "ABSENT", "rule": "COMP-R5", "verdict": "UNKNOWN" },
+        "expected_verdict": "UNKNOWN", "requires_human_review": true,
+        "expected_reason_codes": ["COMP-UNKNOWN-ABSENT"],
+        "eligible_for_scoring": false,
+        "asserts": "OR-03b. Queued and surfaced, never treated as satisfying the floor, never auto-shortlisted above a confirmed qualifying posting."
+      },
+      {
+        "id": "V-05", "input": "Remote + ₹18–24 LPA",
+        "work_mode": { "normalized": "REMOTE", "rule": "WM-R1", "verdict": "PASS" },
+        "compensation": { "state": "CONFIRMED_ANNUAL_INR", "annual_min": 1800000, "annual_max": 2400000, "rule": "COMP-R3", "verdict": "UNKNOWN" },
+        "expected_verdict": "UNKNOWN", "requires_human_review": true,
+        "expected_reason_codes": ["COMP-UNKNOWN-RANGE-STRADDLES"],
+        "eligible_for_scoring": false,
+        "asserts": "OQ-01. Not PASS because the maximum reaches ₹20 LPA; not FAIL because the minimum is below it."
+      },
+      {
+        "id": "V-06", "input": "Hybrid + ₹30 LPA",
+        "work_mode": { "normalized": "HYBRID", "rule": "WM-R2", "verdict": "FAIL" },
+        "compensation": { "state": "CONFIRMED_ANNUAL_INR", "annual_min": 3000000, "annual_max": 3000000, "rule": "COMP-R1", "verdict": "PASS" },
+        "expected_verdict": "FAIL", "requires_human_review": false,
+        "expected_reason_codes": ["WM-FAIL-HYBRID"],
+        "eligible_for_scoring": false,
+        "asserts": "A high salary cannot outbid the work-mode veto. FAIL dominates PASS."
+      },
+      {
+        "id": "V-07", "input": "On-site + ₹30 LPA",
+        "work_mode": { "normalized": "ONSITE", "rule": "WM-R3", "verdict": "FAIL" },
+        "compensation": { "state": "CONFIRMED_ANNUAL_INR", "annual_min": 3000000, "annual_max": 3000000, "rule": "COMP-R1", "verdict": "PASS" },
+        "expected_verdict": "FAIL", "requires_human_review": false,
+        "expected_reason_codes": ["WM-FAIL-ONSITE"],
+        "eligible_for_scoring": false
+      },
+      {
+        "id": "V-08", "input": "Remote + services/staffing company + ₹25 LPA",
+        "work_mode": { "normalized": "REMOTE", "rule": "WM-R1", "verdict": "PASS" },
+        "compensation": { "state": "CONFIRMED_ANNUAL_INR", "annual_min": 2500000, "annual_max": 2500000, "rule": "COMP-R1", "verdict": "PASS" },
+        "company_type_signal": "SERVICES_STAFFING",
+        "expected_verdict": "PASS", "requires_human_review": false,
+        "expected_reason_codes": ["WM-PASS-REMOTE", "COMP-PASS-AT-OR-ABOVE-FLOOR"],
+        "eligible_for_scoring": true,
+        "asserts": "OR-04. Company type is recorded, contributes no reason code, and produces no FAIL. The verdict must be identical to the same posting at a product company."
+      },
+      {
+        "id": "V-09", "input": "Remote + $60,000 annual salary",
+        "work_mode": { "normalized": "REMOTE", "rule": "WM-R1", "verdict": "PASS" },
+        "compensation": { "state": "NON_INR_ANNUAL", "currency": "USD", "period": "per_annum", "stated_value": 60000, "inr_equivalent_value": null, "conversion_confidence_status": "NOT_CONVERTED_NO_BASIS", "rule": "COMP-R7", "verdict": "UNKNOWN" },
+        "expected_verdict": "UNKNOWN", "requires_human_review": true,
+        "expected_reason_codes": ["COMP-UNKNOWN-NO-INR-BASIS"],
+        "eligible_for_scoring": false,
+        "asserts": "OQ-02. The deterministic conversion path is defined (COMP-R8 plus the currency_conversion block) but its source is REQUIRES_CONFIGURATION in 0.1.0, so no rate is invented and the figure is not compared against T. Once a source is configured under a new version, COMP-R8 converts and defers to COMP-R1..R3."
+      },
+      {
+        "id": "V-10", "input": "Remote + $30/hour with no reliable annualization basis",
+        "work_mode": { "normalized": "REMOTE", "rule": "WM-R1", "verdict": "PASS" },
+        "compensation": { "state": "NON_ANNUAL_NOT_ANNUALIZABLE", "currency": "USD", "period": "per_hour", "stated_value": 30, "rule": "COMP-R9", "verdict": "UNKNOWN" },
+        "expected_verdict": "UNKNOWN", "requires_human_review": true,
+        "expected_reason_codes": ["COMP-UNKNOWN-NOT-ANNUALIZABLE"],
+        "eligible_for_scoring": false,
+        "asserts": "OQ-02. No assumed hours-per-year constant is applied. The non-annualizable determination is reached before, and independently of, any currency question."
+      },
+      {
+        "id": "V-11", "input": "Remote + \"competitive salary\"",
+        "work_mode": { "normalized": "REMOTE", "rule": "WM-R1", "verdict": "PASS" },
+        "compensation": { "state": "NON_NUMERIC_CLAIM", "rule": "COMP-R4", "verdict": "UNKNOWN" },
+        "expected_verdict": "UNKNOWN", "requires_human_review": true,
+        "expected_reason_codes": ["COMP-UNKNOWN-NON-NUMERIC"],
+        "eligible_for_scoring": false
+      },
+      {
+        "id": "V-12", "input": "Remote + salary inferred from an external salary website only",
+        "work_mode": { "normalized": "REMOTE", "rule": "WM-R1", "verdict": "PASS" },
+        "compensation": { "state": "EXTERNAL_BENCHMARK_ONLY", "rule": "COMP-R6", "verdict": "UNKNOWN" },
+        "expected_verdict": "UNKNOWN", "requires_human_review": true,
+        "expected_reason_codes": ["COMP-UNKNOWN-EXTERNAL-BENCHMARK-ONLY"],
+        "eligible_for_scoring": false,
+        "asserts": "Version 0.1.0 defines no external source as authoritative compensation evidence, so the benchmark is recorded as human context only and cannot produce PASS. Declaring such a source authoritative would require an Owner ruling and a new ruleset version."
+      }
+    ]
+  },
+
+  "open_items_not_closed_by_this_artifact": [
+    { "id": "F-01", "summary": "Career doc §4 Work Mode phrasing implies a pre-scoring engagement-type veto that OR-04 does not establish.", "status": "FLAGGED, UNRESOLVED", "effect_on_ruleset": "None. No engagement-type gate is created." },
+    { "id": "OR-05 residual", "summary": "Operational test for '-only' role/technology exclusions.", "status": "OPEN", "effect_on_ruleset": "Dimension excluded from the gate." },
+    { "id": "OR-07", "summary": "Whether OR-04 supersedes the career document's contract-scoped product-company condition.", "status": "OPEN", "effect_on_ruleset": "No engagement-type gate dimension." },
+    { "id": "OR-09", "summary": "What the '~15/day' baseline counted.", "status": "OPEN", "effect_on_ruleset": "None." },
+    { "id": "OR-10", "summary": "Whether 25–30/day means surfaced or submitted.", "status": "OPEN", "effect_on_ruleset": "None." },
+    { "id": "OR-02 residual", "summary": "Whether the four search buckets are an eligibility gate or only query seeds.", "status": "OPEN", "effect_on_ruleset": "No bucket-based gate dimension." },
+    { "id": "CONFLICT-1", "summary": "n8n / SQLite write boundary.", "status": "OPEN", "effect_on_ruleset": "None." },
+    { "id": "CONFLICT-3", "summary": "Runtime SQLite database tracked in git.", "status": "OPEN", "effect_on_ruleset": "None." },
+    { "id": "CONFLICT-8", "summary": "API authentication absent.", "status": "OPEN", "effect_on_ruleset": "None." },
+    { "id": "JS-24", "summary": "Migration runner and history table.", "status": "P0 scope, not on the critical path.", "effect_on_ruleset": "None." },
+    { "id": "JS-28", "summary": "Migration 004 unapplied and unauthorized.", "status": "OPEN", "effect_on_ruleset": "None." },
+    { "id": "JS-29", "summary": "data/resume_config.json holds the obsolete ₹18L values.", "status": "OPEN — backlog. File unchanged.", "effect_on_ruleset": "None — the file is declared a non-authoritative input and is not read." },
+    { "id": "DOC-01", "summary": "AI_QA_Learning_Roadmap_Scope.md, cited by the career doc, does not exist.", "status": "OPEN — recorded", "effect_on_ruleset": "None." },
+    { "id": "DOC-02", "summary": "Pasted markdown(20260828-140604).md, named as a planning input, does not exist.", "status": "OPEN — recorded", "effect_on_ruleset": "None." },
+    { "id": "CURRENCY-SOURCE", "summary": "currency_conversion.source is REQUIRES_CONFIGURATION — no provider, cadence, or rate table exists in the repository.", "status": "OPEN — requires a separately authorized configuration action and a new ruleset version.", "effect_on_ruleset": "COMP-R8 dormant; every non-INR annual figure resolves UNKNOWN via COMP-R7." }
+  ],
+
+  "explicit_boundaries": {
+    "statement": "Recorded so that a later reader can tell what this artifact did and did not do.",
+    "this_artifact_is_not": [
+      "a gate implementation",
+      "a scorer or any scoring configuration",
+      "an ingestion configuration",
+      "a database schema, migration, or migration authorization",
+      "an n8n workflow or Gmail integration",
+      "a replacement for data/resume_config.json"
+    ],
+    "migration_005": "Authorized by CONFLICT-2 but NOT applied, and not touched by this artifact. Application requires a session explicitly authorizing execution, per P0_IMPLEMENTATION_SPEC.md §10.4.",
+    "next_task": "P0-02 — gate implementation — is a separate, separately authorized task. Creating this artifact does not begin it."
+  },
+
+  "changelog": [
+    {
+      "version": "0.1.0",
+      "date": "2026-08-29",
+      "change": "Initial ruleset. Encodes the work-mode and compensation hard gate from CAREER_DOC §4 as ruled by OR-03a, OR-03b, OR-04, OQ-01 and OQ-02. Company type recorded as non-gating per OR-04. Currency conversion defined but marked REQUIRES_CONFIGURATION per OQ-02.",
+      "authorized_by": "Repository Owner, P0 task 1 authorization dated 2026-08-29",
+      "rulings_incorporated": ["OR-03a", "OR-03b", "OR-04", "OQ-01", "OQ-02"]
+    }
+  ]
+}

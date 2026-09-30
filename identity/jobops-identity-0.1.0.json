@@ -1,0 +1,459 @@
+{
+  "artifact": {
+    "identity_version": "jobops-identity@0.1.0",
+    "task": "P0-07",
+    "authority": [
+      "P0_IMPLEMENTATION_SPEC.md 8 (cross-source deduplication: layers, uncertainty, scope)",
+      "P0_IMPLEMENTATION_SPEC.md 8.2 (L1/L2/L3/L4 and their confidence)",
+      "P0_IMPLEMENTATION_SPEC.md 8.3 (uncertainty is recorded, never assumed away)",
+      "P0_IMPLEMENTATION_SPEC.md 8.4 (dedup scope: suppression at L1/L2/L4; opportunities included)",
+      "P0_IMPLEMENTATION_SPEC.md 13 X7 (duplicates controlled)",
+      "JOBOPS_SCALING_EXECUTION_PLAN.md P0-07 (source-agnostic by construction)"
+    ],
+    "note": "This artifact is the identity authority. No host rule, tracking parameter, legal suffix, ATS pattern, outcome name or reason code is hardcoded in Python; every one of them is read from here, so an auditor can answer 'why did the system consider these two postings the same job?' without reading code.",
+    "not_authority_for": [
+      "Eligibility. Identity is not a policy layer and never produces or alters a gate verdict (P0_SPEC 2.3).",
+      "Application state. Identity never reads or writes status, stage, scores or human decisions.",
+      "Compensation and work mode. Those belong to policy/jobops-policy-0.1.0.json."
+    ]
+  },
+  "layers": [
+    {
+      "id": "L1",
+      "key": "(source_portal, external_id)",
+      "confidence": "high",
+      "suppression_grade": true,
+      "description": "Source-native posting id, namespaced by portal. LinkedIn job ids are numeric and stable.",
+      "reason_code": "ID-L1-MATCH"
+    },
+    {
+      "id": "L2",
+      "key": "canonical_identity_url",
+      "confidence": "medium-high",
+      "suppression_grade": true,
+      "description": "Canonicalized posting URL: scheme and host normalized, tracking parameters stripped, fragment removed, listing and root URLs rejected as identities.",
+      "reason_code": "ID-L2-MATCH"
+    },
+    {
+      "id": "L3",
+      "key": "(normalized_company, normalized_title, normalized_location)",
+      "confidence": "medium",
+      "suppression_grade": false,
+      "suppression_note": "P0_SPEC 8.4 grants suppression at L1/L2/L4 confidence only. An exact L3 match is therefore a probable duplicate for human review, never a definite one.",
+      "requires_all_components": true,
+      "description": "Conservative composite. Exact equality of all three normalized components. No token reordering, no synonym expansion, no geographic inference, no similarity scoring.",
+      "reason_code": "ID-L3-MATCH"
+    },
+    {
+      "id": "L4",
+      "key": "(ats_system, ats_tenant, requisition_id)",
+      "confidence": "high-when-present",
+      "suppression_grade": true,
+      "description": "Employer ATS requisition id, namespaced by ATS system and tenant. A bare requisition id is never an identity on its own: the same number is issued independently by unrelated ATS systems.",
+      "reason_code": "ID-L4-MATCH"
+    }
+  ],
+  "outcomes": {
+    "definite_duplicate": {
+      "name": "DEFINITE_DUPLICATE",
+      "identity_asserted": true,
+      "identity_uncertain": false,
+      "requires_human_review": false,
+      "suppress_from_review": true,
+      "condition": "Matched at a suppression-grade layer (L1, L2 or L4) with no contradiction at another high-confidence layer."
+    },
+    "probable_duplicate": {
+      "name": "PROBABLE_DUPLICATE",
+      "identity_asserted": false,
+      "identity_uncertain": true,
+      "requires_human_review": true,
+      "suppress_from_review": false,
+      "condition": "Matched exactly at L3 only. P0_SPEC 8.4 does not grant L3 suppression grade, so identity is not asserted and the candidate is linked to its probable match and surfaced."
+    },
+    "identity_uncertain": {
+      "name": "IDENTITY_UNCERTAIN",
+      "identity_asserted": false,
+      "identity_uncertain": true,
+      "requires_human_review": true,
+      "suppress_from_review": false,
+      "condition": "A near-match rather than an exact match (P0_SPEC 8.3), or a match at one high-confidence layer contradicted by another. Retained, linked to its probable match, surfaced to the human. Never auto-merged."
+    },
+    "distinct": {
+      "name": "DISTINCT",
+      "identity_asserted": false,
+      "identity_uncertain": false,
+      "requires_human_review": false,
+      "suppress_from_review": false,
+      "condition": "No layer matched and no near-match was produced."
+    }
+  },
+  "pair_outcome_rule": "Within one candidate/record pair the outcome is decided by the strongest layer that matched, then downgraded to IDENTITY_UNCERTAIN if any conflict rule fires for that same pair. A conflict never upgrades an outcome.",
+  "overall_outcome_precedence": [
+    "DEFINITE_DUPLICATE",
+    "IDENTITY_UNCERTAIN",
+    "PROBABLE_DUPLICATE",
+    "DISTINCT"
+  ],
+  "overall_outcome_precedence_note": "Across pairs, the candidate's outcome is that of its strongest pair. A clean L1 match against one record is not weakened by a near-match against a different record - identity with the first record is established evidence, and the near-match is retained in matches[] and reported as has_uncertain_match rather than discarded or allowed to mask the established match.",
+  "url_canonicalization": {
+    "allowed_schemes": [
+      "http",
+      "https"
+    ],
+    "canonical_scheme": "https",
+    "strip_fragment": true,
+    "strip_fragment_note": "P0_SPEC 8.2: a listing-page URL with a #fragment 'is not a posting'. The fragment is removed, and a URL that has nothing but a root path once the fragment is gone is rejected as an identity rather than stored as one.",
+    "lowercase_host": true,
+    "strip_leading_www": true,
+    "strip_leading_www_note": "www is the only subdomain stripped for undeclared hosts. Blanket subdomain stripping is unsafe: for a Workday tenant host the subdomain IS the employer, and for jobs.lever.co it is the product.",
+    "strip_trailing_slash": true,
+    "lowercase_path": false,
+    "lowercase_path_note": "Paths are case-sensitive on many hosts. Two paths differing only in case are treated as different identities rather than silently merged.",
+    "sort_query_parameters": true,
+    "tracking_parameters": [
+      "utm_source",
+      "utm_medium",
+      "utm_campaign",
+      "utm_term",
+      "utm_content",
+      "utm_id",
+      "gh_src",
+      "gh_jid",
+      "trk",
+      "trkinfo",
+      "refid",
+      "refid_",
+      "originaltrackingid",
+      "trackingid",
+      "position",
+      "pagenum",
+      "eboard",
+      "src",
+      "source",
+      "ref",
+      "referer",
+      "referrer",
+      "fbclid",
+      "gclid",
+      "msclkid",
+      "mc_cid",
+      "mc_eid",
+      "lipi",
+      "licu",
+      "recommendedflavor",
+      "savedsearchid",
+      "currentjobid"
+    ],
+    "tracking_parameters_note": "Matched case-insensitively. Unrecognized parameters are KEPT: a parameter such as ?id=NIM2919 carries the posting identity, and dropping unknown parameters would silently merge distinct postings.",
+    "reject_root_path": true,
+    "bare_listing_paths": [
+      "^/(careers|career|jobs|job|search|openings|opportunities|positions|vacancies)/?$"
+    ],
+    "bare_listing_paths_note": "Applied only when the URL carries no query string. https://site.com/job?id=NIM2919 is a posting; https://site.com/jobs is a listing.",
+    "host_families": [
+      {
+        "name": "linkedin",
+        "source_portal": "linkedin",
+        "host_pattern": "^(?:[a-z]{2}|www)?\\.?linkedin\\.com$",
+        "canonical_host": "linkedin.com",
+        "posting_path_pattern": "^/jobs/view/(?:[^/]*-)?(\\d+)/?$",
+        "external_id_group": 1,
+        "canonical_path_template": "/jobs/view/{external_id}",
+        "note": "in.linkedin.com/jobs/view/<slug>-<id> and www.linkedin.com/jobs/view/<id> are the same posting because the same source-native id is present in both paths. The canonical form is rebuilt from that id, so the slug is not treated as identity-bearing."
+      },
+      {
+        "name": "remoteok",
+        "source_portal": "remoteok",
+        "host_pattern": "^(?:www\\.)?remoteok\\.com$",
+        "canonical_host": "remoteok.com",
+        "posting_path_pattern": "^/remote-jobs/(?:[^/]*-)?(\\d+)/?$",
+        "external_id_group": 1,
+        "canonical_path_template": "/remote-jobs/{external_id}"
+      },
+      {
+        "name": "lever",
+        "source_portal": null,
+        "host_pattern": "^jobs\\.lever\\.co$",
+        "canonical_host": "jobs.lever.co",
+        "posting_path_pattern": "^/([^/]+)/([0-9a-fA-F-]{16,})/?$",
+        "note": "A single-segment path such as /Sprinto is a company board, not a posting, and is rejected as an identity."
+      },
+      {
+        "name": "greenhouse",
+        "source_portal": null,
+        "host_pattern": "^(?:boards|job-boards)\\.greenhouse\\.io$",
+        "canonical_host": "boards.greenhouse.io",
+        "posting_path_pattern": "^/([^/]+)/jobs/(\\d+)/?$"
+      },
+      {
+        "name": "ashby",
+        "source_portal": null,
+        "host_pattern": "^jobs\\.ashbyhq\\.com$",
+        "canonical_host": "jobs.ashbyhq.com",
+        "posting_path_pattern": "^/([^/]+)/([0-9a-fA-F-]{16,})/?$"
+      },
+      {
+        "name": "workday",
+        "source_portal": null,
+        "host_pattern": "^([^.]+)\\.[a-z0-9]+\\.myworkdayjobs\\.com$",
+        "posting_path_pattern": "^(?:/[a-z]{2}-[A-Z]{2})?/[^/]+/job/[^/]+/[^/]+/?$",
+        "note": "The tenant is the leading host label and is preserved. The host is not rewritten because the tenant subdomain is the employer."
+      }
+    ]
+  },
+  "ats_systems": [
+    {
+      "name": "workday",
+      "host_pattern": "^([^.]+)\\.[a-z0-9]+\\.myworkdayjobs\\.com$",
+      "tenant_group": 1,
+      "requisition_pattern": "_([A-Za-z]{1,6}[0-9]{3,12})/?$",
+      "requisition_group": 1,
+      "requisition_source": "path"
+    },
+    {
+      "name": "greenhouse",
+      "host_pattern": "^(?:boards|job-boards)\\.greenhouse\\.io$",
+      "tenant_pattern": "^/([^/]+)/jobs/\\d+",
+      "tenant_group": 1,
+      "requisition_pattern": "^/[^/]+/jobs/(\\d+)/?$",
+      "requisition_group": 1,
+      "requisition_source": "path"
+    },
+    {
+      "name": "lever",
+      "host_pattern": "^jobs\\.lever\\.co$",
+      "tenant_pattern": "^/([^/]+)/",
+      "tenant_group": 1,
+      "requisition_pattern": "^/[^/]+/([0-9a-fA-F-]{16,})/?$",
+      "requisition_group": 1,
+      "requisition_source": "path"
+    },
+    {
+      "name": "ashby",
+      "host_pattern": "^jobs\\.ashbyhq\\.com$",
+      "tenant_pattern": "^/([^/]+)/",
+      "tenant_group": 1,
+      "requisition_pattern": "^/[^/]+/([0-9a-fA-F-]{16,})/?$",
+      "requisition_group": 1,
+      "requisition_source": "path"
+    }
+  ],
+  "ats_note": "A requisition id is only ever an identity together with its ATS system and tenant. requisition_id 12345 on two unrelated ATS systems is two different jobs, and this artifact provides no key under which they could collide.",
+  "text_normalization": {
+    "company": {
+      "steps": [
+        "lowercase",
+        "punctuation_to_space",
+        "collapse_whitespace",
+        "strip_legal_suffixes"
+      ],
+      "legal_suffixes": [
+        "inc",
+        "incorporated",
+        "llc",
+        "llp",
+        "ltd",
+        "limited",
+        "pvt",
+        "private",
+        "plc",
+        "gmbh",
+        "b v",
+        "n v",
+        "ag",
+        "s a",
+        "s p a",
+        "corp",
+        "corporation",
+        "co",
+        "company",
+        "pte",
+        "sdn bhd"
+      ],
+      "legal_suffix_note": "Stripped repeatedly from the end only, and never to an empty string. Nothing else is removed: a country or division qualifier such as 'Group - India' is retained, because dropping it would merge a subsidiary into its parent.",
+      "never": [
+        "abbreviation expansion",
+        "similarity scoring",
+        "token reordering",
+        "stopword removal beyond the declared legal suffixes"
+      ]
+    },
+    "title": {
+      "steps": [
+        "lowercase",
+        "punctuation_to_space",
+        "collapse_whitespace"
+      ],
+      "never": [
+        "seniority stripping",
+        "synonym expansion",
+        "keyword extraction",
+        "similarity scoring"
+      ],
+      "note": "Two titles match only when they normalize to the same string. 'AI QA Engineer' and 'AI Quality Assurance Engineer' are different titles here, and that is the intended conservative reading."
+    },
+    "location": {
+      "steps": [
+        "lowercase",
+        "punctuation_to_space",
+        "collapse_whitespace"
+      ],
+      "never": [
+        "city to region mapping",
+        "country inference",
+        "remote to location coercion",
+        "treating an absent location as a wildcard"
+      ],
+      "unknown_tokens": [
+        "unknown",
+        "n a",
+        "na",
+        "not specified",
+        "none",
+        "null"
+      ],
+      "unknown_tokens_note": "A location normalizing to one of these is NOT EVALUABLE, exactly as an absent location is. It is never positive identity evidence and never matches another unknown."
+    }
+  },
+  "near_match_rules": [
+    {
+      "id": "NM-L3-PARTIAL",
+      "condition": "normalized_company and normalized_title are equal, and normalized_location is not evaluable on at least one side.",
+      "outcome": "IDENTITY_UNCERTAIN",
+      "reason_code": "ID-L3-PARTIAL",
+      "note": "P0_SPEC 8.3: a near-match rather than an exact match does not assert identity. An absent location is not evidence of sameness."
+    }
+  ],
+  "distinctness_rules": [
+    {
+      "id": "DR-L3-LOCATION",
+      "condition": "normalized_company and normalized_title are equal, both locations are evaluable, and they differ.",
+      "outcome": "DISTINCT",
+      "note": "Two requisitions for the same title at the same employer in different locations are different requisitions. A differing evaluable location is counter-evidence, not a near-match."
+    }
+  ],
+  "conflict_rules": [
+    {
+      "id": "CF-L1",
+      "condition": "Both records carry an L1 key for the same source_portal and the external_ids differ.",
+      "reason_code": "ID-CONFLICT-L1"
+    },
+    {
+      "id": "CF-L2",
+      "condition": "Both records carry a canonical identity URL that was REBUILT FROM a source-native id (a host family declaring canonical_path_template), they are in the same host family, and the canonical URLs differ.",
+      "reason_code": "ID-CONFLICT-L2",
+      "note": "Restricted to id-derived canonical URLs on purpose. Two URLs on one ATS host that differ only by locale prefix or title slug are the same requisition, not a contradiction, and one posting legitimately has both a LinkedIn URL and an employer ATS URL."
+    },
+    {
+      "id": "CF-L4",
+      "condition": "Both records carry an ATS requisition for the same (ats_system, ats_tenant) and the requisition_ids differ.",
+      "reason_code": "ID-CONFLICT-L4"
+    }
+  ],
+  "conflict_note": "A conflict downgrades a suppression-grade match to IDENTITY_UNCERTAIN. It never upgrades anything. Differing L3 text alongside an L1/L2/L4 match is recorded as a noted difference, not a conflict: employers rename and postings get re-titled, and a title edit is not evidence of a different job.",
+  "match_scope": {
+    "tables": [
+      "scraped_jobs",
+      "opportunities"
+    ],
+    "opportunities_note": "P0_SPEC 8.4: matching an opportunities row is what prevents re-surfacing something already applied to. Every status is in scope, including applied, rejected and archived rows.",
+    "opportunities_l1_derivation": "opportunities has no external_id column. An L1 key is derived for an opportunities row ONLY when its job_url matches a declared host family whose posting path contains the source-native id. That is reading an id the URL demonstrably carries, not inferring one.",
+    "read_only": true,
+    "read_only_note": "The resolver opens the database read-only. Identity is not application outcome: no status, stage, verdict, score or human decision is read as input or written as output."
+  },
+  "determinism": {
+    "candidate_ordering": "Index records are compared in ascending record_ref order.",
+    "best_match_selection": "Highest-confidence matching layer first, in declared layer order L1, L2, L4, L3; ties broken by ascending record_ref.",
+    "note": "The same candidate against the same index yields a byte-identical resolution record modulo resolved_at."
+  },
+  "reason_codes": {
+    "ID-L1-MATCH": {
+      "layer": "L1",
+      "meaning": "Same source portal and same source-native external id."
+    },
+    "ID-L2-MATCH": {
+      "layer": "L2",
+      "meaning": "Same canonical identity URL."
+    },
+    "ID-L3-MATCH": {
+      "layer": "L3",
+      "meaning": "Same normalized company, title and location."
+    },
+    "ID-L4-MATCH": {
+      "layer": "L4",
+      "meaning": "Same ATS system, tenant and requisition id."
+    },
+    "ID-L3-PARTIAL": {
+      "layer": "L3",
+      "meaning": "Company and title match; location is not evaluable on at least one side. Identity is not asserted."
+    },
+    "ID-L3-LOCATION-DIFFERS": {
+      "layer": "L3",
+      "meaning": "Company and title match but both locations are evaluable and differ. Treated as distinct."
+    },
+    "ID-NO-MATCH": {
+      "layer": null,
+      "meaning": "No identity layer matched any record in scope."
+    },
+    "ID-L1-ABSENT": {
+      "layer": "L1",
+      "meaning": "No source-native external id is available for this record."
+    },
+    "ID-L4-ABSENT": {
+      "layer": "L4",
+      "meaning": "No ATS requisition id is available for this record."
+    },
+    "ID-L3-NOT-EVALUABLE": {
+      "layer": "L3",
+      "meaning": "Company, title or location is missing, so L3 was not evaluated."
+    },
+    "ID-URL-ABSENT": {
+      "layer": "L2",
+      "meaning": "No URL was supplied for this record."
+    },
+    "ID-URL-UNSUPPORTED-SCHEME": {
+      "layer": "L2",
+      "meaning": "URL scheme is not http or https. Not usable as an identity."
+    },
+    "ID-URL-UNPARSEABLE": {
+      "layer": "L2",
+      "meaning": "URL could not be parsed into a host and path."
+    },
+    "ID-URL-ROOT-ONLY": {
+      "layer": "L2",
+      "meaning": "URL addresses a host root with no posting path. Not a posting."
+    },
+    "ID-URL-FRAGMENT-ONLY": {
+      "layer": "L2",
+      "meaning": "URL distinguished only by a fragment. P0_SPEC 8.2 states such a URL is not a posting."
+    },
+    "ID-URL-LISTING-PAGE": {
+      "layer": "L2",
+      "meaning": "URL addresses a listing or company board, not a single posting."
+    },
+    "ID-URL-NOT-A-POSTING-PATH": {
+      "layer": "L2",
+      "meaning": "Host belongs to a declared family and the path does not match that family's posting form."
+    },
+    "ID-CONFLICT-L1": {
+      "layer": "L1",
+      "meaning": "Same portal, different source-native external ids."
+    },
+    "ID-CONFLICT-L2": {
+      "layer": "L2",
+      "meaning": "Same host family, different canonical identity URLs."
+    },
+    "ID-CONFLICT-L4": {
+      "layer": "L4",
+      "meaning": "Same ATS system and tenant, different requisition ids."
+    }
+  },
+  "prohibited": [
+    "Auto-merging on fuzzy or near-match evidence (P0_SPEC 8.3).",
+    "Treating an absent or UNKNOWN value as positive identity evidence.",
+    "Collapsing IDENTITY_UNCERTAIN into a duplicate outcome.",
+    "Deleting, merging or rewriting any existing row. The resolver detects, classifies and reports.",
+    "Reading or writing application status, stage, gate verdict or score.",
+    "Re-evaluating eligibility. Identity is not a policy layer."
+  ]
+}

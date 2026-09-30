@@ -1,0 +1,80 @@
+{
+  "artifact": {
+    "config_version": "linkedin-ingestion@0.1.0",
+    "task": "P0-06",
+    "authority": [
+      "OWNER_RULINGS_LOG.md OR-08 (Path A, radar-scoped deferral)",
+      "P0_IMPLEMENTATION_SPEC.md 7.1 (verified CLI surface)",
+      "P0_IMPLEMENTATION_SPEC.md 7.3 (rate limiting and volume)",
+      "P0_IMPLEMENTATION_SPEC.md 7.5 (raw-source evidence and provenance)",
+      "P0_IMPLEMENTATION_SPEC.md 7.6 (query seeding)",
+      "ai-job-search/.agents/skills/linkedin-search/SKILL.md (personal use only, keep volume low)"
+    ],
+    "note": "Caps are ceilings, not targets. Reaching a cap is a normal terminating condition reported in the run summary - never an error, and never a reason to raise the cap."
+  },
+
+  "cli": {
+    "skill_dir": "~/projects/ai-job-search/.agents/skills/linkedin-search",
+    "entrypoint": "cli/src/cli.ts",
+    "runtime": "bun",
+    "runtime_args": ["run"],
+    "invocation_note": "Subprocess with a stdout-JSON contract. No module of ai-job-search is imported (JS-R3).",
+    "results_per_page": 10,
+    "results_per_page_note": "Fixed by the CLI. Not configurable here; recorded so a run summary can state the page arithmetic."
+  },
+
+  "volume_caps": {
+    "max_search_calls_per_run": 2,
+    "max_detail_calls_per_run": 5,
+    "max_pages_per_query": 1,
+    "max_results_per_run": 10,
+    "daily_max_search_calls": 10,
+    "daily_max_detail_calls": 30,
+    "min_interval_seconds": 5.0,
+    "concurrency": 1,
+    "concurrency_note": "Serial by construction. The adapter has no parallel code path against this source (P0_SPEC 7.3)."
+  },
+
+  "detail_fetch_policy": {
+    "rule": "detail is fetched only for search hits that are not already known under the L1 identity (source_portal, external_id).",
+    "basis": "P0_SPEC 7.3 - 'detail fetched only for pre-filtered candidates, never for every search hit'.",
+    "not_a_policy_filter": "The pre-filter is an identity/efficiency filter. No posting is ever skipped for a policy reason - the adapter performs no policy evaluation (P0_SPEC 7.2)."
+  },
+
+  "query_seeds": {
+    "basis": "P0_IMPLEMENTATION_SPEC.md 7.6 - career doc 4's four target buckets. Seeds queries only; NOT an eligibility filter (OR-02 residual open).",
+    "buckets": [
+      "AI Quality Engineer",
+      "AI Test Automation Engineer",
+      "Data & AI Quality Engineer",
+      "AI Governance Engineer"
+    ],
+    "default_location": "India",
+    "default_jobage_days": 7,
+    "remote_filter": "remote",
+    "remote_filter_note": "Server-side volume reducer only. Never evidence. The JD text decides work mode; a portal filter that conflicts with it yields AMBIGUOUS under WM-N1 (P0_SPEC 4.3, 7.6)."
+  },
+
+  "persistence": {
+    "candidate_table": "scraped_jobs",
+    "source_name": "LinkedIn",
+    "external_id_namespace": "linkedin",
+    "external_id_format": "linkedin:<linkedin_job_id>",
+    "identity_contract": "scraped_jobs.external_id is UNIQUE. Insertion uses INSERT OR IGNORE, so a re-run of the same bounded query inserts zero duplicate rows.",
+    "dedup_boundary": "This is the existing repository identity contract only (L1, namespaced source-native id). L2 URL canonicalization, L3 company+title+location, L4 ATS requisition id, cross-source matching against opportunities, and identity_uncertain handling are P0-07 and are NOT implemented here (P0_SPEC 8)."
+  },
+
+  "provenance_store": {
+    "root": "data/ingestion",
+    "raw_dir": "data/ingestion/raw/linkedin-search/<run_id>",
+    "runs_dir": "data/ingestion/runs",
+    "candidates_dir": "data/ingestion/candidates",
+    "state_dir": "data/ingestion/state",
+    "rationale": "P0_SPEC 7.5 defines raw_payload_ref as a 'pointer to the retained raw record'. The pointer is a run-scoped file path, so no schema column and no migration is required. Run-scoped paths mean nothing is ever overwritten."
+  },
+
+  "scoring": {
+    "enabled": false,
+    "note": "P0-06 does not score. match_score, classification, matched_skills, matched_domains, red_flags and recommendation are left NULL on rows this pipeline writes - they belong to the scorer, which is downstream of the gate and out of scope here."
+  }
+}

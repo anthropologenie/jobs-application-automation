@@ -1,0 +1,231 @@
+{
+  "artifact": {
+    "review_version": "jobops-review@0.1.0",
+    "task": "P0-08",
+    "authority": [
+      "P0_IMPLEMENTATION_SPEC.md 9 (review queue: reuse, three lanes, inspection set, human actions)",
+      "P0_IMPLEMENTATION_SPEC.md 5.2 (no FLAG primary verdict; FAIL is retained and visible)",
+      "P0_IMPLEMENTATION_SPEC.md 5.3 (a verdict is immutable against later ruleset changes)",
+      "P0_IMPLEMENTATION_SPEC.md 8.4 (suppression at L1/L2/L4 confidence; opportunities in scope)",
+      "P0_IMPLEMENTATION_SPEC.md 13 X8 (review queue works)",
+      "OWNER_RULINGS_LOG.md OR-03b (UNKNOWN is queued and surfaced, never passed, never rejected)",
+      "OWNER_RULINGS_LOG.md OR-04 (work-mode veto; company type is not a hard veto)"
+    ],
+    "note": "This artifact declares the review PRESENTATION contract: which lanes exist, how a verdict maps to a lane, how a lane is ordered, and what a human decision may and may not do. It declares NO policy. A verdict, a reason code and a threshold are read from the candidate ledger as the gate wrote them.",
+    "not_authority_for": [
+      "Eligibility. The queue never evaluates policy and never re-derives a verdict.",
+      "Identity. Duplicate outcomes are read from identity/jobops-identity-0.1.0.json's resolver.",
+      "Scoring. P0-08 does not score, rank by fit, or order across lanes."
+    ]
+  },
+
+  "source_of_truth": {
+    "machine_verdict": {
+      "store": "data/ingestion/candidates/<run_id>.jsonl",
+      "field": "gate_verdict",
+      "written_by": "P0-06 ingestion pipeline, from policy.HardEligibilityGate",
+      "mutability": "append-only, run-scoped, never rewritten (P0_SPEC 5.3, 7.5)",
+      "note": "The queue READS this. It never writes a verdict, and it has no code path that could."
+    },
+    "evidence_and_provenance": {
+      "store": "data/ingestion/candidates/<run_id>.jsonl + data/ingestion/raw/<portal>/<run_id>/",
+      "fields": ["provenance", "located_evidence", "field_provenance",
+                 "gate_verdict.evidence", "gate_verdict.unresolved_evidence",
+                 "extractor_version", "normalizer_version"],
+      "mutability": "append-only, run-scoped"
+    },
+    "candidate_row": {
+      "store": "data/jobs-tracker.db :: scraped_jobs",
+      "access": "read-only",
+      "note": "Title, company, URL, location and scraped_at. The queue opens this database read-only."
+    },
+    "identity": {
+      "store": "derived on demand by identity/ (jobops-identity@0.1.0)",
+      "access": "read-only",
+      "note": "Deterministic for a given database state, so it is recomputed rather than cached. No identity result is persisted by P0-08."
+    },
+    "human_decision": {
+      "store": "data/review/decisions.jsonl",
+      "access": "append-only",
+      "written_by": "P0-08 only",
+      "note": "The ONLY thing P0-08 persists. Physically separate from the machine verdict store so that a human decision can never be mistaken for, or overwrite, a machine verdict. No database write and no migration is involved.",
+      "reversal": "A decision is never edited or deleted. A reversal is a NEW record naming the decision it supersedes, so the history of what the human thought and when stays intact."
+    },
+    "application_outcome": {
+      "store": "data/jobs-tracker.db :: opportunities.status",
+      "access": "read-only from the queue",
+      "written_by": "the existing opportunities workflow and POST /api/import-scraped-job/{id}",
+      "note": "P0-08 does not write it. Promotion into opportunities remains the existing, separately authorized bridge, invoked by the human."
+    }
+  },
+
+  "lanes": [
+    {
+      "id": "SHORTLIST",
+      "title": "Shortlist",
+      "verdict": "PASS",
+      "description": "Gate-eligible candidates. The only lane whose members are eligible for scoring.",
+      "active": true,
+      "order_by": ["evaluated_at_desc", "candidate_ref"],
+      "order_note": "P0-08 does not score and does not rank by fit. Ordering is recency then a stable key."
+    },
+    {
+      "id": "REVIEW",
+      "title": "Needs human review",
+      "verdict": "UNKNOWN",
+      "description": "The machine cannot decide and says so. First-class state (OR-03b): never passed, never rejected, never counted as meeting the floor.",
+      "active": true,
+      "order_by": ["evidence_gap", "candidate_ref"],
+      "order_note": "P0_SPEC 9.2: ordered by evidence-gap type so like escalations batch together."
+    },
+    {
+      "id": "BELOW_THRESHOLD",
+      "title": "Below the compensation floor",
+      "verdict": "FAIL",
+      "reason_codes_any": ["COMP-FAIL-BELOW-FLOOR"],
+      "description": "Vetoed on a confirmed numeric figure below the policy floor. Retained and visible, never scored.",
+      "active": true,
+      "order_by": ["reason_codes", "candidate_ref"]
+    },
+    {
+      "id": "EXCLUDED",
+      "title": "Excluded with reason",
+      "verdict": "FAIL",
+      "description": "Every other FAIL - a work-mode veto being the usual case. Retained with its reason codes and quoted trigger. P0_SPEC 5.2: this retention IS the career doc's 'flagged for manual review' outcome; no distinct EXCEPTION-FLAG verdict exists in P0.",
+      "active": true,
+      "order_by": ["reason_codes", "candidate_ref"]
+    },
+    {
+      "id": "NOT_EVALUATED",
+      "title": "Not evaluated by the gate",
+      "verdict": null,
+      "description": "A candidate row that no gate evaluation covers - it predates P0-02 or was never ingested through the P0-06 pipeline. This is the ABSENCE of a verdict, not a verdict. It is shown as unassessed and is never presented as any of PASS, UNKNOWN or FAIL.",
+      "active": true,
+      "order_by": ["candidate_ref"]
+    },
+    {
+      "id": "SUPPRESSED_DUPLICATE",
+      "title": "Suppressed as a duplicate",
+      "verdict": null,
+      "description": "Identity resolved to a definite duplicate at suppression-grade confidence (L1/L2/L4). Removed from the ACTIVE lanes so the human is not asked twice - notably not asked again about something already in opportunities. The record itself is untouched and remains retrievable here with its full evidence.",
+      "active": false,
+      "order_by": ["candidate_ref"]
+    }
+  ],
+
+  "lane_assignment": {
+    "order_of_operations": [
+      "1. Identity suppression. A suppression-grade definite duplicate goes to SUPPRESSED_DUPLICATE regardless of verdict.",
+      "2. Verdict lane. PASS -> SHORTLIST; UNKNOWN -> REVIEW; FAIL -> BELOW_THRESHOLD if a declared reason code matches, else EXCLUDED.",
+      "3. No verdict -> NOT_EVALUATED."
+    ],
+    "suppression_precedes_verdict_note": "A candidate already represented in opportunities has already had the human's attention. Re-surfacing it is the specific waste P0_SPEC 8.4 exists to prevent. Suppression hides it from the ACTIVE presentation and does nothing else - no delete, no merge, no status change, no provenance loss.",
+    "cross_lane_ordering": "PROHIBITED. Lanes are separate collections and are never merged into one ranked list, which is the structural guarantee that an UNKNOWN can never be ordered above a confirmed-qualifying PASS (OR-03b, T-12)."
+  },
+
+  "duplicate_presentation": {
+    "DEFINITE_DUPLICATE": {
+      "suppress_from_active_queue": true,
+      "requires_layer_in": ["L1", "L2", "L4"],
+      "note": "Suppression grade is read from the identity artifact, never redeclared here."
+    },
+    "PROBABLE_DUPLICATE": {
+      "suppress_from_active_queue": false,
+      "presentation": "warning",
+      "note": "An exact L3 match. Surfaced in its verdict lane with the relationship shown, and the human decides. It is never labelled a definite duplicate and never auto-suppressed."
+    },
+    "IDENTITY_UNCERTAIN": {
+      "suppress_from_active_queue": false,
+      "presentation": "warning",
+      "note": "A near-match. Retained, linked to its probable match, surfaced. Uncertainty stays uncertainty."
+    },
+    "DISTINCT": {
+      "suppress_from_active_queue": false,
+      "presentation": "none"
+    }
+  },
+
+  "decision_kinds": [
+    {
+      "id": "ACCEPT",
+      "meaning": "The human has decided to apply to this posting.",
+      "is_terminal": false,
+      "reversible": true,
+      "submits_anything": false,
+      "note": "A workflow boundary, not an action. It records the decision and names the promotion path; it does not submit an application, contact anyone, or write to opportunities. Promotion into opportunities remains the existing POST /api/import-scraped-job/{id} bridge, invoked by the human."
+    },
+    {
+      "id": "SKIP",
+      "meaning": "The human has decided not to apply.",
+      "is_terminal": false,
+      "reversible": true,
+      "submits_anything": false
+    },
+    {
+      "id": "DEFER",
+      "meaning": "The human wants to come back to this.",
+      "is_terminal": false,
+      "reversible": true,
+      "submits_anything": false
+    },
+    {
+      "id": "RESOLVE_UNKNOWN",
+      "meaning": "The human asserts a value for a dimension the machine could not determine.",
+      "is_terminal": false,
+      "reversible": true,
+      "submits_anything": false,
+      "requires": ["dimension", "human_assertion", "human_basis"],
+      "note": "Recorded as a HUMAN ASSERTION with its stated basis. It does not become machine evidence, does not enter the evidence array, does not change the verdict, and does not make the candidate eligible for scoring. The machine's UNKNOWN and the reason it was UNKNOWN both remain readable afterwards."
+    },
+    {
+      "id": "CONFIRM_DUPLICATE",
+      "meaning": "The human confirms a probable duplicate relationship.",
+      "is_terminal": false,
+      "reversible": true,
+      "submits_anything": false,
+      "requires": ["related_record_ref"],
+      "note": "Records the human's judgement about a relationship the identity layer rated probable. It does not merge, delete or rewrite either record, and it does not promote L3 evidence to definite identity."
+    },
+    {
+      "id": "REJECT_DUPLICATE",
+      "meaning": "The human judges that a probable duplicate relationship is wrong.",
+      "is_terminal": false,
+      "reversible": true,
+      "submits_anything": false,
+      "requires": ["related_record_ref"]
+    },
+    {
+      "id": "REOPEN",
+      "meaning": "The human reverses an earlier decision.",
+      "is_terminal": false,
+      "reversible": true,
+      "submits_anything": false,
+      "requires": ["supersedes"],
+      "note": "Appended, never destructive. The superseded decision stays in the ledger and stays readable."
+    }
+  ],
+
+  "decision_record_fields": {
+    "decision_id": "stable id, derived from the record's content and position",
+    "candidate_ref": "the queue key this decision is about",
+    "kind": "one of decision_kinds",
+    "decided_at": "ISO 8601, when the human decided",
+    "actor": "who decided; always a human in P0",
+    "note": "free text the human wrote",
+    "supersedes": "decision_id this reverses, when the kind requires it",
+    "machine_context": "the verdict, ruleset_version and evaluated_at the human was looking at when they decided - so a later reader can tell what the machine knew at the moment of the decision, not merely what it knows now"
+  },
+
+  "prohibited": [
+    "Writing, deriving, overriding or re-deriving a gate verdict.",
+    "Promoting UNKNOWN to PASS, or demoting UNKNOWN to FAIL, for any reason including a human decision to apply.",
+    "Treating a search or portal filter as evidence of work mode.",
+    "Treating an absent value as a favourable one.",
+    "Ordering candidates across lanes into a single ranked list.",
+    "Scoring, ranking by fit, or any Opportunity Quality signal.",
+    "Deleting, merging or rewriting a historical record in order to suppress a duplicate.",
+    "Promoting an L3 probable duplicate to definite identity.",
+    "Submitting an application, contacting a recruiter, or sending any message.",
+    "Editing or deleting a decision already written to the ledger."
+  ]
+}

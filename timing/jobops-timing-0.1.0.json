@@ -1,0 +1,443 @@
+{
+  "artifact": {
+    "timing_version": "jobops-timing@0.1.0",
+    "task": "P0-10",
+    "authority": [
+      "P0_IMPLEMENTATION_SPEC.md 11 (time instrumentation: stages measured, derived measures, reporting discipline, what must not happen)",
+      "P0_IMPLEMENTATION_SPEC.md 11.4 (a stage that cannot be measured is reported as unmeasured, never as zero)",
+      "P0_IMPLEMENTATION_SPEC.md 13 X10 (time instrumentation produces useful measurements)",
+      "JOBOPS_SCALING_EXECUTION_PLAN.md 4 P0-10 (time-to-decision and time-to-submit recorded per candidate; a report yields median minutes/candidate and candidates/day over a >=7-day window)",
+      "OWNER_RULINGS_LOG.md OR-03b (UNKNOWN is a first-class state; it is never passed and never rejected)",
+      "review/jobops-review-0.1.0.json (the human decision contract this instrumentation observes and does not alter)"
+    ],
+    "note": "This artifact declares the MEASUREMENT contract: which events exist, what each timestamp actually means, which metrics may be computed from them, and what must be reported as unmeasured. It declares no policy, no lane, no decision kind and no identity rule. It observes the funnel; it does not shape it.",
+    "not_authority_for": [
+      "Eligibility. No metric reads, derives, or influences a gate verdict.",
+      "Review presentation. Lanes, decision kinds and suppression grades are read from review/jobops-review-0.1.0.json and identity/jobops-identity-0.1.0.json.",
+      "Application workflow. opportunities.status is owned by the existing opportunities workflow and is read, never written and never reinterpreted.",
+      "Scoring or ranking. P0-10 measures the funnel; it does not order it."
+    ]
+  },
+
+  "measurement_states": {
+    "MEASURED": "A value computed from events that actually exist. A measured value of zero is a real zero and is reported as MEASURED with value 0.",
+    "NOT_AVAILABLE": "The events required for this metric do not exist for any candidate yet. The mechanism to observe them EXISTS; nothing has been recorded through it. Never rendered as 0.",
+    "INSUFFICIENT_DATA": "Some events exist but fewer than the declared minimum sample, so a median, a p90 or a rate would be misleading. The sample size is always reported alongside.",
+    "NOT_MEASURABLE": "No observation mechanism exists in the current architecture for this quantity. It is not a data-collection gap that time will close; it would require new instrumentation and, where it would change the operator's workflow, an owner decision first.",
+    "INCONSISTENT": "The required events exist but are ordered such that the interval would be negative. The interval is withheld and the candidate is named, rather than a negative or absolute-value duration being reported.",
+    "note": "ZERO, NOT_AVAILABLE, INSUFFICIENT_DATA and NOT_MEASURABLE are four different facts. No reader and no caller is asked to infer which one a bare 0 means, because a bare 0 is never emitted for a missing measurement."
+  },
+
+  "events": [
+    {
+      "id": "CANDIDATE_OBSERVED",
+      "meaning": "The source returned this posting to the ingestion run. The moment the posting was first seen by JobOps, not the moment the posting was published.",
+      "origin": "machine",
+      "actor": "the P0-06 ingestion pipeline",
+      "store": "data/ingestion/candidates/<run_id>.jsonl",
+      "field": "provenance.source_fetched_at",
+      "precision": "microsecond, ISO 8601, UTC-offset aware",
+      "authority": "authoritative",
+      "measures": "elapsed_lifecycle",
+      "observed": true,
+      "written_by": "P0-06",
+      "note": "Absent for the 77 legacy scraped_jobs rows, which predate the ingestion ledger. For those rows discovery time is NOT_AVAILABLE, not equal to their scraped_at."
+    },
+    {
+      "id": "CANDIDATE_DETAIL_FETCHED",
+      "meaning": "The full job description for this posting was retrieved, which is the input the gate actually evaluates.",
+      "origin": "machine",
+      "actor": "the P0-06 ingestion pipeline",
+      "store": "data/ingestion/candidates/<run_id>.jsonl",
+      "field": "provenance.detail_fetched_at",
+      "precision": "microsecond, ISO 8601, UTC-offset aware",
+      "authority": "authoritative",
+      "measures": "elapsed_lifecycle",
+      "observed": true,
+      "written_by": "P0-06"
+    },
+    {
+      "id": "CANDIDATE_EVALUATED",
+      "meaning": "The hard eligibility gate produced a verdict for this candidate under a named ruleset version.",
+      "origin": "machine",
+      "actor": "policy.HardEligibilityGate, invoked by the P0-06 pipeline",
+      "store": "data/ingestion/candidates/<run_id>.jsonl",
+      "field": "gate_verdict.evaluated_at",
+      "precision": "microsecond, ISO 8601, UTC-offset aware",
+      "authority": "authoritative",
+      "measures": "elapsed_lifecycle",
+      "observed": true,
+      "written_by": "P0-02 via P0-06",
+      "note": "A candidate seen in several runs has several evaluations. The most recent is current; the earlier ones are retained (P0_SPEC 5.3) and are visible as verdict history. Metrics use the CURRENT evaluation and say so."
+    },
+    {
+      "id": "CANDIDATE_INGESTED",
+      "meaning": "A scraped_jobs row was inserted for this candidate. Row creation, not observation and not evaluation.",
+      "origin": "machine",
+      "actor": "the P0-06 pipeline, or a legacy scraper for pre-P0-06 rows",
+      "store": "data/jobs-tracker.db :: scraped_jobs.scraped_at",
+      "field": "scraped_at",
+      "precision": "second, SQLite CURRENT_TIMESTAMP, UTC, stored WITHOUT an offset marker",
+      "authority": "authoritative for row creation",
+      "measures": "elapsed_lifecycle",
+      "observed": true,
+      "written_by": "the existing scraped_jobs insert contract",
+      "note": "Timezone-naive on the wire. This implementation reads it as UTC because SQLite's CURRENT_TIMESTAMP is UTC, and states that assumption rather than hiding it. For legacy rows this is the ONLY timestamp that exists, and it is a row-creation time, not a discovery time."
+    },
+    {
+      "id": "RUN_STARTED",
+      "meaning": "An ingestion run began.",
+      "origin": "machine",
+      "store": "data/ingestion/runs/<run_id>.json",
+      "field": "started_at",
+      "precision": "microsecond, ISO 8601, UTC-offset aware",
+      "authority": "authoritative",
+      "measures": "elapsed_lifecycle",
+      "observed": true,
+      "written_by": "P0-06"
+    },
+    {
+      "id": "RUN_FINISHED",
+      "meaning": "An ingestion run completed and its candidate ledger was closed.",
+      "origin": "machine",
+      "store": "data/ingestion/runs/<run_id>.json",
+      "field": "finished_at",
+      "precision": "microsecond, ISO 8601, UTC-offset aware",
+      "authority": "authoritative",
+      "measures": "elapsed_lifecycle",
+      "observed": true,
+      "written_by": "P0-06",
+      "note": "This is the earliest moment a candidate from that run could have appeared in a queue build. It is a LOWER BOUND on availability, not an observation that any human saw the candidate."
+    },
+    {
+      "id": "HUMAN_DECISION",
+      "meaning": "A human recorded a review decision (ACCEPT, SKIP, DEFER, RESOLVE_UNKNOWN, CONFIRM_DUPLICATE, REJECT_DUPLICATE, REOPEN) about this candidate.",
+      "origin": "human",
+      "actor": "the human reviewer",
+      "store": "data/review/decisions.jsonl",
+      "field": "decided_at",
+      "precision": "microsecond, ISO 8601, UTC-offset aware",
+      "authority": "authoritative",
+      "measures": "elapsed_lifecycle",
+      "observed": true,
+      "written_by": "P0-08",
+      "note": "ACCEPT means the human decided to apply. It is NOT a submission and never implies one. P0-10 writes nothing to this store and alters nothing in it."
+    },
+    {
+      "id": "APPLICATION_PROMOTED",
+      "meaning": "A candidate was promoted into the opportunities table through the human-invoked bridge, creating an application-workflow record.",
+      "origin": "machine record of a human-invoked action",
+      "actor": "the human, via POST /api/import-scraped-job/{id}",
+      "store": "data/jobs-tracker.db :: opportunities.created_at WHERE scraped_job_id IS NOT NULL",
+      "field": "created_at",
+      "precision": "second, UTC, stored WITHOUT an offset marker",
+      "authority": "authoritative for row creation",
+      "measures": "elapsed_lifecycle",
+      "observed": true,
+      "written_by": "the existing bridge endpoint",
+      "note": "The bridge creates the row with status 'Lead'. Promotion is entry into the application workflow. It is NOT preparation, NOT readiness and NOT submission, and this artifact forbids reading it as any of those."
+    },
+    {
+      "id": "APPLICATION_SUBMITTED",
+      "meaning": "A human explicitly recorded that they actually submitted this application to the employer, outside JobOps.",
+      "origin": "human",
+      "actor": "the human applicant",
+      "store": "data/application/submissions.jsonl",
+      "field": "submitted_at",
+      "precision": "declared per record: 'human_stated' when the human supplied the moment, 'recorded_now' when the record itself is the observation",
+      "authority": "authoritative",
+      "measures": "elapsed_lifecycle",
+      "observed": true,
+      "written_by": "P0-10, and only on an explicit human command",
+      "note": "Recording a submission is NOT submitting. JobOps never submits, never calls an employer or ATS endpoint, and never infers this event from any other action. It exists only because a human ran the record command and said so."
+    }
+  ],
+
+  "unobserved_events": [
+    {
+      "id": "QUEUE_AVAILABLE",
+      "meaning_if_it_existed": "The moment this candidate was actually surfaced to the human.",
+      "why_not_observed": "The review queue is a pure projection: it is rebuilt on demand from the ledger, the database, the identity layer and the decision ledger, and building it persists nothing. Nothing records that a queue containing this candidate was ever rendered to a person.",
+      "lower_bound_available": "RUN_FINISHED for the candidate's evaluating run - the earliest moment the candidate could have appeared. Exposed on the timeline as a clearly named derived bound, never as an observation and never as a metric endpoint.",
+      "what_would_be_required": "Persisting a surfacing record when the queue is rendered, which would make P0-08's read-only queue a writer. Not done: an owner decision, not an implementation choice."
+    },
+    {
+      "id": "REVIEW_STARTED",
+      "meaning_if_it_existed": "The moment the human began reading this candidate.",
+      "why_not_observed": "No command, endpoint or UI event in this repository marks the start of human attention. `--show` is a read-only display command and is not evidence that a person read what it printed.",
+      "what_would_be_required": "An explicit start/stop action performed by the human on every candidate - an intrusive manual timer. P0_SPEC 11 does not require it and P0-10 does not add it."
+    },
+    {
+      "id": "REVIEW_ENDED",
+      "meaning_if_it_existed": "The moment the human stopped reading this candidate.",
+      "why_not_observed": "Same as REVIEW_STARTED.",
+      "consequence": "ACTIVE HUMAN EFFORT IS NOT DIRECTLY MEASURABLE. Every duration this artifact declares is elapsed lifecycle time between two recorded events. None of them is a measurement of how long a person worked."
+    },
+    {
+      "id": "APPLICATION_READY_TO_SUBMIT",
+      "meaning_if_it_existed": "The moment an application was prepared and ready to send, which P0_SPEC 11.2 names as the end of the preparation stage.",
+      "why_not_observed": "No readiness state exists. opportunities.status has no 'drafted'-equivalent value; adding one is JS-11 / P1-06, explicitly P1.",
+      "consequence": "time_from_accept_to_ready_to_submit is NOT_MEASURABLE. The measurable neighbours are decision -> promotion and decision -> submission."
+    },
+    {
+      "id": "PER_CANDIDATE_SYSTEM_STAGE_TIMERS",
+      "meaning_if_it_existed": "Wall time per candidate for extraction, normalization, dedup and gate evaluation separately, as P0_SPEC 11.2's system rows describe.",
+      "why_not_observed": "P0-06 records run-level wall time and per-candidate fetch and evaluation instants, not per-stage durations. Adding stage timers means editing the ingestion pipeline, which P0-10 does not touch.",
+      "what_is_available_instead": "Run wall time, per-run candidate counts, and the observed -> detail -> evaluated instants per candidate, which bound the system cost from above."
+    }
+  ],
+
+  "non_events": [
+    {
+      "id": "opportunities.status = 'Applied'",
+      "why_it_is_not_a_submission_event": "It is a state in an 11-value application-workflow enum owned by the existing opportunities workflow. No contract in this repository defines when it is set, by whom, or that it means an external submission completed. Its companion applied_date is a DATE - day precision, no time of day - so it cannot express a time-to-submit at the resolution P0-10 measures.",
+      "treatment": "Read and reported as an application-workflow state, counted separately as legacy_applied_rows. It is never used as the submission endpoint of any duration."
+    },
+    {
+      "id": "ACCEPT",
+      "why_it_is_not_a_submission_event": "It is the human's decision to apply. The application had not been submitted at the moment it was recorded, and may never be.",
+      "treatment": "ACCEPT is the START of time_from_decision_to_submission and can never be its end. Recording an ACCEPT creates no submission record of any kind."
+    },
+    {
+      "id": "POST /api/import-scraped-job/{id}",
+      "why_it_is_not_a_submission_event": "The bridge copies a candidate into opportunities with status 'Lead'. It contacts no employer.",
+      "treatment": "Recorded as APPLICATION_PROMOTED - entry into the application workflow."
+    }
+  ],
+
+  "metrics": [
+    {
+      "id": "time_from_evaluation_to_decision",
+      "question": "How long between the machine producing a verdict and the human deciding what to do about it?",
+      "start_event": "CANDIDATE_EVALUATED",
+      "end_event": "HUMAN_DECISION",
+      "unit": "minutes",
+      "measures": "elapsed_lifecycle",
+      "is_active_human_effort": false,
+      "min_sample": 1,
+      "integrity_note": "This is wall-clock time across nights, weekends and everything else the human did. It is NOT review time and NOT effort. It must never be reported under either name."
+    },
+    {
+      "id": "time_from_queue_availability_to_decision",
+      "question": "How long between the candidate being surfaced to the human and the human deciding?",
+      "start_event": "QUEUE_AVAILABLE",
+      "end_event": "HUMAN_DECISION",
+      "unit": "minutes",
+      "measures": "elapsed_lifecycle",
+      "is_active_human_effort": false,
+      "state_override": "NOT_MEASURABLE",
+      "integrity_note": "QUEUE_AVAILABLE is not observed (see unobserved_events). Substituting the RUN_FINISHED lower bound would report a bound as an observation, so this metric stays NOT_MEASURABLE rather than being quietly approximated."
+    },
+    {
+      "id": "time_from_unknown_to_human_resolution",
+      "question": "How long does an UNKNOWN sit before a human resolves what the machine could not determine?",
+      "start_event": "CANDIDATE_EVALUATED",
+      "end_event": "HUMAN_DECISION",
+      "restricted_to": "candidates whose current verdict is UNKNOWN, and decisions of kind RESOLVE_UNKNOWN",
+      "unit": "minutes",
+      "measures": "elapsed_lifecycle",
+      "is_active_human_effort": false,
+      "min_sample": 1,
+      "integrity_note": "A RESOLVE_UNKNOWN records a human assertion beside the machine's UNKNOWN. The verdict stays UNKNOWN; this metric times the escalation, it does not close it."
+    },
+    {
+      "id": "time_from_decision_to_submission",
+      "question": "Once the human decides to apply, how long until the application is actually submitted?",
+      "start_event": "HUMAN_DECISION (standing ACCEPT)",
+      "end_event": "APPLICATION_SUBMITTED",
+      "unit": "minutes",
+      "measures": "elapsed_lifecycle",
+      "is_active_human_effort": false,
+      "min_sample": 1,
+      "integrity_note": "Computed only where BOTH events exist. A candidate with an ACCEPT and no submission record contributes to no duration and is counted as accepted_without_submission_record - never as a zero and never as a fabricated interval."
+    },
+    {
+      "id": "time_from_evaluation_to_submission",
+      "question": "End to end, how long from machine verdict to a real submission?",
+      "start_event": "CANDIDATE_EVALUATED",
+      "end_event": "APPLICATION_SUBMITTED",
+      "unit": "minutes",
+      "measures": "elapsed_lifecycle",
+      "is_active_human_effort": false,
+      "min_sample": 1
+    },
+    {
+      "id": "time_from_decision_to_promotion",
+      "question": "Once the human decides to apply, how long until the candidate enters the application workflow?",
+      "start_event": "HUMAN_DECISION (standing ACCEPT)",
+      "end_event": "APPLICATION_PROMOTED",
+      "unit": "minutes",
+      "measures": "elapsed_lifecycle",
+      "is_active_human_effort": false,
+      "min_sample": 1,
+      "integrity_note": "Promotion is entry into the workflow, not readiness and not submission. This is the measurable neighbour of the NOT_MEASURABLE preparation stage, and is labelled as such wherever it is reported."
+    },
+    {
+      "id": "candidates_discovered",
+      "question": "How many records did the sources return?",
+      "counts": "records returned by ingestion runs, from run manifests",
+      "measures": "count",
+      "note": "Records returned, not distinct candidates. Legacy rows have no run manifest and are NOT included; they are reported as legacy_rows_without_discovery_record."
+    },
+    {
+      "id": "candidates_ingested",
+      "question": "How many candidates became rows?",
+      "counts": "distinct candidates with a ledger record whose persistence outcome is a row write",
+      "measures": "count"
+    },
+    {
+      "id": "candidates_evaluated",
+      "question": "How many candidates did the gate actually evaluate?",
+      "counts": "distinct candidates with a current gate verdict",
+      "measures": "count",
+      "note": "The current evaluated funnel. Legacy NOT_EVALUATED rows are excluded by construction - they have no verdict - and are reported separately as legacy_not_evaluated_count."
+    },
+    {
+      "id": "distinct_review_candidates",
+      "question": "How many candidates was the human actually asked about?",
+      "counts": "evaluated candidates in an ACTIVE lane, i.e. excluding definite duplicates suppressed at L1/L2/L4",
+      "measures": "count",
+      "integrity_note": "Suppressed definite duplicates are excluded here so that re-observing one posting cannot inflate throughput."
+    },
+    {
+      "id": "candidates_human_reviewed",
+      "question": "How many candidates did the human actually work through?",
+      "counts": "distinct candidates carrying at least one recorded human decision",
+      "measures": "count",
+      "limitation": "A candidate the human read and did not decide on is invisible here, because reading is not recorded. This under-counts review and is stated wherever the number is reported."
+    },
+    {
+      "id": "human_decisions",
+      "question": "How many decisions were recorded?",
+      "counts": "decision records, all kinds, including superseded ones; standing decisions reported separately",
+      "measures": "count"
+    },
+    {
+      "id": "actual_submissions",
+      "question": "How many applications were actually submitted?",
+      "counts": "standing APPLICATION_SUBMITTED records",
+      "measures": "count"
+    },
+    {
+      "id": "unknown_rate",
+      "question": "What share of evaluated candidates could the machine not decide?",
+      "numerator": "evaluated candidates whose current verdict is UNKNOWN",
+      "denominator": "candidates_evaluated",
+      "measures": "rate",
+      "min_sample": 1,
+      "reporting_discipline": "P0_SPEC 11.4(3): also reported per dimension, because a blended figure hides which policy question is unanswerable from the source."
+    },
+    {
+      "id": "pass_to_apply_rate",
+      "numerator": "PASS candidates with a standing ACCEPT",
+      "denominator": "PASS candidates in an active lane",
+      "measures": "rate",
+      "min_sample": 1
+    },
+    {
+      "id": "unknown_to_apply_rate",
+      "numerator": "UNKNOWN candidates with a standing ACCEPT",
+      "denominator": "UNKNOWN candidates in an active lane",
+      "measures": "rate",
+      "min_sample": 1,
+      "integrity_note": "A human applying to an UNKNOWN does not make it a PASS. This rate exists to make that behaviour visible, per P0_SPEC 11.5 - a rising share of applications to UNKNOWN-on-salary candidates is a degradation, not a win."
+    },
+    {
+      "id": "fail_to_application_rate",
+      "numerator": "FAIL candidates with a standing ACCEPT",
+      "denominator": "FAIL candidates in an active lane",
+      "measures": "rate",
+      "min_sample": 1,
+      "integrity_note": "Expected to be zero. A non-zero value is a finding about the gate or the human, not a number to normalise."
+    },
+    {
+      "id": "definite_duplicate_suppression",
+      "question": "How much re-surfacing did identity prevent?",
+      "counts": "candidates suppressed from the active queue as definite duplicates at a suppression-grade layer",
+      "rate_denominator": "all candidates considered by the queue",
+      "measures": "count and rate"
+    },
+    {
+      "id": "probable_duplicate_review_count",
+      "question": "How many candidates need a human duplicate judgement?",
+      "counts": "active-lane candidates whose identity outcome is PROBABLE_DUPLICATE or IDENTITY_UNCERTAIN",
+      "measures": "count",
+      "integrity_note": "Counted as real review opportunities, because they are: a human must decide. They are never labelled definite duplicates and never suppressed."
+    },
+    {
+      "id": "candidates_reviewed_per_period",
+      "counts": "distinct candidates with a decision recorded on each UTC day",
+      "measures": "count per period",
+      "period": "UTC calendar day"
+    },
+    {
+      "id": "decisions_per_period",
+      "counts": "decision records per UTC day",
+      "measures": "count per period",
+      "period": "UTC calendar day"
+    },
+    {
+      "id": "submissions_per_period",
+      "counts": "standing submission records per UTC day, keyed on submitted_at",
+      "measures": "count per period",
+      "period": "UTC calendar day"
+    },
+    {
+      "id": "applications_per_unit_of_human_effort",
+      "question": "How many applications does an hour of human work produce?",
+      "measures": "not computed",
+      "state_override": "NOT_MEASURABLE",
+      "integrity_note": "The denominator is active human effort, and no event in this architecture observes it. Dividing by an elapsed lifecycle interval instead would produce a number that looks like productivity and is not. It is left NOT_MEASURABLE."
+    },
+    {
+      "id": "veto_rate_per_reason_code",
+      "question": "Which rule is doing the vetoing?",
+      "counts": "FAIL candidates per reason code, over evaluated candidates",
+      "measures": "rate",
+      "reporting_discipline": "P0_SPEC 11.4(2): never reported only in aggregate, because an over-broad rule and a correctly strict market look identical in aggregate."
+    },
+    {
+      "id": "unknown_rate_per_dimension",
+      "question": "Which policy question is unanswerable from the source?",
+      "counts": "UNKNOWN dimension verdicts per dimension, over evaluated candidates",
+      "measures": "rate",
+      "reporting_discipline": "P0_SPEC 11.4(3)."
+    }
+  ],
+
+  "population_rules": {
+    "current_evaluated_funnel": "Candidates carrying a gate verdict. This is the population every duration metric and every verdict-based rate is computed over.",
+    "legacy_not_evaluated": {
+      "definition": "scraped_jobs rows that no gate evaluation covers - they predate P0-02 or never went through the P0-06 pipeline.",
+      "treatment": "Counted once, on their own, as legacy_not_evaluated_count. Excluded from candidates_evaluated, from every duration metric, from every verdict rate and from every throughput figure.",
+      "prohibited": "Backfilling them through the current gate, fabricating an evaluation timestamp for them, or presenting them as newly evaluated."
+    },
+    "definite_duplicates": {
+      "treatment": "Suppressed from the active queue by P0-07/P0-08 at L1/L2/L4. Excluded from distinct_review_candidates and from every active-throughput count; counted and reported as suppression.",
+      "prohibited": "Counting a suppressed duplicate as an independent review opportunity."
+    },
+    "probable_duplicates": {
+      "treatment": "L3 and IDENTITY_UNCERTAIN candidates stay in their verdict lane, are counted as review opportunities, and are reported separately so the human duplicate-judgement load is visible."
+    }
+  },
+
+  "windows": {
+    "period": "UTC calendar day",
+    "exit_criterion_window_days": 7,
+    "note": "X10 requires at least 7 days of data. The report states the observed span of human events and whether it reaches that window. It never extrapolates a shorter span to a daily rate."
+  },
+
+  "prohibited": [
+    "Defining ACCEPT as SUBMITTED, or deriving a submission timestamp from a decision timestamp.",
+    "Deriving a submission from opportunities.status, from applied_date, or from any bridge invocation.",
+    "Reporting an elapsed lifecycle interval as review time, active human time, or effort.",
+    "Substituting one event's timestamp for another's when the first is missing.",
+    "Emitting 0 for a measurement that is missing, unavailable, insufficient or unmeasurable.",
+    "Emitting a negative or absolute-value duration when events are out of order.",
+    "Writing to any store P0-01..P0-08 owns: the candidate ledger, decisions.jsonl, scraped_jobs, opportunities, or any policy, identity or review artifact.",
+    "Writing to data/jobs-tracker.db at all.",
+    "Submitting an application, calling an employer or ATS endpoint, or making any external network request.",
+    "Backfilling legacy NOT_EVALUATED rows through the gate.",
+    "Counting a suppressed definite duplicate as an independent review opportunity."
+  ]
+}

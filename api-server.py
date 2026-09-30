@@ -8,9 +8,26 @@ from urllib.parse import urlparse, parse_qs
 import sys
 import threading
 from datetime import datetime
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+
+from ingestion.extraction import is_remote_flag, work_mode_from_candidate_fields
+from policy import HardEligibilityGate
+from review.decisions import Decision, DecisionError, DecisionStore, utc_now_iso
+from review.queue import ReviewQueue
+from review.ruleset import ReviewDriftError
 
 PORT = 8081
 DB_PATH = './data/jobs-tracker.db'
+
+# The scraped_jobs -> opportunities bridge needs the same work-mode
+# classification the ingestion pipeline uses, so a candidate does not change
+# work mode by being imported. The gate is constructed once, at startup, so a
+# policy/implementation disagreement fails loudly here rather than silently
+# degrading a verdict later. Only the normalizer is used below; no verdict is
+# evaluated in this file.
+WORK_MODE_NORMALIZER = HardEligibilityGate().normalizer
 
 SCRAPED_JOB_IMPORT_RE = re.compile(r'^/api/import-scraped-job/(\d+)$')
 
@@ -222,6 +239,11 @@ class APIHandler(http.server.BaseHTTPRequestHandler):
                 self._handle_scraped_jobs(query_components)
                 return  # _handle_scraped_jobs sends its own response
 
+            # P0-08 REVIEW QUEUE (read-only)
+            elif path == '/api/review-queue':
+                self._handle_review_queue(parse_qs(urlparse(self.path).query))
+                return  # _handle_review_queue sends its own response
+
             else:
                 self._send_json_response({"error": "Not found"})
 
@@ -419,6 +441,9 @@ class APIHandler(http.server.BaseHTTPRequestHandler):
                 self._send_json_response({
                     "error": f"Failed to add source: {str(e)}"
                 }, 500)
+        elif self.path == '/api/review-decision':
+            self._handle_review_decision()
+
         else:
             self._send_json_response({"error": "Not found"}, 404)
 
@@ -527,18 +552,35 @@ class APIHandler(http.server.BaseHTTPRequestHandler):
                 }, 409)
                 return
 
+            # Work mode is carried across the bridge, not dropped.
+            # Before this, the INSERT omitted is_remote entirely, so every
+            # imported row took the column default of 0 - a scraped job whose
+            # location said "Remote" became an opportunity marked not-remote.
+            #
+            # is_remote is set ONLY from a confirmed REMOTE classification.
+            # HYBRID and ONSITE are vetoed work modes and AMBIGUOUS/ABSENT are
+            # unresolved; all four leave the flag at 0, because the boolean
+            # cannot represent "unresolved" and the policy artifact forbids
+            # ambiguous language resolving to remote. The normalized enum
+            # remains the system of record for the decision (P0_SPEC 4.3).
+            normalized_work_mode, _work_mode_spans = work_mode_from_candidate_fields(
+                WORK_MODE_NORMALIZER,
+                location=job["location"],
+                description=job["description"],
+            )
+
             cur.execute("BEGIN")
             cur.execute(
                 """
                 INSERT INTO opportunities
                     (company, role, job_url, salary_range, source,
-                     tech_stack, status, scraped_job_id)
-                VALUES (?, ?, ?, ?, ?, ?, 'Lead', ?)
+                     tech_stack, status, scraped_job_id, is_remote)
+                VALUES (?, ?, ?, ?, ?, ?, 'Lead', ?, ?)
                 """,
                 (
                     job["company"], job["job_title"], job["job_url"],
                     job["salary_range"], job["source"], job["tags"],
-                    scraped_job_id,
+                    scraped_job_id, is_remote_flag(normalized_work_mode),
                 ),
             )
             new_opportunity_id = cur.lastrowid
@@ -552,6 +594,8 @@ class APIHandler(http.server.BaseHTTPRequestHandler):
                 "opportunity_id": new_opportunity_id,
                 "scraped_job_id": scraped_job_id,
                 "status": "imported",
+                "normalized_work_mode": normalized_work_mode,
+                "is_remote": is_remote_flag(normalized_work_mode),
             })
         except Exception as e:
             conn.rollback()
@@ -650,6 +694,115 @@ class APIHandler(http.server.BaseHTTPRequestHandler):
                 'success': False,
                 'error': str(e)
             }, 500)
+
+    # ---------------------------------------------------------------- P0-08
+
+    def _handle_review_queue(self, params):
+        """
+        The P0-08 review queue.
+
+        Read-only. The queue reads the candidate ledger (the machine verdict's
+        source of truth), scraped_jobs and opportunities through a read-only
+        connection, and the append-only human decision ledger. It writes
+        nothing and it derives no verdict.
+
+        Deliberately a sibling of /api/scraped-jobs rather than a parameter on
+        it: that endpoint's contract is score-driven (`min_score` defaults to
+        70) and every gate-evaluated candidate carries a NULL match_score,
+        so a verdict-keyed projection cannot be expressed through it without
+        breaking the dashboard's existing behaviour.
+
+            GET /api/review-queue                    lane counts + all lanes
+            GET /api/review-queue?lane=REVIEW        one lane
+            GET /api/review-queue?ref=scraped_jobs:78   one candidate, full evidence
+        """
+        try:
+            queue = ReviewQueue(db_path=Path(DB_PATH))
+            build = queue.build()
+
+            ref = params.get('ref', [None])[0]
+            if ref:
+                entry = build.entry(ref)
+                if entry is None:
+                    self._send_json_response(
+                        {'success': False,
+                         'error': f'No candidate {ref!r} in the review queue'}, 404)
+                    return
+                self._send_json_response({'success': True,
+                                          'review_version': build.review_version,
+                                          'identity_version': build.identity_version,
+                                          'entry': entry.as_dict()})
+                return
+
+            payload = build.as_dict()
+            lane = params.get('lane', [None])[0]
+            if lane:
+                if lane not in payload['lanes']:
+                    self._send_json_response(
+                        {'success': False, 'error': f'No lane {lane!r}',
+                         'lanes': list(payload['lanes'])}, 404)
+                    return
+                payload['lanes'] = {lane: payload['lanes'][lane]}
+
+            payload['success'] = True
+            self._send_json_response(payload)
+
+        except Exception as e:
+            self._send_json_response({'success': False, 'error': str(e)}, 500)
+
+    def _handle_review_decision(self):
+        """
+        Record one human review decision.
+
+        Appends to data/review/decisions.jsonl and nothing else. It writes no
+        database row, changes no gate verdict, changes no application status,
+        submits no application and contacts nobody. An ACCEPT records that the
+        human intends to apply; promoting the candidate into `opportunities`
+        remains POST /api/import-scraped-job/{id}, invoked separately by the
+        human.
+        """
+        try:
+            content_length = int(self.headers.get('Content-Length') or 0)
+            data = json.loads(self.rfile.read(content_length).decode('utf-8')) \
+                if content_length else {}
+
+            candidate_ref = (data.get('candidate_ref') or '').strip()
+            kind = (data.get('kind') or '').strip()
+            if not candidate_ref or not kind:
+                self._send_json_response(
+                    {'success': False,
+                     'error': 'candidate_ref and kind are both required'}, 400)
+                return
+
+            queue = ReviewQueue(db_path=Path(DB_PATH))
+            store = DecisionStore(ruleset=queue.ruleset)
+            record = store.record(Decision(
+                candidate_ref=candidate_ref,
+                kind=kind,
+                decided_at=data.get('decided_at') or utc_now_iso(),
+                note=data.get('note'),
+                supersedes=data.get('supersedes'),
+                dimension=data.get('dimension'),
+                human_assertion=data.get('human_assertion'),
+                human_basis=data.get('human_basis'),
+                related_record_ref=data.get('related_record_ref'),
+                machine_context=queue.machine_context_for(candidate_ref)))
+
+            self._send_json_response({
+                'success': True,
+                'decision': record,
+                'machine_verdict_unchanged': True,
+                'application_submitted': False,
+                'message': 'Human decision recorded. No application was '
+                           'submitted and no message was sent.',
+            }, 201)
+
+        except (DecisionError, ReviewDriftError) as e:
+            # A decision kind the artifact does not declare is the caller's
+            # error, not a server fault: the artifact is the list of kinds.
+            self._send_json_response({'success': False, 'error': str(e)}, 400)
+        except Exception as e:
+            self._send_json_response({'success': False, 'error': str(e)}, 500)
 
     def _handle_scraped_jobs_stats(self):
         """Get statistics about scraped jobs"""

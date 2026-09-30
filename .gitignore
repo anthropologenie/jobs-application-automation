@@ -55,3 +55,22 @@ data/n8n/
 # Generated inventory snapshots
 docs/inventory/db_inventory_*.md
 
+
+# P0-06 ingestion store. Raw LinkedIn payloads, the normalized candidate ledger
+# and the daily rate-limit counters stay local: the linkedin-search CLI is
+# personal-use-only and its output must not be redistributed. Run manifests
+# (data/ingestion/runs/) are counts and queries only, and remain committable as
+# audit evidence.
+data/ingestion/raw/
+data/ingestion/candidates/
+data/ingestion/state/
+
+# JobOps v2 runtime database (Phase B, OR-30 / OI-005): the runtime DB is not
+# tracked. Default location data/runtime/jobops.db, overridable with
+# JOBOPS_DB_PATH. The legacy v0.1 database is untracked going forward; its past
+# versions stay in history (no history rewrite, OI-024).
+data/runtime/
+data/jobs-tracker.db
+data/ingestion/
+data/review/
+data/application/

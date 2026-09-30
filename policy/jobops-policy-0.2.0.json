@@ -1,0 +1,3471 @@
+{
+  "artifact": {
+    "id": "jobops-policy",
+    "version": "0.2.0",
+    "ruleset_version": "jobops-policy@0.2.0",
+    "status": "ACTIVE for the v2 evaluation engine (evaluation/). The v0.1 engine (policy/gate.py) remains pinned to jobops-policy@0.1.0 and is unchanged.",
+    "created": "2026-09-29",
+    "phase": "Phase B",
+    "supersedes_draft": "docs/architecture/drafts/jobops-policy-0.2.0.draft.json (Phase A draft; retained as history)",
+    "authority": [
+      "OWNER_RULINGS_LOG.md OR-11..OR-30",
+      "Owner Phase B implementation command 2026-09-29",
+      "docs/architecture/JOBOPS_V2_OWNER_POLICY_SPEC.md"
+    ],
+    "v0_1_artifact": {
+      "path": "policy/jobops-policy-0.1.0.json",
+      "sha256": "afe05e5a31777410668180a2d50a06da7cfa21736159946273060be6bf1c051f",
+      "statement": "Recorded at Phase B. The v0.1 file is not modified; replay under v0.1 remains possible."
+    },
+    "interpretation": "Every threshold, lexicon, region table, title list, rule table, lane rule, flag and capacity parameter is data in this file. evaluation/ interprets it. Rule tables are ordered; first match wins. Predicates: equality, {'in': [...]}, {'is_null': true}, and numeric {'lt'|'lte'|'gt'|'gte': value or '$param'}.",
+    "verdicts": [
+      "PASS",
+      "FAIL",
+      "UNKNOWN"
+    ],
+    "precedence": [
+      "FAIL",
+      "UNKNOWN",
+      "PASS"
+    ],
+    "no_fourth_verdict": "Relevance, newness, lanes, completeness, preference, compensation bands and experience fit are separate outputs, never eligibility verdicts."
+  },
+  "candidate_profile": {
+    "relevant_ai_experience_years": 3,
+    "relevant_employers": [
+      "Bosch",
+      "Happiest Minds",
+      "Ascendion"
+    ],
+    "employment_location_country": "IN",
+    "ruling": [
+      "OR-11"
+    ]
+  },
+  "parameters": {
+    "floor": 1800000,
+    "target_min": 2400000,
+    "target_max": 2800000,
+    "expected_ask": 2600000,
+    "monthly_multiplier": 12,
+    "bengaluru_hybrid_max_office_days": 3,
+    "short_term_contract_months": 6,
+    "language_confidence_threshold": 0.95,
+    "heuristic_language_max_confidence": 0.9,
+    "review_daily_cap": 10,
+    "review_carry_days": 3,
+    "parking_min_years": 7,
+    "parking_seniority": [
+      "STAFF",
+      "PRINCIPAL",
+      "ARCHITECT"
+    ],
+    "fx_max_age_days": null,
+    "fx_max_age_days_note": "Not ruled (OI-040): the most recent snapshot on or before the observation date is used; no staleness limit."
+  },
+  "eligibility_dimensions": [
+    "geography",
+    "language",
+    "compensation",
+    "employment_type",
+    "employment_relationship",
+    "employer_type"
+  ],
+  "rules": {
+    "geography": [
+      {
+        "rule_id": "GEO-R14",
+        "when": {
+          "relocation_abroad": true
+        },
+        "verdict": "FAIL",
+        "flags": [],
+        "ruling": [
+          "OR-15"
+        ],
+        "note": ""
+      },
+      {
+        "rule_id": "GEO-R15",
+        "when": {
+          "visa_sponsorship": true
+        },
+        "verdict": "FAIL",
+        "flags": [],
+        "ruling": [
+          "OR-15"
+        ],
+        "note": ""
+      },
+      {
+        "rule_id": "GEO-R04",
+        "when": {
+          "foreign_work_authorization": true
+        },
+        "verdict": "FAIL",
+        "flags": [],
+        "ruling": [
+          "OR-14"
+        ],
+        "note": ""
+      },
+      {
+        "rule_id": "GEO-R17",
+        "when": {
+          "residence_requirement": "OTHER_INDIA"
+        },
+        "verdict": "FAIL",
+        "flags": [],
+        "ruling": [
+          "Phase B §9"
+        ],
+        "note": "Explicit residence/base/relocation requirement in a non-Bengaluru Indian city (OI-012)."
+      },
+      {
+        "rule_id": "GEO-R18",
+        "when": {
+          "residence_requirement": "ABROAD"
+        },
+        "verdict": "FAIL",
+        "flags": [],
+        "ruling": [
+          "OR-14",
+          "Phase B §8"
+        ],
+        "note": ""
+      },
+      {
+        "rule_id": "GEO-R19",
+        "when": {
+          "mode": "CONFLICTING"
+        },
+        "verdict": "UNKNOWN",
+        "flags": [
+          "WORK_ARRANGEMENT_AMBIGUOUS"
+        ],
+        "ruling": [
+          "OR-14 (ambiguity -> UNKNOWN)"
+        ],
+        "note": ""
+      },
+      {
+        "rule_id": "GEO-R01",
+        "when": {
+          "mode": "REMOTE",
+          "remote_scope": "WORLDWIDE"
+        },
+        "verdict": "PASS",
+        "flags": [],
+        "ruling": [
+          "OR-14"
+        ],
+        "note": ""
+      },
+      {
+        "rule_id": "GEO-R02",
+        "when": {
+          "mode": "REMOTE",
+          "remote_scope": "INDIA_EXPLICIT"
+        },
+        "verdict": "PASS",
+        "flags": [],
+        "ruling": [
+          "OR-14"
+        ],
+        "note": ""
+      },
+      {
+        "rule_id": "GEO-R20",
+        "when": {
+          "mode": "REMOTE",
+          "remote_scope": "BENGALURU"
+        },
+        "verdict": "PASS",
+        "flags": [],
+        "ruling": [
+          "Phase B §8 (Bengaluru remote)"
+        ],
+        "note": ""
+      },
+      {
+        "rule_id": "GEO-R21",
+        "when": {
+          "mode": "REMOTE",
+          "remote_scope": "UNQUALIFIED_INDIA_LISTING"
+        },
+        "verdict": "PASS",
+        "flags": [],
+        "ruling": [
+          "Phase B §8 (OI-011)"
+        ],
+        "note": ""
+      },
+      {
+        "rule_id": "GEO-R22",
+        "when": {
+          "mode": "REMOTE",
+          "remote_scope": "CITY_HUB_OTHER_INDIA"
+        },
+        "verdict": "UNKNOWN",
+        "flags": [
+          "CITY_HUB_LISTED"
+        ],
+        "ruling": [
+          "Phase B §9"
+        ],
+        "note": ""
+      },
+      {
+        "rule_id": "GEO-R03",
+        "when": {
+          "mode": "REMOTE",
+          "remote_scope": "REGION_EXCLUDES_INDIA"
+        },
+        "verdict": "FAIL",
+        "flags": [],
+        "ruling": [
+          "OR-14",
+          "Phase B §10 (OI-029)"
+        ],
+        "note": ""
+      },
+      {
+        "rule_id": "GEO-R05",
+        "when": {
+          "mode": "REMOTE",
+          "remote_scope": {
+            "in": [
+              "REGION_INCLUDES_INDIA_IMPLICIT",
+              "UNQUALIFIED_NO_LISTING",
+              "UNQUALIFIED_FOREIGN_LISTING"
+            ]
+          }
+        },
+        "verdict": "UNKNOWN",
+        "flags": [
+          "GEO_REGION_AMBIGUOUS"
+        ],
+        "ruling": [
+          "OR-14",
+          "Phase B §10"
+        ],
+        "note": ""
+      },
+      {
+        "rule_id": "GEO-R11",
+        "when": {
+          "mode": "HYBRID",
+          "city_class": {
+            "in": [
+              "OTHER_INDIA",
+              "ABROAD"
+            ]
+          }
+        },
+        "verdict": "FAIL",
+        "flags": [],
+        "ruling": [
+          "OR-15"
+        ],
+        "note": ""
+      },
+      {
+        "rule_id": "GEO-R09",
+        "when": {
+          "mode": "HYBRID",
+          "city_class": "BENGALURU",
+          "flexible": true
+        },
+        "verdict": "UNKNOWN",
+        "flags": [
+          "HYBRID_FLEXIBLE"
+        ],
+        "ruling": [
+          "OR-15"
+        ],
+        "note": ""
+      },
+      {
+        "rule_id": "GEO-R08",
+        "when": {
+          "mode": "HYBRID",
+          "city_class": "BENGALURU",
+          "office_days": {
+            "is_null": true
+          }
+        },
+        "verdict": "UNKNOWN",
+        "flags": [
+          "HYBRID_DAYS_UNSPECIFIED"
+        ],
+        "ruling": [
+          "OR-15"
+        ],
+        "note": ""
+      },
+      {
+        "rule_id": "GEO-R06",
+        "when": {
+          "mode": "HYBRID",
+          "city_class": "BENGALURU",
+          "office_days": {
+            "lte": "$bengaluru_hybrid_max_office_days"
+          }
+        },
+        "verdict": "PASS",
+        "flags": [],
+        "ruling": [
+          "OR-15"
+        ],
+        "note": ""
+      },
+      {
+        "rule_id": "GEO-R07",
+        "when": {
+          "mode": "HYBRID",
+          "city_class": "BENGALURU"
+        },
+        "verdict": "FAIL",
+        "flags": [],
+        "ruling": [
+          "OR-15"
+        ],
+        "note": "Office days above the maximum."
+      },
+      {
+        "rule_id": "GEO-R23",
+        "when": {
+          "mode": "HYBRID"
+        },
+        "verdict": "UNKNOWN",
+        "flags": [
+          "WORK_LOCATION_AMBIGUOUS"
+        ],
+        "ruling": [
+          "OR-14 (ambiguity -> UNKNOWN)"
+        ],
+        "note": "Hybrid with no identifiable city."
+      },
+      {
+        "rule_id": "GEO-R10",
+        "when": {
+          "mode": "ONSITE",
+          "city_class": "BENGALURU"
+        },
+        "verdict": "FAIL",
+        "flags": [],
+        "ruling": [
+          "Phase B §8 (supersedes OR-15 Bengaluru onsite UNKNOWN; OI-013)"
+        ],
+        "note": ""
+      },
+      {
+        "rule_id": "GEO-R12",
+        "when": {
+          "mode": "ONSITE",
+          "city_class": "OTHER_INDIA"
+        },
+        "verdict": "FAIL",
+        "flags": [],
+        "ruling": [
+          "OR-15"
+        ],
+        "note": ""
+      },
+      {
+        "rule_id": "GEO-R13",
+        "when": {
+          "mode": "ONSITE",
+          "city_class": "ABROAD"
+        },
+        "verdict": "FAIL",
+        "flags": [],
+        "ruling": [
+          "OR-15"
+        ],
+        "note": ""
+      },
+      {
+        "rule_id": "GEO-R24",
+        "when": {
+          "mode": "ONSITE"
+        },
+        "verdict": "FAIL",
+        "flags": [],
+        "ruling": [
+          "OR-15",
+          "Phase B §8"
+        ],
+        "note": "Onsite with no identifiable city: every onsite outcome is FAIL."
+      },
+      {
+        "rule_id": "GEO-R16",
+        "when": {},
+        "verdict": "UNKNOWN",
+        "flags": [
+          "WORK_ARRANGEMENT_ABSENT"
+        ],
+        "ruling": [
+          "OR-14",
+          "carried v0.1 WM-R5"
+        ],
+        "note": ""
+      }
+    ],
+    "compensation": [
+      {
+        "rule_id": "COMP-R06",
+        "when": {
+          "state": "ABSENT"
+        },
+        "verdict": "UNKNOWN",
+        "flags": [
+          "COMP_UNDISCLOSED"
+        ],
+        "ruling": [
+          "OR-18",
+          "OR-03b"
+        ],
+        "note": "",
+        "band": "UNKNOWN"
+      },
+      {
+        "rule_id": "COMP-R07",
+        "when": {
+          "state": "NON_NUMERIC"
+        },
+        "verdict": "UNKNOWN",
+        "flags": [
+          "COMP_NON_NUMERIC"
+        ],
+        "ruling": [
+          "OR-18"
+        ],
+        "note": "",
+        "band": "UNKNOWN"
+      },
+      {
+        "rule_id": "COMP-R08",
+        "when": {
+          "state": "NON_BASE_ONLY"
+        },
+        "verdict": "UNKNOWN",
+        "flags": [
+          "COMP_NON_BASE_ONLY"
+        ],
+        "ruling": [
+          "OR-18"
+        ],
+        "note": "",
+        "band": "UNKNOWN"
+      },
+      {
+        "rule_id": "COMP-R05",
+        "when": {
+          "state": "UPPER_BOUND_ONLY"
+        },
+        "verdict": "UNKNOWN",
+        "flags": [
+          "COMP_UPPER_BOUND_ONLY"
+        ],
+        "ruling": [
+          "OR-18"
+        ],
+        "note": "",
+        "band": "UNKNOWN"
+      },
+      {
+        "rule_id": "COMP-R11",
+        "when": {
+          "state": "LOCATION_ADJUSTED_NO_INDIA_BAND"
+        },
+        "verdict": "UNKNOWN",
+        "flags": [
+          "COMP_LOCATION_ADJUSTED_NO_INDIA_BAND"
+        ],
+        "ruling": [
+          "OR-18"
+        ],
+        "note": "",
+        "band": "UNKNOWN"
+      },
+      {
+        "rule_id": "COMP-R13",
+        "when": {
+          "state": "NOT_ANNUALIZABLE"
+        },
+        "verdict": "UNKNOWN",
+        "flags": [
+          "COMP_NOT_ANNUALIZABLE"
+        ],
+        "ruling": [
+          "OQ-02 (carried)"
+        ],
+        "note": "",
+        "band": "UNKNOWN"
+      },
+      {
+        "rule_id": "COMP-R16",
+        "when": {
+          "state": "PERIOD_UNSTATED"
+        },
+        "verdict": "UNKNOWN",
+        "flags": [
+          "COMP_PERIOD_UNSTATED"
+        ],
+        "ruling": [
+          "OQ-02 (carried)"
+        ],
+        "note": "",
+        "band": "UNKNOWN"
+      },
+      {
+        "rule_id": "COMP-R14",
+        "when": {
+          "state": "FX_RATE_UNAVAILABLE"
+        },
+        "verdict": "UNKNOWN",
+        "flags": [
+          "FX_RATE_UNAVAILABLE"
+        ],
+        "ruling": [
+          "OR-27"
+        ],
+        "note": "",
+        "band": "UNKNOWN"
+      },
+      {
+        "rule_id": "COMP-R01",
+        "when": {
+          "state": "FIGURE",
+          "max_inr": {
+            "lt": "$floor"
+          }
+        },
+        "verdict": "FAIL",
+        "flags": [],
+        "ruling": [
+          "OR-18",
+          "Phase B §3"
+        ],
+        "note": "",
+        "band": "NOT_APPLICABLE"
+      },
+      {
+        "rule_id": "COMP-R04",
+        "when": {
+          "state": "FIGURE",
+          "basis": "SALARY",
+          "min_inr": {
+            "lt": "$floor"
+          }
+        },
+        "verdict": "UNKNOWN",
+        "flags": [
+          "SALARY_RANGE_STRADDLES_FLOOR"
+        ],
+        "ruling": [
+          "Phase B §3, §39"
+        ],
+        "note": "",
+        "band": "UNKNOWN"
+      },
+      {
+        "rule_id": "COMP-C05",
+        "when": {
+          "state": "FIGURE",
+          "basis": "CTC",
+          "min_inr": {
+            "lt": "$floor"
+          }
+        },
+        "verdict": "UNKNOWN",
+        "flags": [
+          "CTC_RANGE_STRADDLES_FLOOR"
+        ],
+        "ruling": [
+          "Phase B §4"
+        ],
+        "note": "",
+        "band": "UNKNOWN"
+      },
+      {
+        "rule_id": "COMP-C01",
+        "when": {
+          "state": "FIGURE",
+          "basis": "CTC",
+          "shape": "POINT"
+        },
+        "verdict": "PASS",
+        "flags": [
+          "CTC_BASIS_UNVERIFIED"
+        ],
+        "ruling": [
+          "Phase B §4"
+        ],
+        "note": "No band label for a CTC-only point figure, even >= target (Phase B §4).",
+        "band": "CTC_BASIS_UNVERIFIED"
+      },
+      {
+        "rule_id": "COMP-C02",
+        "when": {
+          "state": "FIGURE",
+          "basis": "CTC",
+          "max_inr": {
+            "lt": "$target_min"
+          }
+        },
+        "verdict": "PASS",
+        "flags": [
+          "BELOW_TARGET"
+        ],
+        "ruling": [
+          "Phase B §4"
+        ],
+        "note": "",
+        "band": "BELOW_TARGET"
+      },
+      {
+        "rule_id": "COMP-C03",
+        "when": {
+          "state": "FIGURE",
+          "basis": "CTC",
+          "min_inr": {
+            "lt": "$target_min"
+          }
+        },
+        "verdict": "PASS",
+        "flags": [
+          "COMPENSATION_REVIEW"
+        ],
+        "ruling": [
+          "Phase B §4"
+        ],
+        "note": "",
+        "band": "SPANS_TARGET"
+      },
+      {
+        "rule_id": "COMP-C04",
+        "when": {
+          "state": "FIGURE",
+          "basis": "CTC"
+        },
+        "verdict": "PASS",
+        "flags": [
+          "CTC_BASIS_UNVERIFIED"
+        ],
+        "ruling": [
+          "Phase B §4"
+        ],
+        "note": "",
+        "band": "CTC_BASIS_UNVERIFIED"
+      },
+      {
+        "rule_id": "COMP-R03",
+        "when": {
+          "state": "FIGURE",
+          "basis": "SALARY",
+          "max_inr": {
+            "lt": "$target_min"
+          }
+        },
+        "verdict": "PASS",
+        "flags": [
+          "BELOW_TARGET"
+        ],
+        "ruling": [
+          "OR-18",
+          "Phase B §3"
+        ],
+        "note": "Includes exactly ₹18L (see OI-036).",
+        "band": "BELOW_TARGET"
+      },
+      {
+        "rule_id": "COMP-R15",
+        "when": {
+          "state": "FIGURE",
+          "basis": "SALARY",
+          "min_inr": {
+            "lt": "$target_min"
+          }
+        },
+        "verdict": "PASS",
+        "flags": [
+          "COMPENSATION_REVIEW"
+        ],
+        "ruling": [
+          "Phase B §3 (OI-006, OI-008)"
+        ],
+        "note": "",
+        "band": "SPANS_TARGET"
+      },
+      {
+        "rule_id": "COMP-R02",
+        "when": {
+          "state": "FIGURE",
+          "basis": "SALARY",
+          "max_inr": {
+            "lte": "$target_max"
+          }
+        },
+        "verdict": "PASS",
+        "flags": [
+          "IN_TARGET"
+        ],
+        "ruling": [
+          "OR-18",
+          "Phase B §3"
+        ],
+        "note": "",
+        "band": "IN_TARGET"
+      },
+      {
+        "rule_id": "COMP-R17",
+        "when": {
+          "state": "FIGURE",
+          "basis": "SALARY",
+          "min_inr": {
+            "gte": "$target_max"
+          }
+        },
+        "verdict": "PASS",
+        "flags": [
+          "ABOVE_TARGET"
+        ],
+        "ruling": [
+          "Phase B §3 (OI-022)"
+        ],
+        "note": "",
+        "band": "ABOVE_TARGET"
+      },
+      {
+        "rule_id": "COMP-R18",
+        "when": {
+          "state": "FIGURE",
+          "basis": "SALARY"
+        },
+        "verdict": "PASS",
+        "flags": [
+          "IN_TARGET"
+        ],
+        "ruling": [
+          "Phase B §3"
+        ],
+        "note": "Range starting inside the target band and ending above it: labelled IN_TARGET by convention (OI-037); lane-neutral.",
+        "band": "IN_TARGET"
+      },
+      {
+        "rule_id": "COMP-R99",
+        "when": {},
+        "verdict": "UNKNOWN",
+        "flags": [
+          "COMP_UNCLASSIFIED"
+        ],
+        "ruling": [
+          "OR-18 (unknown is never PASS)"
+        ],
+        "note": "Safety catch-all: a compensation state the table does not cover resolves UNKNOWN, never PASS.",
+        "band": "UNKNOWN"
+      }
+    ],
+    "employment_type": [
+      {
+        "rule_id": "EMP-R11",
+        "when": {
+          "kind": "MIXED"
+        },
+        "verdict": "UNKNOWN",
+        "flags": [
+          "EMPLOYMENT_MIXED"
+        ],
+        "ruling": [
+          "OR-19"
+        ],
+        "note": ""
+      },
+      {
+        "rule_id": "EMP-R08",
+        "when": {
+          "kind": "INTERNSHIP"
+        },
+        "verdict": "FAIL",
+        "flags": [],
+        "ruling": [
+          "OR-19"
+        ],
+        "note": ""
+      },
+      {
+        "rule_id": "EMP-R07",
+        "when": {
+          "kind": "PART_TIME"
+        },
+        "verdict": "FAIL",
+        "flags": [],
+        "ruling": [
+          "OR-19"
+        ],
+        "note": ""
+      },
+      {
+        "rule_id": "EMP-R06",
+        "when": {
+          "kind": "FREELANCE"
+        },
+        "verdict": "FAIL",
+        "flags": [],
+        "ruling": [
+          "OR-19"
+        ],
+        "note": ""
+      },
+      {
+        "rule_id": "EMP-R05",
+        "when": {
+          "kind": "TEMPORARY"
+        },
+        "verdict": "FAIL",
+        "flags": [],
+        "ruling": [
+          "OR-19"
+        ],
+        "note": ""
+      },
+      {
+        "rule_id": "EMP-R04",
+        "when": {
+          "kind": "CONTRACT_TO_HIRE"
+        },
+        "verdict": "FAIL",
+        "flags": [],
+        "ruling": [
+          "OR-19"
+        ],
+        "note": ""
+      },
+      {
+        "rule_id": "EMP-R09",
+        "when": {
+          "kind": "CONTRACT",
+          "contract_months": {
+            "lt": "$short_term_contract_months"
+          }
+        },
+        "verdict": "FAIL",
+        "flags": [],
+        "ruling": [
+          "OR-19"
+        ],
+        "note": ""
+      },
+      {
+        "rule_id": "EMP-R10",
+        "when": {
+          "kind": "CONTRACT",
+          "direct": true,
+          "contract_months": {
+            "gte": "$short_term_contract_months"
+          }
+        },
+        "verdict": "UNKNOWN",
+        "flags": [
+          "LONG_TERM_DIRECT_CONTRACT"
+        ],
+        "ruling": [
+          "OR-19"
+        ],
+        "note": ""
+      },
+      {
+        "rule_id": "EMP-R03",
+        "when": {
+          "kind": "CONTRACT"
+        },
+        "verdict": "FAIL",
+        "flags": [],
+        "ruling": [
+          "OR-19",
+          "Phase B §6 (OI-021)"
+        ],
+        "note": ""
+      },
+      {
+        "rule_id": "EMP-R01",
+        "when": {
+          "kind": "PERMANENT"
+        },
+        "verdict": "PASS",
+        "flags": [],
+        "ruling": [
+          "OR-19"
+        ],
+        "note": ""
+      },
+      {
+        "rule_id": "EMP-R02",
+        "when": {
+          "kind": "FULL_TIME"
+        },
+        "verdict": "PASS",
+        "flags": [],
+        "ruling": [
+          "OR-19"
+        ],
+        "note": ""
+      },
+      {
+        "rule_id": "EMP-R12",
+        "when": {},
+        "verdict": "UNKNOWN",
+        "flags": [
+          "EMPLOYMENT_UNSTATED"
+        ],
+        "ruling": [
+          "OR-19"
+        ],
+        "note": ""
+      }
+    ],
+    "employment_relationship": [
+      {
+        "rule_id": "REL-R06",
+        "when": {
+          "placement": true
+        },
+        "verdict": "FAIL",
+        "flags": [],
+        "ruling": [
+          "OR-20"
+        ],
+        "note": ""
+      },
+      {
+        "rule_id": "REL-R07",
+        "when": {
+          "third_party_payroll": true
+        },
+        "verdict": "FAIL",
+        "flags": [],
+        "ruling": [
+          "OR-20"
+        ],
+        "note": ""
+      },
+      {
+        "rule_id": "REL-R02",
+        "when": {
+          "independent_contractor": true
+        },
+        "verdict": "FAIL",
+        "flags": [],
+        "ruling": [
+          "OR-20"
+        ],
+        "note": ""
+      },
+      {
+        "rule_id": "REL-R03",
+        "when": {
+          "b2b": true
+        },
+        "verdict": "FAIL",
+        "flags": [],
+        "ruling": [
+          "OR-20"
+        ],
+        "note": ""
+      },
+      {
+        "rule_id": "REL-R04",
+        "when": {
+          "invoice": true
+        },
+        "verdict": "FAIL",
+        "flags": [],
+        "ruling": [
+          "OR-20"
+        ],
+        "note": ""
+      },
+      {
+        "rule_id": "REL-R05",
+        "when": {
+          "hourly_contractor": true
+        },
+        "verdict": "FAIL",
+        "flags": [],
+        "ruling": [
+          "OR-20"
+        ],
+        "note": ""
+      },
+      {
+        "rule_id": "EOR-R01",
+        "when": {
+          "eor": true
+        },
+        "verdict": "UNKNOWN",
+        "flags": [
+          "EOR"
+        ],
+        "ruling": [
+          "OR-26"
+        ],
+        "note": ""
+      },
+      {
+        "rule_id": "REL-R08",
+        "when": {
+          "employer_classification": "STAFFING"
+        },
+        "verdict": "UNKNOWN",
+        "flags": [
+          "EMPLOYER_TYPE_REVIEW"
+        ],
+        "ruling": [
+          "OR-20"
+        ],
+        "note": ""
+      },
+      {
+        "rule_id": "REL-R01",
+        "when": {},
+        "verdict": "PASS",
+        "flags": [],
+        "ruling": [
+          "OR-20"
+        ],
+        "note": "Hiring company is the employer; no third-party relationship stated."
+      }
+    ],
+    "employer_type": [
+      {
+        "rule_id": "EMPR-R01",
+        "when": {
+          "classification": "STAFFING"
+        },
+        "verdict": "UNKNOWN",
+        "flags": [
+          "STAFFING"
+        ],
+        "ruling": [
+          "OR-20"
+        ],
+        "note": ""
+      },
+      {
+        "rule_id": "EMPR-R02",
+        "when": {
+          "classification": "CONSULTANCY"
+        },
+        "verdict": "UNKNOWN",
+        "flags": [
+          "CONSULTANCY"
+        ],
+        "ruling": [
+          "OR-20"
+        ],
+        "note": ""
+      },
+      {
+        "rule_id": "EMPR-R03",
+        "when": {
+          "classification": "IT_SERVICES"
+        },
+        "verdict": "UNKNOWN",
+        "flags": [
+          "IT_SERVICES"
+        ],
+        "ruling": [
+          "OR-20"
+        ],
+        "note": ""
+      },
+      {
+        "rule_id": "EMPR-R05",
+        "when": {
+          "classification": {
+            "in": [
+              "PRODUCT",
+              "AI_NATIVE",
+              "GCC",
+              "ENGINEERING_LED"
+            ]
+          }
+        },
+        "verdict": "PASS",
+        "flags": [],
+        "ruling": [
+          "OR-20"
+        ],
+        "note": ""
+      },
+      {
+        "rule_id": "EMPR-R07",
+        "when": {
+          "classification": "ENTERPRISE_DIRECT"
+        },
+        "verdict": "PASS",
+        "flags": [],
+        "ruling": [
+          "Phase B §7 (OI-026)"
+        ],
+        "note": ""
+      },
+      {
+        "rule_id": "EMPR-R04",
+        "when": {},
+        "verdict": "UNKNOWN",
+        "flags": [
+          "EMPLOYER_UNCLASSIFIED"
+        ],
+        "ruling": [
+          "OR-20",
+          "Phase B §7 (OI-020)"
+        ],
+        "note": ""
+      }
+    ],
+    "language": [
+      {
+        "rule_id": "LANG-R02",
+        "when": {
+          "required_non_english": true,
+          "required_confidence": {
+            "gte": "$language_confidence_threshold"
+          }
+        },
+        "verdict": "FAIL",
+        "flags": [],
+        "ruling": [
+          "OR-17",
+          "Phase B §12"
+        ],
+        "note": ""
+      },
+      {
+        "rule_id": "LANG-R06",
+        "when": {
+          "required_non_english": true
+        },
+        "verdict": "UNKNOWN",
+        "flags": [
+          "LANGUAGE_UNCERTAIN"
+        ],
+        "ruling": [
+          "Phase B §12"
+        ],
+        "note": ""
+      },
+      {
+        "rule_id": "LANG-R04",
+        "when": {
+          "document_language": "NON_ENGLISH",
+          "document_confidence": {
+            "gte": "$language_confidence_threshold"
+          }
+        },
+        "verdict": "FAIL",
+        "flags": [],
+        "ruling": [
+          "OR-17",
+          "Phase B §12 (OI-023)"
+        ],
+        "note": ""
+      },
+      {
+        "rule_id": "LANG-R05",
+        "when": {
+          "document_language": {
+            "in": [
+              "NON_ENGLISH",
+              "UNDETERMINED"
+            ]
+          }
+        },
+        "verdict": "UNKNOWN",
+        "flags": [
+          "LANGUAGE_UNCERTAIN"
+        ],
+        "ruling": [
+          "OR-17"
+        ],
+        "note": ""
+      },
+      {
+        "rule_id": "LANG-R03",
+        "when": {
+          "preferred_non_english": true
+        },
+        "verdict": "PASS",
+        "flags": [
+          "LANGUAGE_PREFERENCE"
+        ],
+        "ruling": [
+          "OR-17",
+          "Phase B §12"
+        ],
+        "note": ""
+      },
+      {
+        "rule_id": "LANG-R01",
+        "when": {},
+        "verdict": "PASS",
+        "flags": [],
+        "ruling": [
+          "OR-17"
+        ],
+        "note": ""
+      }
+    ]
+  },
+  "geo": {
+    "bengaluru": {
+      "city_id": "IN-bengaluru",
+      "aliases": [
+        "bengaluru",
+        "bangalore",
+        "bangalore urban",
+        "bengaluru urban",
+        "greater bengaluru area",
+        "greater bangalore",
+        "bengaluru east",
+        "bengaluru north",
+        "bengaluru south",
+        "bengaluru west",
+        "whitefield",
+        "koramangala",
+        "electronic city",
+        "hsr layout",
+        "indiranagar",
+        "marathahalli",
+        "bellandur",
+        "manyata tech park",
+        "outer ring road",
+        "jp nagar",
+        "hebbal",
+        "yelahanka"
+      ]
+    },
+    "india_cities": {
+      "IN-mumbai": [
+        "mumbai",
+        "bombay",
+        "navi mumbai",
+        "thane"
+      ],
+      "IN-pune": [
+        "pune"
+      ],
+      "IN-hyderabad": [
+        "hyderabad",
+        "secunderabad"
+      ],
+      "IN-chennai": [
+        "chennai",
+        "madras"
+      ],
+      "IN-delhi": [
+        "delhi",
+        "new delhi",
+        "delhi ncr",
+        "ncr"
+      ],
+      "IN-gurugram": [
+        "gurugram",
+        "gurgaon"
+      ],
+      "IN-noida": [
+        "noida",
+        "greater noida"
+      ],
+      "IN-kolkata": [
+        "kolkata",
+        "calcutta"
+      ],
+      "IN-ahmedabad": [
+        "ahmedabad"
+      ],
+      "IN-kochi": [
+        "kochi",
+        "cochin"
+      ],
+      "IN-jaipur": [
+        "jaipur"
+      ],
+      "IN-indore": [
+        "indore"
+      ],
+      "IN-coimbatore": [
+        "coimbatore"
+      ],
+      "IN-thiruvananthapuram": [
+        "thiruvananthapuram",
+        "trivandrum"
+      ],
+      "IN-chandigarh": [
+        "chandigarh"
+      ],
+      "IN-mysuru": [
+        "mysuru",
+        "mysore"
+      ]
+    },
+    "india_states": [
+      "karnataka",
+      "maharashtra",
+      "telangana",
+      "tamil nadu",
+      "kerala",
+      "haryana",
+      "uttar pradesh",
+      "west bengal",
+      "gujarat",
+      "rajasthan"
+    ],
+    "foreign_cities": {
+      "US-san-francisco": {
+        "country": "US",
+        "aliases": [
+          "san francisco",
+          "bay area",
+          "palo alto",
+          "mountain view"
+        ]
+      },
+      "US-new-york": {
+        "country": "US",
+        "aliases": [
+          "new york",
+          "nyc"
+        ]
+      },
+      "US-seattle": {
+        "country": "US",
+        "aliases": [
+          "seattle"
+        ]
+      },
+      "US-austin": {
+        "country": "US",
+        "aliases": [
+          "austin"
+        ]
+      },
+      "US-boston": {
+        "country": "US",
+        "aliases": [
+          "boston"
+        ]
+      },
+      "GB-london": {
+        "country": "GB",
+        "aliases": [
+          "london"
+        ]
+      },
+      "DE-berlin": {
+        "country": "DE",
+        "aliases": [
+          "berlin"
+        ]
+      },
+      "DE-munich": {
+        "country": "DE",
+        "aliases": [
+          "munich",
+          "münchen"
+        ]
+      },
+      "NL-amsterdam": {
+        "country": "NL",
+        "aliases": [
+          "amsterdam"
+        ]
+      },
+      "IE-dublin": {
+        "country": "IE",
+        "aliases": [
+          "dublin"
+        ]
+      },
+      "FR-paris": {
+        "country": "FR",
+        "aliases": [
+          "paris"
+        ]
+      },
+      "CA-toronto": {
+        "country": "CA",
+        "aliases": [
+          "toronto"
+        ]
+      },
+      "AU-sydney": {
+        "country": "AU",
+        "aliases": [
+          "sydney"
+        ]
+      },
+      "JP-tokyo": {
+        "country": "JP",
+        "aliases": [
+          "tokyo"
+        ]
+      },
+      "AE-dubai": {
+        "country": "AE",
+        "aliases": [
+          "dubai"
+        ]
+      }
+    },
+    "countries": {
+      "IN": {
+        "names": [
+          "india",
+          "bharat"
+        ],
+        "acronyms": []
+      },
+      "US": {
+        "names": [
+          "united states",
+          "united states of america",
+          "usa",
+          "u.s.a.",
+          "u.s.",
+          "america"
+        ],
+        "acronyms": [
+          "US"
+        ]
+      },
+      "GB": {
+        "names": [
+          "united kingdom",
+          "great britain",
+          "britain",
+          "england",
+          "scotland"
+        ],
+        "acronyms": [
+          "UK",
+          "GB"
+        ]
+      },
+      "CA": {
+        "names": [
+          "canada"
+        ],
+        "acronyms": []
+      },
+      "DE": {
+        "names": [
+          "germany",
+          "deutschland"
+        ],
+        "acronyms": []
+      },
+      "FR": {
+        "names": [
+          "france"
+        ],
+        "acronyms": []
+      },
+      "NL": {
+        "names": [
+          "netherlands",
+          "holland"
+        ],
+        "acronyms": []
+      },
+      "IE": {
+        "names": [
+          "ireland"
+        ],
+        "acronyms": []
+      },
+      "ES": {
+        "names": [
+          "spain"
+        ],
+        "acronyms": []
+      },
+      "IT": {
+        "names": [
+          "italy"
+        ],
+        "acronyms": []
+      },
+      "PL": {
+        "names": [
+          "poland"
+        ],
+        "acronyms": []
+      },
+      "SE": {
+        "names": [
+          "sweden"
+        ],
+        "acronyms": []
+      },
+      "PT": {
+        "names": [
+          "portugal"
+        ],
+        "acronyms": []
+      },
+      "CH": {
+        "names": [
+          "switzerland"
+        ],
+        "acronyms": []
+      },
+      "NO": {
+        "names": [
+          "norway"
+        ],
+        "acronyms": []
+      },
+      "IS": {
+        "names": [
+          "iceland"
+        ],
+        "acronyms": []
+      },
+      "LI": {
+        "names": [
+          "liechtenstein"
+        ],
+        "acronyms": []
+      },
+      "SG": {
+        "names": [
+          "singapore"
+        ],
+        "acronyms": []
+      },
+      "AU": {
+        "names": [
+          "australia"
+        ],
+        "acronyms": []
+      },
+      "NZ": {
+        "names": [
+          "new zealand"
+        ],
+        "acronyms": []
+      },
+      "JP": {
+        "names": [
+          "japan"
+        ],
+        "acronyms": []
+      },
+      "CN": {
+        "names": [
+          "china"
+        ],
+        "acronyms": []
+      },
+      "KR": {
+        "names": [
+          "south korea",
+          "korea"
+        ],
+        "acronyms": []
+      },
+      "PH": {
+        "names": [
+          "philippines"
+        ],
+        "acronyms": []
+      },
+      "MY": {
+        "names": [
+          "malaysia"
+        ],
+        "acronyms": []
+      },
+      "ID": {
+        "names": [
+          "indonesia"
+        ],
+        "acronyms": []
+      },
+      "VN": {
+        "names": [
+          "vietnam"
+        ],
+        "acronyms": []
+      },
+      "TH": {
+        "names": [
+          "thailand"
+        ],
+        "acronyms": []
+      },
+      "LK": {
+        "names": [
+          "sri lanka"
+        ],
+        "acronyms": []
+      },
+      "BD": {
+        "names": [
+          "bangladesh"
+        ],
+        "acronyms": []
+      },
+      "PK": {
+        "names": [
+          "pakistan"
+        ],
+        "acronyms": []
+      },
+      "AE": {
+        "names": [
+          "united arab emirates"
+        ],
+        "acronyms": [
+          "UAE"
+        ]
+      },
+      "SA": {
+        "names": [
+          "saudi arabia"
+        ],
+        "acronyms": []
+      },
+      "IL": {
+        "names": [
+          "israel"
+        ],
+        "acronyms": []
+      },
+      "ZA": {
+        "names": [
+          "south africa"
+        ],
+        "acronyms": []
+      },
+      "EG": {
+        "names": [
+          "egypt"
+        ],
+        "acronyms": []
+      },
+      "NG": {
+        "names": [
+          "nigeria"
+        ],
+        "acronyms": []
+      },
+      "KE": {
+        "names": [
+          "kenya"
+        ],
+        "acronyms": []
+      },
+      "BR": {
+        "names": [
+          "brazil"
+        ],
+        "acronyms": []
+      },
+      "MX": {
+        "names": [
+          "mexico"
+        ],
+        "acronyms": []
+      },
+      "AR": {
+        "names": [
+          "argentina"
+        ],
+        "acronyms": []
+      },
+      "AT": {
+        "names": [
+          "austria"
+        ],
+        "acronyms": []
+      },
+      "BE": {
+        "names": [
+          "belgium"
+        ],
+        "acronyms": []
+      },
+      "BG": {
+        "names": [
+          "bulgaria"
+        ],
+        "acronyms": []
+      },
+      "HR": {
+        "names": [
+          "croatia"
+        ],
+        "acronyms": []
+      },
+      "CY": {
+        "names": [
+          "cyprus"
+        ],
+        "acronyms": []
+      },
+      "CZ": {
+        "names": [
+          "czech republic",
+          "czechia"
+        ],
+        "acronyms": []
+      },
+      "DK": {
+        "names": [
+          "denmark"
+        ],
+        "acronyms": []
+      },
+      "EE": {
+        "names": [
+          "estonia"
+        ],
+        "acronyms": []
+      },
+      "FI": {
+        "names": [
+          "finland"
+        ],
+        "acronyms": []
+      },
+      "GR": {
+        "names": [
+          "greece"
+        ],
+        "acronyms": []
+      },
+      "HU": {
+        "names": [
+          "hungary"
+        ],
+        "acronyms": []
+      },
+      "LV": {
+        "names": [
+          "latvia"
+        ],
+        "acronyms": []
+      },
+      "LT": {
+        "names": [
+          "lithuania"
+        ],
+        "acronyms": []
+      },
+      "LU": {
+        "names": [
+          "luxembourg"
+        ],
+        "acronyms": []
+      },
+      "MT": {
+        "names": [
+          "malta"
+        ],
+        "acronyms": []
+      },
+      "RO": {
+        "names": [
+          "romania"
+        ],
+        "acronyms": []
+      },
+      "SK": {
+        "names": [
+          "slovakia"
+        ],
+        "acronyms": []
+      },
+      "SI": {
+        "names": [
+          "slovenia"
+        ],
+        "acronyms": []
+      }
+    },
+    "regions": {
+      "EU": {
+        "names": [
+          "european union"
+        ],
+        "acronyms": [
+          "EU"
+        ],
+        "members": [
+          "AT",
+          "BE",
+          "BG",
+          "HR",
+          "CY",
+          "CZ",
+          "DK",
+          "EE",
+          "FI",
+          "FR",
+          "DE",
+          "GR",
+          "HU",
+          "IE",
+          "IT",
+          "LV",
+          "LT",
+          "LU",
+          "MT",
+          "NL",
+          "PL",
+          "PT",
+          "RO",
+          "SK",
+          "SI",
+          "ES",
+          "SE"
+        ]
+      },
+      "EEA": {
+        "names": [
+          "european economic area"
+        ],
+        "acronyms": [
+          "EEA"
+        ],
+        "members": [
+          "AT",
+          "BE",
+          "BG",
+          "HR",
+          "CY",
+          "CZ",
+          "DK",
+          "EE",
+          "FI",
+          "FR",
+          "DE",
+          "GR",
+          "HU",
+          "IE",
+          "IT",
+          "LV",
+          "LT",
+          "LU",
+          "MT",
+          "NL",
+          "PL",
+          "PT",
+          "RO",
+          "SK",
+          "SI",
+          "ES",
+          "SE",
+          "NO",
+          "IS",
+          "LI"
+        ]
+      },
+      "EUROPE": {
+        "names": [
+          "europe"
+        ],
+        "acronyms": [],
+        "members": [
+          "AT",
+          "BE",
+          "BG",
+          "CH",
+          "CY",
+          "CZ",
+          "DE",
+          "DK",
+          "EE",
+          "ES",
+          "FI",
+          "FR",
+          "GB",
+          "GR",
+          "HR",
+          "HU",
+          "IE",
+          "IS",
+          "IT",
+          "LI",
+          "LT",
+          "LU",
+          "LV",
+          "MT",
+          "NL",
+          "NO",
+          "PL",
+          "PT",
+          "RO",
+          "SE",
+          "SI",
+          "SK"
+        ]
+      },
+      "EMEA": {
+        "names": [],
+        "acronyms": [
+          "EMEA"
+        ],
+        "members": [
+          "AE",
+          "AT",
+          "BE",
+          "BG",
+          "CH",
+          "CY",
+          "CZ",
+          "DE",
+          "DK",
+          "EE",
+          "EG",
+          "ES",
+          "FI",
+          "FR",
+          "GB",
+          "GR",
+          "HR",
+          "HU",
+          "IE",
+          "IL",
+          "IS",
+          "IT",
+          "KE",
+          "LI",
+          "LT",
+          "LU",
+          "LV",
+          "MT",
+          "NG",
+          "NL",
+          "NO",
+          "PL",
+          "PT",
+          "RO",
+          "SA",
+          "SE",
+          "SI",
+          "SK",
+          "ZA"
+        ]
+      },
+      "APAC": {
+        "names": [
+          "asia pacific",
+          "asia-pacific",
+          "asia"
+        ],
+        "acronyms": [
+          "APAC"
+        ],
+        "members": [
+          "IN",
+          "SG",
+          "AU",
+          "NZ",
+          "JP",
+          "CN",
+          "KR",
+          "PH",
+          "MY",
+          "ID",
+          "VN",
+          "TH",
+          "LK",
+          "BD",
+          "PK"
+        ]
+      },
+      "NORTH_AMERICA": {
+        "names": [
+          "north america"
+        ],
+        "acronyms": [
+          "NA",
+          "NAM"
+        ],
+        "members": [
+          "US",
+          "CA",
+          "MX"
+        ]
+      },
+      "AMERICAS": {
+        "names": [
+          "americas"
+        ],
+        "acronyms": [
+          "AMER"
+        ],
+        "members": [
+          "US",
+          "CA",
+          "MX",
+          "BR",
+          "AR"
+        ]
+      },
+      "LATAM": {
+        "names": [
+          "latin america"
+        ],
+        "acronyms": [
+          "LATAM"
+        ],
+        "members": [
+          "MX",
+          "BR",
+          "AR"
+        ]
+      }
+    },
+    "worldwide_aliases": [
+      "worldwide",
+      "anywhere",
+      "global",
+      "globally",
+      "any location",
+      "any country",
+      "work from anywhere"
+    ],
+    "timezone_tokens": {
+      "US": [
+        "US",
+        "PST",
+        "PDT",
+        "EST",
+        "EDT",
+        "CST",
+        "CDT",
+        "Pacific",
+        "Eastern",
+        "Central",
+        "US Eastern",
+        "US Pacific"
+      ],
+      "UK": [
+        "UK",
+        "GMT",
+        "BST",
+        "London"
+      ],
+      "EU": [
+        "CET",
+        "CEST",
+        "European",
+        "Europe",
+        "EU"
+      ],
+      "APAC": [
+        "APAC",
+        "SGT",
+        "AEST",
+        "JST",
+        "Singapore"
+      ]
+    }
+  },
+  "lexicon": {
+    "sentence_split": "(?<=[.!?;])\\s+(?=[A-Z(₹$])|\\n+",
+    "remote": [
+      "\\bremote(?:ly)?\\b",
+      "\\bwork from home\\b",
+      "\\bwfh\\b",
+      "\\bwork from anywhere\\b",
+      "\\bdistributed team\\b"
+    ],
+    "hybrid": [
+      "\\bhybrid\\b(?![- ](?:search|retrieval|cloud|models?|approach|architecture|rag|ranking|index|infrastructure|systems?))"
+    ],
+    "onsite": [
+      "\\bon[- ]?site\\b",
+      "\\bin[- ]office\\b",
+      "\\bwork from office\\b",
+      "\\boffice[- ]based\\b",
+      "\\bwfo\\b"
+    ],
+    "flexible_hybrid": [
+      "\\bflexible hybrid\\b",
+      "\\bhybrid[- ]flexible\\b",
+      "\\bflexi(?:ble)?[- ]hybrid\\b"
+    ],
+    "office_days": [
+      "(\\d|one|two|three|four|five)\\s*(?:days?|x)\\s*(?:per|a|/|each)\\s*week",
+      "(\\d|one|two|three|four|five)\\s*days?\\s*(?:in|at|from)\\s*(?:the\\s*)?office"
+    ],
+    "number_words": {
+      "one": 1,
+      "two": 2,
+      "three": 3,
+      "four": 4,
+      "five": 5
+    },
+    "relocation": [
+      "\\brelocat(?:e|ion|ing)\\b"
+    ],
+    "relocation_negation": [
+      "\\bno relocation\\b",
+      "\\brelocation (?:is )?not (?:required|needed|necessary)\\b",
+      "\\bwithout relocat\\w*\\b"
+    ],
+    "visa": [
+      "\\bvisa (?:sponsorship|support|sponsored)\\b",
+      "\\bsponsor(?:s|ship)? (?:your |a )?(?:work )?visa\\b"
+    ],
+    "visa_negation": [
+      "\\b(?:no|not|unable to|cannot|can't|do not|don't|will not|won't)\\b[^.]{0,30}\\bsponsor",
+      "\\bno visa\\b"
+    ],
+    "work_authorization": [
+      "\\b(?:authori[sz]ed|eligible|legally (?:able|permitted|allowed)|permitted) to work in\\b",
+      "\\bright to work in\\b",
+      "\\bwork authori[sz]ation (?:in|for)\\b",
+      "\\bwork permit (?:in|for)\\b"
+    ],
+    "residence_requirement": [
+      "\\bmust (?:be )?(?:based|located|living|residing) (?:in|out of)\\b",
+      "\\bmust reside in\\b",
+      "\\b(?:must|required to|need to|willing to) relocate to\\b",
+      "\\brelocation to\\b",
+      "\\bmust be (?:physically )?present (?:in|at)\\b",
+      "\\bbased out of\\b[^.]*\\b(?:mandatory|required|must)\\b"
+    ],
+    "location_line": [
+      "^\\s*(?:location|locations|job location|work location|based in)\\s*[:\\-]"
+    ],
+    "employment_cue_exclusions": [
+      "\\b(?:data|api|smart|service|code|software) contracts?\\b"
+    ],
+    "employment": {
+      "MIXED": [
+        "\\bfull[- ]?time\\s*(?:/|or|and)\\s*(?:contract(?:ual)?|part[- ]?time|freelance)\\b",
+        "\\bcontract(?:ual)?\\s*(?:/|or)\\s*full[- ]?time\\b"
+      ],
+      "INTERNSHIP": [
+        "\\binternship\\b",
+        "\\bintern\\b"
+      ],
+      "PART_TIME": [
+        "\\bpart[- ]?time\\b"
+      ],
+      "FREELANCE": [
+        "\\bfreelanc\\w*\\b"
+      ],
+      "TEMPORARY": [
+        "\\btemporary\\b",
+        "\\btemp role\\b"
+      ],
+      "CONTRACT_TO_HIRE": [
+        "\\bcontract[- ]to[- ]hire\\b",
+        "\\bc2h\\b",
+        "\\bcontract to permanent\\b"
+      ],
+      "CONTRACT": [
+        "\\bcontract(?:ual)?\\b"
+      ],
+      "PERMANENT": [
+        "\\bpermanent\\b"
+      ],
+      "FULL_TIME": [
+        "\\bfull[- ]?time\\b"
+      ]
+    },
+    "contract_duration": [
+      "(\\d+)\\s*[- ]?\\s*months?",
+      "(\\d+)\\s*[- ]?\\s*years?\\s+contract"
+    ],
+    "direct_contract": [
+      "\\bdirect (?:contract|engagement)\\b",
+      "\\bcontract directly with\\b"
+    ],
+    "relationship": {
+      "eor": [
+        "\\bemployer of record\\b",
+        "(?-i:\\bEOR\\b)"
+      ],
+      "placement": [
+        "\\bdeploy(?:ment|ed)? (?:at|with|to) (?:our |the |a |an )?clients?\\b",
+        "\\bplaced (?:at|with) (?:our |the |a |an )?clients?\\b",
+        "\\bclient (?:site|location|deployment|placement)\\b",
+        "\\bon (?:our|its|their) payroll for (?:deployment|placement)\\b"
+      ],
+      "third_party_payroll": [
+        "\\bthird[- ]party payroll\\b",
+        "\\bbody[- ]?shop\\w*\\b"
+      ],
+      "independent_contractor": [
+        "\\bindependent contractor\\b",
+        "\\bfreelance contractor\\b",
+        "\\b1099\\b"
+      ],
+      "b2b": [
+        "\\bb2b (?:basis|contract|engagement)\\b",
+        "\\bon a b2b\\b"
+      ],
+      "invoice": [
+        "\\binvoice (?:monthly|us|for)\\b",
+        "\\binvoice[- ]based\\b",
+        "\\bsubmit invoices?\\b"
+      ],
+      "hourly_contractor": [
+        "\\bhourly contractor\\b",
+        "\\bpaid (?:as an? )?hourly\\b",
+        "\\bhourly[- ]only\\b"
+      ]
+    },
+    "employer_signals": {
+      "STAFFING": [
+        "\\bstaffing (?:agency|firm|company|partner)\\b",
+        "\\brecruitment agency\\b",
+        "\\bplacement agency\\b"
+      ],
+      "CONSULTANCY": [
+        "\\bconsultancy\\b",
+        "\\bconsulting (?:firm|company)\\b"
+      ],
+      "IT_SERVICES": [
+        "\\bit services\\b",
+        "\\bit consulting and services\\b"
+      ],
+      "GCC": [
+        "\\bglobal capability cent(?:re|er)\\b",
+        "(?-i:\\bGCC\\b)"
+      ],
+      "AI_NATIVE": [
+        "\\bai[- ]native\\b"
+      ],
+      "PRODUCT": [
+        "\\bproduct company\\b",
+        "\\bbuilds and sells its own\\b",
+        "\\bour own (?:ai )?products?\\b"
+      ],
+      "ENGINEERING_LED": [
+        "\\bengineering[- ]led\\b"
+      ]
+    },
+    "compensation": {
+      "keywords": [
+        "\\bsalary\\b",
+        "\\bcompensation\\b",
+        "\\bctc\\b",
+        "\\bcost to company\\b",
+        "\\bpay (?:range|band|scale)\\b",
+        "\\bbase pay\\b",
+        "\\bremuneration\\b",
+        "\\bpay\\b",
+        "\\bpackage\\b",
+        "\\bstipend\\b"
+      ],
+      "non_numeric": [
+        "\\bcompetitive\\b",
+        "\\bas per (?:industry|market|company)\\b",
+        "\\bbest in (?:the )?industry\\b",
+        "\\bcommensurate\\b",
+        "\\battractive\\b",
+        "\\bnegotiable\\b",
+        "\\bmarket[- ]rate\\b",
+        "\\bnot disclosed\\b"
+      ],
+      "non_base": [
+        "\\bbonus(?:es)?\\b",
+        "\\bequity\\b",
+        "\\brsus?\\b",
+        "\\bstock\\b",
+        "\\besops?\\b",
+        "\\bcommission\\b",
+        "\\bsign[- ]on\\b"
+      ],
+      "ctc": [
+        "\\bctc\\b",
+        "\\bcost to company\\b"
+      ],
+      "base": [
+        "\\bbase\\b",
+        "\\bfixed\\b"
+      ],
+      "upper_only": [
+        "\\bup ?to\\b",
+        "\\bupto\\b",
+        "\\bmax(?:imum)?\\.?(?: of)?\\b",
+        "\\bnot more than\\b"
+      ],
+      "lower_only": [
+        "\\bat least\\b",
+        "\\bminimum(?: of)?\\b",
+        "\\bstarting (?:at|from)\\b",
+        "\\bfrom\\s+(?=[₹$€£]|rs|inr|usd)"
+      ],
+      "location_adjusted": [
+        "\\badjusted (?:by|for|based on) location\\b",
+        "\\blocation[- ]adjusted\\b",
+        "\\blocation[- ]based pay\\b",
+        "\\bvaries by location\\b",
+        "\\bdepend(?:s|ing)? on (?:your )?location\\b"
+      ],
+      "india_band": [
+        "\\bindia\\b"
+      ],
+      "currency": {
+        "INR": [
+          "₹",
+          "\\brs\\.?(?=\\s*\\d)",
+          "\\binr\\b",
+          "\\blpa\\b",
+          "\\blakhs?\\b",
+          "\\blacs?\\b"
+        ],
+        "USD": [
+          "\\busd\\b",
+          "\\bus\\$",
+          "\\$"
+        ],
+        "EUR": [
+          "\\beur\\b",
+          "€"
+        ],
+        "GBP": [
+          "\\bgbp\\b",
+          "£"
+        ]
+      },
+      "lakh_unit": [
+        "\\blpa\\b",
+        "\\blakhs?\\b",
+        "\\blacs?\\b",
+        "(?<=\\d)\\s?l\\b"
+      ],
+      "period": {
+        "annual": [
+          "\\bper annum\\b",
+          "\\bp\\.?a\\.?\\b",
+          "\\bper year\\b",
+          "/\\s*(?:year|yr|annum)\\b",
+          "\\bannual(?:ly)?\\b",
+          "\\blpa\\b",
+          "\\ba year\\b"
+        ],
+        "monthly": [
+          "\\bper month\\b",
+          "/\\s*(?:month|mo)\\b",
+          "\\bmonthly\\b",
+          "\\bp\\.?m\\.?\\b",
+          "\\ba month\\b"
+        ],
+        "hourly": [
+          "\\bper hour\\b",
+          "/\\s*(?:hour|hr)\\b",
+          "\\bhourly\\b",
+          "\\ban hour\\b"
+        ],
+        "daily": [
+          "\\bper day\\b",
+          "/\\s*day\\b",
+          "\\bdaily\\b"
+        ]
+      },
+      "range_separators": [
+        "–",
+        "—",
+        "-",
+        " to "
+      ]
+    },
+    "language": {
+      "names": [
+        "german",
+        "french",
+        "spanish",
+        "japanese",
+        "dutch",
+        "italian",
+        "portuguese",
+        "mandarin",
+        "chinese",
+        "korean",
+        "arabic",
+        "polish",
+        "swedish",
+        "danish",
+        "norwegian",
+        "finnish",
+        "russian",
+        "turkish",
+        "hebrew",
+        "czech"
+      ],
+      "required": [
+        "\\b(?:fluent |fluency in |proficiency in |native |business[- ]level |professional )?(?P<lang>{langs})(?: language)?(?: skills)?(?: is| are)? (?:required|mandatory|a must|essential)\\b",
+        "\\b(?:must|required to) (?:speak|be fluent in|have fluent) (?P<lang>{langs})\\b"
+      ],
+      "required_confidence": 0.99,
+      "weak_requirement": [
+        "\\b(?:working )?knowledge of (?P<lang>{langs})\\b",
+        "\\b(?P<lang>{langs})[- ]speaking\\b"
+      ],
+      "weak_requirement_confidence": 0.8,
+      "preferred": [
+        "\\b(?P<lang>{langs})(?: language)?(?: skills)?(?: is| are)? (?:a plus|a bonus|preferred|nice[- ]to[- ]have|an advantage|desirable|beneficial)\\b",
+        "\\b(?:nice[- ]to[- ]have|bonus|preferred)\\s*:?\\s*(?P<lang>{langs})\\b"
+      ],
+      "english_stopwords": [
+        "the",
+        "and",
+        "you",
+        "with",
+        "for",
+        "our",
+        "will",
+        "to",
+        "of",
+        "in",
+        "a",
+        "is",
+        "are",
+        "we",
+        "your",
+        "on",
+        "as",
+        "be",
+        "this",
+        "that"
+      ],
+      "heuristic_english_ratio": 0.12
+    },
+    "timezone": [
+      "\\boverlap\\b",
+      "\\bbusiness hours\\b",
+      "\\btime ?zones?\\b",
+      "\\bworking hours\\b"
+    ],
+    "experience_context": [
+      "\\bexperience\\b",
+      "\\byears?\\b",
+      "\\byrs?\\b"
+    ],
+    "experience": {
+      "range": "(\\d+)\\s*(?:–|—|-|to)\\s*(\\d+)\\s*\\+?\\s*(?:years?|yrs?)",
+      "plus": "(\\d+)\\s*\\+\\s*(?:years?|yrs?)|(?:at least|minimum(?: of)?)\\s*(\\d+)\\s*(?:years?|yrs?)|(\\d+)\\s*(?:years?|yrs?) or more",
+      "point": "(\\d+)\\s*(?:years?|yrs?)"
+    },
+    "seniority": {
+      "SENIOR": [
+        "\\bsenior\\b",
+        "\\bsr\\.?\\b"
+      ],
+      "LEAD": [
+        "\\blead\\b"
+      ],
+      "STAFF": [
+        "\\bstaff\\b"
+      ],
+      "PRINCIPAL": [
+        "\\bprincipal\\b"
+      ],
+      "ARCHITECT": [
+        "\\barchitect\\b"
+      ]
+    },
+    "title_strip_words": [
+      "senior",
+      "sr",
+      "staff",
+      "principal",
+      "lead",
+      "junior",
+      "jr",
+      "associate",
+      "i",
+      "ii",
+      "iii",
+      "iv"
+    ]
+  },
+  "experience_fit": {
+    "candidate_years": 3,
+    "labels": [
+      "DIRECT",
+      "REASONABLE",
+      "STRETCH",
+      "UNKNOWN_FIT"
+    ],
+    "rules": [
+      {
+        "rule_id": "EXP-R01",
+        "shape": "POINT",
+        "when": {
+          "value": {
+            "lte": 3
+          }
+        },
+        "label": "DIRECT"
+      },
+      {
+        "rule_id": "EXP-R02",
+        "shape": "POINT",
+        "when": {},
+        "label": "STRETCH"
+      },
+      {
+        "rule_id": "EXP-R03",
+        "shape": "PLUS",
+        "when": {
+          "min": {
+            "lte": 3
+          }
+        },
+        "label": "DIRECT"
+      },
+      {
+        "rule_id": "EXP-R04",
+        "shape": "PLUS",
+        "when": {},
+        "label": "STRETCH"
+      },
+      {
+        "rule_id": "EXP-R05",
+        "shape": "RANGE",
+        "when": {
+          "max": {
+            "lte": 3
+          }
+        },
+        "label": "DIRECT"
+      },
+      {
+        "rule_id": "EXP-R06",
+        "shape": "RANGE",
+        "when": {
+          "min": {
+            "lte": 3
+          }
+        },
+        "label": "REASONABLE",
+        "ruling": [
+          "Phase B §13 (OI-016)"
+        ]
+      },
+      {
+        "rule_id": "EXP-R07",
+        "shape": "RANGE",
+        "when": {},
+        "label": "STRETCH"
+      },
+      {
+        "rule_id": "EXP-R08",
+        "shape": "NONE",
+        "when": {},
+        "label": "UNKNOWN_FIT"
+      }
+    ],
+    "stretch_flag": "EXPERIENCE_STRETCH",
+    "never_eligibility": true,
+    "ruling": [
+      "OR-21",
+      "Phase B §13"
+    ]
+  },
+  "relevance": {
+    "labels": [
+      "STRONG",
+      "MODERATE",
+      "WEAK",
+      "NOT_ASSESSED"
+    ],
+    "clusters": {
+      "A": {
+        "name": "AI application engineering",
+        "terms": [
+          {
+            "pattern": "\\bllms?\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\blarge language models?\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\bgen(?:erative)?[ -]?ai\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\bprompt (?:engineering|templates?|design)\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\bstructured outputs?\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\bmodel orchestration\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\bllm (?:integration|applications?)\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\bfine[- ]tun(?:e|ed|ing)\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\bpython\\b",
+            "specific": false
+          },
+          {
+            "pattern": "\\bfastapi\\b",
+            "specific": false
+          },
+          {
+            "pattern": "\\bbackend (?:apis?|services?)\\b",
+            "specific": false
+          }
+        ]
+      },
+      "B": {
+        "name": "Retrieval / knowledge systems",
+        "terms": [
+          {
+            "pattern": "\\brag\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\bretrieval[- ]augmented\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\bembeddings?\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\bvector (?:databases?|db|stores?|search|retrieval)\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\bsemantic search\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\bbm25\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\bhybrid (?:retrieval|search)\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\breciprocal rank fusion\\b|\\brrf\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\bre-?rank(?:ing|er|ers)?\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\bgraph ?rag\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\bfaiss\\b|\\bchroma(?:db)?\\b|\\bpinecone\\b|\\bweaviate\\b|\\bpgvector\\b",
+            "specific": true
+          }
+        ]
+      },
+      "C": {
+        "name": "AI evaluation / reliability",
+        "terms": [
+          {
+            "pattern": "\\bllm evaluation\\b|\\bllm evals?\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\bai evaluation\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\bhallucinations?\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\bgroundedness\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\bfaithfulness\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\banswer relevancy\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\bdeepeval\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\bragas\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\bpromptfoo\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\bllm[- ]as[- ]a?[- ]?judge\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\bllm testing\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\bretrieval evaluation\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\bevaluation (?:pipelines?|harness)\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\bai (?:reliability|observability|monitoring)\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\bguardrails?\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\bmodel evaluation\\b",
+            "specific": true
+          }
+        ]
+      },
+      "D": {
+        "name": "AI infrastructure",
+        "terms": [
+          {
+            "pattern": "\\bllmops\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\bmlops\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\bmodel serving\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\binference\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\bai platforms?\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\bmodel monitoring\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\bmachine learning\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\bgradient[- ]boost\\w*\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\bbedrock\\b|\\bsagemaker\\b|\\bvertex ai\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\bdocker\\b",
+            "specific": false
+          },
+          {
+            "pattern": "\\bci/?cd\\b",
+            "specific": false
+          },
+          {
+            "pattern": "\\bkubernetes\\b",
+            "specific": false
+          }
+        ]
+      },
+      "E": {
+        "name": "Agentic / AI-SDLC",
+        "terms": [
+          {
+            "pattern": "\\b(?:ai )?agents?\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\bagentic\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\bmulti[- ]agent\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\btool[- ]calling\\b|\\bfunction[- ]calling\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\blanggraph\\b|\\blangchain\\b|\\bcrewai\\b|\\bautogen\\b|\\bmcp\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\bai coding\\b|\\bcoding agents?\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\b(?:ai[- ])?generat\\w* (?:unit )?tests\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\bai[- ]driven (?:sdlc|software)\\b|\\bai[- ]assisted (?:software|development)\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\bdefect triage\\b",
+            "specific": false
+          },
+          {
+            "pattern": "\\brca\\b|\\broot cause analysis\\b",
+            "specific": false
+          },
+          {
+            "pattern": "\\borchestration\\b",
+            "specific": false
+          }
+        ]
+      },
+      "F": {
+        "name": "Governance / trust",
+        "terms": [
+          {
+            "pattern": "\\bai governance\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\bresponsible ai\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\bai risk\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\bexplainability\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\btrustworthy ai\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\bdecision governance\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\btraceability\\b",
+            "specific": false
+          }
+        ]
+      }
+    },
+    "traditional_qa_terms": [
+      "\\bselenium\\b",
+      "\\bcypress\\b",
+      "\\bplaywright\\b",
+      "\\bmanual (?:testing|test)\\b",
+      "\\bregression test\\w*\\b",
+      "\\bui (?:testing|regression|test)\\b",
+      "\\btest cases?\\b",
+      "\\btestrail\\b",
+      "\\bmobile (?:apps?|testing|qa)\\b",
+      "\\betl testing\\b",
+      "\\bfunctional testing\\b"
+    ],
+    "thresholds": {
+      "strong_min_specific_terms": 3,
+      "strong_min_clusters": 2,
+      "moderate_min_specific_terms": 2
+    },
+    "rule": "STRONG: >= strong_min_specific_terms distinct AI-specific terms spanning >= strong_min_clusters clusters. MODERATE: >= moderate_min_specific_terms distinct AI-specific terms. WEAK: otherwise. NOT_ASSESSED: no JD text. Supporting terms (Python, Docker, CI/CD, RCA ...) are reported as spans but never count. Traditional-QA terms are reported and never count.",
+    "no_score": true,
+    "llm": false,
+    "title_tiers": {
+      "TIER_1": [
+        {
+          "title": "AI Engineer",
+          "variants": [
+            "ai engineer",
+            "artificial intelligence engineer"
+          ]
+        },
+        {
+          "title": "Applied AI Engineer",
+          "variants": [
+            "applied ai engineer"
+          ]
+        },
+        {
+          "title": "Agentic AI Engineer",
+          "variants": [
+            "agentic ai engineer",
+            "ai agent engineer",
+            "ai agents engineer"
+          ]
+        },
+        {
+          "title": "Generative AI Engineer",
+          "variants": [
+            "generative ai engineer",
+            "genai engineer",
+            "gen ai engineer"
+          ]
+        },
+        {
+          "title": "AI/LLM Engineer",
+          "variants": [
+            "ai llm engineer",
+            "llm engineer"
+          ]
+        },
+        {
+          "title": "RAG Engineer",
+          "variants": [
+            "rag engineer"
+          ]
+        },
+        {
+          "title": "Retrieval Engineer",
+          "variants": [
+            "retrieval engineer",
+            "search relevance engineer"
+          ]
+        },
+        {
+          "title": "AI Evaluation Engineer",
+          "variants": [
+            "ai evaluation engineer",
+            "ai evals engineer"
+          ]
+        },
+        {
+          "title": "LLM Evaluation Engineer",
+          "variants": [
+            "llm evaluation engineer",
+            "llm evals engineer"
+          ]
+        },
+        {
+          "title": "AI Quality Engineer",
+          "variants": [
+            "ai quality engineer"
+          ]
+        },
+        {
+          "title": "AI Reliability Engineer",
+          "variants": [
+            "ai reliability engineer"
+          ]
+        },
+        {
+          "title": "AI Testing Engineer",
+          "variants": [
+            "ai testing engineer",
+            "ai test engineer"
+          ]
+        },
+        {
+          "title": "GenAI Quality Engineer",
+          "variants": [
+            "genai quality engineer",
+            "gen ai quality engineer",
+            "generative ai quality engineer"
+          ]
+        },
+        {
+          "title": "AI Platform Engineer",
+          "variants": [
+            "ai platform engineer"
+          ]
+        },
+        {
+          "title": "GenAI Backend Engineer",
+          "variants": [
+            "genai backend engineer",
+            "gen ai backend engineer",
+            "generative ai backend engineer"
+          ]
+        },
+        {
+          "title": "AI Solutions Engineer",
+          "variants": [
+            "ai solutions engineer",
+            "ai solution engineer"
+          ]
+        },
+        {
+          "title": "AI Automation Engineer",
+          "variants": [
+            "ai automation engineer"
+          ]
+        },
+        {
+          "title": "AI-SDLC / Developer Productivity Engineer",
+          "variants": [
+            "ai sdlc engineer",
+            "developer productivity engineer"
+          ]
+        },
+        {
+          "title": "LLMOps / AI Operations Engineer",
+          "variants": [
+            "llmops engineer",
+            "ai operations engineer",
+            "ai ops engineer"
+          ]
+        },
+        {
+          "title": "AI Governance / AI Reliability Engineer",
+          "variants": [
+            "ai governance engineer"
+          ]
+        }
+      ],
+      "TIER_2": [
+        {
+          "title": "Machine Learning Engineer",
+          "variants": [
+            "machine learning engineer",
+            "ml engineer"
+          ]
+        },
+        {
+          "title": "NLP Engineer",
+          "variants": [
+            "nlp engineer"
+          ]
+        },
+        {
+          "title": "MLOps Engineer",
+          "variants": [
+            "mlops engineer"
+          ]
+        },
+        {
+          "title": "ML Platform Engineer",
+          "variants": [
+            "ml platform engineer",
+            "machine learning platform engineer"
+          ]
+        },
+        {
+          "title": "LLM Application Engineer",
+          "variants": [
+            "llm application engineer"
+          ]
+        },
+        {
+          "title": "AI Application Engineer",
+          "variants": [
+            "ai application engineer",
+            "ai applications engineer"
+          ]
+        },
+        {
+          "title": "AI Software Engineer",
+          "variants": [
+            "ai software engineer"
+          ]
+        },
+        {
+          "title": "AI Backend Engineer",
+          "variants": [
+            "ai backend engineer"
+          ]
+        },
+        {
+          "title": "AI Integration Engineer",
+          "variants": [
+            "ai integration engineer"
+          ]
+        },
+        {
+          "title": "AI Product Engineer",
+          "variants": [
+            "ai product engineer"
+          ]
+        },
+        {
+          "title": "AI Developer",
+          "variants": [
+            "ai developer"
+          ]
+        },
+        {
+          "title": "Intelligent Automation Engineer",
+          "variants": [
+            "intelligent automation engineer"
+          ]
+        },
+        {
+          "title": "Data/AI Engineer",
+          "variants": [
+            "data ai engineer",
+            "data and ai engineer"
+          ]
+        },
+        {
+          "title": "ML Infrastructure Engineer",
+          "variants": [
+            "ml infrastructure engineer",
+            "machine learning infrastructure engineer"
+          ]
+        },
+        {
+          "title": "AI Solutions Architect (hands-on)",
+          "variants": [
+            "ai solutions architect",
+            "ai solution architect"
+          ]
+        }
+      ],
+      "TIER_3": "Title in neither list, JD relevance STRONG or MODERATE."
+    },
+    "ruling": [
+      "OR-12",
+      "OR-13",
+      "Phase B §15-§21"
+    ]
+  },
+  "source_authority": {
+    "kinds": [
+      "EMPLOYER_ATS",
+      "COMPANY_SITE",
+      "JOB_BOARD",
+      "AGGREGATOR",
+      "IMPORT"
+    ],
+    "tier_by_kind": {
+      "EMPLOYER_ATS": 1,
+      "COMPANY_SITE": 1
+    },
+    "tier_by_completeness_for_boards": {
+      "FULL_JD": 2,
+      "PARTIAL": 3,
+      "SEARCH_ONLY": 4
+    },
+    "completeness_rank": {
+      "FULL_JD": 0,
+      "PARTIAL": 1,
+      "SEARCH_ONLY": 2
+    },
+    "conflict_dimensions": [
+      "title",
+      "geography",
+      "compensation",
+      "employment_type"
+    ],
+    "ruling": [
+      "Phase B §26 (OI-019)"
+    ],
+    "statement": "Factual authority: ATS/company site > job board. Freshness (first_seen) is recorded per source independently. Conflicting factual evidence across sources is preserved and sets SOURCE_CONFLICT."
+  },
+  "newness": {
+    "states": [
+      "NEW",
+      "UPDATED",
+      "SEEN_BEFORE"
+    ],
+    "material_fields": [
+      "title",
+      "location",
+      "compensation",
+      "employment_type",
+      "jd_hash"
+    ],
+    "enrichment_is_not_update": true,
+    "ruling": [
+      "OR-24",
+      "Phase B §24-§25 (OI-017, OI-018)"
+    ]
+  },
+  "lanes": {
+    "order": [
+      "SHORTLIST",
+      "REVIEW",
+      "PARKED",
+      "EXCLUDED",
+      "SUPPRESSED_DUPLICATE"
+    ],
+    "rules": [
+      {
+        "rule_id": "LANE-R01",
+        "when": {
+          "duplicate": true
+        },
+        "lane": "SUPPRESSED_DUPLICATE",
+        "ruling": [
+          "OR-22"
+        ]
+      },
+      {
+        "rule_id": "LANE-R02",
+        "when": {
+          "eligibility_any": "FAIL"
+        },
+        "lane": "EXCLUDED",
+        "ruling": [
+          "OR-22"
+        ]
+      },
+      {
+        "rule_id": "LANE-R03",
+        "when": {
+          "relevance": "NOT_ASSESSED",
+          "title_tier": "TIER_1"
+        },
+        "lane": "REVIEW",
+        "ruling": [
+          "Phase B §21 (OI-015)"
+        ],
+        "note": "Ordered before seniority parking (OI-044)."
+      },
+      {
+        "rule_id": "LANE-R04",
+        "when": {
+          "relevance": "NOT_ASSESSED"
+        },
+        "lane": "PARKED",
+        "ruling": [
+          "Phase B §21"
+        ]
+      },
+      {
+        "rule_id": "LANE-R05",
+        "when": {
+          "relevance": "WEAK"
+        },
+        "lane": "PARKED",
+        "ruling": [
+          "OR-22"
+        ]
+      },
+      {
+        "rule_id": "LANE-R06",
+        "when": {
+          "relevance": "MODERATE",
+          "parking_signal": true
+        },
+        "lane": "PARKED",
+        "ruling": [
+          "Phase B §22"
+        ],
+        "note": "7+ years or Staff/Principal/Architect title when relevance is not STRONG."
+      },
+      {
+        "rule_id": "LANE-R07",
+        "when": {
+          "eligibility_any": "UNKNOWN"
+        },
+        "lane": "REVIEW",
+        "ruling": [
+          "OR-22"
+        ]
+      },
+      {
+        "rule_id": "LANE-R08",
+        "when": {
+          "review_flag_any": true
+        },
+        "lane": "REVIEW",
+        "ruling": [
+          "OR-22",
+          "Phase B §22"
+        ]
+      },
+      {
+        "rule_id": "LANE-R09",
+        "when": {},
+        "lane": "SHORTLIST",
+        "ruling": [
+          "OR-22"
+        ]
+      }
+    ]
+  },
+  "queue": {
+    "review_daily_cap": "$review_daily_cap",
+    "carry_days": "$review_carry_days",
+    "strong_relevance_exempt_from_overflow_parking": true,
+    "ordering": [
+      {
+        "key": "relevance",
+        "order": [
+          "STRONG",
+          "MODERATE",
+          "NOT_ASSESSED"
+        ]
+      },
+      {
+        "key": "newness",
+        "order": [
+          "NEW",
+          "UPDATED",
+          "SEEN_BEFORE"
+        ]
+      },
+      {
+        "key": "evidence_completeness",
+        "order": "unknown_dimension_count_ascending"
+      },
+      {
+        "key": "work_arrangement",
+        "order": [
+          "REMOTE",
+          "BENGALURU_HYBRID",
+          "OTHER",
+          "UNKNOWN"
+        ]
+      },
+      {
+        "key": "compensation_band",
+        "order": [
+          "IN_TARGET",
+          "ABOVE_TARGET",
+          "SPANS_TARGET",
+          "CTC_BASIS_UNVERIFIED",
+          "BELOW_TARGET",
+          "UNKNOWN",
+          "NOT_APPLICABLE"
+        ]
+      },
+      {
+        "key": "employer_preference",
+        "order": [
+          "PREFERRED_AI_NATIVE",
+          "PREFERRED_PRODUCT",
+          "PREFERRED_GCC",
+          "PREFERRED_ENGINEERING_LED",
+          "NEUTRAL",
+          "UNKNOWN"
+        ]
+      },
+      {
+        "key": "first_seen_at",
+        "order": "ascending"
+      },
+      {
+        "key": "requisition_id",
+        "order": "ascending"
+      }
+    ],
+    "ruling": [
+      "OR-28",
+      "OR-29",
+      "Phase B §23 (OI-009, OI-010, OI-028)"
+    ],
+    "note": "Within employer_preference, PREFERRED_* categories are equal in policy; their listed order is a deterministic tie-break only."
+  },
+  "employer_preference": {
+    "PRODUCT": "PREFERRED_PRODUCT",
+    "AI_NATIVE": "PREFERRED_AI_NATIVE",
+    "GCC": "PREFERRED_GCC",
+    "ENGINEERING_LED": "PREFERRED_ENGINEERING_LED",
+    "ENTERPRISE_DIRECT": "NEUTRAL",
+    "STAFFING": "NEUTRAL",
+    "CONSULTANCY": "NEUTRAL",
+    "IT_SERVICES": "NEUTRAL",
+    "UNKNOWN": "UNKNOWN"
+  },
+  "employer_classifications": [
+    "PRODUCT",
+    "AI_NATIVE",
+    "GCC",
+    "ENGINEERING_LED",
+    "ENTERPRISE_DIRECT",
+    "STAFFING",
+    "CONSULTANCY",
+    "IT_SERVICES",
+    "UNKNOWN"
+  ],
+  "flags": {
+    "review_routing": [
+      "EOR",
+      "EMPLOYER_TYPE_REVIEW",
+      "STAFFING",
+      "CONSULTANCY",
+      "IT_SERVICES",
+      "EMPLOYER_UNCLASSIFIED",
+      "LONG_TERM_DIRECT_CONTRACT",
+      "EMPLOYMENT_MIXED",
+      "EMPLOYMENT_UNSTATED",
+      "BELOW_TARGET",
+      "COMPENSATION_REVIEW",
+      "CTC_BASIS_UNVERIFIED",
+      "SALARY_RANGE_STRADDLES_FLOOR",
+      "CTC_RANGE_STRADDLES_FLOOR",
+      "COMP_UNDISCLOSED",
+      "COMP_NON_NUMERIC",
+      "COMP_NON_BASE_ONLY",
+      "COMP_UPPER_BOUND_ONLY",
+      "COMP_LOCATION_ADJUSTED_NO_INDIA_BAND",
+      "COMP_NOT_ANNUALIZABLE",
+      "COMP_PERIOD_UNSTATED",
+      "FX_RATE_UNAVAILABLE",
+      "COMP_UNCLASSIFIED",
+      "GEO_REGION_AMBIGUOUS",
+      "CITY_HUB_LISTED",
+      "HYBRID_DAYS_UNSPECIFIED",
+      "HYBRID_FLEXIBLE",
+      "WORK_ARRANGEMENT_ABSENT",
+      "WORK_ARRANGEMENT_AMBIGUOUS",
+      "WORK_LOCATION_AMBIGUOUS",
+      "LANGUAGE_UNCERTAIN",
+      "EXPERIENCE_STRETCH",
+      "SOURCE_CONFLICT",
+      "IDENTITY_UNCERTAIN"
+    ],
+    "informational": [
+      "IN_TARGET",
+      "ABOVE_TARGET",
+      "MONTHLY_ASSUMED",
+      "COMP_BASIS_UNSTATED",
+      "LANGUAGE_PREFERENCE",
+      "TIMEZONE_OVERLAP_US",
+      "TIMEZONE_OVERLAP_UK",
+      "TIMEZONE_OVERLAP_EU",
+      "TIMEZONE_OVERLAP_APAC",
+      "SENIORITY_SENIOR",
+      "SENIORITY_LEAD",
+      "SENIORITY_STAFF",
+      "SENIORITY_PRINCIPAL",
+      "SENIORITY_ARCHITECT",
+      "EXPERIENCE_SUBSTANTIAL_MISMATCH"
+    ]
+  },
+  "legacy": {
+    "scraped_jobs": "Rows present at migration 0101 are archived as legacy and never evaluated under v0.2 (OI-034).",
+    "ruling": [
+      "Phase B §29"
+    ]
+  }
+}

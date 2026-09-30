@@ -124,6 +124,22 @@ practice_progress_by_difficulty (view)
 
 ---
 
+### Policy Ruleset (machine-readable)
+
+- [jobops-policy-0.1.0.json](../policy/jobops-policy-0.1.0.json) — Versioned, machine-readable JobOps policy ruleset. The executable policy authority for the P0 hard eligibility gate, derived from [Career_Strategy_and_Search_Preferences.md](Career_Strategy_and_Search_Preferences.md) §4 and the closed rulings in [`../OWNER_RULINGS_LOG.md`](../OWNER_RULINGS_LOG.md).
+
+**When to use:** Before implementing, changing, or reasoning about gate behaviour — this file, not `data/resume_config.json`, is the authority the gate reads for work-mode and compensation rules.
+
+**Key topics:**
+- Ruleset version `jobops-policy@0.1.0`; every executable rule cites a career-doc § or an `OWNER_RULINGS_LOG.md` ruling id
+- Work-mode and compensation hard gate; `PASS` / `UNKNOWN` / `FAIL`, with FAIL dominating UNKNOWN dominating PASS
+- ₹20 LPA compensation floor (OR-03a); UNKNOWN never satisfies it and is never auto-shortlisted above a confirmed qualifying salary (OR-03b, OQ-01)
+- Company type recorded as a signal but explicitly non-gating (OR-04)
+- Currency conversion defined but `REQUIRES_CONFIGURATION`; non-INR compensation remains UNKNOWN pending a separately authorized source (OQ-02)
+- Evidence and provenance requirements, 12 conformance vectors, and the open items the ruleset does not close
+
+---
+
 ## Feature Documentation
 
 Detailed guides for specific features.
