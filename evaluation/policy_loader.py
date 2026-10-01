@@ -28,6 +28,7 @@ POLICY_PATHS = {
     "jobops-policy@0.2.2": REPO_ROOT / "policy" / "jobops-policy-0.2.2.json",
     "jobops-policy@0.2.3": REPO_ROOT / "policy" / "jobops-policy-0.2.3.json",
     "jobops-policy@0.2.4": REPO_ROOT / "policy" / "jobops-policy-0.2.4.json",
+    "jobops-policy@0.2.5": REPO_ROOT / "policy" / "jobops-policy-0.2.5.json",
 }
 EVIDENCE_GAPS = ("missing", "known")  # OR-80: exactly two classes, no third
 # The default for new evaluations. Switched to 0.2.1 on 2026-09-29 only after
@@ -42,6 +43,9 @@ EVIDENCE_GAPS = ("missing", "known")  # OR-80: exactly two classes, no third
 # EXCLUDED / SHORTLIST, sequences passing) with the full suite green and 0.2.0-0.2.3
 # byte-identical. 0.2.3 was never the default. No ingestion is wired: the default
 # only selects the policy for local/replay tools and new evaluations.
+# 0.2.5 (P8, 2026-10-01) is registered for evaluation and replay but is NOT the default:
+# Round 3 informed it, so its Gate E measurement is a fresh independent Round-4 holdout.
+# The owner switches the default after that measurement.
 DEFAULT_VERSION = "jobops-policy@0.2.4"
 DEFAULT_POLICY_PATH = POLICY_PATHS[DEFAULT_VERSION]
 EXPECTED_VERSION = "ANY_SUPPORTED"

@@ -284,3 +284,13 @@ No other question is open.
 | OI | Status | Answer | Ruling |
 |---|---|---|---|
 | OI-052 | **RESOLVED** | **YES** — an explicit statement that candidates in India (or worldwide) are eligible overrides a regional label that would otherwise exclude India: "Remote — EMEA" + India eligibility → PASS; "Remote — APAC" + India eligibility → PASS; "Remote — EMEA" alone → FAIL; plain Remote with no India/region → UNKNOWN. | OR-83 (implemented in `jobops-policy@0.2.4`, GEO-R27 → PASS) |
+
+## P8 Open (appended 2026-10-01)
+
+Recorded in `OWNER_RULINGS_LOG.md` Addendum I. `jobops-policy@0.2.5` applies the recall-safe reading of each item: UNKNOWN → REVIEW, never FAIL, never a silent PASS.
+
+| OI | Question | Why it is open | Current (temporary) behaviour |
+|---|---|---|---|
+| OI-053 | YES/NO — Does an India-resident preference/priority statement count as explicit India eligibility for geography purposes? | OR-79 / OR-83 require an *explicit* eligibility statement; a preference ("India candidates are preferred", "... are our priority") is weaker. P8 §9 forbids deciding it silently. | UNKNOWN + GEO_INDIA_PREFERENCE_UNRESOLVED (GEO-R29, `evidence_gap: known`) → REVIEW against a lock, APAC or an unqualified remote scope. An India listing stays PASS. `jobops-policy@0.2.5`. |
+| OI-054 | YES/NO — When a posting requires authorization to work in "the country where the job is posted" and names no country anywhere (plain "Remote", no listing), is geography FAIL (rather than UNKNOWN)? | OR-50 fails authorization in the posting country only when that country is other than India; here it is unknown, and OR-66 allows FAIL only on unambiguous evidence. | UNKNOWN + GEO_REGION_AMBIGUOUS (GEO-R05) → REVIEW. A stated abroad listing still FAILs (GEO-R04); a stated India listing still PASSes. |
+| OI-055 | YES/NO — When the structured work mode is "Hybrid" and the JD states five office days a week, is geography FAIL (OR-15) rather than UNKNOWN + WORK_MODE_CONFLICT (accepted golden OD25)? | OR-15 / OR-71 (hybrid ≥ 4 days → FAIL) and the accepted OD25 interpretation (P3 §8 precedence → conflict) disagree. | UNKNOWN + WORK_MODE_CONFLICT (GEO-R25) → REVIEW, as OD25 requires. Without a structured mode: Bengaluru on-site → FAIL (GEO-R10). |

@@ -95,8 +95,13 @@ def _resolve_mode(statements: List[Dict[str, Any]]) -> str:
     return accepted
 
 
+def _india_places(places: List[PlaceRef]) -> List[PlaceRef]:
+    return [p for p in places if p.country == INDIA]
+
+
 def summarize_geography(rows: List[Dict[str, Any]], listing_rows: List[Dict[str, Any]],
-                        index: PlaceIndex, auth_fallback_to_listing: bool = False) -> Dict[str, Any]:
+                        index: PlaceIndex, auth_fallback_to_listing: bool = False,
+                        lock_lists_including_india: bool = False) -> Dict[str, Any]:
     statements = [r["value"] for r in rows]
     listing = [p for r in listing_rows for p in _refs(r["value"]["places"])]
     listing += [p for s in statements if s["is_listing"] for p in _refs(s["places"])]
@@ -104,6 +109,11 @@ def summarize_geography(rows: List[Dict[str, Any]], listing_rows: List[Dict[str,
     all_places = [p for s in statements for p in _refs(s["places"])] + listing
     residence = [p for s in statements for p in _refs(s["residence_places"])]
     auth = [p for s in statements for p in _refs(s["work_authorization_places"])]
+    if lock_lists_including_india:
+        # 0.2.5 (P8 Task 2): "must live in India or Germany" / "authorized to work in the US or India" do not
+        # exclude India. Only a lock that names no Indian place can exclude India.
+        residence = _india_places(residence) or residence
+        auth = _india_places(auth) or auth
     relocation = any(s["relocation"] for s in statements)
     visa = any(s["visa"] for s in statements)
     obs_city = PlaceIndex.city_class(all_places)
@@ -125,7 +135,16 @@ def summarize_geography(rows: List[Dict[str, Any]], listing_rows: List[Dict[str,
     if mode == "REMOTE":
         remote_places = [p for s in statements if s["mode"] == "REMOTE" for p in _refs(s["places"])]
         facts["remote_scope"] = _remote_scope(remote_places, listing, index)
-        explicit = sorted({s["explicit_eligibility"] for s in statements if s.get("explicit_eligibility")})
+        stated = sorted({s["explicit_eligibility"] for s in statements if s.get("explicit_eligibility")})
+        # 0.2.5: only INDIA / WORLDWIDE statements are eligibility. A preference (OI-053) or a negated
+        # statement never lifts a lock; 0.2.0-0.2.4 never produce those values.
+        explicit = [e for e in stated if e not in ("INDIA_PREFERENCE", "NEGATED")]
+        if "INDIA_PREFERENCE" in stated and not explicit:
+            facts["explicit_eligibility"] = stated
+            if facts["remote_scope"] in ("REGION_EXCLUDES_INDIA", "REGION_INCLUDES_INDIA_IMPLICIT",
+                                         "UNQUALIFIED_NO_LISTING", "UNQUALIFIED_FOREIGN_LISTING"):
+                # OI-053 (open): preference is weaker than eligibility. UNKNOWN -> REVIEW, never FAIL.
+                facts["remote_scope"] = "INDIA_PREFERENCE_UNRESOLVED"
         if explicit:
             # 0.2.4 (OR-79, F2): an explicit "candidates in India / worldwide are eligible" statement lifts a
             # single-country lock and qualifies an unqualified or implicit remote scope (PASS). Against a

@@ -1,0 +1,4950 @@
+{
+  "artifact": {
+    "id": "jobops-policy",
+    "version": "0.2.5",
+    "ruleset_version": "jobops-policy@0.2.5",
+    "status": "Candidate. Implemented and regression-validated in P8 (docs/reports/JOBOPS_P8_ROUND3_FIX_REPORT_2026-10-01.md); NOT Gate E measured. Round 3 informed this version and is consumed; the Gate E acceptance measurement is a fresh, independent Round-4 holdout. jobops-policy@0.2.4 remains the default until the owner switches it. 0.2.0-0.2.4 stay replayable and byte-identical.",
+    "created": "2026-10-01",
+    "phase": "P8 (Round-3 fix pass: general extraction rules; OR-88)",
+    "authority": [
+      "OWNER_RULINGS_LOG.md OR-11..OR-30",
+      "Owner Phase B implementation command 2026-09-29",
+      "docs/architecture/JOBOPS_V2_OWNER_POLICY_SPEC.md",
+      "OWNER_RULINGS_LOG.md Addendum B (OR-31 onward)",
+      "Owner P1a rulings sheet 2026-09-29",
+      "OWNER_RULINGS_LOG.md Addendum C (OR-62 onward)",
+      "Owner P3 fix-pass rulings 2026-09-29",
+      "OWNER_RULINGS_LOG.md Addendum E (OR-66 onward)",
+      "Owner P5 command 2026-09-30 (Addendum E1-E8)",
+      "OWNER_RULINGS_LOG.md Addendum D (late) OR-74..OR-77",
+      "OWNER_RULINGS_LOG.md Addendum F OR-78..OR-82",
+      "OWNER_RULINGS_LOG.md OR-83 (OI-052 = YES, post-P6)",
+      "Owner P6 command 2026-09-30",
+      "OWNER_RULINGS_LOG.md Addendum G OR-84..OR-87 and Addendum H OR-88",
+      "OWNER_RULINGS_LOG.md Addendum I (P8): OI-053, OI-054, OI-055 open; no new ruling",
+      "Owner P8 command 2026-10-01 (Round-3 fix pass, policy 0.2.5)"
+    ],
+    "v0_1_artifact": {
+      "path": "policy/jobops-policy-0.1.0.json",
+      "sha256": "afe05e5a31777410668180a2d50a06da7cfa21736159946273060be6bf1c051f",
+      "statement": "Recorded at Phase B. The v0.1 file is not modified; replay under v0.1 remains possible."
+    },
+    "interpretation": "Every threshold, lexicon, region table, title list, rule table, lane rule, flag and capacity parameter is data in this file. evaluation/ interprets it. Rule tables are ordered; first match wins. Predicates: equality, {'in': [...]}, {'is_null': true}, and numeric {'lt'|'lte'|'gt'|'gte': value or '$param'}.",
+    "verdicts": [
+      "PASS",
+      "FAIL",
+      "UNKNOWN"
+    ],
+    "precedence": [
+      "FAIL",
+      "UNKNOWN",
+      "PASS"
+    ],
+    "no_fourth_verdict": "Relevance, newness, lanes, completeness, preference, compensation bands and experience fit are separate outputs, never eligibility verdicts.",
+    "v0_2_0_artifact": {
+      "path": "policy/jobops-policy-0.2.0.json",
+      "sha256": "65f74aec883d475989ea0594fac070f547c96a697bc1f7f4b46cf8e0d5dd567a",
+      "statement": "Recorded at P1a. 0.2.0 is not modified and remains replayable."
+    },
+    "v0_2_1_artifact": {
+      "path": "policy/jobops-policy-0.2.1.json",
+      "sha256": "af19a3fd998e945cba19ce68f0e36f2eba4156e8bfd5255ac4ea7dacf7f5ea7d",
+      "statement": "Recorded at P3. The 0.2.1 file is not modified; replay under 0.2.1 remains possible."
+    },
+    "v0_2_2_artifact": {
+      "path": "policy/jobops-policy-0.2.2.json",
+      "sha256": "3743bbaebce2b5f3143ec0a211d6c63aa35b8113dce03b1622876ef43eeed734",
+      "changes_from_0_2_1": [
+        "Work-mode parsing (P3 §8-§11): 'hybrid' is a work-arrangement signal only when its context describes a work arrangement, office attendance or workplace model (lexicon.hybrid_semantics). Technical uses (hybrid search, retrieval, BM25 + dense, ranking, cloud, architecture, model, embeddings ...) are not work-mode signals. A bare 'hybrid' in the JD body with no context is not classified.",
+        "Work-mode source precedence (P3 §8): structured work-mode field > location > title > JD body (lexicon.work_mode_sources). A genuine contradiction between sources -> geography UNKNOWN + WORK_MODE_CONFLICT (GEO-R25, review-routing); a lower-precedence source never silently overrides a higher one.",
+        "Office-day wording (P3 §13): '2 days WFO', '2 office days per week', '5 days work from office', 'hybrid - 3 days', '2 days onsite' are parsed.",
+        "OI-049 (OR-62): a CTC-only range spanning the target carries CTC_BASIS_UNVERIFIED as well as COMPENSATION_REVIEW (COMP-C03).",
+        "CTC lane rule (OR-63): CTC_BASIS_UNVERIFIED is informational; it no longer routes to REVIEW by itself.",
+        "Base and CTC stated on one line with labels separated by | / ; , (P3 §20) are separate clauses, so base wins.",
+        "Direct fixed-term contracts (P3 §25): 'employed directly by', 'directly employed', 'fixed-term' are recognised.",
+        "Relationship signals (EOR, independent contractor, B2B, hourly contractor) are read from the structured employment field as well as the JD body (P3 §26); an independent-contractor employment statement is its own employment kind (FAIL).",
+        "A direct-company contract with no stated duration is UNKNOWN + CONTRACT_DURATION_UNSTATED (EMP-R14), not FAIL, pending OI-051.",
+        "Cross-source newness (OR-64): a higher-authority observation that changes the accepted material value is UPDATED."
+      ]
+    },
+    "v0_2_3_artifact": {
+      "path": "policy/jobops-policy-0.2.3.json",
+      "sha256": "918bf66e7d83d06d7ff7b10c6d8b1309cbabd033331315510851110856659d77",
+      "changes_from_0_2_2": [
+        "E1 evidence precision (OR-66): the structured employment field keeps single-word vocabulary; the JD body needs explicit multi-word employment statements (lexicon.employment_jd). 'contract testing', 'smart contract', 'vendor contracts', 'contract-review assistant', 'contractual SLAs' are not employment (expanded employment_cue_exclusions). Direct-employment evidence is posting-level. A structured-vs-JD contradiction is UNKNOWN + EMPLOYMENT_SOURCE_CONFLICT (EMP-R15), never FAIL.",
+        "E2 compensation (OR-67): fixed/guaranteed annual figure = base; variable/bonus/incentive figures are kept as evidence but never selected or added (lexicon.compensation.variable_component). Components separated by '+', '|' or 'plus' are separate clauses; percentages and counts ('25 lakh users') are never amounts; a lakh word alone does not open a salary clause; a compensation table's single stated period is inherited within the same currency.",
+        "E3 experience (OR-68): STRETCH -> EXPERIENCE_STRETCH (review-routing) -> REVIEW, never EXCLUDED by itself (unchanged behaviour, now covered by tests); the relevant-AI-experience years are the policy parameter relevant_ai_experience_years, referenced by the experience rules.",
+        "E4 language (OR-69): built-in deterministic function-word detector (lexicon.language.detector): English >= .95 PASS; genuine non-English .50-.94 UNKNOWN; >= .95 FAIL; mixed UNKNOWN. Required-language patterns accept a parenthetical level ('Japanese (JLPT N2 or above) is mandatory').",
+        "E5 employer (OR-70): THIRD_PARTY_PAYROLL employer classification (migration 0103) -> employer_type FAIL (EMPR-R08); third-party payroll / client placement relationship evidence -> employer_type FAIL (EMPR-R09) as well as the existing relationship FAIL.",
+        "E6 office days (OR-71): lexicon.office_day_normalization turns weekday lists, weekday ranges, 'twice a week', 'N days a month' (/ monthly_weeks), alternate days, extra floating days and WFH-day wording into office days per week; a normalised count with an attendance cue states a work mode; negated 'hybrid' ('not a hybrid role') is never a work arrangement; remote + five office days elsewhere is a genuine WORK_MODE_CONFLICT.",
+        "E7 title prior (OR-72): Tier 1 title + WEAK relevance + at least one AI-specific term -> REVIEW + RELEVANCE_TITLE_PRIOR (LANE-R10); relevance label and thresholds unchanged.",
+        "E8 relevance vocabulary (OR-73): AI evaluation / reliability / quality vocabulary added; terms marked 'context' count only when the same sentence carries an AI anchor (relevance.context_patterns). Thresholds unchanged.",
+        "P5 root causes (not new policy): sentence boundaries ignore dot leaders and split only before capitals; SGD/CAD/AUD/AED/CHF/JPY are recognised currencies (FX policy unchanged); '21 L' after a compensation keyword is INR; India-eligibility statements are listing evidence; a detail absent in one sighting is neither a SOURCE_CONFLICT nor an UPDATE (F4, owner resolution of R2-SEQ-09); overlapping relevance matches count once and a contextual term never anchors itself."
+      ]
+    },
+    "v0_2_4_artifact": {
+      "path": "policy/jobops-policy-0.2.4.json",
+      "sha256": "735934bf33533a31d207349cf689a3df6dafcdacc9c6a11b889b92e5af8c8136",
+      "statement": "Recorded at P8. 0.2.4 is not modified and remains replayable (Round-3 measured, tag round3-measured-0.2.4).",
+      "changes_from_0_2_3": [
+        "Change A (OR-80, F3): every UNKNOWN-producing rule carries evidence_gap = missing | known (exactly two classes). Queue evidence completeness counts only 'missing' UNKNOWNs (parameter completeness_counts_missing_only); a consultancy / staffing / EOR UNKNOWN is a known fact and no longer ranks as incomplete evidence.",
+        "Change B (OR-79, F2; OR-83): an explicit 'candidates in India / worldwide are eligible' statement lifts a single foreign-country remote lock (GEO-R26 PASS), qualifies an unqualified or implicit remote scope (PASS), and overrides a multi-country region label that would otherwise exclude India, e.g. EMEA, LATAM, UK/Europe (GEO-R27 PASS; OI-052 = YES, OR-83). Without such a statement: single foreign country or India-excluding region -> FAIL (GEO-R03, unchanged), plain Remote / APAC -> UNKNOWN (GEO-R05, unchanged). Precedence: explicit India/worldwide eligibility > explicit regional/country restriction > plain Remote with insufficient evidence."
+      ]
+    },
+    "changes_from_0_2_4": [
+      "Change 1 (OR-79 / OR-83; P8 Task 1): explicit India / worldwide eligibility is recognised by a semantic detector (lexicon.india_eligibility) instead of a fixed phrase list: per clause, an India or worldwide place + a subject (candidates, applicants, residents, this role ...) + a positive cue (eligible, welcome, open, reserved for, can apply ...), or a direct form ('we hire in India', 'must live in India'). Negated statements ('not eligible', 'outside India only', 'cannot apply') are never eligibility, never listing evidence, and their India places never qualify a remote scope. The 0.2.4 phrase list is consulted only when the detector finds no statement.",
+      "Change 2 (OI-053, open; P8 §9): an India preference / priority statement ('India-based candidates preferred', '... are our priority') is not eligibility. Against a lock, APAC or an unqualified remote scope it gives remote_scope INDIA_PREFERENCE_UNRESOLVED -> UNKNOWN + GEO_INDIA_PREFERENCE_UNRESOLVED (GEO-R29) -> REVIEW, never FAIL. It is no longer listing evidence (in 0.2.4 'candidates from India are preferred' could qualify plain Remote as an India listing).",
+      "Change 3 (OR-14 / OR-50; P8 Task 2): residence locks recognise 'must live in', 'need to reside in', 'only candidates based in', 'open/restricted to candidates in', 'residents of', 'residency in X required'; work-authorization locks also recognise 'authorization to work in', 'legal right to work in' and 'US/UK/EU work authorization/permit'. A lock or authorization list that names an Indian place does not exclude India (parameter lock_lists_including_india_do_not_exclude). A lock preceded by a negation ('you do not need to live in the US') is not a lock (lexicon.lock_negation_before), and a negated relocation ('you are not required to relocate to X') is not a relocation (lexicon.relocation_negation; in 0.2.4 it was GEO-R14 FAIL).",
+      "Change 4 (OR-15 / OR-71; P8 Task 3): office-day parsing adds attendance cues (building, site, workplace, hub; 'at home' as a WFH cue), counts with up to two words before the workplace noun ('three days at the Bengaluru office'), 'N days (a week) at/from home' WFH subtraction, 'all five working days' / 'every working day', and per-month counts stated against a workplace. Weekly counts followed by a per-month qualifier are not weekly. Counts in a non-attendance context (respond, notice, onboarding, training, on-call ...) are skipped (office_day_normalization.count_context_exclusions).",
+      "Change 5 (P8 §11): Bengaluru hybrid with more than 3 and fewer than 4 office days per week (e.g. 15 days/month = 3.46) is UNKNOWN + HYBRID_DAYS_BETWEEN_THRESHOLDS (GEO-R28); <= 3 PASS (GEO-R06) and >= 4 FAIL (GEO-R07) are unchanged. In 0.2.4 the gap fell to GEO-R07 FAIL.",
+      "Change 6 (COMP-R11, OR-18; P8 Task 4): location-adjusted pay is recognised generally (pay/salary adjusted to / varies by / depends on location, where you live, geography, region, cost of living; geo-based / geographic pay; location-based ranges). 'Pay is not adjusted by location', 'regardless of location' are not location-adjusted (lexicon.compensation.location_adjusted_negation). Salary thresholds, FX logic and India-band precedence are unchanged.",
+      "Change 7 (OR-20 / OR-70; P8 Task 5): client placement recognises '(employed by a staffing partner and) placed full time at one of their clients', 'assigned/deployed to client projects/sites', and third-party employment ('employed by / on the payroll of a staffing/recruitment/employment agency or third-party employer'). A negated statement ('you will not be placed with clients') is not a signal (lexicon.relationship_negation_before). A staffing/consultancy employer hiring for its own team is still employer UNKNOWN + flag, employment PASS. Precision: the 0.2.4 unanchored 'deployed to clients' / 'client deployment' cues also matched software ('our models are deployed to client environments' -> REL-R06 FAIL); 0.2.5 requires a person subject (you, engineers, consultants ...) for deployment/assignment cues.",
+      "Change 8 (OR-17 / OR-51 / OR-81; P8 Task 6): Indian languages (Hindi, Kannada, Tamil, Telugu, Marathi, Bengali, Malayalam, Gujarati, Punjabi, Urdu, Odia, Assamese) are recognised language names; 'X would be a plus', 'knowledge of X is a plus' are preferences (LANGUAGE_PREFERENCE, informational, verdict PASS) and a preference in the sentence overrides the weak 'knowledge of X' cue. Required non-English stays FAIL at confidence >= 0.95; 'knowledge of X' / 'X-speaking' alone stays UNKNOWN.",
+      "Change 9 (OR-88; P8 Task 7): queue.d3_parking_unconditional. A non-STRONG review item already carried for review_carry_days plans is PARKED on its next planning day (D+3) before the cap is applied, whatever the queue size. OR-29 STRONG exemption, OR-65 carry counting and OR-87 newness order are unchanged."
+    ]
+  },
+  "candidate_profile": {
+    "relevant_ai_experience_years": 3,
+    "relevant_employers": [
+      "Bosch",
+      "Happiest Minds",
+      "Ascendion"
+    ],
+    "employment_location_country": "IN",
+    "ruling": [
+      "OR-11"
+    ]
+  },
+  "parameters": {
+    "floor": 1800000,
+    "target_min": 2400000,
+    "target_max": 2800000,
+    "expected_ask": 2600000,
+    "monthly_multiplier": 12,
+    "bengaluru_hybrid_max_office_days": 3,
+    "bengaluru_hybrid_fail_min_office_days": 4,
+    "short_term_contract_months": 6,
+    "language_confidence_threshold": 0.95,
+    "heuristic_language_max_confidence": 0.9,
+    "review_daily_cap": 10,
+    "review_carry_days": 3,
+    "parking_min_years": 7,
+    "parking_seniority": [
+      "STAFF",
+      "PRINCIPAL",
+      "ARCHITECT"
+    ],
+    "fx_max_age_days": 14,
+    "fx_max_age_days_note": "OI-040 (Addendum B): snapshot age is measured against the evaluation date; older than 14 days is unavailable (FX_STALE).",
+    "fx_reference_date": "evaluation",
+    "fx_digest_warning_age_days": 7,
+    "work_authorization_fallback_to_listing": true,
+    "relevant_ai_experience_years": 3,
+    "standard_work_week_days": 5,
+    "monthly_weeks": 4.33,
+    "employer_fail_on_third_party_relationship": true,
+    "completeness_counts_missing_only": true,
+    "lock_lists_including_india_do_not_exclude": true
+  },
+  "eligibility_dimensions": [
+    "geography",
+    "language",
+    "compensation",
+    "employment_type",
+    "employment_relationship",
+    "employer_type"
+  ],
+  "rules": {
+    "geography": [
+      {
+        "rule_id": "GEO-R14",
+        "when": {
+          "relocation_abroad": true
+        },
+        "verdict": "FAIL",
+        "flags": [],
+        "ruling": [
+          "OR-15"
+        ],
+        "note": ""
+      },
+      {
+        "rule_id": "GEO-R15",
+        "when": {
+          "visa_sponsorship": true
+        },
+        "verdict": "FAIL",
+        "flags": [],
+        "ruling": [
+          "OR-15"
+        ],
+        "note": ""
+      },
+      {
+        "rule_id": "GEO-R04",
+        "when": {
+          "foreign_work_authorization": true
+        },
+        "verdict": "FAIL",
+        "flags": [],
+        "ruling": [
+          "OR-14"
+        ],
+        "note": ""
+      },
+      {
+        "rule_id": "GEO-R17",
+        "when": {
+          "residence_requirement": "OTHER_INDIA"
+        },
+        "verdict": "FAIL",
+        "flags": [],
+        "ruling": [
+          "Phase B §9"
+        ],
+        "note": "Explicit residence/base/relocation requirement in a non-Bengaluru Indian city (OI-012)."
+      },
+      {
+        "rule_id": "GEO-R18",
+        "when": {
+          "residence_requirement": "ABROAD"
+        },
+        "verdict": "FAIL",
+        "flags": [],
+        "ruling": [
+          "OR-14",
+          "Phase B §8"
+        ],
+        "note": ""
+      },
+      {
+        "rule_id": "GEO-R25",
+        "when": {
+          "mode": "CONFLICTING_SOURCES"
+        },
+        "verdict": "UNKNOWN",
+        "flags": [
+          "WORK_MODE_CONFLICT"
+        ],
+        "ruling": [
+          "P3 §8, §10"
+        ],
+        "note": "A higher-precedence source states one work mode and a lower-precedence source makes a genuine work-arrangement statement of another (e.g. structured Remote + 'hybrid work model, 3 days in office'). Neither is chosen silently.",
+        "owner_confirmed": true,
+        "evidence_gap": "known"
+      },
+      {
+        "rule_id": "GEO-R19",
+        "when": {
+          "mode": "CONFLICTING"
+        },
+        "verdict": "UNKNOWN",
+        "flags": [
+          "WORK_ARRANGEMENT_AMBIGUOUS"
+        ],
+        "ruling": [
+          "OR-14 (ambiguity -> UNKNOWN)"
+        ],
+        "note": "",
+        "evidence_gap": "known"
+      },
+      {
+        "rule_id": "GEO-R01",
+        "when": {
+          "mode": "REMOTE",
+          "remote_scope": "WORLDWIDE"
+        },
+        "verdict": "PASS",
+        "flags": [],
+        "ruling": [
+          "OR-14"
+        ],
+        "note": ""
+      },
+      {
+        "rule_id": "GEO-R02",
+        "when": {
+          "mode": "REMOTE",
+          "remote_scope": "INDIA_EXPLICIT"
+        },
+        "verdict": "PASS",
+        "flags": [],
+        "ruling": [
+          "OR-14"
+        ],
+        "note": ""
+      },
+      {
+        "rule_id": "GEO-R20",
+        "when": {
+          "mode": "REMOTE",
+          "remote_scope": "BENGALURU"
+        },
+        "verdict": "PASS",
+        "flags": [],
+        "ruling": [
+          "Phase B §8 (Bengaluru remote)"
+        ],
+        "note": ""
+      },
+      {
+        "rule_id": "GEO-R21",
+        "when": {
+          "mode": "REMOTE",
+          "remote_scope": "UNQUALIFIED_INDIA_LISTING"
+        },
+        "verdict": "PASS",
+        "flags": [],
+        "ruling": [
+          "Phase B §8 (OI-011)"
+        ],
+        "note": ""
+      },
+      {
+        "rule_id": "GEO-R26",
+        "when": {
+          "mode": "REMOTE",
+          "remote_scope": "EXPLICIT_ELIGIBILITY"
+        },
+        "verdict": "PASS",
+        "flags": [],
+        "ruling": [
+          "OR-79 (F2)"
+        ],
+        "note": "Remote with an explicit 'candidates in India / worldwide are eligible' statement."
+      },
+      {
+        "rule_id": "GEO-R27",
+        "when": {
+          "mode": "REMOTE",
+          "remote_scope": "REGION_LOCK_CONTRADICTED"
+        },
+        "verdict": "PASS",
+        "flags": [],
+        "ruling": [
+          "OR-79 (F2)",
+          "OR-83 (OI-052 = YES)"
+        ],
+        "note": "OR-83: an explicit India/worldwide eligibility statement overrides a multi-country region label that would otherwise exclude India (e.g. Remote — EMEA). Scope name kept for replay stability."
+      },
+      {
+        "rule_id": "GEO-R29",
+        "when": {
+          "mode": "REMOTE",
+          "remote_scope": "INDIA_PREFERENCE_UNRESOLVED"
+        },
+        "verdict": "UNKNOWN",
+        "flags": [
+          "GEO_INDIA_PREFERENCE_UNRESOLVED"
+        ],
+        "ruling": [
+          "OR-79",
+          "OR-83",
+          "OI-053 (open)"
+        ],
+        "note": "An India preference/priority statement against a lock, APAC or an unqualified remote scope. OI-053 asks whether preference counts as explicit eligibility; until the owner rules: UNKNOWN -> REVIEW, never FAIL.",
+        "evidence_gap": "known"
+      },
+      {
+        "rule_id": "GEO-R22",
+        "when": {
+          "mode": "REMOTE",
+          "remote_scope": "CITY_HUB_OTHER_INDIA"
+        },
+        "verdict": "UNKNOWN",
+        "flags": [
+          "CITY_HUB_LISTED"
+        ],
+        "ruling": [
+          "Phase B §9"
+        ],
+        "note": "",
+        "evidence_gap": "known"
+      },
+      {
+        "rule_id": "GEO-R03",
+        "when": {
+          "mode": "REMOTE",
+          "remote_scope": "REGION_EXCLUDES_INDIA"
+        },
+        "verdict": "FAIL",
+        "flags": [],
+        "ruling": [
+          "OR-14",
+          "Phase B §10 (OI-029)"
+        ],
+        "note": ""
+      },
+      {
+        "rule_id": "GEO-R05",
+        "when": {
+          "mode": "REMOTE",
+          "remote_scope": {
+            "in": [
+              "REGION_INCLUDES_INDIA_IMPLICIT",
+              "UNQUALIFIED_NO_LISTING",
+              "UNQUALIFIED_FOREIGN_LISTING"
+            ]
+          }
+        },
+        "verdict": "UNKNOWN",
+        "flags": [
+          "GEO_REGION_AMBIGUOUS"
+        ],
+        "ruling": [
+          "OR-14",
+          "Phase B §10"
+        ],
+        "note": "",
+        "evidence_gap": "missing"
+      },
+      {
+        "rule_id": "GEO-R11",
+        "when": {
+          "mode": "HYBRID",
+          "city_class": {
+            "in": [
+              "OTHER_INDIA",
+              "ABROAD"
+            ]
+          }
+        },
+        "verdict": "FAIL",
+        "flags": [],
+        "ruling": [
+          "OR-15"
+        ],
+        "note": ""
+      },
+      {
+        "rule_id": "GEO-R09",
+        "when": {
+          "mode": "HYBRID",
+          "city_class": "BENGALURU",
+          "flexible": true
+        },
+        "verdict": "UNKNOWN",
+        "flags": [
+          "HYBRID_FLEXIBLE"
+        ],
+        "ruling": [
+          "OR-15"
+        ],
+        "note": "",
+        "evidence_gap": "missing"
+      },
+      {
+        "rule_id": "GEO-R08",
+        "when": {
+          "mode": "HYBRID",
+          "city_class": "BENGALURU",
+          "office_days": {
+            "is_null": true
+          }
+        },
+        "verdict": "UNKNOWN",
+        "flags": [
+          "HYBRID_DAYS_UNSPECIFIED"
+        ],
+        "ruling": [
+          "OR-15"
+        ],
+        "note": "",
+        "evidence_gap": "missing"
+      },
+      {
+        "rule_id": "GEO-R06",
+        "when": {
+          "mode": "HYBRID",
+          "city_class": "BENGALURU",
+          "office_days": {
+            "lte": "$bengaluru_hybrid_max_office_days"
+          }
+        },
+        "verdict": "PASS",
+        "flags": [],
+        "ruling": [
+          "OR-15"
+        ],
+        "note": ""
+      },
+      {
+        "rule_id": "GEO-R28",
+        "when": {
+          "mode": "HYBRID",
+          "city_class": "BENGALURU",
+          "office_days": {
+            "gt": "$bengaluru_hybrid_max_office_days",
+            "lt": "$bengaluru_hybrid_fail_min_office_days"
+          }
+        },
+        "verdict": "UNKNOWN",
+        "flags": [
+          "HYBRID_DAYS_BETWEEN_THRESHOLDS"
+        ],
+        "ruling": [
+          "OR-15",
+          "OR-71",
+          "Owner P8 command §11"
+        ],
+        "note": "More than 3 and fewer than 4 office days per week (e.g. 15 days/month / 4.33 = 3.46): neither the <= 3 PASS nor the >= 4 FAIL band. Never FAIL.",
+        "evidence_gap": "known"
+      },
+      {
+        "rule_id": "GEO-R07",
+        "when": {
+          "mode": "HYBRID",
+          "city_class": "BENGALURU"
+        },
+        "verdict": "FAIL",
+        "flags": [],
+        "ruling": [
+          "OR-15"
+        ],
+        "note": "Office days above the maximum."
+      },
+      {
+        "rule_id": "GEO-R23",
+        "when": {
+          "mode": "HYBRID"
+        },
+        "verdict": "UNKNOWN",
+        "flags": [
+          "WORK_LOCATION_AMBIGUOUS"
+        ],
+        "ruling": [
+          "OR-14 (ambiguity -> UNKNOWN)"
+        ],
+        "note": "Hybrid with no identifiable city.",
+        "evidence_gap": "missing"
+      },
+      {
+        "rule_id": "GEO-R10",
+        "when": {
+          "mode": "ONSITE",
+          "city_class": "BENGALURU"
+        },
+        "verdict": "FAIL",
+        "flags": [],
+        "ruling": [
+          "Phase B §8 (supersedes OR-15 Bengaluru onsite UNKNOWN; OI-013)"
+        ],
+        "note": ""
+      },
+      {
+        "rule_id": "GEO-R12",
+        "when": {
+          "mode": "ONSITE",
+          "city_class": "OTHER_INDIA"
+        },
+        "verdict": "FAIL",
+        "flags": [],
+        "ruling": [
+          "OR-15"
+        ],
+        "note": ""
+      },
+      {
+        "rule_id": "GEO-R13",
+        "when": {
+          "mode": "ONSITE",
+          "city_class": "ABROAD"
+        },
+        "verdict": "FAIL",
+        "flags": [],
+        "ruling": [
+          "OR-15"
+        ],
+        "note": ""
+      },
+      {
+        "rule_id": "GEO-R24",
+        "when": {
+          "mode": "ONSITE"
+        },
+        "verdict": "FAIL",
+        "flags": [],
+        "ruling": [
+          "OR-15",
+          "Phase B §8"
+        ],
+        "note": "Onsite with no identifiable city: every onsite outcome is FAIL."
+      },
+      {
+        "rule_id": "GEO-R16",
+        "when": {},
+        "verdict": "UNKNOWN",
+        "flags": [
+          "WORK_ARRANGEMENT_ABSENT"
+        ],
+        "ruling": [
+          "OR-14",
+          "carried v0.1 WM-R5"
+        ],
+        "note": "",
+        "evidence_gap": "missing"
+      }
+    ],
+    "compensation": [
+      {
+        "rule_id": "COMP-R06",
+        "when": {
+          "state": "ABSENT"
+        },
+        "verdict": "UNKNOWN",
+        "flags": [
+          "COMP_UNDISCLOSED"
+        ],
+        "ruling": [
+          "OR-18",
+          "OR-03b"
+        ],
+        "note": "",
+        "band": "UNKNOWN",
+        "evidence_gap": "missing"
+      },
+      {
+        "rule_id": "COMP-R07",
+        "when": {
+          "state": "NON_NUMERIC"
+        },
+        "verdict": "UNKNOWN",
+        "flags": [
+          "COMP_NON_NUMERIC"
+        ],
+        "ruling": [
+          "OR-18"
+        ],
+        "note": "",
+        "band": "UNKNOWN",
+        "evidence_gap": "missing"
+      },
+      {
+        "rule_id": "COMP-R08",
+        "when": {
+          "state": "NON_BASE_ONLY"
+        },
+        "verdict": "UNKNOWN",
+        "flags": [
+          "COMP_NON_BASE_ONLY"
+        ],
+        "ruling": [
+          "OR-18"
+        ],
+        "note": "",
+        "band": "UNKNOWN",
+        "evidence_gap": "missing"
+      },
+      {
+        "rule_id": "COMP-R05",
+        "when": {
+          "state": "UPPER_BOUND_ONLY"
+        },
+        "verdict": "UNKNOWN",
+        "flags": [
+          "COMP_UPPER_BOUND_ONLY"
+        ],
+        "ruling": [
+          "OR-18"
+        ],
+        "note": "",
+        "band": "UNKNOWN",
+        "evidence_gap": "missing"
+      },
+      {
+        "rule_id": "COMP-R11",
+        "when": {
+          "state": "LOCATION_ADJUSTED_NO_INDIA_BAND"
+        },
+        "verdict": "UNKNOWN",
+        "flags": [
+          "COMP_LOCATION_ADJUSTED_NO_INDIA_BAND"
+        ],
+        "ruling": [
+          "OR-18"
+        ],
+        "note": "",
+        "band": "UNKNOWN",
+        "evidence_gap": "missing"
+      },
+      {
+        "rule_id": "COMP-R13",
+        "when": {
+          "state": "NOT_ANNUALIZABLE"
+        },
+        "verdict": "UNKNOWN",
+        "flags": [
+          "COMP_NOT_ANNUALIZABLE"
+        ],
+        "ruling": [
+          "OQ-02 (carried)"
+        ],
+        "note": "",
+        "band": "UNKNOWN",
+        "evidence_gap": "known"
+      },
+      {
+        "rule_id": "COMP-R16",
+        "when": {
+          "state": "PERIOD_UNSTATED"
+        },
+        "verdict": "UNKNOWN",
+        "flags": [
+          "COMP_PERIOD_UNSTATED"
+        ],
+        "ruling": [
+          "OQ-02 (carried)"
+        ],
+        "note": "",
+        "band": "UNKNOWN",
+        "evidence_gap": "missing"
+      },
+      {
+        "rule_id": "COMP-R14",
+        "when": {
+          "state": "FX_RATE_UNAVAILABLE"
+        },
+        "verdict": "UNKNOWN",
+        "flags": [
+          "FX_RATE_UNAVAILABLE"
+        ],
+        "ruling": [
+          "OR-27"
+        ],
+        "note": "",
+        "band": "UNKNOWN",
+        "evidence_gap": "missing"
+      },
+      {
+        "rule_id": "COMP-R19",
+        "when": {
+          "state": "FX_STALE"
+        },
+        "verdict": "UNKNOWN",
+        "flags": [
+          "FX_STALE"
+        ],
+        "ruling": [
+          "Addendum B (OI-040)"
+        ],
+        "note": "Non-INR figure whose newest FX snapshot is older than fx_max_age_days relative to the evaluation date. Never FAIL.",
+        "band": "UNKNOWN",
+        "evidence_gap": "missing"
+      },
+      {
+        "rule_id": "COMP-R01",
+        "when": {
+          "state": "FIGURE",
+          "max_inr": {
+            "lt": "$floor"
+          }
+        },
+        "verdict": "FAIL",
+        "flags": [],
+        "ruling": [
+          "OR-18",
+          "Phase B §3"
+        ],
+        "note": "",
+        "band": "NOT_APPLICABLE"
+      },
+      {
+        "rule_id": "COMP-R04",
+        "when": {
+          "state": "FIGURE",
+          "basis": "SALARY",
+          "min_inr": {
+            "lt": "$floor"
+          }
+        },
+        "verdict": "UNKNOWN",
+        "flags": [
+          "SALARY_RANGE_STRADDLES_FLOOR"
+        ],
+        "ruling": [
+          "Phase B §3, §39"
+        ],
+        "note": "",
+        "band": "UNKNOWN",
+        "evidence_gap": "known"
+      },
+      {
+        "rule_id": "COMP-C05",
+        "when": {
+          "state": "FIGURE",
+          "basis": "CTC",
+          "min_inr": {
+            "lt": "$floor"
+          }
+        },
+        "verdict": "UNKNOWN",
+        "flags": [
+          "CTC_RANGE_STRADDLES_FLOOR"
+        ],
+        "ruling": [
+          "Phase B §4"
+        ],
+        "note": "",
+        "band": "UNKNOWN",
+        "evidence_gap": "known"
+      },
+      {
+        "rule_id": "COMP-C06",
+        "when": {
+          "state": "FIGURE",
+          "basis": "CTC",
+          "shape": "POINT",
+          "max_inr": {
+            "lt": "$target_min"
+          }
+        },
+        "verdict": "PASS",
+        "flags": [
+          "BELOW_TARGET",
+          "CTC_BASIS_UNVERIFIED"
+        ],
+        "ruling": [
+          "Addendum B (OI-039)"
+        ],
+        "note": "CTC-only point figure at or above the floor and below target.",
+        "band": "BELOW_TARGET"
+      },
+      {
+        "rule_id": "COMP-C01",
+        "when": {
+          "state": "FIGURE",
+          "basis": "CTC",
+          "shape": "POINT"
+        },
+        "verdict": "PASS",
+        "flags": [
+          "CTC_BASIS_UNVERIFIED"
+        ],
+        "ruling": [
+          "Phase B §4",
+          "Addendum B (OI-039)"
+        ],
+        "note": "CTC-only point figure at or above target: CTC_BASIS_UNVERIFIED, never IN_TARGET.",
+        "band": "CTC_BASIS_UNVERIFIED"
+      },
+      {
+        "rule_id": "COMP-C02",
+        "when": {
+          "state": "FIGURE",
+          "basis": "CTC",
+          "max_inr": {
+            "lt": "$target_min"
+          }
+        },
+        "verdict": "PASS",
+        "flags": [
+          "BELOW_TARGET",
+          "CTC_BASIS_UNVERIFIED"
+        ],
+        "ruling": [
+          "Phase B §4",
+          "Addendum B (OI-039)"
+        ],
+        "note": "",
+        "band": "BELOW_TARGET"
+      },
+      {
+        "rule_id": "COMP-C03",
+        "when": {
+          "state": "FIGURE",
+          "basis": "CTC",
+          "min_inr": {
+            "lt": "$target_min"
+          }
+        },
+        "verdict": "PASS",
+        "flags": [
+          "COMPENSATION_REVIEW",
+          "CTC_BASIS_UNVERIFIED"
+        ],
+        "ruling": [
+          "Phase B §4",
+          "OR-62 (OI-049)"
+        ],
+        "note": "Unchanged from 0.2.0. Whether CTC_BASIS_UNVERIFIED is also added is OI-049.",
+        "band": "SPANS_TARGET"
+      },
+      {
+        "rule_id": "COMP-C04",
+        "when": {
+          "state": "FIGURE",
+          "basis": "CTC"
+        },
+        "verdict": "PASS",
+        "flags": [
+          "CTC_BASIS_UNVERIFIED"
+        ],
+        "ruling": [
+          "Phase B §4"
+        ],
+        "note": "",
+        "band": "CTC_BASIS_UNVERIFIED"
+      },
+      {
+        "rule_id": "COMP-R03",
+        "when": {
+          "state": "FIGURE",
+          "basis": "SALARY",
+          "max_inr": {
+            "lt": "$target_min"
+          }
+        },
+        "verdict": "PASS",
+        "flags": [
+          "BELOW_TARGET"
+        ],
+        "ruling": [
+          "OR-18",
+          "Phase B §3"
+        ],
+        "note": "Includes exactly ₹18L (see OI-036).",
+        "band": "BELOW_TARGET"
+      },
+      {
+        "rule_id": "COMP-R15",
+        "when": {
+          "state": "FIGURE",
+          "basis": "SALARY",
+          "min_inr": {
+            "lt": "$target_min"
+          }
+        },
+        "verdict": "PASS",
+        "flags": [
+          "COMPENSATION_REVIEW"
+        ],
+        "ruling": [
+          "Phase B §3 (OI-006, OI-008)"
+        ],
+        "note": "",
+        "band": "SPANS_TARGET"
+      },
+      {
+        "rule_id": "COMP-R02",
+        "when": {
+          "state": "FIGURE",
+          "basis": "SALARY",
+          "max_inr": {
+            "lte": "$target_max"
+          }
+        },
+        "verdict": "PASS",
+        "flags": [
+          "IN_TARGET"
+        ],
+        "ruling": [
+          "OR-18",
+          "Phase B §3"
+        ],
+        "note": "",
+        "band": "IN_TARGET"
+      },
+      {
+        "rule_id": "COMP-R17",
+        "when": {
+          "state": "FIGURE",
+          "basis": "SALARY",
+          "min_inr": {
+            "gte": "$target_max"
+          }
+        },
+        "verdict": "PASS",
+        "flags": [
+          "ABOVE_TARGET"
+        ],
+        "ruling": [
+          "Phase B §3 (OI-022)"
+        ],
+        "note": "",
+        "band": "ABOVE_TARGET"
+      },
+      {
+        "rule_id": "COMP-R18",
+        "when": {
+          "state": "FIGURE",
+          "basis": "SALARY"
+        },
+        "verdict": "PASS",
+        "flags": [
+          "IN_TARGET"
+        ],
+        "ruling": [
+          "Phase B §3"
+        ],
+        "note": "Range starting inside the target band and ending above it: labelled IN_TARGET by convention (OI-037); lane-neutral.",
+        "band": "IN_TARGET"
+      },
+      {
+        "rule_id": "COMP-R99",
+        "when": {},
+        "verdict": "UNKNOWN",
+        "flags": [
+          "COMP_UNCLASSIFIED"
+        ],
+        "ruling": [
+          "OR-18 (unknown is never PASS)"
+        ],
+        "note": "Safety catch-all: a compensation state the table does not cover resolves UNKNOWN, never PASS.",
+        "band": "UNKNOWN",
+        "evidence_gap": "missing"
+      }
+    ],
+    "employment_type": [
+      {
+        "rule_id": "EMP-R15",
+        "when": {
+          "kind": "CONFLICTING"
+        },
+        "verdict": "UNKNOWN",
+        "flags": [
+          "EMPLOYMENT_SOURCE_CONFLICT"
+        ],
+        "ruling": [
+          "OR-66 (Addendum E1)"
+        ],
+        "note": "Structured employment field and explicit JD statement contradict each other.",
+        "evidence_gap": "known"
+      },
+      {
+        "rule_id": "EMP-R11",
+        "when": {
+          "kind": "MIXED"
+        },
+        "verdict": "UNKNOWN",
+        "flags": [
+          "EMPLOYMENT_MIXED"
+        ],
+        "ruling": [
+          "OR-19"
+        ],
+        "note": "",
+        "evidence_gap": "known"
+      },
+      {
+        "rule_id": "EMP-R08",
+        "when": {
+          "kind": "INTERNSHIP"
+        },
+        "verdict": "FAIL",
+        "flags": [],
+        "ruling": [
+          "OR-19"
+        ],
+        "note": ""
+      },
+      {
+        "rule_id": "EMP-R07",
+        "when": {
+          "kind": "PART_TIME"
+        },
+        "verdict": "FAIL",
+        "flags": [],
+        "ruling": [
+          "OR-19"
+        ],
+        "note": ""
+      },
+      {
+        "rule_id": "EMP-R06",
+        "when": {
+          "kind": "FREELANCE"
+        },
+        "verdict": "FAIL",
+        "flags": [],
+        "ruling": [
+          "OR-19"
+        ],
+        "note": ""
+      },
+      {
+        "rule_id": "EMP-R05",
+        "when": {
+          "kind": "TEMPORARY"
+        },
+        "verdict": "FAIL",
+        "flags": [],
+        "ruling": [
+          "OR-19"
+        ],
+        "note": ""
+      },
+      {
+        "rule_id": "EMP-R04",
+        "when": {
+          "kind": "CONTRACT_TO_HIRE"
+        },
+        "verdict": "FAIL",
+        "flags": [],
+        "ruling": [
+          "OR-19"
+        ],
+        "note": ""
+      },
+      {
+        "rule_id": "EMP-R13",
+        "when": {
+          "kind": "INDEPENDENT_CONTRACTOR"
+        },
+        "verdict": "FAIL",
+        "flags": [],
+        "ruling": [
+          "OR-52",
+          "P3 §24, §26"
+        ],
+        "note": "Independent contractor / B2B / hourly contractor stated as the employment itself.",
+        "owner_confirmed": true
+      },
+      {
+        "rule_id": "EMP-R09",
+        "when": {
+          "kind": "CONTRACT",
+          "contract_months": {
+            "lt": "$short_term_contract_months"
+          }
+        },
+        "verdict": "FAIL",
+        "flags": [],
+        "ruling": [
+          "OR-19"
+        ],
+        "note": ""
+      },
+      {
+        "rule_id": "EMP-R10",
+        "when": {
+          "kind": "CONTRACT",
+          "direct": true,
+          "contract_months": {
+            "gte": "$short_term_contract_months"
+          }
+        },
+        "verdict": "UNKNOWN",
+        "flags": [
+          "LONG_TERM_DIRECT_CONTRACT"
+        ],
+        "ruling": [
+          "OR-19"
+        ],
+        "note": "",
+        "evidence_gap": "known"
+      },
+      {
+        "rule_id": "EMP-R14",
+        "when": {
+          "kind": "CONTRACT",
+          "direct": true,
+          "contract_months": {
+            "is_null": true
+          }
+        },
+        "verdict": "UNKNOWN",
+        "flags": [
+          "CONTRACT_DURATION_UNSTATED"
+        ],
+        "ruling": [
+          "P3 §24, §37 (uncertainty is UNKNOWN, never FAIL)",
+          "OI-051 (open)"
+        ],
+        "note": "A direct-company contract whose duration is not stated is neither known short-term (< 6 months, FAIL) nor known long-term (UNKNOWN + LONG_TERM_DIRECT_CONTRACT). Held at UNKNOWN until OI-051 is ruled.",
+        "owner_confirmed": false,
+        "evidence_gap": "missing"
+      },
+      {
+        "rule_id": "EMP-R03",
+        "when": {
+          "kind": "CONTRACT"
+        },
+        "verdict": "FAIL",
+        "flags": [],
+        "ruling": [
+          "OR-19",
+          "Phase B §6 (OI-021)"
+        ],
+        "note": ""
+      },
+      {
+        "rule_id": "EMP-R01",
+        "when": {
+          "kind": "PERMANENT"
+        },
+        "verdict": "PASS",
+        "flags": [],
+        "ruling": [
+          "OR-19"
+        ],
+        "note": ""
+      },
+      {
+        "rule_id": "EMP-R02",
+        "when": {
+          "kind": "FULL_TIME"
+        },
+        "verdict": "PASS",
+        "flags": [],
+        "ruling": [
+          "OR-19"
+        ],
+        "note": ""
+      },
+      {
+        "rule_id": "EMP-R12",
+        "when": {},
+        "verdict": "UNKNOWN",
+        "flags": [
+          "EMPLOYMENT_UNSTATED"
+        ],
+        "ruling": [
+          "OR-19"
+        ],
+        "note": "",
+        "evidence_gap": "missing"
+      }
+    ],
+    "employment_relationship": [
+      {
+        "rule_id": "REL-R06",
+        "when": {
+          "placement": true
+        },
+        "verdict": "FAIL",
+        "flags": [],
+        "ruling": [
+          "OR-20"
+        ],
+        "note": ""
+      },
+      {
+        "rule_id": "REL-R07",
+        "when": {
+          "third_party_payroll": true
+        },
+        "verdict": "FAIL",
+        "flags": [],
+        "ruling": [
+          "OR-20"
+        ],
+        "note": ""
+      },
+      {
+        "rule_id": "REL-R02",
+        "when": {
+          "independent_contractor": true
+        },
+        "verdict": "FAIL",
+        "flags": [],
+        "ruling": [
+          "OR-20"
+        ],
+        "note": ""
+      },
+      {
+        "rule_id": "REL-R03",
+        "when": {
+          "b2b": true
+        },
+        "verdict": "FAIL",
+        "flags": [],
+        "ruling": [
+          "OR-20"
+        ],
+        "note": ""
+      },
+      {
+        "rule_id": "REL-R04",
+        "when": {
+          "invoice": true
+        },
+        "verdict": "FAIL",
+        "flags": [],
+        "ruling": [
+          "OR-20"
+        ],
+        "note": ""
+      },
+      {
+        "rule_id": "REL-R05",
+        "when": {
+          "hourly_contractor": true
+        },
+        "verdict": "FAIL",
+        "flags": [],
+        "ruling": [
+          "OR-20"
+        ],
+        "note": ""
+      },
+      {
+        "rule_id": "EOR-R01",
+        "when": {
+          "eor": true
+        },
+        "verdict": "UNKNOWN",
+        "flags": [
+          "EOR"
+        ],
+        "ruling": [
+          "OR-26"
+        ],
+        "note": "",
+        "evidence_gap": "known"
+      },
+      {
+        "rule_id": "REL-R08",
+        "when": {
+          "employer_classification": "STAFFING"
+        },
+        "verdict": "UNKNOWN",
+        "flags": [
+          "EMPLOYER_TYPE_REVIEW"
+        ],
+        "ruling": [
+          "OR-20"
+        ],
+        "note": "",
+        "evidence_gap": "known"
+      },
+      {
+        "rule_id": "REL-R01",
+        "when": {},
+        "verdict": "PASS",
+        "flags": [],
+        "ruling": [
+          "OR-20"
+        ],
+        "note": "Hiring company is the employer; no third-party relationship stated."
+      }
+    ],
+    "employer_type": [
+      {
+        "rule_id": "EMPR-R08",
+        "when": {
+          "classification": "THIRD_PARTY_PAYROLL"
+        },
+        "verdict": "FAIL",
+        "flags": [],
+        "ruling": [
+          "OR-70 (Addendum E5)"
+        ],
+        "note": "Owner/registry classification."
+      },
+      {
+        "rule_id": "EMPR-R09",
+        "when": {
+          "third_party_relationship": true
+        },
+        "verdict": "FAIL",
+        "flags": [],
+        "ruling": [
+          "OR-70 (Addendum E5)"
+        ],
+        "note": "Third-party payroll / client placement stated in the posting."
+      },
+      {
+        "rule_id": "EMPR-R01",
+        "when": {
+          "classification": "STAFFING"
+        },
+        "verdict": "UNKNOWN",
+        "flags": [
+          "STAFFING"
+        ],
+        "ruling": [
+          "OR-20"
+        ],
+        "note": "",
+        "evidence_gap": "known"
+      },
+      {
+        "rule_id": "EMPR-R02",
+        "when": {
+          "classification": "CONSULTANCY"
+        },
+        "verdict": "UNKNOWN",
+        "flags": [
+          "CONSULTANCY"
+        ],
+        "ruling": [
+          "OR-20"
+        ],
+        "note": "",
+        "evidence_gap": "known"
+      },
+      {
+        "rule_id": "EMPR-R03",
+        "when": {
+          "classification": "IT_SERVICES"
+        },
+        "verdict": "UNKNOWN",
+        "flags": [
+          "IT_SERVICES"
+        ],
+        "ruling": [
+          "OR-20"
+        ],
+        "note": "",
+        "evidence_gap": "known"
+      },
+      {
+        "rule_id": "EMPR-R05",
+        "when": {
+          "classification": {
+            "in": [
+              "PRODUCT",
+              "AI_NATIVE",
+              "GCC",
+              "ENGINEERING_LED"
+            ]
+          }
+        },
+        "verdict": "PASS",
+        "flags": [],
+        "ruling": [
+          "OR-20"
+        ],
+        "note": ""
+      },
+      {
+        "rule_id": "EMPR-R07",
+        "when": {
+          "classification": "ENTERPRISE_DIRECT"
+        },
+        "verdict": "PASS",
+        "flags": [],
+        "ruling": [
+          "Phase B §7 (OI-026)"
+        ],
+        "note": ""
+      },
+      {
+        "rule_id": "EMPR-R04",
+        "when": {},
+        "verdict": "UNKNOWN",
+        "flags": [
+          "EMPLOYER_UNCLASSIFIED"
+        ],
+        "ruling": [
+          "OR-20",
+          "Phase B §7 (OI-020)"
+        ],
+        "note": "",
+        "evidence_gap": "missing"
+      }
+    ],
+    "language": [
+      {
+        "rule_id": "LANG-R02",
+        "when": {
+          "required_non_english": true,
+          "required_confidence": {
+            "gte": "$language_confidence_threshold"
+          }
+        },
+        "verdict": "FAIL",
+        "flags": [],
+        "ruling": [
+          "OR-17",
+          "Phase B §12"
+        ],
+        "note": ""
+      },
+      {
+        "rule_id": "LANG-R06",
+        "when": {
+          "required_non_english": true
+        },
+        "verdict": "UNKNOWN",
+        "flags": [
+          "LANGUAGE_UNCERTAIN"
+        ],
+        "ruling": [
+          "Phase B §12"
+        ],
+        "note": "",
+        "evidence_gap": "known"
+      },
+      {
+        "rule_id": "LANG-R04",
+        "when": {
+          "document_language": "NON_ENGLISH",
+          "document_confidence": {
+            "gte": "$language_confidence_threshold"
+          }
+        },
+        "verdict": "FAIL",
+        "flags": [],
+        "ruling": [
+          "OR-17",
+          "Phase B §12 (OI-023)"
+        ],
+        "note": ""
+      },
+      {
+        "rule_id": "LANG-R05",
+        "when": {
+          "document_language": {
+            "in": [
+              "NON_ENGLISH",
+              "UNDETERMINED"
+            ]
+          }
+        },
+        "verdict": "UNKNOWN",
+        "flags": [
+          "LANGUAGE_UNCERTAIN"
+        ],
+        "ruling": [
+          "OR-17"
+        ],
+        "note": "",
+        "evidence_gap": "known"
+      },
+      {
+        "rule_id": "LANG-R03",
+        "when": {
+          "preferred_non_english": true
+        },
+        "verdict": "PASS",
+        "flags": [
+          "LANGUAGE_PREFERENCE"
+        ],
+        "ruling": [
+          "OR-17",
+          "Phase B §12"
+        ],
+        "note": ""
+      },
+      {
+        "rule_id": "LANG-R01",
+        "when": {},
+        "verdict": "PASS",
+        "flags": [],
+        "ruling": [
+          "OR-17"
+        ],
+        "note": ""
+      }
+    ]
+  },
+  "geo": {
+    "bengaluru": {
+      "city_id": "IN-bengaluru",
+      "aliases": [
+        "bengaluru",
+        "bangalore",
+        "bangalore urban",
+        "bengaluru urban",
+        "greater bengaluru area",
+        "greater bangalore",
+        "bengaluru east",
+        "bengaluru north",
+        "bengaluru south",
+        "bengaluru west",
+        "whitefield",
+        "koramangala",
+        "electronic city",
+        "hsr layout",
+        "indiranagar",
+        "marathahalli",
+        "bellandur",
+        "manyata tech park",
+        "outer ring road",
+        "jp nagar",
+        "hebbal",
+        "yelahanka"
+      ]
+    },
+    "india_cities": {
+      "IN-mumbai": [
+        "mumbai",
+        "bombay",
+        "navi mumbai",
+        "thane"
+      ],
+      "IN-pune": [
+        "pune"
+      ],
+      "IN-hyderabad": [
+        "hyderabad",
+        "secunderabad"
+      ],
+      "IN-chennai": [
+        "chennai",
+        "madras"
+      ],
+      "IN-delhi": [
+        "delhi",
+        "new delhi",
+        "delhi ncr",
+        "ncr"
+      ],
+      "IN-gurugram": [
+        "gurugram",
+        "gurgaon"
+      ],
+      "IN-noida": [
+        "noida",
+        "greater noida"
+      ],
+      "IN-kolkata": [
+        "kolkata",
+        "calcutta"
+      ],
+      "IN-ahmedabad": [
+        "ahmedabad"
+      ],
+      "IN-kochi": [
+        "kochi",
+        "cochin"
+      ],
+      "IN-jaipur": [
+        "jaipur"
+      ],
+      "IN-indore": [
+        "indore"
+      ],
+      "IN-coimbatore": [
+        "coimbatore"
+      ],
+      "IN-thiruvananthapuram": [
+        "thiruvananthapuram",
+        "trivandrum"
+      ],
+      "IN-chandigarh": [
+        "chandigarh"
+      ],
+      "IN-mysuru": [
+        "mysuru",
+        "mysore"
+      ]
+    },
+    "india_states": [
+      "karnataka",
+      "maharashtra",
+      "telangana",
+      "tamil nadu",
+      "kerala",
+      "haryana",
+      "uttar pradesh",
+      "west bengal",
+      "gujarat",
+      "rajasthan"
+    ],
+    "foreign_cities": {
+      "US-san-francisco": {
+        "country": "US",
+        "aliases": [
+          "san francisco",
+          "bay area",
+          "palo alto",
+          "mountain view"
+        ]
+      },
+      "US-new-york": {
+        "country": "US",
+        "aliases": [
+          "new york",
+          "nyc"
+        ]
+      },
+      "US-seattle": {
+        "country": "US",
+        "aliases": [
+          "seattle"
+        ]
+      },
+      "US-austin": {
+        "country": "US",
+        "aliases": [
+          "austin"
+        ]
+      },
+      "US-boston": {
+        "country": "US",
+        "aliases": [
+          "boston"
+        ]
+      },
+      "GB-london": {
+        "country": "GB",
+        "aliases": [
+          "london"
+        ]
+      },
+      "DE-berlin": {
+        "country": "DE",
+        "aliases": [
+          "berlin"
+        ]
+      },
+      "DE-munich": {
+        "country": "DE",
+        "aliases": [
+          "munich",
+          "münchen"
+        ]
+      },
+      "NL-amsterdam": {
+        "country": "NL",
+        "aliases": [
+          "amsterdam"
+        ]
+      },
+      "IE-dublin": {
+        "country": "IE",
+        "aliases": [
+          "dublin"
+        ]
+      },
+      "FR-paris": {
+        "country": "FR",
+        "aliases": [
+          "paris"
+        ]
+      },
+      "CA-toronto": {
+        "country": "CA",
+        "aliases": [
+          "toronto"
+        ]
+      },
+      "AU-sydney": {
+        "country": "AU",
+        "aliases": [
+          "sydney"
+        ]
+      },
+      "JP-tokyo": {
+        "country": "JP",
+        "aliases": [
+          "tokyo"
+        ]
+      },
+      "AE-dubai": {
+        "country": "AE",
+        "aliases": [
+          "dubai"
+        ]
+      }
+    },
+    "countries": {
+      "IN": {
+        "names": [
+          "india",
+          "bharat"
+        ],
+        "acronyms": []
+      },
+      "US": {
+        "names": [
+          "united states",
+          "united states of america",
+          "usa",
+          "u.s.a.",
+          "u.s.",
+          "america"
+        ],
+        "acronyms": [
+          "US"
+        ]
+      },
+      "GB": {
+        "names": [
+          "united kingdom",
+          "great britain",
+          "britain",
+          "england",
+          "scotland"
+        ],
+        "acronyms": [
+          "UK",
+          "GB"
+        ]
+      },
+      "CA": {
+        "names": [
+          "canada"
+        ],
+        "acronyms": []
+      },
+      "DE": {
+        "names": [
+          "germany",
+          "deutschland"
+        ],
+        "acronyms": []
+      },
+      "FR": {
+        "names": [
+          "france"
+        ],
+        "acronyms": []
+      },
+      "NL": {
+        "names": [
+          "netherlands",
+          "holland"
+        ],
+        "acronyms": []
+      },
+      "IE": {
+        "names": [
+          "ireland"
+        ],
+        "acronyms": []
+      },
+      "ES": {
+        "names": [
+          "spain"
+        ],
+        "acronyms": []
+      },
+      "IT": {
+        "names": [
+          "italy"
+        ],
+        "acronyms": []
+      },
+      "PL": {
+        "names": [
+          "poland"
+        ],
+        "acronyms": []
+      },
+      "SE": {
+        "names": [
+          "sweden"
+        ],
+        "acronyms": []
+      },
+      "PT": {
+        "names": [
+          "portugal"
+        ],
+        "acronyms": []
+      },
+      "CH": {
+        "names": [
+          "switzerland"
+        ],
+        "acronyms": []
+      },
+      "NO": {
+        "names": [
+          "norway"
+        ],
+        "acronyms": []
+      },
+      "IS": {
+        "names": [
+          "iceland"
+        ],
+        "acronyms": []
+      },
+      "LI": {
+        "names": [
+          "liechtenstein"
+        ],
+        "acronyms": []
+      },
+      "SG": {
+        "names": [
+          "singapore"
+        ],
+        "acronyms": []
+      },
+      "AU": {
+        "names": [
+          "australia"
+        ],
+        "acronyms": []
+      },
+      "NZ": {
+        "names": [
+          "new zealand"
+        ],
+        "acronyms": []
+      },
+      "JP": {
+        "names": [
+          "japan"
+        ],
+        "acronyms": []
+      },
+      "CN": {
+        "names": [
+          "china"
+        ],
+        "acronyms": []
+      },
+      "KR": {
+        "names": [
+          "south korea",
+          "korea"
+        ],
+        "acronyms": []
+      },
+      "PH": {
+        "names": [
+          "philippines"
+        ],
+        "acronyms": []
+      },
+      "MY": {
+        "names": [
+          "malaysia"
+        ],
+        "acronyms": []
+      },
+      "ID": {
+        "names": [
+          "indonesia"
+        ],
+        "acronyms": []
+      },
+      "VN": {
+        "names": [
+          "vietnam"
+        ],
+        "acronyms": []
+      },
+      "TH": {
+        "names": [
+          "thailand"
+        ],
+        "acronyms": []
+      },
+      "LK": {
+        "names": [
+          "sri lanka"
+        ],
+        "acronyms": []
+      },
+      "BD": {
+        "names": [
+          "bangladesh"
+        ],
+        "acronyms": []
+      },
+      "PK": {
+        "names": [
+          "pakistan"
+        ],
+        "acronyms": []
+      },
+      "AE": {
+        "names": [
+          "united arab emirates"
+        ],
+        "acronyms": [
+          "UAE"
+        ]
+      },
+      "SA": {
+        "names": [
+          "saudi arabia"
+        ],
+        "acronyms": []
+      },
+      "IL": {
+        "names": [
+          "israel"
+        ],
+        "acronyms": []
+      },
+      "ZA": {
+        "names": [
+          "south africa"
+        ],
+        "acronyms": []
+      },
+      "EG": {
+        "names": [
+          "egypt"
+        ],
+        "acronyms": []
+      },
+      "NG": {
+        "names": [
+          "nigeria"
+        ],
+        "acronyms": []
+      },
+      "KE": {
+        "names": [
+          "kenya"
+        ],
+        "acronyms": []
+      },
+      "BR": {
+        "names": [
+          "brazil"
+        ],
+        "acronyms": []
+      },
+      "MX": {
+        "names": [
+          "mexico"
+        ],
+        "acronyms": []
+      },
+      "AR": {
+        "names": [
+          "argentina"
+        ],
+        "acronyms": []
+      },
+      "AT": {
+        "names": [
+          "austria"
+        ],
+        "acronyms": []
+      },
+      "BE": {
+        "names": [
+          "belgium"
+        ],
+        "acronyms": []
+      },
+      "BG": {
+        "names": [
+          "bulgaria"
+        ],
+        "acronyms": []
+      },
+      "HR": {
+        "names": [
+          "croatia"
+        ],
+        "acronyms": []
+      },
+      "CY": {
+        "names": [
+          "cyprus"
+        ],
+        "acronyms": []
+      },
+      "CZ": {
+        "names": [
+          "czech republic",
+          "czechia"
+        ],
+        "acronyms": []
+      },
+      "DK": {
+        "names": [
+          "denmark"
+        ],
+        "acronyms": []
+      },
+      "EE": {
+        "names": [
+          "estonia"
+        ],
+        "acronyms": []
+      },
+      "FI": {
+        "names": [
+          "finland"
+        ],
+        "acronyms": []
+      },
+      "GR": {
+        "names": [
+          "greece"
+        ],
+        "acronyms": []
+      },
+      "HU": {
+        "names": [
+          "hungary"
+        ],
+        "acronyms": []
+      },
+      "LV": {
+        "names": [
+          "latvia"
+        ],
+        "acronyms": []
+      },
+      "LT": {
+        "names": [
+          "lithuania"
+        ],
+        "acronyms": []
+      },
+      "LU": {
+        "names": [
+          "luxembourg"
+        ],
+        "acronyms": []
+      },
+      "MT": {
+        "names": [
+          "malta"
+        ],
+        "acronyms": []
+      },
+      "RO": {
+        "names": [
+          "romania"
+        ],
+        "acronyms": []
+      },
+      "SK": {
+        "names": [
+          "slovakia"
+        ],
+        "acronyms": []
+      },
+      "SI": {
+        "names": [
+          "slovenia"
+        ],
+        "acronyms": []
+      }
+    },
+    "regions": {
+      "EU": {
+        "names": [
+          "european union"
+        ],
+        "acronyms": [
+          "EU"
+        ],
+        "members": [
+          "AT",
+          "BE",
+          "BG",
+          "HR",
+          "CY",
+          "CZ",
+          "DK",
+          "EE",
+          "FI",
+          "FR",
+          "DE",
+          "GR",
+          "HU",
+          "IE",
+          "IT",
+          "LV",
+          "LT",
+          "LU",
+          "MT",
+          "NL",
+          "PL",
+          "PT",
+          "RO",
+          "SK",
+          "SI",
+          "ES",
+          "SE"
+        ]
+      },
+      "EEA": {
+        "names": [
+          "european economic area"
+        ],
+        "acronyms": [
+          "EEA"
+        ],
+        "members": [
+          "AT",
+          "BE",
+          "BG",
+          "HR",
+          "CY",
+          "CZ",
+          "DK",
+          "EE",
+          "FI",
+          "FR",
+          "DE",
+          "GR",
+          "HU",
+          "IE",
+          "IT",
+          "LV",
+          "LT",
+          "LU",
+          "MT",
+          "NL",
+          "PL",
+          "PT",
+          "RO",
+          "SK",
+          "SI",
+          "ES",
+          "SE",
+          "NO",
+          "IS",
+          "LI"
+        ]
+      },
+      "EUROPE": {
+        "names": [
+          "europe"
+        ],
+        "acronyms": [],
+        "members": [
+          "AT",
+          "BE",
+          "BG",
+          "CH",
+          "CY",
+          "CZ",
+          "DE",
+          "DK",
+          "EE",
+          "ES",
+          "FI",
+          "FR",
+          "GB",
+          "GR",
+          "HR",
+          "HU",
+          "IE",
+          "IS",
+          "IT",
+          "LI",
+          "LT",
+          "LU",
+          "LV",
+          "MT",
+          "NL",
+          "NO",
+          "PL",
+          "PT",
+          "RO",
+          "SE",
+          "SI",
+          "SK"
+        ]
+      },
+      "EMEA": {
+        "names": [],
+        "acronyms": [
+          "EMEA"
+        ],
+        "members": [
+          "AE",
+          "AT",
+          "BE",
+          "BG",
+          "CH",
+          "CY",
+          "CZ",
+          "DE",
+          "DK",
+          "EE",
+          "EG",
+          "ES",
+          "FI",
+          "FR",
+          "GB",
+          "GR",
+          "HR",
+          "HU",
+          "IE",
+          "IL",
+          "IS",
+          "IT",
+          "KE",
+          "LI",
+          "LT",
+          "LU",
+          "LV",
+          "MT",
+          "NG",
+          "NL",
+          "NO",
+          "PL",
+          "PT",
+          "RO",
+          "SA",
+          "SE",
+          "SI",
+          "SK",
+          "ZA"
+        ]
+      },
+      "APAC": {
+        "names": [
+          "asia pacific",
+          "asia-pacific",
+          "asia"
+        ],
+        "acronyms": [
+          "APAC"
+        ],
+        "members": [
+          "IN",
+          "SG",
+          "AU",
+          "NZ",
+          "JP",
+          "CN",
+          "KR",
+          "PH",
+          "MY",
+          "ID",
+          "VN",
+          "TH",
+          "LK",
+          "BD",
+          "PK"
+        ]
+      },
+      "NORTH_AMERICA": {
+        "names": [
+          "north america"
+        ],
+        "acronyms": [
+          "NA",
+          "NAM"
+        ],
+        "members": [
+          "US",
+          "CA",
+          "MX"
+        ]
+      },
+      "AMERICAS": {
+        "names": [
+          "americas"
+        ],
+        "acronyms": [
+          "AMER"
+        ],
+        "members": [
+          "US",
+          "CA",
+          "MX",
+          "BR",
+          "AR"
+        ]
+      },
+      "LATAM": {
+        "names": [
+          "latin america"
+        ],
+        "acronyms": [
+          "LATAM"
+        ],
+        "members": [
+          "MX",
+          "BR",
+          "AR"
+        ]
+      }
+    },
+    "worldwide_aliases": [
+      "worldwide",
+      "anywhere",
+      "global",
+      "globally",
+      "any location",
+      "any country",
+      "work from anywhere"
+    ],
+    "timezone_tokens": {
+      "US": [
+        "US",
+        "PST",
+        "PDT",
+        "EST",
+        "EDT",
+        "CST",
+        "CDT",
+        "Pacific",
+        "Eastern",
+        "Central",
+        "US Eastern",
+        "US Pacific"
+      ],
+      "UK": [
+        "UK",
+        "GMT",
+        "BST",
+        "London"
+      ],
+      "EU": [
+        "CET",
+        "CEST",
+        "European",
+        "Europe",
+        "EU"
+      ],
+      "APAC": [
+        "APAC",
+        "SGT",
+        "AEST",
+        "JST",
+        "Singapore"
+      ]
+    }
+  },
+  "lexicon": {
+    "sentence_split": "(?:(?<=[!?;])|(?<=[^.]\\.))\\s+(?=(?-i:[A-Z(₹$]))|\\n+",
+    "remote": [
+      "\\bremote(?:ly)?\\b",
+      "\\bwork from home\\b",
+      "\\bwfh\\b",
+      "\\bwork from anywhere\\b",
+      "\\bdistributed team\\b"
+    ],
+    "hybrid": [
+      "\\bhybrid\\b(?![- ](?:search|retrieval|cloud|models?|approach|architecture|rag|ranking|index|infrastructure|systems?))"
+    ],
+    "onsite": [
+      "\\bon[- ]?site\\b",
+      "\\bin[- ]office\\b",
+      "\\bwork from office\\b",
+      "\\boffice[- ]based\\b",
+      "\\bwfo\\b"
+    ],
+    "flexible_hybrid": [
+      "\\bflexible hybrid\\b",
+      "\\bhybrid[- ]flexible\\b",
+      "\\bflexi(?:ble)?[- ]hybrid\\b"
+    ],
+    "office_days": [
+      "(\\d|one|two|three|four|five)\\s*(?:days?|x)\\s*(?:per|a|/|each)\\s*week",
+      "(\\d|one|two|three|four|five)\\s*days?\\s*(?:in|at|from)\\s*(?:the\\s*)?office",
+      "(\\d|one|two|three|four|five)\\s*(?:office|onsite|on-site|in-office|in office|wfo)\\s*days?",
+      "(\\d|one|two|three|four|five)\\s*days?\\s*(?:a\\s+week\\s+|per\\s+week\\s+|/\\s*week\\s+)?(?:of\\s+)?(?:wfo|work(?:ing)?\\s+from\\s+(?:the\\s+)?office|on[- ]?site|in[- ]office|in[- ]person|at\\s+(?:the\\s+)?office)",
+      "\\bhybrid\\b[^\\d\\n.]{0,12}?(\\d|one|two|three|four|five)\\s*days?\\b"
+    ],
+    "number_words": {
+      "one": 1,
+      "two": 2,
+      "three": 3,
+      "four": 4,
+      "five": 5
+    },
+    "relocation": [
+      "\\brelocat(?:e|ion|ing)\\b"
+    ],
+    "relocation_negation": [
+      "\\bno relocation\\b",
+      "\\brelocation (?:is )?not (?:required|needed|necessary)\\b",
+      "\\bwithout relocat\\w*\\b",
+      "\\b(?:not|never|no need to|needn't|don't|do not|won't|will not)\\b[^.;]{0,25}?\\brelocat\\w*\\b",
+      "\\brelocat\\w*\\s+(?:is\\s+)?(?:optional|not (?:required|needed|necessary|expected))\\b"
+    ],
+    "visa": [
+      "\\bvisa (?:sponsorship|support|sponsored)\\b",
+      "\\bsponsor(?:s|ship)? (?:your |a )?(?:work )?visa\\b"
+    ],
+    "visa_negation": [
+      "\\b(?:no|not|unable to|cannot|can't|do not|don't|will not|won't)\\b[^.]{0,30}\\bsponsor",
+      "\\bno visa\\b"
+    ],
+    "work_authorization": [
+      "\\b(?:authori[sz]ed|eligible|legally (?:able|permitted|allowed)|permitted) to work in\\b",
+      "\\bright to work in\\b",
+      "\\bwork authori[sz]ation (?:in|for)\\b",
+      "\\bwork permit (?:in|for)\\b",
+      "\\bauthori[sz]ation to work in\\b",
+      "\\b(?:legal|valid)\\s+(?:right|authori[sz]ation|permission)\\s+to\\s+work\\s+in\\b",
+      "\\b(?:US|U\\.S\\.|UK|EU|EEA)\\s+work\\s+(?:authori[sz]ation|permits?|visas?)\\b"
+    ],
+    "residence_requirement": [
+      "\\b(?:must|required to|need to|needs to|have to|has to|should|will need to)\\s+(?:currently\\s+)?(?:be\\s+)?(?:based|located|living|residing|resident|domiciled|live|reside|remain|stay)\\s+(?:in|within|out of)\\b",
+      "\\bmust reside in\\b",
+      "\\b(?:must|required to|need to|willing to) relocate to\\b",
+      "\\brelocation to\\b",
+      "\\bmust be (?:physically )?present (?:in|at)\\b",
+      "\\bbased out of\\b[^.]*\\b(?:mandatory|required|must)\\b",
+      "\\b(?:residency|residence)\\s+(?:in|within)\\b(?=[^.;]{0,60}\\b(?:required|mandatory|a must|essential)\\b)",
+      "\\bonly\\s+(?:candidates|applicants|people|those|residents|individuals)\\s+(?:who\\s+)?(?:are\\s+)?(?:currently\\s+)?(?:based|located|living|residing|live|reside)\\s+(?:in|within)\\b",
+      "\\b(?:open|restricted|limited)\\s+(?:only\\s+)?to\\s+(?:candidates|applicants|residents|people|individuals)\\s+(?:who\\s+(?:are|live|reside)\\s+)?(?:currently\\s+)?(?:(?:based|located|living|residing|resident)\\s+)?(?:in|within)\\b",
+      "\\b(?:open|restricted|limited)\\s+(?:only\\s+)?to\\s+(?:residents|citizens)\\s+of\\b"
+    ],
+    "location_line": [
+      "^\\s*(?:location|locations|job location|work location|based in)\\s*[:\\-]"
+    ],
+    "employment_cue_exclusions": [
+      "\\b(?:data|api|apis|smart|service|code|software|vendor|supplier|customer|client|legal|commercial|sales|openapi|interface|schema|consumer[- ]driven|consumer|provider)[- ]contracts?\\b",
+      "\\bcontracts? (?:testing|tests?|reviews?|reviewing|reviewer|management|lifecycle|analysis|analytics|intelligence|drafting|negotiation|extraction|assistant|ai|automation|clauses?|documents?|repository|compliance|renewals?|terms)\\b",
+      "\\bcontract[- ](?:review|management|lifecycle|analysis|intelligence|drafting|negotiation|extraction)\\w*\\b",
+      "\\bcontractual (?:slas?|obligations?|terms|commitments|requirements|penalt\\w+)\\b",
+      "\\bsmart[- ]contracts?\\b"
+    ],
+    "employment": {
+      "MIXED": [
+        "\\bfull[- ]?time\\s*(?:/|or|and)\\s*(?:contract(?:ual)?|part[- ]?time|freelance)\\b",
+        "\\bcontract(?:ual)?\\s*(?:/|or)\\s*full[- ]?time\\b"
+      ],
+      "INTERNSHIP": [
+        "\\binternship\\b",
+        "\\bintern\\b"
+      ],
+      "PART_TIME": [
+        "\\bpart[- ]?time\\b"
+      ],
+      "FREELANCE": [
+        "\\bfreelanc\\w*\\b"
+      ],
+      "TEMPORARY": [
+        "\\btemporary\\b",
+        "\\btemp role\\b"
+      ],
+      "CONTRACT_TO_HIRE": [
+        "\\bcontract[- ]to[- ]hire\\b",
+        "\\bc2h\\b",
+        "\\bcontract to permanent\\b"
+      ],
+      "INDEPENDENT_CONTRACTOR": [
+        "\\bindependent contractor\\b",
+        "\\bhourly contractor\\b",
+        "\\bb2b contractor\\b",
+        "\\bfreelance contractor\\b",
+        "^\\W*(?:independent\\s+|external\\s+)?contractor\\W*$",
+        "^\\W*b2b\\W*$",
+        "\\b(?:engaged|hired|contracted|working|work|join(?:ing)?) as an? (?:independent |external |freelance |hourly )?contractor\\b",
+        "\\bcontractor (?:basis|agreement|engagement|role|position)\\b",
+        "\\bon a contractor basis\\b"
+      ],
+      "CONTRACT": [
+        "\\bcontract(?:ual)?\\b",
+        "\\bfixed[- ]term\\b"
+      ],
+      "PERMANENT": [
+        "\\bpermanent\\b"
+      ],
+      "FULL_TIME": [
+        "\\bfull[- ]?time\\b"
+      ]
+    },
+    "contract_duration": [
+      "(\\d+)\\s*[- ]?\\s*months?",
+      "(\\d+)\\s*[- ]?\\s*years?\\s+contract"
+    ],
+    "direct_contract": [
+      "\\bdirect (?:contract|engagement)\\b",
+      "\\bcontract directly with\\b",
+      "\\b(?:employed|hired|engaged|contracted|paid)\\s+directly\\s+(?:by|with|through)\\b",
+      "\\bdirectly\\s+(?:employed|hired|engaged|contracted)\\s+(?:by|with)\\b",
+      "\\bdirect\\s+(?:employee|employment|hire)\\s+(?:of|with|by|at)\\b",
+      "\\bon\\s+our\\s+(?:own\\s+)?payroll\\b(?!\\s+for\\s+(?:deployment|placement))",
+      "\\bno\\s+(?:agency|intermediar(?:y|ies)|third[- ]party)\\b"
+    ],
+    "relationship": {
+      "eor": [
+        "\\bemployer of record\\b",
+        "(?-i:\\bEOR\\b)",
+        "\\bemployer[- ]of[- ]record\\b",
+        "\\b(?:through|via) an? (?:eor|employer[- ]of[- ]record)\\b"
+      ],
+      "placement": [
+        "\\b(?:you|you'll|you're|candidates?|engineers?|consultants?|developers?|resources?|employees?|staff|hires?|associates?|professionals?|contractors?)\\b[^.;]{0,60}?\\bdeploy(?:ment|ed)?\\s+(?:at|with|to)\\s+(?:our |the |a |an )?clients?\\b",
+        "\\bplaced (?:at|with) (?:our |the |a |an )?clients?\\b",
+        "\\bclient (?:site|location|placement)\\b",
+        "\\bon (?:a )?client deployment\\b",
+        "\\bon (?:our|its|their) payroll for (?:deployment|placement)\\b",
+        "\\b(?:you|you'll|you're|candidates?|engineers?|consultants?|developers?|resources?|employees?|staff|hires?|associates?|professionals?|contractors?)\\b[^.;]{0,80}?(?<!\\bwell )(?<!\\buniquely )(?<!\\bideally )(?<!\\bperfectly )(?<!\\bbest )(?<!\\bbetter )\\bplaced\\b[^.;]{0,40}?\\b(?:at|with|on|into)\\b[^.;]{0,25}?\\bclients?(?:'s|s')?\\b",
+        "\\b(?:you|you'll|you're|candidates?|engineers?|consultants?|developers?|resources?|employees?|staff|hires?|associates?|professionals?|contractors?)\\b[^.;]{0,60}?\\b(?:deployed|assigned|allocated|seconded|posted|stationed)\\s+(?:full[- ]time\\s+|on[- ]site\\s+)?(?:to|at|with|on)\\s+(?:a\\s+|an\\s+|the\\s+|our\\s+|their\\s+|one of (?:our|their)\\s+)?clients?(?:'s|s')?\\s+(?:\\w+\\s+)?(?:sites?|locations?|offices?|premises|teams?|projects?|engagements?|accounts?|organi[sz]ations?)\\b"
+      ],
+      "third_party_payroll": [
+        "\\bthird[- ]party payroll\\b",
+        "\\bbody[- ]?shop\\w*\\b",
+        "\\b(?:employed|engaged|contracted|paid)\\s+(?:directly\\s+)?(?:by|through|via)\\s+(?:a\\s+|an\\s+|the\\s+|our\\s+|their\\s+)?(?:staffing|recruitment|employment|placement|manpower|outsourcing|third[- ]party)\\s+(?:partner|agency|firm|company|vendor|provider|employer|organi[sz]ation)\\b",
+        "\\bon\\s+the\\s+(?:payroll|rolls)\\s+of\\s+(?:a\\s+|an\\s+|the\\s+|our\\s+)?(?:staffing|recruitment|employment|placement|manpower|outsourcing|third[- ]party)\\b"
+      ],
+      "independent_contractor": [
+        "\\bindependent contractor\\b",
+        "\\bfreelance contractor\\b",
+        "\\b1099\\b",
+        "^\\W*(?:independent\\s+|external\\s+)?contractor\\W*$",
+        "\\b(?:engaged|hired|contracted|working|work|join(?:ing)?) as an? (?:independent |external |freelance )?contractor\\b",
+        "\\bcontractor (?:basis|agreement|engagement)\\b"
+      ],
+      "b2b": [
+        "\\bb2b (?:basis|contract|engagement)\\b",
+        "\\bon a b2b\\b",
+        "^\\W*b2b\\W*$",
+        "\\bb2b contractor\\b"
+      ],
+      "invoice": [
+        "\\binvoice (?:monthly|us|for)\\b",
+        "\\binvoice[- ]based\\b",
+        "\\bsubmit invoices?\\b"
+      ],
+      "hourly_contractor": [
+        "\\bhourly contractor\\b",
+        "\\bpaid (?:as an? )?hourly\\b",
+        "\\bhourly[- ]only\\b"
+      ]
+    },
+    "employer_signals": {
+      "STAFFING": [
+        "\\bstaffing (?:agency|firm|company|partner)\\b",
+        "\\brecruitment agency\\b",
+        "\\bplacement agency\\b"
+      ],
+      "CONSULTANCY": [
+        "\\bconsultancy\\b",
+        "\\bconsulting (?:firm|company)\\b"
+      ],
+      "IT_SERVICES": [
+        "\\bit services\\b",
+        "\\bit consulting and services\\b"
+      ],
+      "GCC": [
+        "\\bglobal capability cent(?:re|er)\\b",
+        "(?-i:\\bGCC\\b)"
+      ],
+      "AI_NATIVE": [
+        "\\bai[- ]native\\b"
+      ],
+      "PRODUCT": [
+        "\\bproduct company\\b",
+        "\\bbuilds and sells its own\\b",
+        "\\bour own (?:ai )?products?\\b"
+      ],
+      "ENGINEERING_LED": [
+        "\\bengineering[- ]led\\b"
+      ]
+    },
+    "compensation": {
+      "keywords": [
+        "\\bsalary\\b",
+        "\\bcompensation\\b",
+        "\\bctc\\b",
+        "\\bcost to company\\b",
+        "\\bpay (?:range|band|scale)\\b",
+        "\\bbase pay\\b",
+        "\\bremuneration\\b",
+        "\\bpay\\b",
+        "\\bpackage\\b",
+        "\\bstipend\\b"
+      ],
+      "non_numeric": [
+        "\\bcompetitive\\b",
+        "\\bas per (?:industry|market|company)\\b",
+        "\\bbest in (?:the )?industry\\b",
+        "\\bcommensurate\\b",
+        "\\battractive\\b",
+        "\\bnegotiable\\b",
+        "\\bmarket[- ]rate\\b",
+        "\\bnot disclosed\\b"
+      ],
+      "non_base": [
+        "\\bbonus(?:es)?\\b",
+        "\\bequity\\b",
+        "\\brsus?\\b",
+        "\\bstock\\b",
+        "\\besops?\\b",
+        "\\bcommission\\b",
+        "\\bsign[- ]on\\b"
+      ],
+      "ctc": [
+        "\\bctc\\b",
+        "\\bcost to company\\b"
+      ],
+      "base": [
+        "\\bbase\\b",
+        "\\bfixed\\b"
+      ],
+      "upper_only": [
+        "\\bup ?to\\b",
+        "\\bupto\\b",
+        "\\bmax(?:imum)?\\.?(?: of)?\\b",
+        "\\bnot more than\\b"
+      ],
+      "lower_only": [
+        "\\bat least\\b",
+        "\\bminimum(?: of)?\\b",
+        "\\bstarting (?:at|from)\\b",
+        "\\bfrom\\s+(?=[₹$€£]|rs|inr|usd)"
+      ],
+      "location_adjusted": [
+        "\\badjusted (?:by|for|based on) location\\b",
+        "\\blocation[- ]adjusted\\b",
+        "\\blocation[- ]based pay\\b",
+        "\\bvaries by location\\b",
+        "\\bdepend(?:s|ing)? on (?:your )?location\\b",
+        "\\b(?:pay|salary|salaries|compensation|base|range|ranges|band|bands|offers?)\\b[^.;]{0,40}?\\b(?:adjust(?:ed|s)?|calibrat(?:ed|es)|scal(?:ed|es)|var(?:y|ies|ying)|differ(?:s|ent)?|depend(?:s|ent|ing)?|tiered|benchmarked|locali[sz]ed|set)\\b[^.;]{0,30}?\\b(?:location|locations|geograph(?:y|ic|ical)|region|regions|cost of (?:living|labou?r)|where (?:you|the candidate|candidates|they|employees?) (?:live|lives|reside|resides|are based|is based|work|works)|(?:your|the candidate'?s|candidates'?|the employee'?s|their) (?:home )?(?:location|country|city|region))\\b",
+        "\\bgeo(?:graphic(?:al)?)?[- ]?(?:based|adjusted|differentiated|specific|tiered)?\\s*(?:pay|salary|salaries|compensation|pay zones?|differentials?|adjustments?)\\b",
+        "\\blocation[- ](?:adjusted|based|dependent|specific|tiered)\\s+(?:pay|salary|salaries|compensation|ranges?|bands?)\\b"
+      ],
+      "india_band": [
+        "\\bindia\\b"
+      ],
+      "currency": {
+        "INR": [
+          "₹",
+          "\\brs\\.?(?=\\s*\\d)",
+          "\\binr\\b",
+          "\\blpa\\b",
+          "\\blakhs?\\b",
+          "\\blacs?\\b",
+          "(?<![\\d,])\\d{1,2}(?:,\\d{2})+,\\d{3}(?![\\d,])",
+          "(?<=\\d)\\s?l\\b"
+        ],
+        "SGD": [
+          "\\bsgd\\b",
+          "\\bs\\$"
+        ],
+        "CAD": [
+          "\\bcad\\b",
+          "\\bc\\$"
+        ],
+        "AUD": [
+          "\\baud\\b",
+          "\\ba\\$"
+        ],
+        "AED": [
+          "\\baed\\b",
+          "\\bdirhams?\\b"
+        ],
+        "CHF": [
+          "\\bchf\\b"
+        ],
+        "JPY": [
+          "\\bjpy\\b",
+          "¥"
+        ],
+        "USD": [
+          "\\busd\\b",
+          "\\bus\\$",
+          "\\$"
+        ],
+        "EUR": [
+          "\\beur\\b",
+          "€"
+        ],
+        "GBP": [
+          "\\bgbp\\b",
+          "£"
+        ]
+      },
+      "lakh_unit": [
+        "\\blpa\\b",
+        "\\blakhs?\\b",
+        "\\blacs?\\b",
+        "(?<=\\d)\\s?l\\b"
+      ],
+      "period": {
+        "annual": [
+          "\\bper annum\\b",
+          "\\bp\\.?a\\.?\\b",
+          "\\bper year\\b",
+          "/\\s*(?:year|yr|annum)\\b",
+          "\\bannual(?:ly)?\\b",
+          "\\blpa\\b",
+          "\\ba year\\b"
+        ],
+        "monthly": [
+          "\\bper month\\b",
+          "/\\s*(?:month|mo)\\b",
+          "\\bmonthly\\b",
+          "\\bp\\.?m\\.?\\b",
+          "\\ba month\\b"
+        ],
+        "hourly": [
+          "\\bper hour\\b",
+          "/\\s*(?:hour|hr)\\b",
+          "\\bhourly\\b",
+          "\\ban hour\\b"
+        ],
+        "daily": [
+          "\\bper day\\b",
+          "/\\s*day\\b",
+          "\\bdaily\\b"
+        ]
+      },
+      "range_separators": [
+        "–",
+        "—",
+        "-",
+        " to "
+      ],
+      "number_token": "(?<![\\w.])(\\d[\\d,]*(?:\\.\\d+)?)\\s*([kK](?![A-Za-z]))?(?!\\d)",
+      "labelled_clause_split": "\\s*(?:[|/;,]|\\band\\b|\\bwith\\b)\\s*(?=(?:a\\s+|the\\s+)?(?:base|fixed|ctc|cost to company|total (?:compensation|comp|package)|gross)\\b)",
+      "labelled_clause_split_note": "P3 §20: 'Base: ₹25 LPA | CTC: ₹31 LPA' is two clauses (split only before a basis label), so the base figure is selected and CTC stays as evidence.",
+      "weak_currency_markers": [
+        "\\blakhs?\\b",
+        "\\blacs?\\b",
+        "(?<=\\d)\\s?l\\b"
+      ],
+      "component_split": "\\s+\\+\\s+|\\s*\\|\\s*|\\s+plus\\s+(?=[₹$€£]|rs\\b|inr\\b|\\d|up\\s?to\\b|variable\\b|bonus\\b)",
+      "non_money_number_suffix": "^\\s*(?:%|percent\\b|(?:lakhs?|lacs?|crores?|cr|k|m|mn|million|billion|bn|thousand)?\\+?\\s*(?:users|customers|clients|downloads|installs|merchants|members|subscribers|people|employees|engineers|students|learners|patients|requests|queries|tokens|transactions|records|documents|pages|rows|images|calls|messages|sessions|visits|views|devices|stores|restaurants|sellers|buyers|vacancies|openings|positions|hours|hrs|years|yrs|months|weeks|languages|countries|cities|teams)\\b)",
+      "variable_component": [
+        "\\bvariable\\b",
+        "\\bbonus(?:es)?\\b",
+        "\\bincentives?\\b",
+        "\\bcommissions?\\b",
+        "\\bperformance pay\\b",
+        "\\bjoining\\b",
+        "\\bsign[- ]on\\b",
+        "\\besops?\\b",
+        "\\brsus?\\b",
+        "\\bequity\\b",
+        "\\bstock\\b"
+      ],
+      "inclusive_tail": "\\b(?:inclusive of|including|incl\\.?|includes|plus|with)\\b.*$",
+      "period_inheritance": true,
+      "p5_note": "OR-67 (Addendum E2).",
+      "location_adjusted_negation": [
+        "\\b(?:not|never|no)\\s+(?:\\w+\\s+){0,2}?(?:adjusted|adjust|vary|varies|differ|differs|dependent|depend|depends|tiered|locali[sz]ed|location[- ]based)\\b",
+        "\\b\\w+n['’]t\\s+(?:\\w+\\s+){0,2}?(?:adjust|vary|differ|depend)\\w*\\b",
+        "\\b(?:regardless|irrespective|independent)\\s+of\\s+(?:your\\s+|the\\s+)?(?:location|where|geograph\\w*|region|country|city)\\b",
+        "\\bno\\s+(?:location|geographic|geo)[- ]?(?:based\\s+)?(?:adjustments?|differentials?)\\b"
+      ]
+    },
+    "language": {
+      "names": [
+        "german",
+        "french",
+        "spanish",
+        "japanese",
+        "dutch",
+        "italian",
+        "portuguese",
+        "mandarin",
+        "chinese",
+        "korean",
+        "arabic",
+        "polish",
+        "swedish",
+        "danish",
+        "norwegian",
+        "finnish",
+        "russian",
+        "turkish",
+        "hebrew",
+        "czech",
+        "hindi",
+        "kannada",
+        "tamil",
+        "telugu",
+        "marathi",
+        "bengali",
+        "malayalam",
+        "gujarati",
+        "punjabi",
+        "urdu",
+        "odia",
+        "assamese"
+      ],
+      "required": [
+        "\\b(?:fluent |fluency in |proficiency in |native |business[- ]level |professional |working )?(?P<lang>{langs})(?: language)?(?: skills| proficiency| fluency)?(?:\\s*\\([^)]{0,60}\\))?(?: or above| or higher)?(?: is| are)? (?:required|mandatory|compulsory|a must|essential)\\b",
+        "\\b(?:must|required to|need to) (?:speak|be fluent in|have fluent|read and write|write) (?P<lang>{langs})\\b",
+        "\\b(?:fluency|proficiency) in (?P<lang>{langs}) (?:is )?(?:required|mandatory|compulsory|essential)\\b"
+      ],
+      "required_confidence": 0.99,
+      "weak_requirement": [
+        "\\b(?:working )?knowledge of (?P<lang>{langs})\\b",
+        "\\b(?P<lang>{langs})[- ]speaking\\b"
+      ],
+      "weak_requirement_confidence": 0.8,
+      "preferred": [
+        "\\b(?P<lang>{langs})(?: language)?(?: skills)?(?: is| are)? (?:a plus|a bonus|preferred|nice[- ]to[- ]have|an advantage|desirable|beneficial)\\b",
+        "\\b(?:nice[- ]to[- ]have|bonus|preferred)\\s*:?\\s*(?P<lang>{langs})\\b",
+        "\\b(?P<lang>{langs})(?: language)?(?: skills| knowledge| proficiency| fluency)?\\s+(?:would be|will be|is considered|counts as|would count as)\\s+(?:a plus|a bonus|an advantage|nice[- ]to[- ]have|helpful|useful|beneficial|desirable)\\b",
+        "\\b(?:knowledge of|familiarity with|fluency in|proficiency in|ability to speak|speaking)\\s+(?P<lang>{langs})\\s+(?:is\\s+|would be\\s+|will be\\s+)?(?:a plus|a bonus|an advantage|preferred|nice[- ]to[- ]have|helpful|useful|beneficial|desirable)\\b"
+      ],
+      "english_stopwords": [
+        "the",
+        "and",
+        "you",
+        "with",
+        "for",
+        "our",
+        "will",
+        "to",
+        "of",
+        "in",
+        "a",
+        "is",
+        "are",
+        "we",
+        "your",
+        "on",
+        "as",
+        "be",
+        "this",
+        "that"
+      ],
+      "heuristic_english_ratio": 0.12,
+      "detector": {
+        "method": "function_words_v2",
+        "english_function_words": [
+          "a",
+          "about",
+          "across",
+          "after",
+          "again",
+          "all",
+          "and",
+          "any",
+          "are",
+          "as",
+          "at",
+          "be",
+          "because",
+          "been",
+          "before",
+          "being",
+          "between",
+          "both",
+          "but",
+          "by",
+          "can",
+          "could",
+          "did",
+          "do",
+          "does",
+          "done",
+          "during",
+          "each",
+          "for",
+          "from",
+          "further",
+          "had",
+          "has",
+          "have",
+          "he",
+          "her",
+          "here",
+          "his",
+          "how",
+          "if",
+          "into",
+          "is",
+          "it",
+          "its",
+          "just",
+          "may",
+          "more",
+          "most",
+          "must",
+          "not",
+          "of",
+          "off",
+          "on",
+          "once",
+          "only",
+          "or",
+          "other",
+          "our",
+          "ours",
+          "out",
+          "over",
+          "own",
+          "same",
+          "she",
+          "should",
+          "some",
+          "such",
+          "than",
+          "that",
+          "the",
+          "their",
+          "them",
+          "then",
+          "there",
+          "these",
+          "they",
+          "this",
+          "those",
+          "through",
+          "to",
+          "under",
+          "until",
+          "up",
+          "upon",
+          "us",
+          "very",
+          "we",
+          "what",
+          "when",
+          "where",
+          "which",
+          "while",
+          "who",
+          "whom",
+          "will",
+          "with",
+          "within",
+          "without",
+          "would",
+          "you",
+          "your",
+          "yours"
+        ],
+        "foreign_function_words": {
+          "de": [
+            "und",
+            "der",
+            "das",
+            "den",
+            "dem",
+            "des",
+            "ein",
+            "eine",
+            "einen",
+            "einem",
+            "einer",
+            "mit",
+            "für",
+            "von",
+            "zu",
+            "auf",
+            "ist",
+            "sind",
+            "wir",
+            "sie",
+            "ihr",
+            "ihre",
+            "ihren",
+            "ihrer",
+            "unser",
+            "unsere",
+            "unseren",
+            "unserem",
+            "nicht",
+            "oder",
+            "bei",
+            "aus",
+            "sehr",
+            "auch",
+            "wie",
+            "werden",
+            "wird",
+            "können",
+            "haben",
+            "sowie",
+            "über",
+            "nach",
+            "zum",
+            "zur",
+            "im",
+            "ihnen"
+          ],
+          "fr": [
+            "le",
+            "la",
+            "les",
+            "du",
+            "une",
+            "et",
+            "pour",
+            "avec",
+            "nous",
+            "vous",
+            "sont",
+            "dans",
+            "sur",
+            "pas",
+            "qui",
+            "que",
+            "au",
+            "aux",
+            "votre",
+            "notre",
+            "nos",
+            "vos",
+            "cette",
+            "ces",
+            "être",
+            "sera",
+            "leur",
+            "leurs",
+            "chez",
+            "très"
+          ],
+          "es": [
+            "el",
+            "los",
+            "las",
+            "del",
+            "y",
+            "para",
+            "con",
+            "una",
+            "unos",
+            "unas",
+            "somos",
+            "nuestro",
+            "nuestra",
+            "nuestros",
+            "por",
+            "sus",
+            "su",
+            "como",
+            "más",
+            "pero",
+            "también",
+            "está",
+            "están",
+            "ser",
+            "muy",
+            "sobre",
+            "entre"
+          ],
+          "pt": [
+            "os",
+            "um",
+            "uma",
+            "dos",
+            "das",
+            "não",
+            "nossa",
+            "nosso",
+            "você",
+            "são",
+            "pelo",
+            "pela",
+            "ao"
+          ],
+          "it": [
+            "il",
+            "lo",
+            "gli",
+            "della",
+            "delle",
+            "dei",
+            "degli",
+            "siamo",
+            "sono",
+            "che",
+            "anche",
+            "più",
+            "nel",
+            "nella",
+            "alla",
+            "alle"
+          ],
+          "nl": [
+            "het",
+            "een",
+            "voor",
+            "wij",
+            "zijn",
+            "niet",
+            "ook",
+            "maar",
+            "bij",
+            "naar",
+            "onze",
+            "jouw",
+            "je",
+            "deze",
+            "wordt",
+            "worden",
+            "hebben",
+            "heeft"
+          ]
+        },
+        "english_max_foreign_share": 0.05,
+        "non_english_min_foreign_share": 0.5,
+        "min_evidence_words": 3,
+        "no_evidence_ascii_confidence": 0.95,
+        "note": "OR-69 (Addendum E4). Product, tool and technical names are neither English nor foreign function words, so they never lower English confidence; lowercase words with Latin diacritics and non-Latin-script words count as non-English evidence.",
+        "strip_pattern": "\\S+@\\S+|https?://\\S+|www\\.\\S+|\\b[\\w-]+\\.(?:com|io|ai|org|net|co|in|dev|app|tech|so)\\b",
+        "min_foreign_evidence": 2
+      },
+      "preference_overrides_weak_requirement": true
+    },
+    "timezone": [
+      "\\boverlap\\b",
+      "\\bbusiness hours\\b",
+      "\\btime ?zones?\\b",
+      "\\bworking hours\\b"
+    ],
+    "experience_context": [
+      "\\bexperience\\b",
+      "\\byears?\\b",
+      "\\byrs?\\b"
+    ],
+    "experience": {
+      "range": "(\\d+)\\s*(?:–|—|-|to)\\s*(\\d+)\\s*\\+?\\s*(?:years?|yrs?)",
+      "plus": "(\\d+)\\s*\\+\\s*(?:years?|yrs?)|(?:at least|minimum(?: of)?)\\s*(\\d+)\\s*(?:years?|yrs?)|(\\d+)\\s*(?:years?|yrs?) or more",
+      "point": "(\\d+)\\s*(?:years?|yrs?)"
+    },
+    "seniority": {
+      "SENIOR": [
+        "\\bsenior\\b",
+        "\\bsr\\.?\\b"
+      ],
+      "LEAD": [
+        "\\blead\\b"
+      ],
+      "STAFF": [
+        "\\bstaff\\b"
+      ],
+      "PRINCIPAL": [
+        "\\bprincipal\\b"
+      ],
+      "ARCHITECT": [
+        "\\barchitect\\b"
+      ]
+    },
+    "title_strip_words": [
+      "senior",
+      "sr",
+      "staff",
+      "principal",
+      "lead",
+      "junior",
+      "jr",
+      "associate",
+      "i",
+      "ii",
+      "iii",
+      "iv"
+    ],
+    "work_mode_sources": {
+      "order": [
+        "raw_work_mode",
+        "raw_location",
+        "raw_title",
+        "raw_text"
+      ],
+      "note": "Precedence of work-mode evidence (P3 §8). Rank 1 is highest. A lower-rank statement whose mode differs from the highest-rank stated mode is a genuine contradiction (GEO-R25), never a silent override."
+    },
+    "hybrid_semantics": {
+      "token": "\\bhybrid\\b",
+      "window_words": 3,
+      "word_pattern": "[a-z0-9+#]+",
+      "normalize": [
+        [
+          "on[- ]site",
+          "onsite"
+        ],
+        [
+          "in[- ]office",
+          "inoffice"
+        ],
+        [
+          "in[- ]person",
+          "inperson"
+        ],
+        [
+          "work(?:ing)? from (?:the )?office",
+          "wfo"
+        ],
+        [
+          "work(?:ing)? from home",
+          "wfh"
+        ]
+      ],
+      "work_terms_after": [
+        "work",
+        "working",
+        "workplace",
+        "workforce",
+        "role",
+        "roles",
+        "position",
+        "positions",
+        "job",
+        "jobs",
+        "employment",
+        "arrangement",
+        "arrangements",
+        "schedule",
+        "policy",
+        "office",
+        "offices",
+        "day",
+        "days",
+        "week",
+        "wfo",
+        "wfh",
+        "remote",
+        "onsite",
+        "inoffice",
+        "inperson",
+        "opportunity",
+        "opening",
+        "basis",
+        "team",
+        "teams",
+        "first",
+        "setup",
+        "culture",
+        "mode",
+        "location"
+      ],
+      "technical_terms_after": [
+        "search",
+        "searches",
+        "retrieval",
+        "retriever",
+        "retrievers",
+        "ranking",
+        "ranker",
+        "rankers",
+        "rerank",
+        "reranking",
+        "bm25",
+        "dense",
+        "sparse",
+        "lexical",
+        "semantic",
+        "keyword",
+        "vector",
+        "vectors",
+        "embedding",
+        "embeddings",
+        "index",
+        "indexes",
+        "indexing",
+        "rag",
+        "cloud",
+        "clouds",
+        "multicloud",
+        "architecture",
+        "architectures",
+        "infrastructure",
+        "infra",
+        "system",
+        "systems",
+        "pipeline",
+        "pipelines",
+        "approach",
+        "approaches",
+        "algorithm",
+        "algorithms",
+        "method",
+        "methods",
+        "recommender",
+        "recommenders",
+        "recommendation",
+        "recommendations",
+        "graph",
+        "neural",
+        "quantum",
+        "app",
+        "apps",
+        "mobile",
+        "deployment",
+        "deployments",
+        "storage",
+        "database",
+        "databases",
+        "engine",
+        "engines",
+        "solution",
+        "solutions",
+        "stack",
+        "network",
+        "networks",
+        "transformer",
+        "transformers",
+        "llm",
+        "llms",
+        "classifier",
+        "classifiers",
+        "cnn",
+        "rnn",
+        "encoder",
+        "encoders",
+        "query",
+        "queries",
+        "scoring",
+        "fusion",
+        "rrf"
+      ],
+      "weak_technical_terms_after": [
+        "model",
+        "models",
+        "modelling",
+        "modeling"
+      ],
+      "work_terms_before": [
+        "work",
+        "working",
+        "workplace",
+        "role",
+        "position",
+        "job",
+        "opening",
+        "arrangement",
+        "mode",
+        "location",
+        "type",
+        "office",
+        "setup",
+        "schedule",
+        "employment",
+        "team",
+        "we",
+        "company"
+      ],
+      "technical_terms_before": [
+        "search",
+        "retrieval",
+        "ranking",
+        "bm25",
+        "dense",
+        "sparse",
+        "vector",
+        "embedding",
+        "embeddings",
+        "rag",
+        "cloud",
+        "index",
+        "model",
+        "models",
+        "architecture"
+      ],
+      "note": "P3 §9-§11. For each 'hybrid' token: the first cue among the next window_words words decides (work -> WORK, technical -> TECHNICAL; a weak technical cue such as 'model' is WORK only when the words before it or the sentence show a work arrangement / office attendance). With no cue after it, the nearest cue before it decides; then an office-attendance cue in the sentence -> WORK. With no contextual evidence at all, a token in a structured field (work mode, location, a location line, or a title suffix such as '(Hybrid)') is WORK and a token in the JD body is UNCLASSIFIED (no work mode inferred).",
+      "negation_terms_before": [
+        "not",
+        "no",
+        "non",
+        "never",
+        "isn",
+        "without",
+        "nor"
+      ]
+    },
+    "relationship_fields": {
+      "fields": [
+        "raw_text",
+        "raw_employment_type"
+      ],
+      "note": "P3 §26: relationship signals are read from the structured employment field as well as the JD body."
+    },
+    "office_day_normalization": {
+      "number_words": {
+        "one": 1,
+        "two": 2,
+        "three": 3,
+        "four": 4,
+        "five": 5,
+        "six": 6,
+        "seven": 7,
+        "eight": 8,
+        "nine": 9,
+        "ten": 10,
+        "eleven": 11,
+        "twelve": 12,
+        "thirteen": 13,
+        "fourteen": 14,
+        "fifteen": 15,
+        "sixteen": 16,
+        "seventeen": 17,
+        "eighteen": 18,
+        "nineteen": 19,
+        "twenty": 20
+      },
+      "frequency_words": {
+        "once": 1,
+        "twice": 2,
+        "thrice": 3
+      },
+      "weekday_token": "\\b(?:(?P<mon>mondays?|mon)|(?P<tue>tuesdays?|tues|tue)|(?P<wed>wednesdays?|wed)|(?P<thu>thursdays?|thurs|thur|thu)|(?P<fri>fridays?|fri))\\b",
+      "range_joiner": "\\s*(?:through|thru|to|till|until|–|—|-)\\s*",
+      "alternate": [
+        "\\balternate (?:week)?days\\b",
+        "\\bevery other (?:week)?day\\b"
+      ],
+      "alternate_days_per_week": 2.5,
+      "wfh_count": [
+        "\\b(?P<n>\\d|{num})\\s+(?:wfh|remote|work[- ]from[- ]home)\\s+days?\\b",
+        "\\b(?P<n>\\d|{num})\\s+days?\\s+(?:of\\s+)?(?:wfh|work[- ]from[- ]home)\\b",
+        "\\b(?P<n>\\d|{num})\\s+days?\\s+(?:(?:a|per|each)\\s+week\\s+)?(?:at|from)\\s+home\\b(?![^.;]{0,25}?\\b(?:per|a|each|every|in\\s+a)\\s+month\\b)"
+      ],
+      "weekly_count": [
+        "\\b(?P<n>\\d|{num})\\s*(?:days?|x)\\s*(?:per|a|/|each|every|in\\s+a)\\s*week\\b",
+        "\\b(?P<n>\\d|{num})\\s+(?:[a-z-]+\\s+){1,2}days?\\s*(?:per|a|/|each|every|in\\s+a)\\s*week\\b",
+        "\\b(?P<n>\\d|{num})\\s*days?\\s*(?:in|at|from)\\s*(?:the\\s*)?office\\b(?![^.;]{0,25}?\\b(?:per|a|each|every|in\\s+a)\\s+month\\b)",
+        "\\b(?P<n>\\d|{num})\\s*(?:office|onsite|on-site|in-office|in office|wfo)\\s*days?\\b(?![^.;]{0,25}?\\b(?:per|a|each|every|in\\s+a)\\s+month\\b)",
+        "\\b(?P<n>\\d|{num})\\s*days?\\s*(?:a\\s+week\\s+|per\\s+week\\s+|/\\s*week\\s+)?(?:of\\s+)?(?:wfo|work(?:ing)?\\s+from\\s+(?:the\\s+)?office|on[- ]?site|in[- ]office|in[- ]person|at\\s+(?:the\\s+)?office)\\b(?![^.;]{0,25}?\\b(?:per|a|each|every|in\\s+a)\\s+month\\b)",
+        "\\bhybrid\\b[^\\d\\n.]{0,12}?(?P<n>\\d|{num})\\s*days?\\b(?![^.;]{0,25}?\\b(?:per|a|each|every|in\\s+a)\\s+month\\b)",
+        "\\b(?P<n>{freq})\\s+(?:a|per|each|every|in\\s+a)\\s+week\\b",
+        "\\b(?P<n>{freq})\\s+weekly\\b",
+        "\\b(?P<n>\\d|{num})\\s+days?\\s+(?:(?:a|per|each|every)\\s+week\\s+)?(?:are\\s+)?(?:spent\\s+)?(?:at|in|from|on)\\s+(?:the\\s+|our\\s+|your\\s+|a\\s+)?(?:[a-z-]+\\s+){0,2}?(?:office|offices|building|site|campus|hub|cent(?:re|er)|premises|studio|hq|headquarters|workplace)\\b(?![^.;]{0,25}?\\b(?:per|a|each|every|in\\s+a)\\s+month\\b)"
+      ],
+      "monthly_count": [
+        "\\b(?P<n>\\d{1,2}|{num})\\s+(?:[a-z-]+\\s+){0,2}days?\\s*(?:per|a|/|each|every|in\\s+a)\\s*month\\b",
+        "\\b(?P<n>\\d{1,2}|{num})\\s+days?\\s+(?:at|in|from|on)\\s+(?:the\\s+|our\\s+)?(?:[a-z-]+\\s+){0,2}?(?:office|offices|building|site|campus|hub|cent(?:re|er)|premises|studio|hq|headquarters|workplace)\\s+(?:per|a|each|every|in\\s+a)\\s+month\\b"
+      ],
+      "extra_days": [
+        "(?:\\bplus\\b|\\band\\b|\\+)\\s+(?P<n>\\d|{num})\\s+(?:floating|flexible|additional|extra|more|other|optional)\\s+days?\\b"
+      ],
+      "all_weekdays": [
+        "\\bevery (?:single )?weekday\\b",
+        "\\ball (?:five |5 )?weekdays\\b",
+        "\\ball\\s+(?:five\\s+|5\\s+)?(?:working|work|business|office)\\s+days\\b",
+        "\\bevery\\s+(?:single\\s+)?(?:working|work|business)\\s+day\\b"
+      ],
+      "office_cues": [
+        "\\boffices?\\b",
+        "\\bcampus\\b",
+        "\\bstudio\\b",
+        "\\bhq\\b",
+        "\\bheadquarters\\b",
+        "\\bcent(?:re|er)\\b",
+        "\\bpremises\\b",
+        "\\btech park\\b",
+        "\\bon[- ]?site\\b",
+        "\\bin[- ]office\\b",
+        "\\bwfo\\b",
+        "\\bin[- ]person\\b",
+        "\\battendance\\b",
+        "\\bcome in\\b",
+        "\\bsit (?:together|in)\\b",
+        "\\bbuilding\\b",
+        "(?<!web )\\bsite\\b(?![- ]reliability)",
+        "\\bworkplace\\b",
+        "\\bhub\\b"
+      ],
+      "wfh_cues": [
+        "\\bwfh\\b",
+        "\\bwork(?:ing)? from home\\b",
+        "\\bfrom home\\b",
+        "\\bremote(?:ly)?\\b",
+        "\\bat home\\b"
+      ],
+      "note": "OR-71 (Addendum E6). Office days per week = weekly count | monthly count / monthly_weeks | office weekdays (+ extra floating days) | standard_work_week_days - WFH days | alternate_days_per_week. Weekday tokens are assigned to the nearest office or WFH cue; in the JD body an attendance cue is required. 0.2.5 (P8 Task 3): more attendance cues and count forms; per-month qualifiers; non-attendance count contexts skipped.",
+      "count_context_exclusions": {
+        "window_words": 4,
+        "patterns": [
+          "\\bonboard\\w*",
+          "\\binduction\\b",
+          "\\btraining\\b",
+          "\\borientation\\b",
+          "\\bnotice\\b",
+          "\\brespon(?:d|ds|se|ses)\\b",
+          "\\bon[- ]call\\b",
+          "\\bbootcamp\\b",
+          "\\bfirst\\s+(?:week|weeks|month)\\b",
+          "\\bjoining\\b",
+          "\\bturnaround\\b",
+          "\\bholidays?\\b",
+          "\\bvacation\\b",
+          "\\bsla\\b",
+          "\\bdeadlines?\\b",
+          "\\bworkshops?\\b",
+          "\\bhackathons?\\b",
+          "\\boff-?sites?\\b"
+        ],
+        "note": "0.2.5 (P8 Task 3): a count with one of these within window_words words on either side is not an office-day statement ('five working days to respond', 'a five-day onboarding', 'five-day on-call rotation')."
+      }
+    },
+    "employment_jd": {
+      "MIXED": [
+        "\\bfull[- ]?time\\s*(?:/|or|and)\\s*(?:contract(?:ual)?|part[- ]?time|freelance)\\b",
+        "\\bcontract(?:ual)?\\s*(?:/|or)\\s*full[- ]?time\\b"
+      ],
+      "INTERNSHIP": [
+        "\\b(?:this is an?|paid|unpaid|\\d+[- ]?months?|summer|winter) internship\\b",
+        "\\binternship (?:role|position|program(?:me)?|opportunity|opening|offer)\\b",
+        "\\bintern position\\b",
+        "\\bas an intern\\b"
+      ],
+      "PART_TIME": [
+        "\\bpart[- ]?time (?:role|position|job|basis|engagement|opportunity|contract|employment|opening)\\b",
+        "\\bthis is a part[- ]?time\\b"
+      ],
+      "FREELANCE": [
+        "\\bfreelance (?:roles?|positions?|engagements?|basis|contracts?|projects?|work|opportunit(?:y|ies)|assignments?)\\b",
+        "\\bfreelancers? (?:welcome|only|wanted)\\b",
+        "\\bon a freelance basis\\b",
+        "\\bas a freelancer\\b"
+      ],
+      "TEMPORARY": [
+        "\\btemporary (?:role|position|job|contract|assignment|basis|employment|opening|opportunity|cover|hire|engagement)\\b",
+        "\\btemp role\\b",
+        "\\b(?:maternity|paternity|parental) (?:leave )?cover\\b",
+        "\\bthis (?:role|position) is temporary\\b"
+      ],
+      "CONTRACT_TO_HIRE": [
+        "\\bcontract[- ]to[- ]hire\\b",
+        "\\bc2h\\b",
+        "\\bcontract to permanent\\b",
+        "\\bcontract[- ]to[- ](?:perm|fte|full[- ]time)\\b"
+      ],
+      "INDEPENDENT_CONTRACTOR": [
+        "\\bindependent contractor\\b",
+        "\\bhourly contractor\\b",
+        "\\bb2b contractor\\b",
+        "\\bfreelance contractor\\b",
+        "\\b(?:engaged|hired|contracted|working|work|join(?:ing)?) as an? (?:independent |external |freelance |hourly )?contractor\\b",
+        "\\bcontractor (?:basis|agreement|engagement|role|position)\\b",
+        "\\bon a contractor basis\\b"
+      ],
+      "CONTRACT": [
+        "\\b\\d+[- ]?(?:months?|years?|yr)\\s+(?:fixed[- ]term\\s+)?contract(?:ual)?\\b",
+        "\\bcontract(?:ual)? (?:role|position|job|opening|basis|engagement|employment|assignment|hire|period|term|tenure|duration|staff|workers?|employee)\\b",
+        "\\bcontract (?:of|for) \\d+\\s*(?:months?|years?)\\b",
+        "\\bon (?:a )?contract(?:ual)?(?: basis)?\\b",
+        "\\bfixed[- ]term (?:contract|role|position|employment|engagement|basis|hire|appointment)\\b",
+        "\\b\\d+[- ]?months? fixed[- ]term\\b",
+        "\\b(?:this|the) (?:role|position|job|engagement) is (?:a )?(?:fixed[- ]term|contract(?:ual)?)\\b",
+        "\\b(?:employment|engagement|job|position) type\\s*[:\\-]\\s*(?:fixed[- ]term|contract(?:ual)?)\\b"
+      ],
+      "PERMANENT": [
+        "\\bpermanent\\b"
+      ],
+      "FULL_TIME": [
+        "\\bfull[- ]?time\\b"
+      ]
+    },
+    "employment_label_line": [
+      "^\\W*(?:employment|job|engagement|contract|position|role|work)\\s+type\\s*[:\\-]",
+      "^\\W*(?:employment|engagement)\\s*[:\\-]"
+    ],
+    "employment_jd_note": "OR-66 (Addendum E1): JD-body / salary-line employment vocabulary. Explicit multi-word statements only; the structured employment field uses lexicon.employment.",
+    "employment_source_conflicts": {
+      "PERMANENT": [
+        "TEMPORARY",
+        "CONTRACT",
+        "CONTRACT_TO_HIRE",
+        "INTERNSHIP",
+        "FREELANCE",
+        "INDEPENDENT_CONTRACTOR",
+        "PART_TIME"
+      ],
+      "FULL_TIME": [
+        "PART_TIME"
+      ]
+    },
+    "eligibility_line": [
+      "\\bindia[- ]based (?:candidates|applicants|engineers|freelancers|talent|teammates|developers)\\b",
+      "\\b(?:open to|hiring (?:in|from)|we hire in|candidates (?:in|from)|applicants (?:in|from)|anywhere in|remote(?:ly)? (?:within|across|from)) india\\b"
+    ],
+    "explicit_eligibility": {
+      "INDIA": [
+        "\\b(?:candidates?|applicants?|engineers?|talent|people) (?:in|from|based in|located in) india (?:are|is|will be) (?:eligible|welcome|considered)\\b",
+        "\\bindia(?:n)?[- ]?(?:based )?(?:candidates|applicants) (?:are )?(?:eligible|welcome)\\b",
+        "\\b(?:open|available) to (?:candidates|applicants) (?:in|from) india\\b",
+        "\\bwe (?:can )?(?:hire|employ) (?:in|from) india\\b"
+      ],
+      "WORLDWIDE": [
+        "\\bworldwide (?:candidates|applicants) (?:are )?(?:eligible|welcome)\\b",
+        "\\b(?:candidates|applicants) (?:from )?(?:anywhere(?: in the world)?|worldwide) (?:are )?(?:eligible|welcome)\\b",
+        "\\bwork from anywhere in the world\\b",
+        "\\bopen to (?:candidates|applicants) worldwide\\b"
+      ]
+    },
+    "explicit_eligibility_note": "OR-79 (F2): statements that explicitly make India or worldwide candidates eligible.",
+    "lock_negation_before": [
+      "not",
+      "no",
+      "never",
+      "without",
+      "nor",
+      "neither",
+      "needn't"
+    ],
+    "lock_negation_window_words": 4,
+    "lock_negation_note": "0.2.5 (P8 Task 2): a residence / work-authorization lock preceded by one of these words (or any n't contraction) within lock_negation_window_words words is not a lock.",
+    "india_eligibility": {
+      "clause_split": "\\s*(?:;|:|—|\\s[-–]\\s|\\bbut\\b|\\bwhereas\\b|\\bwhile\\b|\\bhowever\\b)\\s*",
+      "india_place": [
+        "\\b(?:in|from|within|across|throughout|out of)\\s+india\\b",
+        "\\bindia[- ](?:based|resident|located|domiciled)\\b",
+        "\\b(?:india|indian)\\s+(?:residents?|nationals?|citizens?)\\b",
+        "\\bresidents?\\s+of\\s+india\\b"
+      ],
+      "worldwide_place": [
+        "\\bworldwide\\b",
+        "\\bglobally\\b",
+        "\\b(?:from|in)\\s+any\\s+country\\b",
+        "\\bany\\s+location\\b",
+        "\\banywhere\\b(?!\\s+(?:in|within|across|inside)\\s+(?!the\\s+world\\b))"
+      ],
+      "subject": [
+        "\\b(?:candidates?|applicants?|engineers?|developers?|talent|professionals?|residents?|individuals?|anyone|those|hires?|freelancers?|contractors?|nationals?|citizens?)\\b",
+        "\\b(?:this|the|our)\\s+(?:role|position|seat|opening|job|vacancy|opportunity|requisition)\\b"
+      ],
+      "positive": [
+        "\\beligible\\b",
+        "\\bwelcome[sd]?\\b",
+        "\\b(?:can|may)\\s+apply\\b",
+        "\\b(?:invited|encouraged)\\s+to\\s+apply\\b",
+        "\\bconsidered\\b",
+        "\\bopen\\b",
+        "\\breserved\\b",
+        "\\b(?:restricted|limited|exclusive)\\s+to\\b",
+        "\\bonly\\b",
+        "\\bhir(?:e|es|ed|ing)\\b",
+        "\\brecruit(?:s|ed|ing)?\\b",
+        "\\baccept(?:s|ed|ing)?\\b",
+        "\\bqualif(?:y|ies)\\b"
+      ],
+      "negation": [
+        "\\b(?:not|never|no longer)\\s+(?:\\w+\\s+){0,2}?(?:eligible|welcome|open|considered|accepted|accepting|able to apply|hire|hiring|employ|recruit|recruiting|available)\\b",
+        "\\b(?:ineligible|excluded|cannot apply|cannot be considered|unable to (?:hire|employ|consider|accept))\\b",
+        "\\b(?:no|not)\\s+(?:\\w+\\s+){0,2}?(?:candidates|applicants|residents|hires|hiring)\\b",
+        "\\b\\w+n['’]t\\s+(?:\\w+\\s+){0,2}?(?:eligible|welcome|open|considered|accept|hire|hiring|employ|apply|consider)\\w*\\b",
+        "\\boutside(?:\\s+of)?\\s+india\\b",
+        "\\b(?:except|excluding|other than|apart from|besides)\\s+(?:\\w+\\s+){0,2}?india\\b",
+        "\\bbeyond\\s+india\\b"
+      ],
+      "preference": [
+        "\\bprefer(?:s|red|ence|ential|ably)?\\b",
+        "\\bpriorit(?:y|ies|ise|ize|ised|ized|ising|izing)\\b",
+        "\\bideally\\b",
+        "\\bfavou?r(?:ed|s)?\\b",
+        "\\b(?:a|an)\\s+(?:plus|advantage|bonus)\\b",
+        "\\bnice[- ]to[- ]have\\b",
+        "\\bfirst consideration\\b"
+      ],
+      "direct_india": [
+        "\\b(?:candidates?|applicants?|engineers?|talent|people) (?:in|from|based in|located in) india (?:are|is|will be) (?:eligible|welcome|considered)\\b",
+        "\\bindia(?:n)?[- ]?(?:based )?(?:candidates|applicants) (?:are )?(?:eligible|welcome)\\b",
+        "\\b(?:open|available) to (?:candidates|applicants) (?:in|from) india\\b",
+        "\\bwe (?:can )?(?:hire|employ) (?:in|from) india\\b",
+        "\\b(?:must|need to|needs to|required to|have to|has to)\\s+(?:currently\\s+)?(?:be\\s+)?(?:live|living|reside|residing|based|located|resident|domiciled)\\s+(?:in|within)\\s+india\\b",
+        "\\b(?:hiring|recruiting)\\s+(?:only\\s+)?(?:in|from)\\s+india\\b"
+      ],
+      "direct_worldwide": [
+        "\\bworldwide (?:candidates|applicants) (?:are )?(?:eligible|welcome)\\b",
+        "\\b(?:candidates|applicants) (?:from )?(?:anywhere(?: in the world)?|worldwide) (?:are )?(?:eligible|welcome)\\b",
+        "\\bwork from anywhere in the world\\b",
+        "\\bopen to (?:candidates|applicants) worldwide\\b"
+      ],
+      "note": "0.2.5 (OR-79 / OR-83; P8 Task 1; OI-053). Per clause: place (India | worldwide) + (subject or direct form); negation -> NEGATED; India + preference -> INDIA_PREFERENCE (OI-053, UNKNOWN); positive cue or direct form -> INDIA | WORLDWIDE. INDIA > WORLDWIDE > INDIA_PREFERENCE > NEGATED across clauses. Only INDIA / WORLDWIDE lift a lock."
+    },
+    "relationship_negation_before": [
+      "not",
+      "no",
+      "never",
+      "without",
+      "nor",
+      "neither"
+    ],
+    "relationship_negation_window_words": 4,
+    "relationship_negation_note": "0.2.5 (P8 Task 5): a relationship signal preceded by one of these words (or any n't contraction) within relationship_negation_window_words words is not a signal ('you will not be placed with clients')."
+  },
+  "experience_fit": {
+    "candidate_years": 3,
+    "labels": [
+      "DIRECT",
+      "REASONABLE",
+      "STRETCH",
+      "UNKNOWN_FIT"
+    ],
+    "rules": [
+      {
+        "rule_id": "EXP-R01",
+        "shape": "POINT",
+        "when": {
+          "value": {
+            "lte": "$relevant_ai_experience_years"
+          }
+        },
+        "label": "DIRECT"
+      },
+      {
+        "rule_id": "EXP-R02",
+        "shape": "POINT",
+        "when": {},
+        "label": "STRETCH"
+      },
+      {
+        "rule_id": "EXP-R03",
+        "shape": "PLUS",
+        "when": {
+          "min": {
+            "lte": "$relevant_ai_experience_years"
+          }
+        },
+        "label": "DIRECT"
+      },
+      {
+        "rule_id": "EXP-R04",
+        "shape": "PLUS",
+        "when": {},
+        "label": "STRETCH"
+      },
+      {
+        "rule_id": "EXP-R05",
+        "shape": "RANGE",
+        "when": {
+          "max": {
+            "lte": "$relevant_ai_experience_years"
+          }
+        },
+        "label": "DIRECT"
+      },
+      {
+        "rule_id": "EXP-R06",
+        "shape": "RANGE",
+        "when": {
+          "min": {
+            "lte": "$relevant_ai_experience_years"
+          }
+        },
+        "label": "REASONABLE",
+        "ruling": [
+          "Phase B §13 (OI-016)"
+        ]
+      },
+      {
+        "rule_id": "EXP-R07",
+        "shape": "RANGE",
+        "when": {},
+        "label": "STRETCH"
+      },
+      {
+        "rule_id": "EXP-R08",
+        "shape": "NONE",
+        "when": {},
+        "label": "UNKNOWN_FIT"
+      }
+    ],
+    "stretch_flag": "EXPERIENCE_STRETCH",
+    "never_eligibility": true,
+    "ruling": [
+      "OR-21",
+      "Phase B §13",
+      "OR-68 (Addendum E3)"
+    ]
+  },
+  "relevance": {
+    "labels": [
+      "STRONG",
+      "MODERATE",
+      "WEAK",
+      "NOT_ASSESSED"
+    ],
+    "clusters": {
+      "A": {
+        "name": "AI application engineering",
+        "terms": [
+          {
+            "pattern": "\\bllms?\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\blarge language models?\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\bgen(?:erative)?[ -]?ai\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\bprompt (?:engineering|templates?|design)\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\bstructured outputs?\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\bmodel orchestration\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\bllm (?:integration|applications?)\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\bfine[- ]tun(?:e|ed|ing)\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\bpython\\b",
+            "specific": false
+          },
+          {
+            "pattern": "\\bfastapi\\b",
+            "specific": false
+          },
+          {
+            "pattern": "\\bbackend (?:apis?|services?)\\b",
+            "specific": false
+          },
+          {
+            "pattern": "\\bchatbots?\\b|\\bconversational ai\\b",
+            "specific": true
+          }
+        ]
+      },
+      "B": {
+        "name": "Retrieval / knowledge systems",
+        "terms": [
+          {
+            "pattern": "\\brag\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\bretrieval[- ]augmented\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\bembeddings?\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\bvector (?:databases?|db|stores?|search|retrieval)\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\bsemantic search\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\bbm25\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\bhybrid (?:retrieval|search)\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\breciprocal rank fusion\\b|\\brrf\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\bre-?rank(?:ing|er|ers)?\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\bgraph ?rag\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\bfaiss\\b|\\bchroma(?:db)?\\b|\\bpinecone\\b|\\bweaviate\\b|\\bpgvector\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\bcross[- ]encoders?\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\bchunking\\b",
+            "specific": true,
+            "context": "ai"
+          },
+          {
+            "pattern": "\\bquery (?:rewriting|understanding|expansion)\\b",
+            "specific": true,
+            "context": "ai"
+          },
+          {
+            "pattern": "\\bretriev(?:al|er|ers)\\b",
+            "specific": true,
+            "context": "ai"
+          },
+          {
+            "pattern": "\\b(?:hybrid|graph|agentic|multimodal)[- ]?rag\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\bground(?:ing|ed)\\b",
+            "specific": true,
+            "context": "ai"
+          }
+        ]
+      },
+      "C": {
+        "name": "AI evaluation / reliability",
+        "terms": [
+          {
+            "pattern": "\\bllm evaluation\\b|\\bllm evals?\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\bai evaluation\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\bhallucinations?\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\bgroundedness\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\bfaithfulness\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\banswer relevancy\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\bdeepeval\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\bragas\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\bpromptfoo\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\bllm[- ]as[- ]a?[- ]?judge\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\bllm testing\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\bretrieval evaluation\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\bevaluation (?:pipelines?|harness)\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\bai (?:reliability|observability|monitoring)\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\bguardrails?\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\bmodel evaluation\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\bevals?\\b",
+            "specific": true,
+            "context": "ai"
+          },
+          {
+            "pattern": "\\bevaluation (?:suites?|sets?|datasets?|frameworks?|harness(?:es)?|metrics|reports?|rubrics?|loops?|program(?:me)?)\\b",
+            "specific": true,
+            "context": "ai"
+          },
+          {
+            "pattern": "\\bgolden (?:sets?|datasets?|data ?sets?|questions?|answers?|traces?)\\b",
+            "specific": true,
+            "context": "ai"
+          },
+          {
+            "pattern": "\\bprompt[- ](?:regression|evaluation|testing|versioning|injection)\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\bred[- ]?team(?:ing|s|ers)?\\b",
+            "specific": true,
+            "context": "ai"
+          },
+          {
+            "pattern": "\\b(?:safety|bias|toxicity|jailbreak|adversarial|robustness) (?:evals?|evaluations?|testing|tests?|checks?|suites?)\\b",
+            "specific": true,
+            "context": "ai"
+          },
+          {
+            "pattern": "\\bcontext (?:precision|recall)\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\bcitation[- ](?:faithfulness|accuracy|grounding|evals?|checks?)\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\b(?:agent|agentic|trajectory) (?:evals?|evaluations?|testing|tests?|observability|quality|validation|reliability|traces?)\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\bllm (?:observability|monitoring|reliability|validation|quality|outputs?|ops)\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\b(?:model|inference|ai|answer|output|retrieval|rag|summary|response|generation) quality\\b",
+            "specific": true,
+            "context": "ai"
+          },
+          {
+            "pattern": "\\bslos?\\b|\\bslis?\\b|\\berror budgets?\\b",
+            "specific": true,
+            "context": "ai"
+          },
+          {
+            "pattern": "\\breliability\\b",
+            "specific": true,
+            "context": "ai"
+          },
+          {
+            "pattern": "\\b(?:llm|ai)[- ]judges?\\b|\\bjudge (?:models?|calibration|prompts?|agreement)\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\brubrics?\\b",
+            "specific": true,
+            "context": "ai"
+          },
+          {
+            "pattern": "\\b(?:human|annotator|rater|nurse|physician|clinician|analyst|expert)s?[- ](?:labell?ed|raters?|reviewers?|annotations?|calibration|feedback)\\b",
+            "specific": true,
+            "context": "ai"
+          },
+          {
+            "pattern": "\\bbenchmarks?\\b",
+            "specific": true,
+            "context": "ai"
+          },
+          {
+            "pattern": "\\b(?:regression|offline|online|automated|continuous) (?:evals?|evaluations?)\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\bvalidat\\w* (?:its |the |their |model |llm |ai )?outputs?\\b|\\boutput validation\\b",
+            "specific": true,
+            "context": "ai"
+          },
+          {
+            "pattern": "\\b(?:ai|llm|genai|gen ai|ml) (?:testing|test automation|quality engineering|qa)\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\b(?:test|test[- ]case|unit[- ]test) generation\\b|\\bgenerat\\w* test (?:cases|suites?)\\b",
+            "specific": true,
+            "context": "ai"
+          },
+          {
+            "pattern": "\\bdefect prediction\\b",
+            "specific": true,
+            "context": "ai"
+          },
+          {
+            "pattern": "\\bdrift (?:monitors?|monitoring|detection)\\b",
+            "specific": true,
+            "context": "ai"
+          },
+          {
+            "pattern": "\\bevaluat(?:e|es|ed|ing|ion|ions|or|ors)\\b",
+            "specific": true,
+            "context": "ai"
+          },
+          {
+            "pattern": "\\bjudges?\\b",
+            "specific": true,
+            "context": "ai"
+          },
+          {
+            "pattern": "\\bcalibrat\\w*\\b",
+            "specific": true,
+            "context": "ai"
+          },
+          {
+            "pattern": "\\b(?:quality|release) gates?\\b",
+            "specific": true,
+            "context": "ai"
+          }
+        ]
+      },
+      "D": {
+        "name": "AI infrastructure",
+        "terms": [
+          {
+            "pattern": "\\bllmops\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\bmlops\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\bmodel serving\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\binference\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\bai platforms?\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\bmodel monitoring\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\bmachine learning\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\bgradient[- ]boost\\w*\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\bbedrock\\b|\\bsagemaker\\b|\\bvertex ai\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\bdocker\\b",
+            "specific": false
+          },
+          {
+            "pattern": "\\bci/?cd\\b",
+            "specific": false
+          },
+          {
+            "pattern": "\\bkubernetes\\b",
+            "specific": false
+          },
+          {
+            "pattern": "\\b(?:model|llm|ai) gateway\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\bvllm\\b|\\btriton inference\\b",
+            "specific": true
+          }
+        ]
+      },
+      "E": {
+        "name": "Agentic / AI-SDLC",
+        "terms": [
+          {
+            "pattern": "\\b(?:ai )?agents?\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\bagentic\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\bmulti[- ]agent\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\btool[- ]calling\\b|\\bfunction[- ]calling\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\blanggraph\\b|\\blangchain\\b|\\bcrewai\\b|\\bautogen\\b|\\bmcp\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\bai coding\\b|\\bcoding agents?\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\b(?:ai[- ])?generat\\w* (?:unit )?tests\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\bai[- ]driven (?:sdlc|software)\\b|\\bai[- ]assisted (?:software|development)\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\bdefect triage\\b",
+            "specific": false
+          },
+          {
+            "pattern": "\\brca\\b|\\broot cause analysis\\b",
+            "specific": false
+          },
+          {
+            "pattern": "\\borchestration\\b",
+            "specific": false
+          },
+          {
+            "pattern": "\\btool[- ]use\\b",
+            "specific": true
+          }
+        ]
+      },
+      "F": {
+        "name": "Governance / trust",
+        "terms": [
+          {
+            "pattern": "\\bai governance\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\bresponsible ai\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\bai risk\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\bexplainability\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\btrustworthy ai\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\bdecision governance\\b",
+            "specific": true
+          },
+          {
+            "pattern": "\\btraceability\\b",
+            "specific": false
+          }
+        ]
+      }
+    },
+    "traditional_qa_terms": [
+      "\\bselenium\\b",
+      "\\bcypress\\b",
+      "\\bplaywright\\b",
+      "\\bmanual (?:testing|test)\\b",
+      "\\bregression test\\w*\\b",
+      "\\bui (?:testing|regression|test)\\b",
+      "\\btest cases?\\b",
+      "\\btestrail\\b",
+      "\\bmobile (?:apps?|testing|qa)\\b",
+      "\\betl testing\\b",
+      "\\bfunctional testing\\b"
+    ],
+    "thresholds": {
+      "strong_min_specific_terms": 3,
+      "strong_min_clusters": 2,
+      "moderate_min_specific_terms": 2
+    },
+    "rule": "STRONG: >= strong_min_specific_terms distinct AI-specific terms spanning >= strong_min_clusters clusters. MODERATE: >= moderate_min_specific_terms distinct AI-specific terms. WEAK: otherwise. NOT_ASSESSED: no JD text. Supporting terms (Python, Docker, CI/CD, RCA ...) are reported as spans but never count. Traditional-QA terms are reported and never count.",
+    "no_score": true,
+    "llm": false,
+    "title_tiers": {
+      "TIER_1": [
+        {
+          "title": "AI Engineer",
+          "variants": [
+            "ai engineer",
+            "artificial intelligence engineer"
+          ]
+        },
+        {
+          "title": "Applied AI Engineer",
+          "variants": [
+            "applied ai engineer"
+          ]
+        },
+        {
+          "title": "Agentic AI Engineer",
+          "variants": [
+            "agentic ai engineer",
+            "ai agent engineer",
+            "ai agents engineer"
+          ]
+        },
+        {
+          "title": "Generative AI Engineer",
+          "variants": [
+            "generative ai engineer",
+            "genai engineer",
+            "gen ai engineer"
+          ]
+        },
+        {
+          "title": "AI/LLM Engineer",
+          "variants": [
+            "ai llm engineer",
+            "llm engineer"
+          ]
+        },
+        {
+          "title": "RAG Engineer",
+          "variants": [
+            "rag engineer"
+          ]
+        },
+        {
+          "title": "Retrieval Engineer",
+          "variants": [
+            "retrieval engineer",
+            "search relevance engineer"
+          ]
+        },
+        {
+          "title": "AI Evaluation Engineer",
+          "variants": [
+            "ai evaluation engineer",
+            "ai evals engineer"
+          ]
+        },
+        {
+          "title": "LLM Evaluation Engineer",
+          "variants": [
+            "llm evaluation engineer",
+            "llm evals engineer"
+          ]
+        },
+        {
+          "title": "AI Quality Engineer",
+          "variants": [
+            "ai quality engineer"
+          ]
+        },
+        {
+          "title": "AI Reliability Engineer",
+          "variants": [
+            "ai reliability engineer"
+          ]
+        },
+        {
+          "title": "AI Testing Engineer",
+          "variants": [
+            "ai testing engineer",
+            "ai test engineer"
+          ]
+        },
+        {
+          "title": "GenAI Quality Engineer",
+          "variants": [
+            "genai quality engineer",
+            "gen ai quality engineer",
+            "generative ai quality engineer"
+          ]
+        },
+        {
+          "title": "AI Platform Engineer",
+          "variants": [
+            "ai platform engineer"
+          ]
+        },
+        {
+          "title": "GenAI Backend Engineer",
+          "variants": [
+            "genai backend engineer",
+            "gen ai backend engineer",
+            "generative ai backend engineer"
+          ]
+        },
+        {
+          "title": "AI Solutions Engineer",
+          "variants": [
+            "ai solutions engineer",
+            "ai solution engineer"
+          ]
+        },
+        {
+          "title": "AI Automation Engineer",
+          "variants": [
+            "ai automation engineer"
+          ]
+        },
+        {
+          "title": "AI-SDLC / Developer Productivity Engineer",
+          "variants": [
+            "ai sdlc engineer",
+            "developer productivity engineer"
+          ]
+        },
+        {
+          "title": "LLMOps / AI Operations Engineer",
+          "variants": [
+            "llmops engineer",
+            "ai operations engineer",
+            "ai ops engineer"
+          ]
+        },
+        {
+          "title": "AI Governance / AI Reliability Engineer",
+          "variants": [
+            "ai governance engineer"
+          ]
+        }
+      ],
+      "TIER_2": [
+        {
+          "title": "Machine Learning Engineer",
+          "variants": [
+            "machine learning engineer",
+            "ml engineer"
+          ]
+        },
+        {
+          "title": "NLP Engineer",
+          "variants": [
+            "nlp engineer"
+          ]
+        },
+        {
+          "title": "MLOps Engineer",
+          "variants": [
+            "mlops engineer"
+          ]
+        },
+        {
+          "title": "ML Platform Engineer",
+          "variants": [
+            "ml platform engineer",
+            "machine learning platform engineer"
+          ]
+        },
+        {
+          "title": "LLM Application Engineer",
+          "variants": [
+            "llm application engineer"
+          ]
+        },
+        {
+          "title": "AI Application Engineer",
+          "variants": [
+            "ai application engineer",
+            "ai applications engineer"
+          ]
+        },
+        {
+          "title": "AI Software Engineer",
+          "variants": [
+            "ai software engineer"
+          ]
+        },
+        {
+          "title": "AI Backend Engineer",
+          "variants": [
+            "ai backend engineer"
+          ]
+        },
+        {
+          "title": "AI Integration Engineer",
+          "variants": [
+            "ai integration engineer"
+          ]
+        },
+        {
+          "title": "AI Product Engineer",
+          "variants": [
+            "ai product engineer"
+          ]
+        },
+        {
+          "title": "AI Developer",
+          "variants": [
+            "ai developer"
+          ]
+        },
+        {
+          "title": "Intelligent Automation Engineer",
+          "variants": [
+            "intelligent automation engineer"
+          ]
+        },
+        {
+          "title": "Data/AI Engineer",
+          "variants": [
+            "data ai engineer",
+            "data and ai engineer"
+          ]
+        },
+        {
+          "title": "ML Infrastructure Engineer",
+          "variants": [
+            "ml infrastructure engineer",
+            "machine learning infrastructure engineer"
+          ]
+        },
+        {
+          "title": "AI Solutions Architect (hands-on)",
+          "variants": [
+            "ai solutions architect",
+            "ai solution architect"
+          ]
+        }
+      ],
+      "TIER_3": "Title in neither list, JD relevance STRONG or MODERATE."
+    },
+    "ruling": [
+      "OR-12",
+      "OR-13",
+      "Phase B §15-§21",
+      "OR-72 (Addendum E7)",
+      "OR-73 (Addendum E8)"
+    ],
+    "context_patterns": {
+      "ai": [
+        "\\bllms?\\b",
+        "\\blarge language models?\\b",
+        "\\bgen(?:erative)?[ -]?ai\\b",
+        "\\bai\\b",
+        "\\bml\\b",
+        "\\bmachine learning\\b",
+        "\\b(?:language|foundation|ml|ai|llm|trained|predictive|ranking|embedding|judge|reasoning)[ -]models?\\b",
+        "\\bmodel (?:provider|outputs?|quality|upgrades?|releases?|behaviou?r|changes?|rollouts?|responses?|versions?)\\b",
+        "\\brag\\b",
+        "\\bretrieval\\b",
+        "\\bagents?\\b",
+        "\\bagentic\\b",
+        "\\bprompts?\\b",
+        "\\bchatbots?\\b",
+        "\\bcopilots?\\b",
+        "\\bassistants?\\b",
+        "\\bembeddings?\\b",
+        "\\bnlp\\b",
+        "\\btransformers?\\b",
+        "\\binference\\b",
+        "\\bneural\\b",
+        "\\bhallucinat\\w*\\b"
+      ]
+    },
+    "context_note": "OR-73: a term with 'context': 'ai' counts only when the same sentence matches an AI anchor in context_patterns.ai; thresholds are unchanged, so no single keyword can make a JD STRONG."
+  },
+  "source_authority": {
+    "kinds": [
+      "EMPLOYER_ATS",
+      "COMPANY_SITE",
+      "JOB_BOARD",
+      "AGGREGATOR",
+      "IMPORT"
+    ],
+    "tier_by_kind": {
+      "EMPLOYER_ATS": 1,
+      "COMPANY_SITE": 1
+    },
+    "tier_by_completeness_for_boards": {
+      "FULL_JD": 2,
+      "PARTIAL": 3,
+      "SEARCH_ONLY": 4
+    },
+    "completeness_rank": {
+      "FULL_JD": 0,
+      "PARTIAL": 1,
+      "SEARCH_ONLY": 2
+    },
+    "conflict_dimensions": [
+      "title",
+      "geography",
+      "compensation",
+      "employment_type"
+    ],
+    "ruling": [
+      "Phase B §26 (OI-019)"
+    ],
+    "statement": "Factual authority: ATS/company site > job board. Freshness (first_seen) is recorded per source independently. Conflicting factual evidence across sources is preserved and sets SOURCE_CONFLICT.",
+    "absent_detail_is_not_conflict": true,
+    "absent_detail_note": "P5 (F4): a sighting that omits a detail does not contradict one that states it; only two stated, different values conflict."
+  },
+  "newness": {
+    "states": [
+      "NEW",
+      "UPDATED",
+      "SEEN_BEFORE"
+    ],
+    "material_fields": [
+      "title",
+      "location",
+      "compensation",
+      "employment_type",
+      "jd_hash"
+    ],
+    "enrichment_is_not_update": true,
+    "ruling": [
+      "OR-24",
+      "Phase B §24-§25 (OI-017, OI-018)",
+      "OR-64"
+    ],
+    "cross_source_update": {
+      "enabled": true,
+      "fields": [
+        "title",
+        "location",
+        "compensation",
+        "employment_type"
+      ],
+      "location_compare": "arrangement",
+      "applies_after_first_run": true,
+      "applies_after_first_run_note": "OI-050 (open): when the board sighting and the contradicting ATS sighting are both in the run that first observed the requisition, newness stays NEW (pre-P3 behaviour, G111) until the owner rules. The lane is REVIEW either way (SOURCE_CONFLICT).",
+      "note": "OR-64: when an observation of strictly higher source authority (ATS/company site over a board) changes the accepted value of a material field, newness is UPDATED (the evaluation carries SOURCE_CONFLICT). When the accepted value does not change, SEEN_BEFORE and the conflict evidence is preserved. JD hash and raw listing strings are not compared across sources (their formatting differs by source).",
+      "absent_detail_is_enrichment": true
+    },
+    "absent_detail_is_enrichment": true,
+    "absent_detail_note": "P5 (owner resolution of R2-SEQ-09): a detail absent in the earlier sighting and present now (office days, a JD) is enrichment, never UPDATED."
+  },
+  "lanes": {
+    "order": [
+      "SHORTLIST",
+      "REVIEW",
+      "PARKED",
+      "EXCLUDED",
+      "SUPPRESSED_DUPLICATE"
+    ],
+    "rules": [
+      {
+        "rule_id": "LANE-R01",
+        "when": {
+          "duplicate": true
+        },
+        "lane": "SUPPRESSED_DUPLICATE",
+        "ruling": [
+          "OR-22"
+        ]
+      },
+      {
+        "rule_id": "LANE-R02",
+        "when": {
+          "eligibility_any": "FAIL"
+        },
+        "lane": "EXCLUDED",
+        "ruling": [
+          "OR-22"
+        ]
+      },
+      {
+        "rule_id": "LANE-R03",
+        "when": {
+          "relevance": "NOT_ASSESSED",
+          "title_tier": "TIER_1"
+        },
+        "lane": "REVIEW",
+        "ruling": [
+          "Phase B §21 (OI-015)"
+        ],
+        "note": "Ordered before seniority parking (OI-044)."
+      },
+      {
+        "rule_id": "LANE-R04",
+        "when": {
+          "relevance": "NOT_ASSESSED"
+        },
+        "lane": "PARKED",
+        "ruling": [
+          "Phase B §21"
+        ]
+      },
+      {
+        "rule_id": "LANE-R10",
+        "when": {
+          "relevance": "WEAK",
+          "relevance_title_prior": true
+        },
+        "lane": "REVIEW",
+        "ruling": [
+          "OR-72 (Addendum E7)"
+        ],
+        "note": "Tier 1 title + WEAK JD evidence with at least one AI-specific term."
+      },
+      {
+        "rule_id": "LANE-R05",
+        "when": {
+          "relevance": "WEAK"
+        },
+        "lane": "PARKED",
+        "ruling": [
+          "OR-22"
+        ]
+      },
+      {
+        "rule_id": "LANE-R06",
+        "when": {
+          "relevance": "MODERATE",
+          "parking_signal": true
+        },
+        "lane": "PARKED",
+        "ruling": [
+          "Phase B §22"
+        ],
+        "note": "7+ years or Staff/Principal/Architect title when relevance is not STRONG."
+      },
+      {
+        "rule_id": "LANE-R07",
+        "when": {
+          "eligibility_any": "UNKNOWN"
+        },
+        "lane": "REVIEW",
+        "ruling": [
+          "OR-22"
+        ]
+      },
+      {
+        "rule_id": "LANE-R08",
+        "when": {
+          "review_flag_any": true
+        },
+        "lane": "REVIEW",
+        "ruling": [
+          "OR-22",
+          "Phase B §22"
+        ]
+      },
+      {
+        "rule_id": "LANE-R09",
+        "when": {},
+        "lane": "SHORTLIST",
+        "ruling": [
+          "OR-22"
+        ]
+      }
+    ]
+  },
+  "queue": {
+    "review_daily_cap": "$review_daily_cap",
+    "carry_days": "$review_carry_days",
+    "strong_relevance_exempt_from_overflow_parking": true,
+    "ordering": [
+      {
+        "key": "relevance",
+        "order": [
+          "STRONG",
+          "MODERATE",
+          "NOT_ASSESSED"
+        ]
+      },
+      {
+        "key": "newness",
+        "order": [
+          "NEW",
+          "UPDATED",
+          "SEEN_BEFORE"
+        ]
+      },
+      {
+        "key": "evidence_completeness",
+        "order": "unknown_dimension_count_ascending"
+      },
+      {
+        "key": "work_arrangement",
+        "order": [
+          "REMOTE",
+          "BENGALURU_HYBRID",
+          "OTHER",
+          "UNKNOWN"
+        ]
+      },
+      {
+        "key": "compensation_band",
+        "order": [
+          "IN_TARGET",
+          "ABOVE_TARGET",
+          "SPANS_TARGET",
+          "CTC_BASIS_UNVERIFIED",
+          "BELOW_TARGET",
+          "UNKNOWN",
+          "NOT_APPLICABLE"
+        ]
+      },
+      {
+        "key": "employer_preference",
+        "order": [
+          "PREFERRED_AI_NATIVE",
+          "PREFERRED_PRODUCT",
+          "PREFERRED_GCC",
+          "PREFERRED_ENGINEERING_LED",
+          "NEUTRAL",
+          "UNKNOWN"
+        ]
+      },
+      {
+        "key": "first_seen_at",
+        "order": "ascending"
+      },
+      {
+        "key": "requisition_id",
+        "order": "ascending"
+      }
+    ],
+    "ruling": [
+      "OR-28",
+      "OR-29",
+      "Phase B §23 (OI-009, OI-010, OI-028)",
+      "Addendum B (OI-046)",
+      "OR-65",
+      "OR-87",
+      "OR-88"
+    ],
+    "note": "Within employer_preference, PREFERRED_* categories are equal in policy; their listed order is a deterministic tie-break only.",
+    "group_identity_uncertain_review": true,
+    "group_note": "OI-046 (Addendum B): requisitions flagged IDENTITY_UNCERTAIN and linked by a PROBABLE_DUPLICATE identity link are presented as ONE review item (group_id + member ids) consuming ONE daily cap slot. Presentation only: requisitions, observations, evidence and evaluations are never merged.",
+    "carry_note": "OR-65: the first overflow day counts as carry day 1. An item overflowing on D is eligible on D+1 and D+2 and is PARKED on D+3 (carry_days > review_carry_days). STRONG is exempt.",
+    "evidence_completeness_note": "OR-80 (0.2.4): the evidence_completeness key counts only UNKNOWN dimensions whose rule has evidence_gap = missing.",
+    "d3_parking_unconditional": true,
+    "d3_note": "OR-88 (0.2.5): D+3 parking is time-based and unconditional. A non-STRONG item already carried for review_carry_days daily plans is PARKED on its next planning day before the cap is applied, even when the REVIEW queue has fewer than review_daily_cap items. STRONG stays exempt (OR-29); carry counting is OR-65; newness order is OR-87."
+  },
+  "employer_preference": {
+    "PRODUCT": "PREFERRED_PRODUCT",
+    "AI_NATIVE": "PREFERRED_AI_NATIVE",
+    "GCC": "PREFERRED_GCC",
+    "ENGINEERING_LED": "PREFERRED_ENGINEERING_LED",
+    "ENTERPRISE_DIRECT": "NEUTRAL",
+    "STAFFING": "NEUTRAL",
+    "CONSULTANCY": "NEUTRAL",
+    "IT_SERVICES": "NEUTRAL",
+    "UNKNOWN": "UNKNOWN",
+    "THIRD_PARTY_PAYROLL": "UNKNOWN"
+  },
+  "employer_classifications": [
+    "PRODUCT",
+    "AI_NATIVE",
+    "GCC",
+    "ENGINEERING_LED",
+    "ENTERPRISE_DIRECT",
+    "STAFFING",
+    "CONSULTANCY",
+    "IT_SERVICES",
+    "UNKNOWN"
+  ],
+  "flags": {
+    "review_routing": [
+      "EOR",
+      "EMPLOYER_TYPE_REVIEW",
+      "STAFFING",
+      "CONSULTANCY",
+      "IT_SERVICES",
+      "EMPLOYER_UNCLASSIFIED",
+      "LONG_TERM_DIRECT_CONTRACT",
+      "EMPLOYMENT_MIXED",
+      "EMPLOYMENT_UNSTATED",
+      "BELOW_TARGET",
+      "COMPENSATION_REVIEW",
+      "SALARY_RANGE_STRADDLES_FLOOR",
+      "CTC_RANGE_STRADDLES_FLOOR",
+      "COMP_UNDISCLOSED",
+      "COMP_NON_NUMERIC",
+      "COMP_NON_BASE_ONLY",
+      "COMP_UPPER_BOUND_ONLY",
+      "COMP_LOCATION_ADJUSTED_NO_INDIA_BAND",
+      "COMP_NOT_ANNUALIZABLE",
+      "COMP_PERIOD_UNSTATED",
+      "FX_RATE_UNAVAILABLE",
+      "COMP_UNCLASSIFIED",
+      "GEO_REGION_AMBIGUOUS",
+      "CITY_HUB_LISTED",
+      "HYBRID_DAYS_UNSPECIFIED",
+      "HYBRID_FLEXIBLE",
+      "WORK_ARRANGEMENT_ABSENT",
+      "WORK_ARRANGEMENT_AMBIGUOUS",
+      "WORK_LOCATION_AMBIGUOUS",
+      "LANGUAGE_UNCERTAIN",
+      "EXPERIENCE_STRETCH",
+      "SOURCE_CONFLICT",
+      "IDENTITY_UNCERTAIN",
+      "FX_STALE",
+      "WORK_MODE_CONFLICT",
+      "CONTRACT_DURATION_UNSTATED",
+      "RELEVANCE_TITLE_PRIOR",
+      "EMPLOYMENT_SOURCE_CONFLICT",
+      "HYBRID_DAYS_BETWEEN_THRESHOLDS",
+      "GEO_INDIA_PREFERENCE_UNRESOLVED"
+    ],
+    "informational": [
+      "IN_TARGET",
+      "ABOVE_TARGET",
+      "MONTHLY_ASSUMED",
+      "COMP_BASIS_UNSTATED",
+      "LANGUAGE_PREFERENCE",
+      "TIMEZONE_OVERLAP_US",
+      "TIMEZONE_OVERLAP_UK",
+      "TIMEZONE_OVERLAP_EU",
+      "TIMEZONE_OVERLAP_APAC",
+      "SENIORITY_SENIOR",
+      "SENIORITY_LEAD",
+      "SENIORITY_STAFF",
+      "SENIORITY_PRINCIPAL",
+      "SENIORITY_ARCHITECT",
+      "EXPERIENCE_SUBSTANTIAL_MISMATCH",
+      "CTC_BASIS_UNVERIFIED"
+    ],
+    "ctc_lane_note": "OR-63: CTC_BASIS_UNVERIFIED alone does not route to REVIEW. BELOW_TARGET, COMPENSATION_REVIEW and every other review-routing flag still do."
+  },
+  "legacy": {
+    "scraped_jobs": "Rows present at migration 0101 are archived as legacy and never evaluated under v0.2 (OI-034).",
+    "ruling": [
+      "Phase B §29"
+    ]
+  }
+}

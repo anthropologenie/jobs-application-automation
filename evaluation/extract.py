@@ -14,6 +14,7 @@ from dataclasses import dataclass
 from typing import Any, Dict, List, Optional
 
 from geo import PlaceIndex
+from geo.places import INDIA
 from relevance.labeller import extract_relevance_spans
 
 from . import compensation, officedays
@@ -104,6 +105,70 @@ def hybrid_usage(sentence: str, policy, *, office_cue: bool, structured: str) ->
     return out
 
 
+def india_eligibility(sentence: str, policy) -> Optional[str]:
+    """
+    0.2.5 (OR-79 / OR-83; P8 Task 1, OI-053): classify an India / worldwide eligibility statement.
+
+    Per clause (lexicon.india_eligibility.clause_split), a statement needs a place (India or a
+    worldwide scope) and either a subject (candidates, applicants, residents, this role ...) or a
+    direct form ("we hire in India", "must live in India"). Then, in order:
+        negation ("not eligible", "outside India only")       -> NEGATED (never eligibility)
+        India + preference ("preferred", "our priority")      -> INDIA_PREFERENCE (OI-053: UNKNOWN)
+        positive cue ("eligible", "welcome", "reserved for")  -> INDIA | WORLDWIDE
+    Across clauses INDIA > WORLDWIDE > INDIA_PREFERENCE > NEGATED. None when no clause applies.
+    """
+    cfg = policy.section("lexicon")["india_eligibility"]
+    rx = lambda k: policy.regexes("geo.ie." + k, cfg[k])  # noqa: E731
+    found = set()
+    for clause in policy.regex("geo.ie.split", cfg["clause_split"]).split(sentence):
+        if not clause or not clause.strip():
+            continue
+        india = any_match(rx("india_place"), clause)
+        world = any_match(rx("worldwide_place"), clause)
+        direct_india = any_match(rx("direct_india"), clause)
+        direct_world = any_match(rx("direct_worldwide"), clause)
+        if not (india or world or direct_india or direct_world):
+            continue
+        if not (direct_india or direct_world or any_match(rx("subject"), clause)):
+            continue
+        if any_match(rx("negation"), clause):
+            found.add("NEGATED")
+        elif (india or direct_india) and any_match(rx("preference"), clause):
+            found.add("INDIA_PREFERENCE")
+        elif direct_india or (india and any_match(rx("positive"), clause)):
+            found.add("INDIA")
+        elif direct_world or (world and any_match(rx("positive"), clause)):
+            found.add("WORLDWIDE")
+    for value in ("INDIA", "WORLDWIDE", "INDIA_PREFERENCE", "NEGATED"):
+        if value in found:
+            return value
+    return None
+
+
+def _negated_before(sentence: str, m: "re.Match[str]", policy, key: str, window: int,
+                    inside: bool = False) -> bool:
+    """
+    0.2.5: a negation word among the `window` words before a lock / signal match ("not required to live in").
+    With `inside`, a negation within the match counts too (a person-anchored signal such as
+    "you will not be placed with clients" starts at the subject, before the negation).
+    """
+    words = re.findall(r"[a-z']+", sentence[:m.start()].lower())[-window:]
+    if inside:
+        words += re.findall(r"[a-z']+", m.group(0).lower())
+    neg = set(policy.section("lexicon")[key])
+    return any(w in neg or w.endswith("n't") for w in words)
+
+
+def _lock_match(sentence: str, pats, policy) -> Optional["re.Match[str]"]:
+    """0.2.5 (lexicon.lock_negation_before): the first lock match that is not negated."""
+    window = policy.section("lexicon")["lock_negation_window_words"]
+    for p in pats:
+        for m in p.finditer(sentence):
+            if not _negated_before(sentence, m, policy, "lock_negation_before", window):
+                return m
+    return None
+
+
 def _geography(sentences: List[str], listing: Optional[str], policy, places: PlaceIndex,
                work_mode: Optional[str] = None, title: Optional[str] = None) -> List[EvidenceDraft]:
     lex = policy.section("lexicon")
@@ -116,6 +181,8 @@ def _geography(sentences: List[str], listing: Optional[str], policy, places: Pla
     semantic = "hybrid_semantics" in lex
 
     normalised = "office_day_normalization" in lex  # 0.2.3 (Addendum E6)
+    semantic_eligibility = "india_eligibility" in lex  # 0.2.5 (P8 Task 1)
+    guarded_locks = "lock_negation_before" in lex  # 0.2.5 (P8 Task 2)
 
     def analyse(sentence: str, field: str, forced_listing: bool) -> Optional[EvidenceDraft]:
         remote = bool(any_match(rx("remote"), sentence))
@@ -144,15 +211,28 @@ def _geography(sentences: List[str], listing: Optional[str], policy, places: Pla
             days_mode = "HYBRID" if days < policy.param("standard_work_week_days") else "ONSITE"
         relocation = bool(any_match(rx("relocation"), sentence)) and not any_match(rx("relocation_negation"), sentence)
         visa = bool(any_match(rx("visa"), sentence)) and not any_match(rx("visa_negation"), sentence)
-        auth_m = any_match(rx("work_authorization"), sentence)
-        res_m = any_match(rx("residence_requirement"), sentence)
+        if guarded_locks:  # 0.2.5: a negated lock ("you are not required to relocate to the US") is not a lock
+            auth_m = _lock_match(sentence, rx("work_authorization"), policy)
+            res_m = _lock_match(sentence, rx("residence_requirement"), policy)
+        else:
+            auth_m = any_match(rx("work_authorization"), sentence)
+            res_m = any_match(rx("residence_requirement"), sentence)
         explicit = None  # 0.2.4 (OR-79): explicit India / worldwide eligibility statement
-        for scope_name, pats in (lex.get("explicit_eligibility") or {}).items():
-            if any_match(policy.regexes("geo.explicit." + scope_name, pats), sentence):
-                explicit = scope_name
-                break
+        if semantic_eligibility:
+            # 0.2.5 (P8 Task 1): semantic detector with negation and preference guards (OI-053). The
+            # 0.2.4 phrase list is consulted only when the detector found no statement at all.
+            explicit = india_eligibility(sentence, policy)
+        if explicit is None:
+            for scope_name, pats in (lex.get("explicit_eligibility") or {}).items():
+                if any_match(policy.regexes("geo.explicit." + scope_name, pats), sentence):
+                    explicit = scope_name
+                    break
+        # 0.2.5: a preference ("India candidates preferred") or a negated statement ("India residents are
+        # not eligible") is never listing evidence, and its India places never qualify a remote scope.
+        weak_statement = explicit in ("INDIA_PREFERENCE", "NEGATED")
+        eligibility_line = bool(lex.get("eligibility_line") and any_match(rx("eligibility_line"), sentence))
         is_location_line = forced_listing or bool(any_match(rx("location_line"), sentence)) \
-            or bool(lex.get("eligibility_line") and any_match(rx("eligibility_line"), sentence)) or bool(explicit)
+            or (eligibility_line and not weak_statement) or (bool(explicit) and not weak_statement)
         if hybrid:
             mode = "HYBRID"
         elif days_mode:
@@ -167,17 +247,22 @@ def _geography(sentences: List[str], listing: Optional[str], policy, places: Pla
             mode = "REMOTE"
         else:
             mode = None
-        if not (mode or relocation or visa or auth_m or res_m or is_location_line):
+        if not (mode or relocation or visa or auth_m or res_m or is_location_line or weak_statement):
             return None
         found = places.find(sentence)
+        if weak_statement:
+            found = [p for p in found if p.country != INDIA]
+        auth_places = places.find(sentence[auth_m.end():]) if auth_m else []
+        if auth_m and not auth_places and guarded_locks:
+            auth_places = places.find(auth_m.group(0))  # 0.2.5: "US work authorization is required"
         value = {
             "mode": mode, "places": _place_dicts(found), "office_days": days,
             "flexible": bool(any_match(rx("flexible_hybrid"), sentence)),
             "relocation": relocation, "visa": visa,
             "work_authorization": bool(auth_m),
-            "work_authorization_places": _place_dicts(places.find(sentence[auth_m.end():])) if auth_m else [],
+            "work_authorization_places": _place_dicts(auth_places),
             "residence_places": _place_dicts(places.find(sentence[res_m.end():])) if res_m else [],
-            "is_listing": mode is None and not (relocation or visa or auth_m or res_m),
+            "is_listing": mode is None and not (relocation or visa or auth_m or res_m or weak_statement),
         }
         if rank_of:
             value["source_rank"] = rank_of[field]
@@ -300,11 +385,20 @@ def _employment_by_field(tagged: List[tuple], policy) -> List[EvidenceDraft]:
 
 def _relationship(sentences: List[str], policy, employment_sentences: Optional[List[str]] = None) -> List[EvidenceDraft]:
     """Relationship signals from the JD body, and (0.2.2, lexicon.relationship_fields) the employment field."""
-    lex = policy.section("lexicon")["relationship"]
+    lexicon = policy.section("lexicon")
+    lex = lexicon["relationship"]
+    guarded = "relationship_negation_before" in lexicon  # 0.2.5 (P8 Task 5)
     out = []
     tagged = [(s, "raw_text") for s in sentences] + [(s, "raw_employment_type") for s in employment_sentences or []]
     for s, field in tagged:
-        signals = [k for k, pats in lex.items() if any_match(policy.regexes("rel." + k, pats), s)]
+        if guarded:
+            # "you will not be placed with clients": a negated relationship statement is not a signal.
+            window = lexicon["relationship_negation_window_words"]
+            signals = [k for k, pats in lex.items()
+                       if any(not _negated_before(s, m, policy, "relationship_negation_before", window, inside=True)
+                              for p in policy.regexes("rel." + k, pats) for m in p.finditer(s))]
+        else:
+            signals = [k for k, pats in lex.items() if any_match(policy.regexes("rel." + k, pats), s)]
         if signals:
             out.append(EvidenceDraft("employment_relationship", "relationship.signal", "PRIMARY", s,
                                      {"signals": signals}, field))
@@ -324,9 +418,14 @@ def _employer(sentences: List[str], policy) -> List[EvidenceDraft]:
 
 def _language(sentences: List[str], text: Optional[str], detection: Optional[Dict[str, Any]], policy) -> List[EvidenceDraft]:
     lex = policy.section("lexicon")["language"]
+    pref_wins = bool(lex.get("preference_overrides_weak_requirement"))  # 0.2.5 (P8 Task 6)
     out = []
     for s in sentences:
+        preferred_here = pref_wins and any(
+            (m := p.search(s)) and m.group("lang") for p in policy.regexes("lang.preferred", lex["preferred"]))
         for key, conf_key in (("required", "required_confidence"), ("weak_requirement", "weak_requirement_confidence")):
+            if key == "weak_requirement" and preferred_here:
+                continue  # "knowledge of French would be a plus" is a preference, not a weak requirement
             for p in policy.regexes("lang." + key, lex[key]):
                 m = p.search(s)
                 if m and m.group("lang"):

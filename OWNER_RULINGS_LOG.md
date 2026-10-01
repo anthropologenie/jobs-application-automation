@@ -1541,3 +1541,48 @@ The frozen Round-3 corpus contains an authoring defect in 11 posting cases. Each
 ---
 
 **Addendum H status:** OR-88 and the Round-3 authoring-defect record appended. No earlier content of this log was modified. No policy artifact was created or changed.
+
+---
+
+# Addendum I — P8 Round-3 fix pass: open owner items (appended 2026-10-01)
+
+**Source:** Owner command "JobOps v2 — P8 Round 3 Fix Pass → Policy 0.2.5" §9, §19, §21, §25.
+**Recording rule:** append-only. These are **open questions**, not rulings. Each `RULING:` field is empty and stays empty until the Owner rules. No earlier entry is rewritten. Numbering continues from OI-052.
+**Policy version:** `jobops-policy@0.2.5` implements the recall-safe reading of each item (UNKNOWN → REVIEW, never FAIL / EXCLUDED, never a silent PASS). `jobops-policy@0.2.0`–`0.2.4` are unchanged.
+
+| id | Item | Status |
+|---|---|---|
+| OI-053 | India preference / priority as explicit India eligibility | ☐ OPEN |
+| OI-054 | Authorization in "the country where the job is posted" when the posting names no country | ☐ OPEN |
+| OI-055 | Structured "Hybrid" + JD stating five office days a week | ☐ OPEN |
+
+---
+
+## OI-053 — India preference / priority as explicit India eligibility
+**Date opened:** 2026-10-01 · **Affects:** Round-3 R3-010 (consumed corpus) · **Status:** OPEN
+**Question (YES/NO):** Does an India-resident preference/priority statement count as explicit India eligibility for geography purposes?
+**Context:** OR-79 and OR-83 lift a foreign-country, multi-country or APAC remote label only when the JD *explicitly* states that candidates in India (or worldwide) are eligible. Statements such as "India residents are our priority", "India candidates are preferred" or "India-based candidates are preferred" are weaker than eligibility: a preference does not say that other candidates are ineligible, nor that India candidates can be employed. The owner P8 command §9 forbids deciding this silently.
+**Current behaviour (`jobops-policy@0.2.5`, GEO-R29):** against a lock, APAC or an unqualified remote scope, an India preference gives geography UNKNOWN + `GEO_INDIA_PREFERENCE_UNRESOLVED` (`evidence_gap: known`) → REVIEW. Never FAIL, never EXCLUDED. A preference is no longer India listing evidence. An India listing ("Remote — India") is unaffected and stays PASS.
+### RULING:
+
+---
+
+## OI-054 — Authorization in "the country where the job is posted" when the posting names no country
+**Date opened:** 2026-10-01 · **Affects:** Round-3 R3-012 (consumed corpus) · **Status:** OPEN
+**Question (YES/NO):** When a posting requires authorization to work in "the country where the job is posted" (or similar) and names no country anywhere (plain "Remote", no listing), is geography FAIL (rather than UNKNOWN)?
+**Context:** OR-50 fails "a requirement to be authorized to work in the country of the posting (other than India)". When the posting country is stated, 0.2.4 and 0.2.5 already apply it: an abroad listing → FAIL (GEO-R04), an India listing → no lock. When no country is stated, whether that country is "other than India" is unknown, and OR-66 allows a hard FAIL only from explicit, unambiguous evidence. The same boilerplate appears on Indian postings. The Round-3 author's corrected expectation for R3-012 is FAIL; the overlay corrected an authoring copy error and did not rule on this question.
+**Current behaviour (`jobops-policy@0.2.5`):** UNKNOWN + `GEO_REGION_AMBIGUOUS` (GEO-R05) → REVIEW. Never FAIL.
+### RULING:
+
+---
+
+## OI-055 — Structured "Hybrid" + JD stating five office days a week
+**Date opened:** 2026-10-01 · **Affects:** Round-3 R3-018 and S-02 (consumed corpus) · **Status:** OPEN
+**Question (YES/NO):** When the structured work mode is "Hybrid" and the JD states five office days a week (e.g. "every working day at the Bengaluru office"), is geography FAIL (OR-15: Bengaluru hybrid with 4–5 office days → FAIL) rather than UNKNOWN + WORK_MODE_CONFLICT?
+**Context:** Two accepted artifacts disagree. OR-15 / OR-71 fail Bengaluru hybrid at ≥ 4 office days. The accepted golden case OD25 (`tests/fixtures/policy_v023_golden_cases.json`; Addendum E implementation note 3; P3 §8 source precedence) makes structured Hybrid contradicted by "every weekday in the office" UNKNOWN + WORK_MODE_CONFLICT. A JD count of 4 days is consistent with "Hybrid" and FAILs (GEO-R07); a count of 5 reads as on-site and so as a conflict. Both readings of the conflicting modes for a Bengaluru role (hybrid 5 days, or Bengaluru on-site) would be FAIL. The Round-3 corpus expects FAIL.
+**Current behaviour (`jobops-policy@0.2.5`):** "all five working days" / "every working day" is now parsed (P8 Task 3). With a structured Hybrid it gives UNKNOWN + `WORK_MODE_CONFLICT` (GEO-R25) → REVIEW, as OD25 requires. Without a structured mode it gives Bengaluru on-site → FAIL (GEO-R10), as before. OD25 is not changed.
+### RULING:
+
+---
+
+**Addendum I status:** OI-053, OI-054 and OI-055 recorded as OPEN. No ruling recorded. No earlier content of this log was modified.

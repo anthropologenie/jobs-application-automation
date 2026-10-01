@@ -1,0 +1,2591 @@
+{
+  "artifact": {
+    "id": "jobops-policy-v025-golden-cases",
+    "phase": "P8 (Round-3 fix pass)",
+    "policy_version": "jobops-policy@0.2.5",
+    "default_evaluation_date": "2026-09-30",
+    "harness": "tests/test_p8_policy_025.py (mutations: tests/p8_mutations.py)",
+    "authoring": "Independent wording written for P8; no Round-3 case id or Round-3 sentence is used. Each expectation is hand-checked against the cited ruling. Observations are merged over the harness base (Remote - India, Base: INR 30 LPA, Full-time permanent, owner-classified PRODUCT unless stated) and raw_text is appended to a STRONG-relevance JD so the lane reflects eligibility.",
+    "mutation": "remove_fix names the fix family removed in memory (tests/p8_mutations.py restores the 0.2.4 data for that family). fails_without_fix = true means the case's verdict, rule or lane differs without the fix (the case exercises the fix); false marks a regression guard that must hold either way.",
+    "jd_prefix": "You will build RAG pipelines with embeddings and vector retrieval, run LLM evaluation for groundedness and faithfulness on golden datasets, and add guardrails against hallucination.",
+    "base_observation": {
+      "source": "ats:greenhouse",
+      "source_kind": "EMPLOYER_ATS",
+      "completeness": "FULL_JD",
+      "observed_at": "2026-09-29T06:00:00+00:00",
+      "run_id": "p8-golden",
+      "raw_title": "AI Engineer",
+      "raw_company": "Lakeshore Synthetic Labs",
+      "raw_salary": "Base: ₹30 LPA",
+      "raw_employment_type": "Full-time, permanent",
+      "raw_location": "Remote - India",
+      "raw_work_mode": "Remote"
+    }
+  },
+  "case_count": 69,
+  "cases": [
+    {
+      "case_id": "P8-ELG-01",
+      "family": "india_eligibility",
+      "polarity": "positive",
+      "description": "Single-country lock lifted by 'engineers living in India can apply'.",
+      "ruling": "OR-79, OR-83",
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_location": "Remote — Netherlands",
+        "raw_text": "Engineers living in India can apply for this opening."
+      },
+      "expected": {
+        "dimensions": {
+          "geography": "PASS"
+        },
+        "rules": {
+          "geography": "GEO-R26"
+        },
+        "lane": "SHORTLIST",
+        "flags_include": [],
+        "flags_exclude": []
+      },
+      "mutation": {
+        "remove_fix": "india_eligibility",
+        "expected_without_fix": {
+          "verdict": "FAIL",
+          "rule": "GEO-R03",
+          "lane": "EXCLUDED"
+        },
+        "fails_without_fix": true
+      }
+    },
+    {
+      "case_id": "P8-ELG-02",
+      "family": "india_eligibility",
+      "polarity": "positive",
+      "description": "Multi-country lock (LATAM) lifted by 'open to India residents'.",
+      "ruling": "OR-83",
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_location": "Remote — LATAM",
+        "raw_text": "This position is open to India residents as well."
+      },
+      "expected": {
+        "dimensions": {
+          "geography": "PASS"
+        },
+        "rules": {
+          "geography": "GEO-R27"
+        },
+        "lane": "SHORTLIST",
+        "flags_include": [],
+        "flags_exclude": []
+      },
+      "mutation": {
+        "remove_fix": "india_eligibility",
+        "expected_without_fix": {
+          "verdict": "FAIL",
+          "rule": "GEO-R03",
+          "lane": "EXCLUDED"
+        },
+        "fails_without_fix": true
+      }
+    },
+    {
+      "case_id": "P8-ELG-03",
+      "family": "india_eligibility",
+      "polarity": "positive",
+      "description": "APAC ambiguity resolved by 'applicants who are based in India are welcome'.",
+      "ruling": "OR-83",
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_location": "Remote — APAC",
+        "raw_text": "Applicants who are based in India are welcome to apply."
+      },
+      "expected": {
+        "dimensions": {
+          "geography": "PASS"
+        },
+        "rules": {
+          "geography": "GEO-R26"
+        },
+        "lane": "SHORTLIST",
+        "flags_include": [],
+        "flags_exclude": [
+          "GEO_REGION_AMBIGUOUS"
+        ]
+      },
+      "mutation": {
+        "remove_fix": "india_eligibility",
+        "expected_without_fix": {
+          "verdict": "UNKNOWN",
+          "rule": "GEO-R05",
+          "lane": "REVIEW"
+        },
+        "fails_without_fix": true
+      }
+    },
+    {
+      "case_id": "P8-ELG-04",
+      "family": "india_eligibility",
+      "polarity": "positive",
+      "description": "Plain Remote + 'only consider applicants located in India' -> India-only remote.",
+      "ruling": "OR-79, OR-49",
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_location": "Remote",
+        "raw_text": "We only consider applicants located in India."
+      },
+      "expected": {
+        "dimensions": {
+          "geography": "PASS"
+        },
+        "rules": {
+          "geography": "GEO-R21"
+        },
+        "lane": "SHORTLIST",
+        "flags_include": [],
+        "flags_exclude": [
+          "GEO_REGION_AMBIGUOUS"
+        ]
+      },
+      "mutation": {
+        "remove_fix": "india_eligibility",
+        "expected_without_fix": {
+          "verdict": "UNKNOWN",
+          "rule": "GEO-R05",
+          "lane": "REVIEW"
+        },
+        "fails_without_fix": true
+      }
+    },
+    {
+      "case_id": "P8-ELG-05",
+      "family": "india_eligibility",
+      "polarity": "positive",
+      "description": "Single-country lock lifted by 'professionals from India are eligible'.",
+      "ruling": "OR-79",
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_location": "Remote — Canada",
+        "raw_text": "Professionals from India are eligible too."
+      },
+      "expected": {
+        "dimensions": {
+          "geography": "PASS"
+        },
+        "rules": {
+          "geography": "GEO-R26"
+        },
+        "lane": "SHORTLIST",
+        "flags_include": [],
+        "flags_exclude": []
+      },
+      "mutation": {
+        "remove_fix": "india_eligibility",
+        "expected_without_fix": {
+          "verdict": "FAIL",
+          "rule": "GEO-R03",
+          "lane": "EXCLUDED"
+        },
+        "fails_without_fix": true
+      }
+    },
+    {
+      "case_id": "P8-ELG-06",
+      "family": "india_eligibility",
+      "polarity": "positive",
+      "description": "Single-country lock lifted by worldwide eligibility ('applicants located anywhere').",
+      "ruling": "OR-79, OR-83",
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_location": "Remote — United Kingdom",
+        "raw_text": "Applicants located anywhere are eligible."
+      },
+      "expected": {
+        "dimensions": {
+          "geography": "PASS"
+        },
+        "rules": {
+          "geography": "GEO-R26"
+        },
+        "lane": "SHORTLIST",
+        "flags_include": [],
+        "flags_exclude": []
+      },
+      "mutation": {
+        "remove_fix": "india_eligibility",
+        "expected_without_fix": {
+          "verdict": "FAIL",
+          "rule": "GEO-R03",
+          "lane": "EXCLUDED"
+        },
+        "fails_without_fix": true
+      }
+    },
+    {
+      "case_id": "P8-ELG-07",
+      "family": "india_eligibility",
+      "polarity": "positive",
+      "description": "Plain Remote + 'anyone residing in India may apply'.",
+      "ruling": "OR-79",
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_location": "Remote",
+        "raw_text": "Anyone residing in India may apply."
+      },
+      "expected": {
+        "dimensions": {
+          "geography": "PASS"
+        },
+        "rules": {
+          "geography": "GEO-R21"
+        },
+        "lane": "SHORTLIST",
+        "flags_include": [],
+        "flags_exclude": [
+          "GEO_REGION_AMBIGUOUS"
+        ]
+      },
+      "mutation": {
+        "remove_fix": "india_eligibility",
+        "expected_without_fix": {
+          "verdict": "UNKNOWN",
+          "rule": "GEO-R05",
+          "lane": "REVIEW"
+        },
+        "fails_without_fix": true
+      }
+    },
+    {
+      "case_id": "P8-ELG-N1",
+      "family": "india_eligibility",
+      "polarity": "negative",
+      "description": "Negated India statement does not lift a single-country lock.",
+      "ruling": "OR-79, OR-66",
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_location": "Remote — Germany",
+        "raw_text": "Candidates in India are not eligible for this role."
+      },
+      "expected": {
+        "dimensions": {
+          "geography": "FAIL"
+        },
+        "rules": {
+          "geography": "GEO-R03"
+        },
+        "lane": "EXCLUDED",
+        "flags_include": [],
+        "flags_exclude": []
+      },
+      "mutation": {
+        "remove_fix": "india_eligibility",
+        "expected_without_fix": {
+          "verdict": "FAIL",
+          "rule": "GEO-R03",
+          "lane": "EXCLUDED"
+        },
+        "fails_without_fix": false
+      }
+    },
+    {
+      "case_id": "P8-ELG-N2",
+      "family": "india_eligibility",
+      "polarity": "negative",
+      "description": "Negated India statement is never India listing evidence (0.2.4 read it as a listing -> PASS).",
+      "ruling": "OR-66, OR-38",
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_location": "Remote",
+        "raw_text": "Candidates in India are not eligible for this role."
+      },
+      "expected": {
+        "dimensions": {
+          "geography": "UNKNOWN"
+        },
+        "rules": {
+          "geography": "GEO-R05"
+        },
+        "lane": "REVIEW",
+        "flags_include": [
+          "GEO_REGION_AMBIGUOUS"
+        ],
+        "flags_exclude": []
+      },
+      "mutation": {
+        "remove_fix": "india_eligibility",
+        "expected_without_fix": {
+          "verdict": "PASS",
+          "rule": "GEO-R21",
+          "lane": "SHORTLIST"
+        },
+        "fails_without_fix": true
+      }
+    },
+    {
+      "case_id": "P8-ELG-N3",
+      "family": "india_eligibility",
+      "polarity": "negative",
+      "description": "Welcoming US candidates is not India eligibility.",
+      "ruling": "OR-79",
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_location": "Remote — Germany",
+        "raw_text": "US candidates are welcome to apply."
+      },
+      "expected": {
+        "dimensions": {
+          "geography": "FAIL"
+        },
+        "rules": {
+          "geography": "GEO-R03"
+        },
+        "lane": "EXCLUDED",
+        "flags_include": [],
+        "flags_exclude": []
+      },
+      "mutation": {
+        "remove_fix": "india_eligibility",
+        "expected_without_fix": {
+          "verdict": "FAIL",
+          "rule": "GEO-R03",
+          "lane": "EXCLUDED"
+        },
+        "fails_without_fix": false
+      }
+    },
+    {
+      "case_id": "P8-ELG-N4",
+      "family": "india_eligibility",
+      "polarity": "negative",
+      "description": "'Open only to candidates outside India' is never India eligibility.",
+      "ruling": "OR-66",
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_location": "Remote",
+        "raw_text": "This role is open only to candidates outside India."
+      },
+      "expected": {
+        "dimensions": {
+          "geography": "UNKNOWN"
+        },
+        "rules": {
+          "geography": "GEO-R05"
+        },
+        "lane": "REVIEW",
+        "flags_include": [
+          "GEO_REGION_AMBIGUOUS"
+        ],
+        "flags_exclude": []
+      },
+      "mutation": {
+        "remove_fix": "india_eligibility",
+        "expected_without_fix": {
+          "verdict": "UNKNOWN",
+          "rule": "GEO-R05",
+          "lane": "REVIEW"
+        },
+        "fails_without_fix": false
+      }
+    },
+    {
+      "case_id": "P8-ELG-N5",
+      "family": "india_eligibility",
+      "polarity": "negative",
+      "description": "Welcoming other countries keeps the EMEA lock.",
+      "ruling": "OR-50, OR-83",
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_location": "Remote — EMEA",
+        "raw_text": "Candidates from Brazil and Mexico are also welcome."
+      },
+      "expected": {
+        "dimensions": {
+          "geography": "FAIL"
+        },
+        "rules": {
+          "geography": "GEO-R03"
+        },
+        "lane": "EXCLUDED",
+        "flags_include": [],
+        "flags_exclude": []
+      },
+      "mutation": {
+        "remove_fix": "india_eligibility",
+        "expected_without_fix": {
+          "verdict": "FAIL",
+          "rule": "GEO-R03",
+          "lane": "EXCLUDED"
+        },
+        "fails_without_fix": false
+      }
+    },
+    {
+      "case_id": "P8-ELG-N6",
+      "family": "india_eligibility",
+      "polarity": "negative",
+      "description": "'Applicants from India cannot apply' is never India listing evidence.",
+      "ruling": "OR-66",
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_location": "Remote",
+        "raw_text": "Applicants from India cannot apply to this requisition."
+      },
+      "expected": {
+        "dimensions": {
+          "geography": "UNKNOWN"
+        },
+        "rules": {
+          "geography": "GEO-R05"
+        },
+        "lane": "REVIEW",
+        "flags_include": [
+          "GEO_REGION_AMBIGUOUS"
+        ],
+        "flags_exclude": []
+      },
+      "mutation": {
+        "remove_fix": "india_eligibility",
+        "expected_without_fix": {
+          "verdict": "PASS",
+          "rule": "GEO-R21",
+          "lane": "SHORTLIST"
+        },
+        "fails_without_fix": true
+      }
+    },
+    {
+      "case_id": "P8-PRF-01",
+      "family": "india_eligibility",
+      "polarity": "preference",
+      "description": "India preference against a single-country lock -> UNKNOWN pending OI-053, never FAIL.",
+      "ruling": "OI-053 (open)",
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_location": "Remote — Germany",
+        "raw_text": "India-based applicants will be given preference."
+      },
+      "expected": {
+        "dimensions": {
+          "geography": "UNKNOWN"
+        },
+        "rules": {
+          "geography": "GEO-R29"
+        },
+        "lane": "REVIEW",
+        "flags_include": [
+          "GEO_INDIA_PREFERENCE_UNRESOLVED"
+        ],
+        "flags_exclude": []
+      },
+      "mutation": {
+        "remove_fix": "india_eligibility",
+        "expected_without_fix": {
+          "verdict": "FAIL",
+          "rule": "GEO-R03",
+          "lane": "EXCLUDED"
+        },
+        "fails_without_fix": true
+      }
+    },
+    {
+      "case_id": "P8-PRF-02",
+      "family": "india_eligibility",
+      "polarity": "preference",
+      "description": "India preference on plain Remote is not an India listing -> UNKNOWN pending OI-053 (0.2.4: PASS).",
+      "ruling": "OI-053 (open)",
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_location": "Remote",
+        "raw_text": "Candidates from India are preferred."
+      },
+      "expected": {
+        "dimensions": {
+          "geography": "UNKNOWN"
+        },
+        "rules": {
+          "geography": "GEO-R29"
+        },
+        "lane": "REVIEW",
+        "flags_include": [
+          "GEO_INDIA_PREFERENCE_UNRESOLVED"
+        ],
+        "flags_exclude": []
+      },
+      "mutation": {
+        "remove_fix": "india_eligibility",
+        "expected_without_fix": {
+          "verdict": "PASS",
+          "rule": "GEO-R21",
+          "lane": "SHORTLIST"
+        },
+        "fails_without_fix": true
+      }
+    },
+    {
+      "case_id": "P8-PRF-03",
+      "family": "india_eligibility",
+      "polarity": "preference",
+      "description": "India priority on APAC -> UNKNOWN pending OI-053 (GEO-R29, not the generic GEO-R05).",
+      "ruling": "OI-053 (open)",
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_location": "Remote — APAC",
+        "raw_text": "We prioritise applicants living in India."
+      },
+      "expected": {
+        "dimensions": {
+          "geography": "UNKNOWN"
+        },
+        "rules": {
+          "geography": "GEO-R29"
+        },
+        "lane": "REVIEW",
+        "flags_include": [
+          "GEO_INDIA_PREFERENCE_UNRESOLVED"
+        ],
+        "flags_exclude": [
+          "GEO_REGION_AMBIGUOUS"
+        ]
+      },
+      "mutation": {
+        "remove_fix": "india_eligibility",
+        "expected_without_fix": {
+          "verdict": "UNKNOWN",
+          "rule": "GEO-R05",
+          "lane": "REVIEW"
+        },
+        "fails_without_fix": true
+      }
+    },
+    {
+      "case_id": "P8-PRF-04",
+      "family": "india_eligibility",
+      "polarity": "preference",
+      "description": "India preference on an India listing stays PASS (the listing already establishes India).",
+      "ruling": "OR-49",
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_location": "Remote — India",
+        "raw_text": "India-based candidates are preferred."
+      },
+      "expected": {
+        "dimensions": {
+          "geography": "PASS"
+        },
+        "rules": {
+          "geography": "GEO-R02"
+        },
+        "lane": "SHORTLIST",
+        "flags_include": [],
+        "flags_exclude": []
+      },
+      "mutation": {
+        "remove_fix": "india_eligibility",
+        "expected_without_fix": {
+          "verdict": "PASS",
+          "rule": "GEO-R02",
+          "lane": "SHORTLIST"
+        },
+        "fails_without_fix": false
+      }
+    },
+    {
+      "case_id": "P8-LCK-01",
+      "family": "region_residence_authorization",
+      "polarity": "positive",
+      "description": "'Need to reside in Canada' is a residence lock -> FAIL.",
+      "ruling": "OR-14, OR-50",
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_location": "Remote",
+        "raw_text": "You need to reside in Canada for the duration of employment."
+      },
+      "expected": {
+        "dimensions": {
+          "geography": "FAIL"
+        },
+        "rules": {
+          "geography": "GEO-R18"
+        },
+        "lane": "EXCLUDED",
+        "flags_include": [],
+        "flags_exclude": [
+          "GEO_REGION_AMBIGUOUS"
+        ]
+      },
+      "mutation": {
+        "remove_fix": "region_residence_authorization",
+        "expected_without_fix": {
+          "verdict": "UNKNOWN",
+          "rule": "GEO-R05",
+          "lane": "REVIEW"
+        },
+        "fails_without_fix": true
+      }
+    },
+    {
+      "case_id": "P8-LCK-02",
+      "family": "region_residence_authorization",
+      "polarity": "positive",
+      "description": "'Only applicants living in Australia' is a residence lock -> FAIL.",
+      "ruling": "OR-14, OR-50",
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_location": "Remote",
+        "raw_text": "Only applicants living in Australia will be considered."
+      },
+      "expected": {
+        "dimensions": {
+          "geography": "FAIL"
+        },
+        "rules": {
+          "geography": "GEO-R18"
+        },
+        "lane": "EXCLUDED",
+        "flags_include": [],
+        "flags_exclude": [
+          "GEO_REGION_AMBIGUOUS"
+        ]
+      },
+      "mutation": {
+        "remove_fix": "region_residence_authorization",
+        "expected_without_fix": {
+          "verdict": "UNKNOWN",
+          "rule": "GEO-R05",
+          "lane": "REVIEW"
+        },
+        "fails_without_fix": true
+      }
+    },
+    {
+      "case_id": "P8-LCK-03",
+      "family": "region_residence_authorization",
+      "polarity": "positive",
+      "description": "'Should be based in the United Kingdom' is a residence lock -> FAIL.",
+      "ruling": "OR-14",
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_location": "Remote",
+        "raw_text": "Candidates should be based in the United Kingdom."
+      },
+      "expected": {
+        "dimensions": {
+          "geography": "FAIL"
+        },
+        "rules": {
+          "geography": "GEO-R18"
+        },
+        "lane": "EXCLUDED",
+        "flags_include": [],
+        "flags_exclude": [
+          "GEO_REGION_AMBIGUOUS"
+        ]
+      },
+      "mutation": {
+        "remove_fix": "region_residence_authorization",
+        "expected_without_fix": {
+          "verdict": "UNKNOWN",
+          "rule": "GEO-R05",
+          "lane": "REVIEW"
+        },
+        "fails_without_fix": true
+      }
+    },
+    {
+      "case_id": "P8-LCK-04",
+      "family": "region_residence_authorization",
+      "polarity": "positive",
+      "description": "'US work authorization' required -> FAIL.",
+      "ruling": "OR-14, OR-50",
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_location": "Remote",
+        "raw_text": "You will need US work authorization to be considered."
+      },
+      "expected": {
+        "dimensions": {
+          "geography": "FAIL"
+        },
+        "rules": {
+          "geography": "GEO-R04"
+        },
+        "lane": "EXCLUDED",
+        "flags_include": [],
+        "flags_exclude": [
+          "GEO_REGION_AMBIGUOUS"
+        ]
+      },
+      "mutation": {
+        "remove_fix": "region_residence_authorization",
+        "expected_without_fix": {
+          "verdict": "UNKNOWN",
+          "rule": "GEO-R05",
+          "lane": "REVIEW"
+        },
+        "fails_without_fix": true
+      }
+    },
+    {
+      "case_id": "P8-LCK-05",
+      "family": "region_residence_authorization",
+      "polarity": "positive",
+      "description": "'Restricted to residents of the European Union' -> FAIL.",
+      "ruling": "OR-50",
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_location": "Remote",
+        "raw_text": "This job is restricted to residents of the European Union."
+      },
+      "expected": {
+        "dimensions": {
+          "geography": "FAIL"
+        },
+        "rules": {
+          "geography": "GEO-R18"
+        },
+        "lane": "EXCLUDED",
+        "flags_include": [],
+        "flags_exclude": [
+          "GEO_REGION_AMBIGUOUS"
+        ]
+      },
+      "mutation": {
+        "remove_fix": "region_residence_authorization",
+        "expected_without_fix": {
+          "verdict": "UNKNOWN",
+          "rule": "GEO-R05",
+          "lane": "REVIEW"
+        },
+        "fails_without_fix": true
+      }
+    },
+    {
+      "case_id": "P8-LCK-N1",
+      "family": "region_residence_authorization",
+      "polarity": "negative",
+      "description": "Authorization to work in India never FAILs.",
+      "ruling": "OR-14",
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_location": "Remote — India",
+        "raw_text": "Candidates must be authorized to work in India."
+      },
+      "expected": {
+        "dimensions": {
+          "geography": "PASS"
+        },
+        "rules": {
+          "geography": "GEO-R02"
+        },
+        "lane": "SHORTLIST",
+        "flags_include": [],
+        "flags_exclude": []
+      },
+      "mutation": {
+        "remove_fix": "region_residence_authorization",
+        "expected_without_fix": {
+          "verdict": "PASS",
+          "rule": "GEO-R02",
+          "lane": "SHORTLIST"
+        },
+        "fails_without_fix": false
+      }
+    },
+    {
+      "case_id": "P8-LCK-N2",
+      "family": "region_residence_authorization",
+      "polarity": "negative",
+      "description": "Generic mention of work authorization with no country lock.",
+      "ruling": "OR-66",
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_location": "Remote — India",
+        "raw_text": "We will verify work authorization during onboarding."
+      },
+      "expected": {
+        "dimensions": {
+          "geography": "PASS"
+        },
+        "rules": {
+          "geography": "GEO-R02"
+        },
+        "lane": "SHORTLIST",
+        "flags_include": [],
+        "flags_exclude": []
+      },
+      "mutation": {
+        "remove_fix": "region_residence_authorization",
+        "expected_without_fix": {
+          "verdict": "PASS",
+          "rule": "GEO-R02",
+          "lane": "SHORTLIST"
+        },
+        "fails_without_fix": false
+      }
+    },
+    {
+      "case_id": "P8-LCK-N3",
+      "family": "region_residence_authorization",
+      "polarity": "negative",
+      "description": "Unrelated technical use of 'authorization'.",
+      "ruling": "OR-66",
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_location": "Remote — India",
+        "raw_text": "Our platform handles OAuth authorization for enterprise tenants."
+      },
+      "expected": {
+        "dimensions": {
+          "geography": "PASS"
+        },
+        "rules": {
+          "geography": "GEO-R02"
+        },
+        "lane": "SHORTLIST",
+        "flags_include": [],
+        "flags_exclude": []
+      },
+      "mutation": {
+        "remove_fix": "region_residence_authorization",
+        "expected_without_fix": {
+          "verdict": "PASS",
+          "rule": "GEO-R02",
+          "lane": "SHORTLIST"
+        },
+        "fails_without_fix": false
+      }
+    },
+    {
+      "case_id": "P8-LCK-N4",
+      "family": "region_residence_authorization",
+      "polarity": "negative",
+      "description": "Negated relocation/residence ('not required to relocate to the US') never FAILs (0.2.4: GEO-R14 FAIL).",
+      "ruling": "OR-66",
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_location": "Remote — India",
+        "raw_text": "You are not required to relocate to the United States."
+      },
+      "expected": {
+        "dimensions": {
+          "geography": "PASS"
+        },
+        "rules": {
+          "geography": "GEO-R02"
+        },
+        "lane": "SHORTLIST",
+        "flags_include": [],
+        "flags_exclude": []
+      },
+      "mutation": {
+        "remove_fix": "region_residence_authorization",
+        "expected_without_fix": {
+          "verdict": "FAIL",
+          "rule": "GEO-R14",
+          "lane": "EXCLUDED"
+        },
+        "fails_without_fix": true
+      }
+    },
+    {
+      "case_id": "P8-LCK-N5",
+      "family": "region_residence_authorization",
+      "polarity": "negative",
+      "description": "A residence list that includes India does not exclude India (0.2.4: GEO-R18 FAIL).",
+      "ruling": "OR-14",
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_location": "Remote — India",
+        "raw_text": "Candidates must be based in India or Singapore."
+      },
+      "expected": {
+        "dimensions": {
+          "geography": "PASS"
+        },
+        "rules": {
+          "geography": "GEO-R02"
+        },
+        "lane": "SHORTLIST",
+        "flags_include": [],
+        "flags_exclude": []
+      },
+      "mutation": {
+        "remove_fix": "region_residence_authorization",
+        "expected_without_fix": {
+          "verdict": "FAIL",
+          "rule": "GEO-R18",
+          "lane": "EXCLUDED"
+        },
+        "fails_without_fix": true
+      }
+    },
+    {
+      "case_id": "P8-LCK-N6",
+      "family": "region_residence_authorization",
+      "polarity": "negative",
+      "description": "An authorization list that includes India does not exclude India (0.2.4: GEO-R04 FAIL).",
+      "ruling": "OR-14",
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_location": "Remote — India",
+        "raw_text": "You must be authorized to work in the US or India."
+      },
+      "expected": {
+        "dimensions": {
+          "geography": "PASS"
+        },
+        "rules": {
+          "geography": "GEO-R02"
+        },
+        "lane": "SHORTLIST",
+        "flags_include": [],
+        "flags_exclude": []
+      },
+      "mutation": {
+        "remove_fix": "region_residence_authorization",
+        "expected_without_fix": {
+          "verdict": "FAIL",
+          "rule": "GEO-R04",
+          "lane": "EXCLUDED"
+        },
+        "fails_without_fix": true
+      }
+    },
+    {
+      "case_id": "P8-LCK-N7",
+      "family": "region_residence_authorization",
+      "polarity": "negative",
+      "description": "Posting-country authorization on an India listing is not a foreign lock.",
+      "ruling": "OR-50",
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_location": "Remote — India",
+        "raw_text": "Applicants must have authorization to work in the country where this job is located."
+      },
+      "expected": {
+        "dimensions": {
+          "geography": "PASS"
+        },
+        "rules": {
+          "geography": "GEO-R02"
+        },
+        "lane": "SHORTLIST",
+        "flags_include": [],
+        "flags_exclude": []
+      },
+      "mutation": {
+        "remove_fix": "region_residence_authorization",
+        "expected_without_fix": {
+          "verdict": "PASS",
+          "rule": "GEO-R02",
+          "lane": "SHORTLIST"
+        },
+        "fails_without_fix": false
+      }
+    },
+    {
+      "case_id": "P8-LCK-N8",
+      "family": "region_residence_authorization",
+      "polarity": "negative",
+      "description": "'Must live in India' never FAILs; on plain Remote it is India eligibility.",
+      "ruling": "OR-14, OR-79",
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_location": "Remote",
+        "raw_text": "You must live in India to apply."
+      },
+      "expected": {
+        "dimensions": {
+          "geography": "PASS"
+        },
+        "rules": {
+          "geography": "GEO-R26"
+        },
+        "lane": "SHORTLIST",
+        "flags_include": [],
+        "flags_exclude": []
+      },
+      "mutation": {
+        "remove_fix": "region_residence_authorization",
+        "expected_without_fix": {
+          "verdict": "PASS",
+          "rule": "GEO-R21",
+          "lane": "SHORTLIST"
+        },
+        "fails_without_fix": true
+      }
+    },
+    {
+      "case_id": "P8-OFD-01",
+      "family": "office_days",
+      "polarity": "positive",
+      "description": "'three days at the Koramangala workplace each week' -> 3 -> PASS.",
+      "ruling": "OR-15, OR-71",
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_location": "Bengaluru",
+        "raw_work_mode": "Hybrid",
+        "raw_text": "You will spend three days at the Koramangala workplace each week."
+      },
+      "expected": {
+        "dimensions": {
+          "geography": "PASS"
+        },
+        "rules": {
+          "geography": "GEO-R06"
+        },
+        "lane": "SHORTLIST",
+        "flags_include": [],
+        "flags_exclude": [
+          "HYBRID_DAYS_UNSPECIFIED"
+        ]
+      },
+      "mutation": {
+        "remove_fix": "office_days",
+        "expected_without_fix": {
+          "verdict": "UNKNOWN",
+          "rule": "GEO-R08",
+          "lane": "REVIEW"
+        },
+        "fails_without_fix": true
+      }
+    },
+    {
+      "case_id": "P8-OFD-02",
+      "family": "office_days",
+      "polarity": "positive",
+      "description": "Weekly frequency with a building as the attendance cue -> 2 -> PASS.",
+      "ruling": "OR-71",
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_location": "Bengaluru",
+        "raw_work_mode": "Hybrid",
+        "raw_text": "Our team gathers in the Indiranagar building twice a week."
+      },
+      "expected": {
+        "dimensions": {
+          "geography": "PASS"
+        },
+        "rules": {
+          "geography": "GEO-R06"
+        },
+        "lane": "SHORTLIST",
+        "flags_include": [],
+        "flags_exclude": [
+          "HYBRID_DAYS_UNSPECIFIED"
+        ]
+      },
+      "mutation": {
+        "remove_fix": "office_days",
+        "expected_without_fix": {
+          "verdict": "UNKNOWN",
+          "rule": "GEO-R08",
+          "lane": "REVIEW"
+        },
+        "fails_without_fix": true
+      }
+    },
+    {
+      "case_id": "P8-OFD-03",
+      "family": "office_days",
+      "polarity": "positive",
+      "description": "12 days per month at a site -> 2.77/week -> PASS.",
+      "ruling": "OR-71",
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_location": "Bengaluru",
+        "raw_work_mode": "Hybrid",
+        "raw_text": "Plan on 12 days per month at the Bellandur site."
+      },
+      "expected": {
+        "dimensions": {
+          "geography": "PASS"
+        },
+        "rules": {
+          "geography": "GEO-R06"
+        },
+        "lane": "SHORTLIST",
+        "flags_include": [],
+        "flags_exclude": [
+          "HYBRID_DAYS_UNSPECIFIED"
+        ]
+      },
+      "mutation": {
+        "remove_fix": "office_days",
+        "expected_without_fix": {
+          "verdict": "UNKNOWN",
+          "rule": "GEO-R08",
+          "lane": "REVIEW"
+        },
+        "fails_without_fix": true
+      }
+    },
+    {
+      "case_id": "P8-OFD-04",
+      "family": "office_days",
+      "polarity": "positive",
+      "description": "WFH subtraction: four days at home, one in office -> 1 -> PASS (0.2.4 read 4 office days -> FAIL).",
+      "ruling": "OR-71",
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_location": "Bengaluru",
+        "raw_work_mode": null,
+        "raw_text": "Hybrid setup: four days at home and one at the Bengaluru office."
+      },
+      "expected": {
+        "dimensions": {
+          "geography": "PASS"
+        },
+        "rules": {
+          "geography": "GEO-R06"
+        },
+        "lane": "SHORTLIST",
+        "flags_include": [],
+        "flags_exclude": []
+      },
+      "mutation": {
+        "remove_fix": "office_days",
+        "expected_without_fix": {
+          "verdict": "FAIL",
+          "rule": "GEO-R07",
+          "lane": "EXCLUDED"
+        },
+        "fails_without_fix": true
+      }
+    },
+    {
+      "case_id": "P8-OFD-05",
+      "family": "office_days",
+      "polarity": "positive",
+      "description": "'every working day' at a Bengaluru building, no structured mode -> Bengaluru onsite -> FAIL.",
+      "ruling": "Phase B §8, OR-71",
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_location": "Bengaluru",
+        "raw_work_mode": null,
+        "raw_text": "The team works from our Manyata building on every working day."
+      },
+      "expected": {
+        "dimensions": {
+          "geography": "FAIL"
+        },
+        "rules": {
+          "geography": "GEO-R10"
+        },
+        "lane": "EXCLUDED",
+        "flags_include": [],
+        "flags_exclude": [
+          "WORK_ARRANGEMENT_ABSENT"
+        ]
+      },
+      "mutation": {
+        "remove_fix": "office_days",
+        "expected_without_fix": {
+          "verdict": "UNKNOWN",
+          "rule": "GEO-R16",
+          "lane": "REVIEW"
+        },
+        "fails_without_fix": true
+      }
+    },
+    {
+      "case_id": "P8-OFD-06",
+      "family": "office_days",
+      "polarity": "positive",
+      "description": "Four fixed days per week at a hub, structured Hybrid -> 4 -> FAIL.",
+      "ruling": "OR-15, OR-71",
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_location": "Bengaluru",
+        "raw_work_mode": "Hybrid",
+        "raw_text": "You will be at the Bengaluru hub on four fixed days per week."
+      },
+      "expected": {
+        "dimensions": {
+          "geography": "FAIL"
+        },
+        "rules": {
+          "geography": "GEO-R07"
+        },
+        "lane": "EXCLUDED",
+        "flags_include": [],
+        "flags_exclude": [
+          "HYBRID_DAYS_UNSPECIFIED"
+        ]
+      },
+      "mutation": {
+        "remove_fix": "office_days",
+        "expected_without_fix": {
+          "verdict": "UNKNOWN",
+          "rule": "GEO-R08",
+          "lane": "REVIEW"
+        },
+        "fails_without_fix": true
+      }
+    },
+    {
+      "case_id": "P8-OFD-07",
+      "family": "office_days",
+      "polarity": "positive",
+      "description": "'All five working days' at a Bengaluru building, no structured mode -> FAIL.",
+      "ruling": "Phase B §8, OR-71",
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_location": "Bengaluru",
+        "raw_work_mode": null,
+        "raw_text": "All five working days are spent at our Bengaluru building."
+      },
+      "expected": {
+        "dimensions": {
+          "geography": "FAIL"
+        },
+        "rules": {
+          "geography": "GEO-R10"
+        },
+        "lane": "EXCLUDED",
+        "flags_include": [],
+        "flags_exclude": [
+          "WORK_ARRANGEMENT_ABSENT"
+        ]
+      },
+      "mutation": {
+        "remove_fix": "office_days",
+        "expected_without_fix": {
+          "verdict": "UNKNOWN",
+          "rule": "GEO-R16",
+          "lane": "REVIEW"
+        },
+        "fails_without_fix": true
+      }
+    },
+    {
+      "case_id": "P8-OFD-08",
+      "family": "office_days",
+      "polarity": "positive",
+      "description": "Two days on site in person per week -> PASS (0.2.4 form, regression guard).",
+      "ruling": "OR-71",
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_location": "Bengaluru",
+        "raw_work_mode": "Hybrid",
+        "raw_text": "Two days on site in person each week, the remainder from home."
+      },
+      "expected": {
+        "dimensions": {
+          "geography": "PASS"
+        },
+        "rules": {
+          "geography": "GEO-R06"
+        },
+        "lane": "SHORTLIST",
+        "flags_include": [],
+        "flags_exclude": []
+      },
+      "mutation": {
+        "remove_fix": "office_days",
+        "expected_without_fix": {
+          "verdict": "PASS",
+          "rule": "GEO-R06",
+          "lane": "SHORTLIST"
+        },
+        "fails_without_fix": false
+      }
+    },
+    {
+      "case_id": "P8-OFD-B1",
+      "family": "office_days",
+      "polarity": "boundary",
+      "description": "15 days/month = 3.46/week: between thresholds -> UNKNOWN (0.2.4: FAIL).",
+      "ruling": "P8 §11",
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_location": "Bengaluru",
+        "raw_work_mode": "Hybrid",
+        "raw_text": "You will be in the office 15 days per month."
+      },
+      "expected": {
+        "dimensions": {
+          "geography": "UNKNOWN"
+        },
+        "rules": {
+          "geography": "GEO-R28"
+        },
+        "lane": "REVIEW",
+        "flags_include": [
+          "HYBRID_DAYS_BETWEEN_THRESHOLDS"
+        ],
+        "flags_exclude": []
+      },
+      "mutation": {
+        "remove_fix": "office_days_between_thresholds",
+        "expected_without_fix": {
+          "verdict": "FAIL",
+          "rule": "GEO-R07",
+          "lane": "EXCLUDED"
+        },
+        "fails_without_fix": true
+      }
+    },
+    {
+      "case_id": "P8-OFD-B2",
+      "family": "office_days",
+      "polarity": "boundary",
+      "description": "17 days/month = 3.93/week: between thresholds -> UNKNOWN (0.2.4: FAIL).",
+      "ruling": "P8 §11",
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_location": "Bengaluru",
+        "raw_work_mode": "Hybrid",
+        "raw_text": "You will be in the office 17 days per month."
+      },
+      "expected": {
+        "dimensions": {
+          "geography": "UNKNOWN"
+        },
+        "rules": {
+          "geography": "GEO-R28"
+        },
+        "lane": "REVIEW",
+        "flags_include": [
+          "HYBRID_DAYS_BETWEEN_THRESHOLDS"
+        ],
+        "flags_exclude": []
+      },
+      "mutation": {
+        "remove_fix": "office_days_between_thresholds",
+        "expected_without_fix": {
+          "verdict": "FAIL",
+          "rule": "GEO-R07",
+          "lane": "EXCLUDED"
+        },
+        "fails_without_fix": true
+      }
+    },
+    {
+      "case_id": "P8-OFD-B3",
+      "family": "office_days",
+      "polarity": "boundary",
+      "description": "Exactly 3 days/week -> PASS (boundary).",
+      "ruling": "OR-15",
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_location": "Bengaluru",
+        "raw_work_mode": "Hybrid",
+        "raw_text": "You will be in the office three days a week."
+      },
+      "expected": {
+        "dimensions": {
+          "geography": "PASS"
+        },
+        "rules": {
+          "geography": "GEO-R06"
+        },
+        "lane": "SHORTLIST",
+        "flags_include": [],
+        "flags_exclude": []
+      },
+      "mutation": {
+        "remove_fix": "office_days_between_thresholds",
+        "expected_without_fix": {
+          "verdict": "PASS",
+          "rule": "GEO-R06",
+          "lane": "SHORTLIST"
+        },
+        "fails_without_fix": false
+      }
+    },
+    {
+      "case_id": "P8-OFD-B4",
+      "family": "office_days",
+      "polarity": "boundary",
+      "description": "Exactly 4 days/week -> FAIL (boundary).",
+      "ruling": "OR-15",
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_location": "Bengaluru",
+        "raw_work_mode": "Hybrid",
+        "raw_text": "You will be in the office four days a week."
+      },
+      "expected": {
+        "dimensions": {
+          "geography": "FAIL"
+        },
+        "rules": {
+          "geography": "GEO-R07"
+        },
+        "lane": "EXCLUDED",
+        "flags_include": [],
+        "flags_exclude": []
+      },
+      "mutation": {
+        "remove_fix": "office_days_between_thresholds",
+        "expected_without_fix": {
+          "verdict": "FAIL",
+          "rule": "GEO-R07",
+          "lane": "EXCLUDED"
+        },
+        "fails_without_fix": false
+      }
+    },
+    {
+      "case_id": "P8-OFD-B5",
+      "family": "office_days",
+      "polarity": "boundary",
+      "description": "18 days/month = 4.16/week -> FAIL.",
+      "ruling": "OR-71",
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_location": "Bengaluru",
+        "raw_work_mode": "Hybrid",
+        "raw_text": "You will be in the office 18 days per month."
+      },
+      "expected": {
+        "dimensions": {
+          "geography": "FAIL"
+        },
+        "rules": {
+          "geography": "GEO-R07"
+        },
+        "lane": "EXCLUDED",
+        "flags_include": [],
+        "flags_exclude": []
+      },
+      "mutation": {
+        "remove_fix": "office_days_between_thresholds",
+        "expected_without_fix": {
+          "verdict": "FAIL",
+          "rule": "GEO-R07",
+          "lane": "EXCLUDED"
+        },
+        "fails_without_fix": false
+      }
+    },
+    {
+      "case_id": "P8-OFD-B6",
+      "family": "office_days",
+      "polarity": "boundary",
+      "description": "13 days/month = 3.0023, normalised to 3.00 (2 decimals, 0.2.3 rounding) -> PASS.",
+      "ruling": "OR-71",
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_location": "Bengaluru",
+        "raw_work_mode": "Hybrid",
+        "raw_text": "You will be in the office 13 days per month."
+      },
+      "expected": {
+        "dimensions": {
+          "geography": "PASS"
+        },
+        "rules": {
+          "geography": "GEO-R06"
+        },
+        "lane": "SHORTLIST",
+        "flags_include": [],
+        "flags_exclude": []
+      },
+      "mutation": {
+        "remove_fix": "office_days_between_thresholds",
+        "expected_without_fix": {
+          "verdict": "PASS",
+          "rule": "GEO-R06",
+          "lane": "SHORTLIST"
+        },
+        "fails_without_fix": false
+      }
+    },
+    {
+      "case_id": "P8-OFD-N1",
+      "family": "office_days",
+      "polarity": "negative",
+      "description": "Onboarding days in the first week are not an office schedule.",
+      "ruling": "OR-66",
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_location": "Remote - India",
+        "raw_work_mode": "Remote",
+        "raw_text": "Your first week includes five days at the Bengaluru office for onboarding."
+      },
+      "expected": {
+        "dimensions": {
+          "geography": "PASS"
+        },
+        "rules": {
+          "geography": "GEO-R02"
+        },
+        "lane": "SHORTLIST",
+        "flags_include": [],
+        "flags_exclude": [
+          "WORK_MODE_CONFLICT"
+        ]
+      },
+      "mutation": {
+        "remove_fix": "office_days_context_exclusion",
+        "expected_without_fix": {
+          "verdict": "UNKNOWN",
+          "rule": "GEO-R25",
+          "lane": "REVIEW"
+        },
+        "fails_without_fix": true
+      }
+    },
+    {
+      "case_id": "P8-OFD-N2",
+      "family": "office_days",
+      "polarity": "negative",
+      "description": "Training days at the office are not an office schedule (stays days-unspecified).",
+      "ruling": "OR-66",
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_location": "Bengaluru",
+        "raw_work_mode": "Hybrid",
+        "raw_text": "Training takes three days at the Bengaluru office."
+      },
+      "expected": {
+        "dimensions": {
+          "geography": "UNKNOWN"
+        },
+        "rules": {
+          "geography": "GEO-R08"
+        },
+        "lane": "REVIEW",
+        "flags_include": [
+          "HYBRID_DAYS_UNSPECIFIED"
+        ],
+        "flags_exclude": []
+      },
+      "mutation": {
+        "remove_fix": "office_days_context_exclusion",
+        "expected_without_fix": {
+          "verdict": "PASS",
+          "rule": "GEO-R06",
+          "lane": "SHORTLIST"
+        },
+        "fails_without_fix": true
+      }
+    },
+    {
+      "case_id": "P8-OFD-N3",
+      "family": "office_days",
+      "polarity": "negative",
+      "description": "'within five working days of applying' is not an office-day count.",
+      "ruling": "OR-66",
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_location": "Remote - India",
+        "raw_work_mode": "Remote",
+        "raw_text": "Candidates hear back within five working days of applying."
+      },
+      "expected": {
+        "dimensions": {
+          "geography": "PASS"
+        },
+        "rules": {
+          "geography": "GEO-R02"
+        },
+        "lane": "SHORTLIST",
+        "flags_include": [],
+        "flags_exclude": []
+      },
+      "mutation": {
+        "remove_fix": "office_days",
+        "expected_without_fix": {
+          "verdict": "PASS",
+          "rule": "GEO-R02",
+          "lane": "SHORTLIST"
+        },
+        "fails_without_fix": false
+      }
+    },
+    {
+      "case_id": "P8-OFD-N4",
+      "family": "office_days",
+      "polarity": "negative",
+      "description": "'five-day on-call rotation' is not an office-day count.",
+      "ruling": "OR-66",
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_location": "Remote - India",
+        "raw_work_mode": "Remote",
+        "raw_text": "Everyone joins a five-day on-call rotation once a quarter."
+      },
+      "expected": {
+        "dimensions": {
+          "geography": "PASS"
+        },
+        "rules": {
+          "geography": "GEO-R02"
+        },
+        "lane": "SHORTLIST",
+        "flags_include": [],
+        "flags_exclude": []
+      },
+      "mutation": {
+        "remove_fix": "office_days",
+        "expected_without_fix": {
+          "verdict": "PASS",
+          "rule": "GEO-R02",
+          "lane": "SHORTLIST"
+        },
+        "fails_without_fix": false
+      }
+    },
+    {
+      "case_id": "P8-OFD-N5",
+      "family": "office_days",
+      "polarity": "negative",
+      "description": "Technical 'hybrid' is ignored; the genuine attendance statement still counts.",
+      "ruling": "P3 §9-§11, OR-71",
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_location": "Bengaluru",
+        "raw_work_mode": "Hybrid",
+        "raw_text": "Our ranking stack uses a hybrid BM25 and vector retriever. Office attendance is three days a week."
+      },
+      "expected": {
+        "dimensions": {
+          "geography": "PASS"
+        },
+        "rules": {
+          "geography": "GEO-R06"
+        },
+        "lane": "SHORTLIST",
+        "flags_include": [],
+        "flags_exclude": []
+      },
+      "mutation": {
+        "remove_fix": "office_days",
+        "expected_without_fix": {
+          "verdict": "PASS",
+          "rule": "GEO-R06",
+          "lane": "SHORTLIST"
+        },
+        "fails_without_fix": false
+      }
+    },
+    {
+      "case_id": "P8-OFD-N6",
+      "family": "office_days",
+      "polarity": "negative",
+      "description": "A training week of five days at a campus is not an office schedule.",
+      "ruling": "OR-66",
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_location": "Remote - India",
+        "raw_work_mode": "Remote",
+        "raw_text": "New joiners attend a training week of five days at the Pune campus."
+      },
+      "expected": {
+        "dimensions": {
+          "geography": "PASS"
+        },
+        "rules": {
+          "geography": "GEO-R02"
+        },
+        "lane": "SHORTLIST",
+        "flags_include": [],
+        "flags_exclude": [
+          "WORK_MODE_CONFLICT"
+        ]
+      },
+      "mutation": {
+        "remove_fix": "office_days_context_exclusion",
+        "expected_without_fix": {
+          "verdict": "UNKNOWN",
+          "rule": "GEO-R25",
+          "lane": "REVIEW"
+        },
+        "fails_without_fix": true
+      }
+    },
+    {
+      "case_id": "P8-PAY-01",
+      "family": "location_pay",
+      "polarity": "positive",
+      "description": "'Salary varies based on where you live', no India band -> UNKNOWN.",
+      "ruling": "COMP-R11, OR-18",
+      "classification": "PRODUCT",
+      "fx": {
+        "currency": "USD",
+        "rate": 83.0,
+        "snapshot_date": "2026-09-28"
+      },
+      "observation": {
+        "raw_salary": "USD 120,000 – 150,000 per year. Salary varies based on where you live."
+      },
+      "expected": {
+        "dimensions": {
+          "compensation": "UNKNOWN",
+          "geography": "PASS"
+        },
+        "rules": {
+          "compensation": "COMP-R11"
+        },
+        "lane": "REVIEW",
+        "flags_include": [
+          "COMP_LOCATION_ADJUSTED_NO_INDIA_BAND"
+        ],
+        "flags_exclude": []
+      },
+      "mutation": {
+        "remove_fix": "location_pay",
+        "expected_without_fix": {
+          "verdict": "PASS",
+          "rule": "COMP-R17",
+          "lane": "SHORTLIST"
+        },
+        "fails_without_fix": true
+      }
+    },
+    {
+      "case_id": "P8-PAY-02",
+      "family": "location_pay",
+      "polarity": "positive",
+      "description": "'geographic pay adjustments apply', no India band -> UNKNOWN.",
+      "ruling": "COMP-R11",
+      "classification": "PRODUCT",
+      "fx": {
+        "currency": "USD",
+        "rate": 83.0,
+        "snapshot_date": "2026-09-28"
+      },
+      "observation": {
+        "raw_salary": "$140,000 – $170,000 annual base; geographic pay adjustments apply."
+      },
+      "expected": {
+        "dimensions": {
+          "compensation": "UNKNOWN",
+          "geography": "PASS"
+        },
+        "rules": {
+          "compensation": "COMP-R11"
+        },
+        "lane": "REVIEW",
+        "flags_include": [
+          "COMP_LOCATION_ADJUSTED_NO_INDIA_BAND"
+        ],
+        "flags_exclude": []
+      },
+      "mutation": {
+        "remove_fix": "location_pay",
+        "expected_without_fix": {
+          "verdict": "PASS",
+          "rule": "COMP-R17",
+          "lane": "SHORTLIST"
+        },
+        "fails_without_fix": true
+      }
+    },
+    {
+      "case_id": "P8-PAY-03",
+      "family": "location_pay",
+      "polarity": "positive",
+      "description": "'calibrated to the employee's home country', no India band -> UNKNOWN.",
+      "ruling": "COMP-R11",
+      "classification": "PRODUCT",
+      "fx": {
+        "currency": "EUR",
+        "rate": 90.0,
+        "snapshot_date": "2026-09-28"
+      },
+      "observation": {
+        "raw_salary": "EUR 90,000 – 110,000 per year; compensation is calibrated to the employee's home country."
+      },
+      "expected": {
+        "dimensions": {
+          "compensation": "UNKNOWN",
+          "geography": "PASS"
+        },
+        "rules": {
+          "compensation": "COMP-R11"
+        },
+        "lane": "REVIEW",
+        "flags_include": [
+          "COMP_LOCATION_ADJUSTED_NO_INDIA_BAND"
+        ],
+        "flags_exclude": []
+      },
+      "mutation": {
+        "remove_fix": "location_pay",
+        "expected_without_fix": {
+          "verdict": "PASS",
+          "rule": "COMP-R17",
+          "lane": "SHORTLIST"
+        },
+        "fails_without_fix": true
+      }
+    },
+    {
+      "case_id": "P8-PAY-04",
+      "family": "location_pay",
+      "polarity": "positive",
+      "description": "Location-adjusted USD band with an India band -> the India band decides.",
+      "ruling": "OR-18, OR-27",
+      "classification": "PRODUCT",
+      "fx": {
+        "currency": "USD",
+        "rate": 83.0,
+        "snapshot_date": "2026-09-28"
+      },
+      "observation": {
+        "raw_salary": "US: $150,000 – $180,000 per year (pay depends on candidate location); India: ₹40 – 48 LPA"
+      },
+      "expected": {
+        "dimensions": {
+          "compensation": "PASS",
+          "geography": "PASS"
+        },
+        "rules": {
+          "compensation": "COMP-R17"
+        },
+        "lane": "SHORTLIST",
+        "flags_include": [],
+        "flags_exclude": []
+      },
+      "mutation": {
+        "remove_fix": "location_pay",
+        "expected_without_fix": {
+          "verdict": "PASS",
+          "rule": "COMP-R17",
+          "lane": "SHORTLIST"
+        },
+        "fails_without_fix": false
+      }
+    },
+    {
+      "case_id": "P8-PAY-N1",
+      "family": "location_pay",
+      "polarity": "negative",
+      "description": "'pay is not adjusted by location' is not location-adjusted pay (0.2.4: UNKNOWN).",
+      "ruling": "OR-66",
+      "classification": "PRODUCT",
+      "fx": {
+        "currency": "USD",
+        "rate": 83.0,
+        "snapshot_date": "2026-09-28"
+      },
+      "observation": {
+        "raw_salary": "USD 120,000 – 150,000 per year; pay is not adjusted by location."
+      },
+      "expected": {
+        "dimensions": {
+          "compensation": "PASS",
+          "geography": "PASS"
+        },
+        "rules": {
+          "compensation": "COMP-R17"
+        },
+        "lane": "SHORTLIST",
+        "flags_include": [],
+        "flags_exclude": [
+          "COMP_LOCATION_ADJUSTED_NO_INDIA_BAND"
+        ]
+      },
+      "mutation": {
+        "remove_fix": "location_pay",
+        "expected_without_fix": {
+          "verdict": "UNKNOWN",
+          "rule": "COMP-R11",
+          "lane": "REVIEW"
+        },
+        "fails_without_fix": true
+      }
+    },
+    {
+      "case_id": "P8-PAY-N2",
+      "family": "location_pay",
+      "polarity": "negative",
+      "description": "'the same salary regardless of location' is not location-adjusted pay.",
+      "ruling": "OR-66",
+      "classification": "PRODUCT",
+      "fx": {
+        "currency": "USD",
+        "rate": 83.0,
+        "snapshot_date": "2026-09-28"
+      },
+      "observation": {
+        "raw_salary": "USD 120,000 – 150,000 per year, the same salary regardless of location."
+      },
+      "expected": {
+        "dimensions": {
+          "compensation": "PASS",
+          "geography": "PASS"
+        },
+        "rules": {
+          "compensation": "COMP-R17"
+        },
+        "lane": "SHORTLIST",
+        "flags_include": [],
+        "flags_exclude": []
+      },
+      "mutation": {
+        "remove_fix": "location_pay",
+        "expected_without_fix": {
+          "verdict": "PASS",
+          "rule": "COMP-R17",
+          "lane": "SHORTLIST"
+        },
+        "fails_without_fix": false
+      }
+    },
+    {
+      "case_id": "P8-PLC-01",
+      "family": "client_placement",
+      "polarity": "positive",
+      "description": "Third-party payroll + placement with a client -> FAIL.",
+      "ruling": "OR-20, OR-70",
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_text": "You will be on the payroll of a third-party staffing agency and placed with one of our clients."
+      },
+      "expected": {
+        "dimensions": {
+          "employment_relationship": "FAIL",
+          "geography": "PASS"
+        },
+        "rules": {
+          "employment_relationship": "REL-R06"
+        },
+        "lane": "EXCLUDED",
+        "flags_include": [],
+        "flags_exclude": []
+      },
+      "mutation": {
+        "remove_fix": "client_placement",
+        "expected_without_fix": {
+          "verdict": "PASS",
+          "rule": "REL-R01",
+          "lane": "SHORTLIST"
+        },
+        "fails_without_fix": true
+      }
+    },
+    {
+      "case_id": "P8-PLC-02",
+      "family": "client_placement",
+      "polarity": "positive",
+      "description": "Engineers assigned to client projects -> FAIL.",
+      "ruling": "OR-20",
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_text": "Selected engineers are assigned to client projects for a year or more."
+      },
+      "expected": {
+        "dimensions": {
+          "employment_relationship": "FAIL",
+          "geography": "PASS"
+        },
+        "rules": {
+          "employment_relationship": "REL-R06"
+        },
+        "lane": "EXCLUDED",
+        "flags_include": [],
+        "flags_exclude": []
+      },
+      "mutation": {
+        "remove_fix": "client_placement",
+        "expected_without_fix": {
+          "verdict": "PASS",
+          "rule": "REL-R01",
+          "lane": "SHORTLIST"
+        },
+        "fails_without_fix": true
+      }
+    },
+    {
+      "case_id": "P8-PLC-03",
+      "family": "client_placement",
+      "polarity": "positive",
+      "description": "Employed by an employment agency and seconded to a client team -> FAIL.",
+      "ruling": "OR-20, OR-70",
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_text": "You will be employed by an employment agency and seconded to the client's engineering team."
+      },
+      "expected": {
+        "dimensions": {
+          "employment_relationship": "FAIL",
+          "geography": "PASS"
+        },
+        "rules": {
+          "employment_relationship": "REL-R06"
+        },
+        "lane": "EXCLUDED",
+        "flags_include": [],
+        "flags_exclude": []
+      },
+      "mutation": {
+        "remove_fix": "client_placement",
+        "expected_without_fix": {
+          "verdict": "PASS",
+          "rule": "REL-R01",
+          "lane": "SHORTLIST"
+        },
+        "fails_without_fix": true
+      }
+    },
+    {
+      "case_id": "P8-PLC-N1",
+      "family": "client_placement",
+      "polarity": "negative",
+      "description": "Consultancy hiring for its own internal team, 'not placed with clients' -> employment PASS; employer UNKNOWN + CONSULTANCY.",
+      "ruling": "OR-20, OR-66",
+      "classification": "CONSULTANCY",
+      "observation": {
+        "raw_text": "We are a technology consultancy. This opening is on our internal tooling team and you will not be placed with clients."
+      },
+      "expected": {
+        "dimensions": {
+          "employment_relationship": "PASS",
+          "geography": "PASS"
+        },
+        "rules": {
+          "employment_relationship": "REL-R01"
+        },
+        "lane": "REVIEW",
+        "flags_include": [
+          "CONSULTANCY"
+        ],
+        "flags_exclude": []
+      },
+      "mutation": {
+        "remove_fix": "client_placement",
+        "expected_without_fix": {
+          "verdict": "FAIL",
+          "rule": "REL-R06",
+          "lane": "EXCLUDED"
+        },
+        "fails_without_fix": true
+      }
+    },
+    {
+      "case_id": "P8-PLC-N2",
+      "family": "client_placement",
+      "polarity": "negative",
+      "description": "Staffing firm hiring for its own internal team -> no placement; employer review only.",
+      "ruling": "OR-20",
+      "classification": "STAFFING",
+      "observation": {
+        "raw_text": "We are a staffing firm hiring a platform engineer for our own internal systems team."
+      },
+      "expected": {
+        "dimensions": {
+          "employment_relationship": "UNKNOWN",
+          "geography": "PASS"
+        },
+        "rules": {
+          "employment_relationship": "REL-R08"
+        },
+        "lane": "REVIEW",
+        "flags_include": [
+          "EMPLOYER_TYPE_REVIEW",
+          "STAFFING"
+        ],
+        "flags_exclude": []
+      },
+      "mutation": {
+        "remove_fix": "client_placement",
+        "expected_without_fix": {
+          "verdict": "UNKNOWN",
+          "rule": "REL-R08",
+          "lane": "REVIEW"
+        },
+        "fails_without_fix": false
+      }
+    },
+    {
+      "case_id": "P8-PLC-N3",
+      "family": "client_placement",
+      "polarity": "negative",
+      "description": "Software 'deployed to client environments' and 'well placed to work with clients' are not placement (0.2.4: REL-R06 FAIL).",
+      "ruling": "OR-66",
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_text": "Our models are deployed to client environments across many industries. You are well placed to work with clients on their AI roadmaps."
+      },
+      "expected": {
+        "dimensions": {
+          "employment_relationship": "PASS",
+          "geography": "PASS"
+        },
+        "rules": {
+          "employment_relationship": "REL-R01"
+        },
+        "lane": "SHORTLIST",
+        "flags_include": [],
+        "flags_exclude": []
+      },
+      "mutation": {
+        "remove_fix": "client_placement",
+        "expected_without_fix": {
+          "verdict": "FAIL",
+          "rule": "REL-R06",
+          "lane": "EXCLUDED"
+        },
+        "fails_without_fix": true
+      }
+    },
+    {
+      "case_id": "P8-LNG-01",
+      "family": "language_preference",
+      "polarity": "positive",
+      "description": "'Kannada is a plus' -> LANGUAGE_PREFERENCE, PASS, informational.",
+      "ruling": "OR-17, OR-81",
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_text": "Kannada is a plus for customer calls."
+      },
+      "expected": {
+        "dimensions": {
+          "language": "PASS",
+          "geography": "PASS"
+        },
+        "rules": {
+          "language": "LANG-R03"
+        },
+        "lane": "SHORTLIST",
+        "flags_include": [
+          "LANGUAGE_PREFERENCE"
+        ],
+        "flags_exclude": []
+      },
+      "mutation": {
+        "remove_fix": "language_preference",
+        "expected_without_fix": {
+          "verdict": "PASS",
+          "rule": "LANG-R01",
+          "lane": "SHORTLIST"
+        },
+        "fails_without_fix": true
+      }
+    },
+    {
+      "case_id": "P8-LNG-02",
+      "family": "language_preference",
+      "polarity": "positive",
+      "description": "'Knowledge of German would be a plus' is a preference, not a weak requirement (0.2.4: UNKNOWN).",
+      "ruling": "OR-17, OR-51",
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_text": "Knowledge of German would be a plus."
+      },
+      "expected": {
+        "dimensions": {
+          "language": "PASS",
+          "geography": "PASS"
+        },
+        "rules": {
+          "language": "LANG-R03"
+        },
+        "lane": "SHORTLIST",
+        "flags_include": [
+          "LANGUAGE_PREFERENCE"
+        ],
+        "flags_exclude": [
+          "LANGUAGE_UNCERTAIN"
+        ]
+      },
+      "mutation": {
+        "remove_fix": "language_preference",
+        "expected_without_fix": {
+          "verdict": "UNKNOWN",
+          "rule": "LANG-R06",
+          "lane": "REVIEW"
+        },
+        "fails_without_fix": true
+      }
+    },
+    {
+      "case_id": "P8-LNG-03",
+      "family": "language_preference",
+      "polarity": "positive",
+      "description": "'Tamil nice to have' -> LANGUAGE_PREFERENCE.",
+      "ruling": "OR-17",
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_text": "Tamil nice to have."
+      },
+      "expected": {
+        "dimensions": {
+          "language": "PASS",
+          "geography": "PASS"
+        },
+        "rules": {
+          "language": "LANG-R03"
+        },
+        "lane": "SHORTLIST",
+        "flags_include": [
+          "LANGUAGE_PREFERENCE"
+        ],
+        "flags_exclude": []
+      },
+      "mutation": {
+        "remove_fix": "language_preference",
+        "expected_without_fix": {
+          "verdict": "PASS",
+          "rule": "LANG-R01",
+          "lane": "SHORTLIST"
+        },
+        "fails_without_fix": true
+      }
+    },
+    {
+      "case_id": "P8-LNG-04",
+      "family": "language_preference",
+      "polarity": "positive",
+      "description": "'Speaking French is an advantage' -> LANGUAGE_PREFERENCE (0.2.4 form, regression guard).",
+      "ruling": "OR-17",
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_text": "Speaking French is an advantage when you meet our Paris partners."
+      },
+      "expected": {
+        "dimensions": {
+          "language": "PASS",
+          "geography": "PASS"
+        },
+        "rules": {
+          "language": "LANG-R03"
+        },
+        "lane": "SHORTLIST",
+        "flags_include": [
+          "LANGUAGE_PREFERENCE"
+        ],
+        "flags_exclude": []
+      },
+      "mutation": {
+        "remove_fix": "language_preference",
+        "expected_without_fix": {
+          "verdict": "PASS",
+          "rule": "LANG-R03",
+          "lane": "SHORTLIST"
+        },
+        "fails_without_fix": false
+      }
+    },
+    {
+      "case_id": "P8-LNG-N1",
+      "family": "language_preference",
+      "polarity": "negative",
+      "description": "'Fluent Hindi is required' -> FAIL (0.2.4 did not know Hindi).",
+      "ruling": "OR-17, OR-51",
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_text": "Fluent Hindi is required for this role."
+      },
+      "expected": {
+        "dimensions": {
+          "language": "FAIL",
+          "geography": "PASS"
+        },
+        "rules": {
+          "language": "LANG-R02"
+        },
+        "lane": "EXCLUDED",
+        "flags_include": [],
+        "flags_exclude": []
+      },
+      "mutation": {
+        "remove_fix": "language_preference",
+        "expected_without_fix": {
+          "verdict": "PASS",
+          "rule": "LANG-R01",
+          "lane": "SHORTLIST"
+        },
+        "fails_without_fix": true
+      }
+    },
+    {
+      "case_id": "P8-LNG-N2",
+      "family": "language_preference",
+      "polarity": "negative",
+      "description": "Hindi mentioned incidentally (product feature) -> no flag, PASS.",
+      "ruling": "OR-17",
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_text": "Our assistant transcribes Hindi and Tamil voice notes."
+      },
+      "expected": {
+        "dimensions": {
+          "language": "PASS",
+          "geography": "PASS"
+        },
+        "rules": {
+          "language": "LANG-R01"
+        },
+        "lane": "SHORTLIST",
+        "flags_include": [],
+        "flags_exclude": []
+      },
+      "mutation": {
+        "remove_fix": "language_preference",
+        "expected_without_fix": {
+          "verdict": "PASS",
+          "rule": "LANG-R01",
+          "lane": "SHORTLIST"
+        },
+        "fails_without_fix": false
+      }
+    },
+    {
+      "case_id": "P8-LNG-N3",
+      "family": "language_preference",
+      "polarity": "negative",
+      "description": "'Hindi-speaking' without a clear requirement -> UNKNOWN.",
+      "ruling": "OR-69, P8 §14",
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_text": "You will support Hindi-speaking merchants."
+      },
+      "expected": {
+        "dimensions": {
+          "language": "UNKNOWN",
+          "geography": "PASS"
+        },
+        "rules": {
+          "language": "LANG-R06"
+        },
+        "lane": "REVIEW",
+        "flags_include": [
+          "LANGUAGE_UNCERTAIN"
+        ],
+        "flags_exclude": []
+      },
+      "mutation": {
+        "remove_fix": "language_preference",
+        "expected_without_fix": {
+          "verdict": "PASS",
+          "rule": "LANG-R01",
+          "lane": "SHORTLIST"
+        },
+        "fails_without_fix": true
+      }
+    }
+  ],
+  "queue_scenarios": [
+    {
+      "id": "P8-Q1",
+      "description": "Queue below the cap at D+3: the non-STRONG carried item is PARKED (OR-88).",
+      "days": [
+        {
+          "add": [
+            "S:10",
+            "N"
+          ]
+        },
+        {
+          "add": [
+            "T:10"
+          ]
+        },
+        {
+          "add": [
+            "U:10"
+          ]
+        },
+        {
+          "add": []
+        }
+      ],
+      "expect": {
+        "3": {
+          "shown": [],
+          "carried": [],
+          "parked": [
+            "N"
+          ]
+        }
+      },
+      "expect_without_fix": {
+        "3": {
+          "shown": [
+            "N"
+          ],
+          "carried": [],
+          "parked": []
+        }
+      }
+    },
+    {
+      "id": "P8-Q2",
+      "description": "Queue exactly at the cap at D+3 (9 new + the carried item): the carried item is PARKED (OR-88).",
+      "days": [
+        {
+          "add": [
+            "S:10",
+            "N"
+          ]
+        },
+        {
+          "add": [
+            "T:10"
+          ]
+        },
+        {
+          "add": [
+            "U:10"
+          ]
+        },
+        {
+          "add": [
+            "V:9"
+          ]
+        }
+      ],
+      "expect": {
+        "3": {
+          "shown": "V:9",
+          "carried": [],
+          "parked": [
+            "N"
+          ]
+        }
+      },
+      "expect_without_fix": {
+        "3": {
+          "shown": "V:9+N",
+          "carried": [],
+          "parked": []
+        }
+      }
+    },
+    {
+      "id": "P8-Q3",
+      "description": "Queue over the cap at D+3: PARKED under both readings.",
+      "days": [
+        {
+          "add": [
+            "S:10",
+            "N"
+          ]
+        },
+        {
+          "add": [
+            "T:10"
+          ]
+        },
+        {
+          "add": [
+            "U:10"
+          ]
+        },
+        {
+          "add": [
+            "V:10"
+          ]
+        }
+      ],
+      "expect": {
+        "3": {
+          "shown": "V:10",
+          "carried": [],
+          "parked": [
+            "N"
+          ]
+        }
+      },
+      "expect_without_fix": {
+        "3": {
+          "shown": "V:10",
+          "carried": [],
+          "parked": [
+            "N"
+          ]
+        }
+      }
+    },
+    {
+      "id": "P8-Q4",
+      "description": "STRONG item carried to D+3 with free capacity is shown, never PARKED (OR-29).",
+      "days": [
+        {
+          "add": [
+            "S:10",
+            "H"
+          ]
+        },
+        {
+          "add": [
+            "T:10"
+          ]
+        },
+        {
+          "add": [
+            "U:10"
+          ]
+        },
+        {
+          "add": []
+        }
+      ],
+      "expect": {
+        "3": {
+          "shown": [
+            "H"
+          ],
+          "carried": [],
+          "parked": []
+        }
+      },
+      "expect_without_fix": {
+        "3": {
+          "shown": [
+            "H"
+          ],
+          "carried": [],
+          "parked": []
+        }
+      }
+    },
+    {
+      "id": "P8-Q5",
+      "description": "D, D+1, D+2 carry: an item that overflowed on D is carried, not parked, and is eligible again (OR-65).",
+      "days": [
+        {
+          "add": [
+            "S:10",
+            "N"
+          ]
+        },
+        {
+          "add": [
+            "T:10"
+          ]
+        },
+        {
+          "add": []
+        }
+      ],
+      "expect": {
+        "0": {
+          "shown": "S:10",
+          "carried": [
+            "N"
+          ],
+          "parked": []
+        },
+        "1": {
+          "shown": "T:10",
+          "carried": [
+            "N"
+          ],
+          "parked": []
+        },
+        "2": {
+          "shown": [
+            "N"
+          ],
+          "carried": [],
+          "parked": []
+        }
+      },
+      "expect_without_fix": {
+        "2": {
+          "shown": [
+            "N"
+          ],
+          "carried": [],
+          "parked": []
+        }
+      }
+    }
+  ]
+}

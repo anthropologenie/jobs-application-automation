@@ -51,7 +51,7 @@ def parse_clauses(sentence: str, policy) -> List[Dict[str, Any]]:
             return []
     out: List[Dict[str, Any]] = []
     sentence_india = bool(any_match(rx("india_band"), sentence))
-    sentence_loc_adj = bool(any_match(rx("location_adjusted"), sentence))
+    sentence_loc_adj = _location_adjusted(sentence, policy, lex, rx)
     clauses = [c.strip() for c in _CLAUSE_SPLIT.split(sentence) if c and c.strip()]
     labelled = lex.get("labelled_clause_split")
     if labelled:  # 0.2.2: "Base: ₹25 LPA | CTC: ₹31 LPA" is two clauses, so base can win
@@ -69,6 +69,14 @@ def parse_clauses(sentence: str, policy) -> List[Dict[str, Any]]:
         fact["sentence_mentions_india"] = sentence_india
         out.append(fact)
     return out
+
+
+def _location_adjusted(text: str, policy, lex, rx) -> bool:
+    """COMP-R11 input. 0.2.5 (P8 Task 4): "pay is not adjusted by location" is not location-adjusted pay."""
+    if not any_match(rx("location_adjusted"), text):
+        return False
+    negation = lex.get("location_adjusted_negation")
+    return not (negation and any_match(policy.regexes("comp.location_adjusted_negation", negation), text))
 
 
 def _number_regex(policy, lex) -> "re.Pattern[str]":
@@ -91,7 +99,7 @@ def _parse_clause(clause: str, policy, lex, rx) -> Optional[Dict[str, Any]]:
         n = _to_number(m.group(1), m.group(2))
         if n is not None and n > 0:
             numbers.append((m.start(), n))
-    loc_adj = bool(any_match(rx("location_adjusted"), clause))
+    loc_adj = _location_adjusted(clause, policy, lex, rx)
     base = {"quoted_span": clause, "location_adjusted": loc_adj,
             "india_band": bool(any_match(rx("india_band"), clause))}
     if currency and numbers:

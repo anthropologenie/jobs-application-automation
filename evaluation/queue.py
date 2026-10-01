@@ -18,6 +18,10 @@ presentation:
     carry day. Beyond review_carry_days, a non-STRONG item moves to PARKED
     (overflow) and appears in the weekly PARKED digest. STRONG relevance is
     exempt and keeps carrying. Nothing is discarded.
+  * OR-88 (0.2.5, queue.d3_parking_unconditional): D+3 parking is time-based. A
+    non-STRONG item already carried for review_carry_days plans is PARKED on its
+    next planning day before the cap is applied, even when the queue has room.
+    0.2.0-0.2.4 park only a carried item that overflows the cap again.
   * Requisitions with a human review decision leave the pending REVIEW pool.
   * Legacy scraped_jobs rows are not requisitions and never appear here.
   * FX freshness (0.2.1): any item whose FX snapshot is more than
@@ -156,9 +160,31 @@ def plan_day(service, day: str) -> Dict[str, Any]:
 
     groups = _groups(service.conn, pending) if grouping else [[it] for it in pending]
     units = sorted((_unit(g, policy) for g in groups), key=lambda u: order_key(u, policy))
+    due: List[Dict[str, Any]] = []
+    if qcfg.get("d3_parking_unconditional"):
+        keep = []
+        for unit in units:
+            members = unit["_members"]
+            unit_strong = any(m["relevance"] == "STRONG" for m in members)
+            reached = (max(m["_state"]["carry_days"] for m in members) >= carry_limit
+                       and all(m["_state"]["last_planned_day"] != day for m in members))
+            (due if reached and not (strong_exempt and unit_strong) else keep).append(unit)
+        units = keep
     surfaced, carried, overflow = units[:cap], [], []
     service.conn.execute("BEGIN IMMEDIATE")
     try:
+        for unit in due:  # OR-88: D+3 + non-STRONG -> PARKED, whatever the queue size
+            carry_days = 0
+            for m in unit["_members"]:
+                st = m.pop("_state")
+                st["carry_days"] += 1
+                st.update(first_review_day=st["first_review_day"] or day, last_planned_day=day,
+                          overflow_parked_on=day)
+                carry_days = max(carry_days, st["carry_days"])
+                repo.save_queue_state(service.conn, st)
+            public = {**_public(unit), "carry_days": carry_days, "parked_by": "overflow"}
+            overflow.append(public)
+            lanes["PARKED"].append(public)
         for unit in surfaced:
             for m in unit["_members"]:
                 st = m.pop("_state")
