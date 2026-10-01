@@ -101,8 +101,16 @@ def _india_places(places: List[PlaceRef]) -> List[PlaceRef]:
 
 def summarize_geography(rows: List[Dict[str, Any]], listing_rows: List[Dict[str, Any]],
                         index: PlaceIndex, auth_fallback_to_listing: bool = False,
-                        lock_lists_including_india: bool = False) -> Dict[str, Any]:
+                        lock_lists_including_india: bool = False,
+                        india_preference_is_eligibility: bool = False,
+                        office_days_override_hybrid_label: bool = False) -> Dict[str, Any]:
     statements = [r["value"] for r in rows]
+    if office_days_override_hybrid_label and any(s["mode"] == "HYBRID" for s in statements):
+        # 0.2.6 (OR-91, OI-055 = FAIL): an explicit, measurable office-day count ("five days a week in the
+        # office") is the attendance requirement of the hybrid role, not a competing ONSITE mode. Only a
+        # day-count-derived ONSITE statement is folded; a bare "on-site" with no count stays a conflict.
+        statements = [dict(s, mode="HYBRID") if s["mode"] == "ONSITE" and s["office_days"] is not None
+                      and s.get("office_days_method") else s for s in statements]
     listing = [p for r in listing_rows for p in _refs(r["value"]["places"])]
     listing += [p for s in statements if s["is_listing"] for p in _refs(s["places"])]
     mode = _resolve_mode(statements)
@@ -139,6 +147,11 @@ def summarize_geography(rows: List[Dict[str, Any]], listing_rows: List[Dict[str,
         # 0.2.5: only INDIA / WORLDWIDE statements are eligibility. A preference (OI-053) or a negated
         # statement never lifts a lock; 0.2.0-0.2.4 never produce those values.
         explicit = [e for e in stated if e not in ("INDIA_PREFERENCE", "NEGATED")]
+        if india_preference_is_eligibility and "INDIA_PREFERENCE" in stated:
+            # 0.2.6 (OR-89, OI-053 = YES): an India preference / priority statement is India eligibility.
+            # Explicit exclusions keep precedence: residence / authorization locks are earlier FAIL rules,
+            # and a negated India clause outranks the preference in extraction.
+            explicit.append("INDIA_PREFERENCE")
         if "INDIA_PREFERENCE" in stated and not explicit:
             facts["explicit_eligibility"] = stated
             if facts["remote_scope"] in ("REGION_EXCLUDES_INDIA", "REGION_INCLUDES_INDIA_IMPLICIT",

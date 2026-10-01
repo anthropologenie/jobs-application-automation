@@ -115,7 +115,9 @@ def india_eligibility(sentence: str, policy) -> Optional[str]:
         negation ("not eligible", "outside India only")       -> NEGATED (never eligibility)
         India + preference ("preferred", "our priority")      -> INDIA_PREFERENCE (OI-053: UNKNOWN)
         positive cue ("eligible", "welcome", "reserved for")  -> INDIA | WORLDWIDE
-    Across clauses INDIA > WORLDWIDE > INDIA_PREFERENCE > NEGATED. None when no clause applies.
+    Across clauses INDIA > WORLDWIDE > INDIA_PREFERENCE > NEGATED (0.2.5), or the policy's
+    india_eligibility.precedence (0.2.6, OR-89: an explicit exclusion outranks a preference).
+    None when no clause applies.
     """
     cfg = policy.section("lexicon")["india_eligibility"]
     rx = lambda k: policy.regexes("geo.ie." + k, cfg[k])  # noqa: E731
@@ -139,7 +141,7 @@ def india_eligibility(sentence: str, policy) -> Optional[str]:
             found.add("INDIA")
         elif direct_world or (world and any_match(rx("positive"), clause)):
             found.add("WORLDWIDE")
-    for value in ("INDIA", "WORLDWIDE", "INDIA_PREFERENCE", "NEGATED"):
+    for value in cfg.get("precedence", ("INDIA", "WORLDWIDE", "INDIA_PREFERENCE", "NEGATED")):
         if value in found:
             return value
     return None

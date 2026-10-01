@@ -8,7 +8,8 @@
       "jobops-policy@0.2.2",
       "jobops-policy@0.2.3",
       "jobops-policy@0.2.4",
-      "jobops-policy@0.2.5"
+      "jobops-policy@0.2.5",
+      "jobops-policy@0.2.6"
     ],
     "versioning": "A case with `expected` is shared by every version it runs under. A case whose result differs between versions carries `expected_by_version` instead. A case with `policy_versions` runs only under those versions (P3: G188+ exercise behaviour introduced in 0.2.2).",
     "default_evaluation_date": "2026-09-21",
@@ -21,7 +22,8 @@
     "p3_update": "2026-09-30 P3 fix pass: 0.2.2 expectations added (0.2.0 / 0.2.1 expectations untouched); G188–G276 added. Expected values are hand-written from the rulings; see docs/reports/JOBOPS_BLIND_FIX_REPORT_2026-09-29.md.",
     "p5_note": "P5 (2026-09-30): jobops-policy@0.2.3 added to policy_versions_under_test; every expected_by_version case gained a 0.2.3 entry equal to its 0.2.2 entry (verified by execution); G072 restricted to 0.2.0-0.2.2 because OR-70 changes its employer verdict. No existing expectation was modified. Cases pinned to 0.2.2 (P3, G188-G276) also run under 0.2.3 with their 0.2.2 expectation (verified by execution).",
     "p6_note": "P6 (2026-09-30): jobops-policy@0.2.4 added to policy_versions_under_test; every case that runs under 0.2.3 also runs under 0.2.4 with its 0.2.3 expectation (verified by execution: 0.2.4 differs from 0.2.3 only in queue evidence completeness and explicit-eligibility geography, neither exercised by these single-observation expectations). G072 stays restricted to 0.2.0-0.2.2. No existing expectation was modified.",
-    "p8_note": "P8 (2026-10-01): jobops-policy@0.2.5 added to policy_versions_under_test; every case that runs under 0.2.4 also runs under 0.2.5 with its 0.2.4 expectation (verified by execution: none of these cases exercises a 0.2.5 change). G072 stays restricted to 0.2.0-0.2.2. No existing expectation was modified. 0.2.5 behaviour is covered by tests/fixtures/policy_v025_golden_cases.json."
+    "p8_note": "P8 (2026-10-01): jobops-policy@0.2.5 added to policy_versions_under_test; every case that runs under 0.2.4 also runs under 0.2.5 with its 0.2.4 expectation (verified by execution: none of these cases exercises a 0.2.5 change). G072 stays restricted to 0.2.0-0.2.2. No existing expectation was modified. 0.2.5 behaviour is covered by tests/fixtures/policy_v025_golden_cases.json.",
+    "p8b_note": "P8b (2026-10-01): jobops-policy@0.2.6 added to policy_versions_under_test; every case that runs under 0.2.5 also runs under 0.2.6 with its 0.2.5 expectation (verified by execution: no case here exercises OR-89 or OR-91). No existing expectation was modified. 0.2.6 ruling behaviour is covered by tests/fixtures/policy_v026_golden_cases.json."
   },
   "case_count": 273,
   "cases": [
@@ -5971,6 +5973,38 @@
           ],
           "newness": "NEW",
           "lane": "SHORTLIST"
+        },
+        "jobops-policy@0.2.6": {
+          "eligibility_dimensions": {
+            "geography": "PASS",
+            "language": "PASS",
+            "compensation": "PASS",
+            "employment_type": "PASS",
+            "employment_relationship": "PASS",
+            "employer_type": "PASS"
+          },
+          "eligibility_overall": "PASS",
+          "relevance": {
+            "relevance_label": "STRONG",
+            "title_signal": "TIER_1",
+            "capability_clusters": [
+              "A",
+              "B",
+              "C"
+            ],
+            "experience_signal": "DIRECT",
+            "seniority_signal": "NONE"
+          },
+          "preference_attributes": {
+            "compensation_band": "CTC_BASIS_UNVERIFIED",
+            "employer_preference": "PREFERRED_PRODUCT",
+            "work_arrangement": "REMOTE"
+          },
+          "flags": [
+            "CTC_BASIS_UNVERIFIED"
+          ],
+          "newness": "NEW",
+          "lane": "SHORTLIST"
         }
       },
       "p3_version_note": "0.2.2 / OR-63: CTC_BASIS_UNVERIFIED alone no longer routes to REVIEW; otherwise clean -> SHORTLIST."
@@ -7386,6 +7420,39 @@
           ],
           "newness": "NEW",
           "lane": "REVIEW"
+        },
+        "jobops-policy@0.2.6": {
+          "eligibility_dimensions": {
+            "geography": "PASS",
+            "language": "PASS",
+            "compensation": "PASS",
+            "employment_type": "PASS",
+            "employment_relationship": "PASS",
+            "employer_type": "PASS"
+          },
+          "eligibility_overall": "PASS",
+          "relevance": {
+            "relevance_label": "STRONG",
+            "title_signal": "TIER_1",
+            "capability_clusters": [
+              "A",
+              "B",
+              "C"
+            ],
+            "experience_signal": "DIRECT",
+            "seniority_signal": "NONE"
+          },
+          "preference_attributes": {
+            "compensation_band": "BELOW_TARGET",
+            "employer_preference": "PREFERRED_PRODUCT",
+            "work_arrangement": "REMOTE"
+          },
+          "flags": [
+            "BELOW_TARGET",
+            "CTC_BASIS_UNVERIFIED"
+          ],
+          "newness": "NEW",
+          "lane": "REVIEW"
         }
       }
     },
@@ -7648,6 +7715,39 @@
           ],
           "newness": "NEW",
           "lane": "REVIEW"
+        },
+        "jobops-policy@0.2.6": {
+          "eligibility_dimensions": {
+            "geography": "PASS",
+            "language": "PASS",
+            "compensation": "PASS",
+            "employment_type": "PASS",
+            "employment_relationship": "PASS",
+            "employer_type": "PASS"
+          },
+          "eligibility_overall": "PASS",
+          "relevance": {
+            "relevance_label": "STRONG",
+            "title_signal": "TIER_1",
+            "capability_clusters": [
+              "A",
+              "B",
+              "C"
+            ],
+            "experience_signal": "DIRECT",
+            "seniority_signal": "NONE"
+          },
+          "preference_attributes": {
+            "compensation_band": "SPANS_TARGET",
+            "employer_preference": "PREFERRED_PRODUCT",
+            "work_arrangement": "REMOTE"
+          },
+          "flags": [
+            "COMPENSATION_REVIEW",
+            "CTC_BASIS_UNVERIFIED"
+          ],
+          "newness": "NEW",
+          "lane": "REVIEW"
         }
       },
       "p3_version_note": "0.2.2 / OR-62 (OI-049): CTC range spanning the target also carries CTC_BASIS_UNVERIFIED."
@@ -7877,6 +7977,38 @@
           "lane": "SHORTLIST"
         },
         "jobops-policy@0.2.5": {
+          "eligibility_dimensions": {
+            "geography": "PASS",
+            "language": "PASS",
+            "compensation": "PASS",
+            "employment_type": "PASS",
+            "employment_relationship": "PASS",
+            "employer_type": "PASS"
+          },
+          "eligibility_overall": "PASS",
+          "relevance": {
+            "relevance_label": "STRONG",
+            "title_signal": "TIER_1",
+            "capability_clusters": [
+              "A",
+              "B",
+              "C"
+            ],
+            "experience_signal": "DIRECT",
+            "seniority_signal": "NONE"
+          },
+          "preference_attributes": {
+            "compensation_band": "CTC_BASIS_UNVERIFIED",
+            "employer_preference": "PREFERRED_PRODUCT",
+            "work_arrangement": "REMOTE"
+          },
+          "flags": [
+            "CTC_BASIS_UNVERIFIED"
+          ],
+          "newness": "NEW",
+          "lane": "SHORTLIST"
+        },
+        "jobops-policy@0.2.6": {
           "eligibility_dimensions": {
             "geography": "PASS",
             "language": "PASS",
@@ -8238,6 +8370,39 @@
           "lane": "REVIEW"
         },
         "jobops-policy@0.2.5": {
+          "eligibility_dimensions": {
+            "geography": "PASS",
+            "language": "PASS",
+            "compensation": "PASS",
+            "employment_type": "PASS",
+            "employment_relationship": "PASS",
+            "employer_type": "PASS"
+          },
+          "eligibility_overall": "PASS",
+          "relevance": {
+            "relevance_label": "STRONG",
+            "title_signal": "TIER_1",
+            "capability_clusters": [
+              "A",
+              "B",
+              "C"
+            ],
+            "experience_signal": "DIRECT",
+            "seniority_signal": "NONE"
+          },
+          "preference_attributes": {
+            "compensation_band": "BELOW_TARGET",
+            "employer_preference": "PREFERRED_PRODUCT",
+            "work_arrangement": "REMOTE"
+          },
+          "flags": [
+            "BELOW_TARGET",
+            "CTC_BASIS_UNVERIFIED"
+          ],
+          "newness": "NEW",
+          "lane": "REVIEW"
+        },
+        "jobops-policy@0.2.6": {
           "eligibility_dimensions": {
             "geography": "PASS",
             "language": "PASS",
@@ -10461,6 +10626,38 @@
           ],
           "newness": "NEW",
           "lane": "EXCLUDED"
+        },
+        "jobops-policy@0.2.6": {
+          "eligibility_dimensions": {
+            "geography": "PASS",
+            "language": "PASS",
+            "compensation": "PASS",
+            "employment_type": "FAIL",
+            "employment_relationship": "FAIL",
+            "employer_type": "PASS"
+          },
+          "eligibility_overall": "FAIL",
+          "relevance": {
+            "relevance_label": "STRONG",
+            "title_signal": "TIER_1",
+            "capability_clusters": [
+              "A",
+              "B",
+              "C"
+            ],
+            "experience_signal": "DIRECT",
+            "seniority_signal": "NONE"
+          },
+          "preference_attributes": {
+            "compensation_band": "IN_TARGET",
+            "employer_preference": "PREFERRED_PRODUCT",
+            "work_arrangement": "REMOTE"
+          },
+          "flags": [
+            "IN_TARGET"
+          ],
+          "newness": "NEW",
+          "lane": "EXCLUDED"
         }
       },
       "p3_version_note": "0.2.2 / P3 §24, §26: an independent-contractor engagement is an employment FAIL (EMP-R13) as well as a relationship FAIL; overall verdict and lane unchanged."
@@ -10882,6 +11079,38 @@
           "lane": "EXCLUDED"
         },
         "jobops-policy@0.2.5": {
+          "eligibility_dimensions": {
+            "geography": "PASS",
+            "language": "PASS",
+            "compensation": "PASS",
+            "employment_type": "FAIL",
+            "employment_relationship": "FAIL",
+            "employer_type": "PASS"
+          },
+          "eligibility_overall": "FAIL",
+          "relevance": {
+            "relevance_label": "STRONG",
+            "title_signal": "TIER_1",
+            "capability_clusters": [
+              "A",
+              "B",
+              "C"
+            ],
+            "experience_signal": "DIRECT",
+            "seniority_signal": "NONE"
+          },
+          "preference_attributes": {
+            "compensation_band": "IN_TARGET",
+            "employer_preference": "PREFERRED_PRODUCT",
+            "work_arrangement": "REMOTE"
+          },
+          "flags": [
+            "IN_TARGET"
+          ],
+          "newness": "NEW",
+          "lane": "EXCLUDED"
+        },
+        "jobops-policy@0.2.6": {
           "eligibility_dimensions": {
             "geography": "PASS",
             "language": "PASS",
@@ -15684,6 +15913,39 @@
           ],
           "newness": "NEW",
           "lane": "REVIEW"
+        },
+        "jobops-policy@0.2.6": {
+          "eligibility_dimensions": {
+            "geography": "PASS",
+            "language": "PASS",
+            "compensation": "PASS",
+            "employment_type": "PASS",
+            "employment_relationship": "PASS",
+            "employer_type": "PASS"
+          },
+          "eligibility_overall": "PASS",
+          "relevance": {
+            "relevance_label": "STRONG",
+            "title_signal": "TIER_1",
+            "capability_clusters": [
+              "A",
+              "B",
+              "C"
+            ],
+            "experience_signal": "DIRECT",
+            "seniority_signal": "NONE"
+          },
+          "preference_attributes": {
+            "compensation_band": "BELOW_TARGET",
+            "employer_preference": "PREFERRED_PRODUCT",
+            "work_arrangement": "REMOTE"
+          },
+          "flags": [
+            "BELOW_TARGET",
+            "CTC_BASIS_UNVERIFIED"
+          ],
+          "newness": "NEW",
+          "lane": "REVIEW"
         }
       }
     },
@@ -15916,6 +16178,39 @@
           "lane": "REVIEW"
         },
         "jobops-policy@0.2.5": {
+          "eligibility_dimensions": {
+            "geography": "PASS",
+            "language": "PASS",
+            "compensation": "PASS",
+            "employment_type": "PASS",
+            "employment_relationship": "PASS",
+            "employer_type": "PASS"
+          },
+          "eligibility_overall": "PASS",
+          "relevance": {
+            "relevance_label": "STRONG",
+            "title_signal": "TIER_1",
+            "capability_clusters": [
+              "A",
+              "B",
+              "C"
+            ],
+            "experience_signal": "DIRECT",
+            "seniority_signal": "NONE"
+          },
+          "preference_attributes": {
+            "compensation_band": "BELOW_TARGET",
+            "employer_preference": "PREFERRED_PRODUCT",
+            "work_arrangement": "REMOTE"
+          },
+          "flags": [
+            "BELOW_TARGET",
+            "CTC_BASIS_UNVERIFIED"
+          ],
+          "newness": "NEW",
+          "lane": "REVIEW"
+        },
+        "jobops-policy@0.2.6": {
           "eligibility_dimensions": {
             "geography": "PASS",
             "language": "PASS",
@@ -16210,6 +16505,39 @@
           ],
           "newness": "NEW",
           "lane": "REVIEW"
+        },
+        "jobops-policy@0.2.6": {
+          "eligibility_dimensions": {
+            "geography": "PASS",
+            "language": "PASS",
+            "compensation": "PASS",
+            "employment_type": "PASS",
+            "employment_relationship": "PASS",
+            "employer_type": "PASS"
+          },
+          "eligibility_overall": "PASS",
+          "relevance": {
+            "relevance_label": "STRONG",
+            "title_signal": "TIER_1",
+            "capability_clusters": [
+              "A",
+              "B",
+              "C"
+            ],
+            "experience_signal": "DIRECT",
+            "seniority_signal": "NONE"
+          },
+          "preference_attributes": {
+            "compensation_band": "BELOW_TARGET",
+            "employer_preference": "PREFERRED_PRODUCT",
+            "work_arrangement": "REMOTE"
+          },
+          "flags": [
+            "BELOW_TARGET",
+            "CTC_BASIS_UNVERIFIED"
+          ],
+          "newness": "NEW",
+          "lane": "REVIEW"
         }
       }
     },
@@ -16442,6 +16770,39 @@
           "lane": "SHORTLIST"
         },
         "jobops-policy@0.2.5": {
+          "eligibility_dimensions": {
+            "geography": "PASS",
+            "language": "PASS",
+            "compensation": "PASS",
+            "employment_type": "PASS",
+            "employment_relationship": "PASS",
+            "employer_type": "PASS"
+          },
+          "eligibility_overall": "PASS",
+          "relevance": {
+            "relevance_label": "STRONG",
+            "title_signal": "TIER_1",
+            "capability_clusters": [
+              "A",
+              "B",
+              "C"
+            ],
+            "experience_signal": "DIRECT",
+            "seniority_signal": "NONE"
+          },
+          "preference_attributes": {
+            "compensation_band": "IN_TARGET",
+            "employer_preference": "PREFERRED_PRODUCT",
+            "work_arrangement": "REMOTE"
+          },
+          "flags": [
+            "COMP_BASIS_UNSTATED",
+            "IN_TARGET"
+          ],
+          "newness": "NEW",
+          "lane": "SHORTLIST"
+        },
+        "jobops-policy@0.2.6": {
           "eligibility_dimensions": {
             "geography": "PASS",
             "language": "PASS",
@@ -16803,6 +17164,39 @@
           "lane": "SHORTLIST"
         },
         "jobops-policy@0.2.5": {
+          "eligibility_dimensions": {
+            "geography": "PASS",
+            "language": "PASS",
+            "compensation": "PASS",
+            "employment_type": "PASS",
+            "employment_relationship": "PASS",
+            "employer_type": "PASS"
+          },
+          "eligibility_overall": "PASS",
+          "relevance": {
+            "relevance_label": "STRONG",
+            "title_signal": "TIER_1",
+            "capability_clusters": [
+              "A",
+              "B",
+              "C"
+            ],
+            "experience_signal": "DIRECT",
+            "seniority_signal": "NONE"
+          },
+          "preference_attributes": {
+            "compensation_band": "IN_TARGET",
+            "employer_preference": "PREFERRED_PRODUCT",
+            "work_arrangement": "REMOTE"
+          },
+          "flags": [
+            "COMP_BASIS_UNSTATED",
+            "IN_TARGET"
+          ],
+          "newness": "NEW",
+          "lane": "SHORTLIST"
+        },
+        "jobops-policy@0.2.6": {
           "eligibility_dimensions": {
             "geography": "PASS",
             "language": "PASS",
@@ -17399,6 +17793,38 @@
           ],
           "newness": "NEW",
           "lane": "REVIEW"
+        },
+        "jobops-policy@0.2.6": {
+          "eligibility_dimensions": {
+            "geography": "PASS",
+            "language": "PASS",
+            "compensation": "UNKNOWN",
+            "employment_type": "PASS",
+            "employment_relationship": "PASS",
+            "employer_type": "PASS"
+          },
+          "eligibility_overall": "UNKNOWN",
+          "relevance": {
+            "relevance_label": "STRONG",
+            "title_signal": "TIER_1",
+            "capability_clusters": [
+              "A",
+              "B",
+              "C"
+            ],
+            "experience_signal": "DIRECT",
+            "seniority_signal": "NONE"
+          },
+          "preference_attributes": {
+            "compensation_band": "UNKNOWN",
+            "employer_preference": "PREFERRED_PRODUCT",
+            "work_arrangement": "REMOTE"
+          },
+          "flags": [
+            "FX_STALE"
+          ],
+          "newness": "NEW",
+          "lane": "REVIEW"
         }
       },
       "notes": "0.2.0 has no FX age limit; 0.2.1 measures age against the evaluation date (15 > 14 -> FX_STALE, never FAIL)."
@@ -17629,6 +18055,38 @@
           "lane": "EXCLUDED"
         },
         "jobops-policy@0.2.5": {
+          "eligibility_dimensions": {
+            "geography": "FAIL",
+            "language": "PASS",
+            "compensation": "PASS",
+            "employment_type": "PASS",
+            "employment_relationship": "PASS",
+            "employer_type": "PASS"
+          },
+          "eligibility_overall": "FAIL",
+          "relevance": {
+            "relevance_label": "STRONG",
+            "title_signal": "TIER_1",
+            "capability_clusters": [
+              "A",
+              "B",
+              "C"
+            ],
+            "experience_signal": "DIRECT",
+            "seniority_signal": "NONE"
+          },
+          "preference_attributes": {
+            "compensation_band": "IN_TARGET",
+            "employer_preference": "PREFERRED_PRODUCT",
+            "work_arrangement": "REMOTE"
+          },
+          "flags": [
+            "IN_TARGET"
+          ],
+          "newness": "NEW",
+          "lane": "EXCLUDED"
+        },
+        "jobops-policy@0.2.6": {
           "eligibility_dimensions": {
             "geography": "FAIL",
             "language": "PASS",
@@ -20220,6 +20678,34 @@
           "canonical_url_from_seq": 2,
           "lane": "REVIEW",
           "newness": "SEEN_BEFORE"
+        },
+        "jobops-policy@0.2.6": {
+          "steps": [
+            {
+              "after_seq": 1,
+              "newness": "NEW",
+              "lane": "SHORTLIST"
+            },
+            {
+              "after_seq": 2,
+              "same_requisition_as_seq": 1,
+              "newness": "UPDATED",
+              "lane": "REVIEW",
+              "flags_include": [
+                "SOURCE_CONFLICT",
+                "ABOVE_TARGET"
+              ]
+            }
+          ],
+          "requisition_count": 1,
+          "first_seen_at": "2026-09-19T06:00:00+00:00",
+          "source_first_seen": {
+            "board:example": "2026-09-19T06:00:00+00:00",
+            "ats:greenhouse": "2026-09-20T06:00:00+00:00"
+          },
+          "canonical_url_from_seq": 2,
+          "lane": "REVIEW",
+          "newness": "SEEN_BEFORE"
         }
       },
       "p3_version_note": "0.2.2 / OR-64: the ATS observation (later run, higher authority) changes the accepted salary (₹26L -> ₹30L), so newness is UPDATED; SOURCE_CONFLICT and REVIEW unchanged."
@@ -20238,7 +20724,8 @@
         "jobops-policy@0.2.2",
         "jobops-policy@0.2.3",
         "jobops-policy@0.2.4",
-        "jobops-policy@0.2.5"
+        "jobops-policy@0.2.5",
+        "jobops-policy@0.2.6"
       ],
       "posting_text": "AI Engineer — Synthetic Product Co\n[work mode] Remote\n[location] India\nSynthetic Product Co builds and sells its own AI software product.\nSalary: ₹26 LPA fixed base.\nEmployment type: Full-time, permanent.\nWorking language: English.\nExperience: 3 years building AI applications.\nYou will build a RAG pipeline using embeddings, vector retrieval with BM25 hybrid search, reranking and LLM evaluation (groundedness, faithfulness) in Python and FastAPI, deployed with Docker and CI/CD.\nYou will own hybrid search for our support assistant, blending keyword and vector matches.",
       "observation": {
@@ -20338,7 +20825,8 @@
         "jobops-policy@0.2.2",
         "jobops-policy@0.2.3",
         "jobops-policy@0.2.4",
-        "jobops-policy@0.2.5"
+        "jobops-policy@0.2.5",
+        "jobops-policy@0.2.6"
       ],
       "posting_text": "AI Engineer — Synthetic Product Co\n[work mode] Remote\n[location] India\nSynthetic Product Co builds and sells its own AI software product.\nSalary: ₹26 LPA fixed base.\nEmployment type: Full-time, permanent.\nWorking language: English.\nExperience: 3 years building AI applications.\nYou will build a RAG pipeline using embeddings, vector retrieval with BM25 hybrid search, reranking and LLM evaluation (groundedness, faithfulness) in Python and FastAPI, deployed with Docker and CI/CD.\n- Build hybrid retrieval over product manuals using Elasticsearch and pgvector",
       "observation": {
@@ -20438,7 +20926,8 @@
         "jobops-policy@0.2.2",
         "jobops-policy@0.2.3",
         "jobops-policy@0.2.4",
-        "jobops-policy@0.2.5"
+        "jobops-policy@0.2.5",
+        "jobops-policy@0.2.6"
       ],
       "posting_text": "AI Engineer — Synthetic Product Co\n[work mode] Remote\n[location] India\nSynthetic Product Co builds and sells its own AI software product.\nSalary: ₹26 LPA fixed base.\nEmployment type: Full-time, permanent.\nWorking language: English.\nExperience: 3 years building AI applications.\nYou will build a RAG pipeline using embeddings, vector retrieval with BM25 hybrid search, reranking and LLM evaluation (groundedness, faithfulness) in Python and FastAPI, deployed with Docker and CI/CD.\nTune a hybrid BM25 + dense retriever and track recall@k on a golden set.",
       "observation": {
@@ -20538,7 +21027,8 @@
         "jobops-policy@0.2.2",
         "jobops-policy@0.2.3",
         "jobops-policy@0.2.4",
-        "jobops-policy@0.2.5"
+        "jobops-policy@0.2.5",
+        "jobops-policy@0.2.6"
       ],
       "posting_text": "AI Engineer — Synthetic Product Co\n[work mode] Remote\n[location] India\nSynthetic Product Co builds and sells its own AI software product.\nSalary: ₹26 LPA fixed base.\nEmployment type: Full-time, permanent.\nWorking language: English.\nExperience: 3 years building AI applications.\nYou will build a RAG pipeline using embeddings, vector retrieval with BM25 hybrid search, reranking and LLM evaluation (groundedness, faithfulness) in Python and FastAPI, deployed with Docker and CI/CD.\nImprove hybrid ranking by fusing lexical and semantic scores with reciprocal rank fusion.",
       "observation": {
@@ -20638,7 +21128,8 @@
         "jobops-policy@0.2.2",
         "jobops-policy@0.2.3",
         "jobops-policy@0.2.4",
-        "jobops-policy@0.2.5"
+        "jobops-policy@0.2.5",
+        "jobops-policy@0.2.6"
       ],
       "posting_text": "AI Engineer — Synthetic Product Co\n[work mode] Remote\n[location] India\nSynthetic Product Co builds and sells its own AI software product.\nSalary: ₹26 LPA fixed base.\nEmployment type: Full-time, permanent.\nWorking language: English.\nExperience: 3 years building AI applications.\nYou will build a RAG pipeline using embeddings, vector retrieval with BM25 hybrid search, reranking and LLM evaluation (groundedness, faithfulness) in Python and FastAPI, deployed with Docker and CI/CD.\nOur platform runs on a hybrid cloud (AWS plus on-prem GPUs).",
       "observation": {
@@ -20738,7 +21229,8 @@
         "jobops-policy@0.2.2",
         "jobops-policy@0.2.3",
         "jobops-policy@0.2.4",
-        "jobops-policy@0.2.5"
+        "jobops-policy@0.2.5",
+        "jobops-policy@0.2.6"
       ],
       "posting_text": "AI Engineer — Synthetic Product Co\n[work mode] Remote\n[location] India\nSynthetic Product Co builds and sells its own AI software product.\nSalary: ₹26 LPA fixed base.\nEmployment type: Full-time, permanent.\nWorking language: English.\nExperience: 3 years building AI applications.\nYou will build a RAG pipeline using embeddings, vector retrieval with BM25 hybrid search, reranking and LLM evaluation (groundedness, faithfulness) in Python and FastAPI, deployed with Docker and CI/CD.\nDesign a hybrid architecture that routes simple queries to a small model and hard ones to a frontier LLM.",
       "observation": {
@@ -20838,7 +21330,8 @@
         "jobops-policy@0.2.2",
         "jobops-policy@0.2.3",
         "jobops-policy@0.2.4",
-        "jobops-policy@0.2.5"
+        "jobops-policy@0.2.5",
+        "jobops-policy@0.2.6"
       ],
       "posting_text": "AI Engineer — Synthetic Product Co\n[work mode] Remote\n[location] India\nSynthetic Product Co builds and sells its own AI software product.\nSalary: ₹26 LPA fixed base.\nEmployment type: Full-time, permanent.\nWorking language: English.\nExperience: 3 years building AI applications.\nYou will build a RAG pipeline using embeddings, vector retrieval with BM25 hybrid search, reranking and LLM evaluation (groundedness, faithfulness) in Python and FastAPI, deployed with Docker and CI/CD.\nYou will evaluate a hybrid model that combines rules with an LLM classifier.",
       "observation": {
@@ -20938,7 +21431,8 @@
         "jobops-policy@0.2.2",
         "jobops-policy@0.2.3",
         "jobops-policy@0.2.4",
-        "jobops-policy@0.2.5"
+        "jobops-policy@0.2.5",
+        "jobops-policy@0.2.6"
       ],
       "posting_text": "Hybrid Search Engineer — Synthetic Product Co\n[work mode] Remote\n[location] India\nSynthetic Product Co builds and sells its own AI software product.\nSalary: ₹26 LPA fixed base.\nEmployment type: Full-time, permanent.\nWorking language: English.\nExperience: 3 years building AI applications.\nYou will build a RAG pipeline using embeddings, vector retrieval with BM25 hybrid search, reranking and LLM evaluation (groundedness, faithfulness) in Python and FastAPI, deployed with Docker and CI/CD.",
       "observation": {
@@ -21037,7 +21531,8 @@
         "jobops-policy@0.2.2",
         "jobops-policy@0.2.3",
         "jobops-policy@0.2.4",
-        "jobops-policy@0.2.5"
+        "jobops-policy@0.2.5",
+        "jobops-policy@0.2.6"
       ],
       "posting_text": "AI Engineer — Synthetic Product Co\n[work mode] Remote\n[location] India\nSynthetic Product Co builds and sells its own AI software product.\nSalary: ₹26 LPA fixed base.\nEmployment type: Full-time, permanent.\nWorking language: English.\nExperience: 3 years building AI applications.\nYou will build a RAG pipeline using embeddings, vector retrieval with BM25 hybrid search, reranking and LLM evaluation (groundedness, faithfulness) in Python and FastAPI, deployed with Docker and CI/CD.\nShip hybrid embeddings (sparse SPLADE + dense) for multilingual search.",
       "observation": {
@@ -21137,7 +21632,8 @@
         "jobops-policy@0.2.2",
         "jobops-policy@0.2.3",
         "jobops-policy@0.2.4",
-        "jobops-policy@0.2.5"
+        "jobops-policy@0.2.5",
+        "jobops-policy@0.2.6"
       ],
       "posting_text": "AI Engineer — Synthetic Product Co\n[work mode] On-site\n[location] Bengaluru, Karnataka, India\nSynthetic Product Co builds and sells its own AI software product.\nSalary: ₹26 LPA fixed base.\nEmployment type: Full-time, permanent.\nWorking language: English.\nExperience: 3 years building AI applications.\nYou will build a RAG pipeline using embeddings, vector retrieval with BM25 hybrid search, reranking and LLM evaluation (groundedness, faithfulness) in Python and FastAPI, deployed with Docker and CI/CD.\nYou will own hybrid search quality for the product catalogue.",
       "observation": {
@@ -21237,7 +21733,8 @@
         "jobops-policy@0.2.2",
         "jobops-policy@0.2.3",
         "jobops-policy@0.2.4",
-        "jobops-policy@0.2.5"
+        "jobops-policy@0.2.5",
+        "jobops-policy@0.2.6"
       ],
       "posting_text": "AI Engineer — Synthetic Product Co\n[work mode] Hybrid (2 days in office)\n[location] Bengaluru, Karnataka, India\nSynthetic Product Co builds and sells its own AI software product.\nSalary: ₹26 LPA fixed base.\nEmployment type: Full-time, permanent.\nWorking language: English.\nExperience: 3 years building AI applications.\nYou will build a RAG pipeline using embeddings, vector retrieval with BM25 hybrid search, reranking and LLM evaluation (groundedness, faithfulness) in Python and FastAPI, deployed with Docker and CI/CD.\nBuild hybrid retrieval over support tickets.",
       "observation": {
@@ -21337,7 +21834,8 @@
         "jobops-policy@0.2.2",
         "jobops-policy@0.2.3",
         "jobops-policy@0.2.4",
-        "jobops-policy@0.2.5"
+        "jobops-policy@0.2.5",
+        "jobops-policy@0.2.6"
       ],
       "posting_text": "AI Engineer — Synthetic Product Co\n[work mode] Remote (US only)\n[location] United States\nSynthetic Product Co builds and sells its own AI software product.\nSalary: ₹26 LPA fixed base.\nEmployment type: Full-time, permanent.\nWorking language: English.\nExperience: 3 years building AI applications.\nYou will build a RAG pipeline using embeddings, vector retrieval with BM25 hybrid search, reranking and LLM evaluation (groundedness, faithfulness) in Python and FastAPI, deployed with Docker and CI/CD.\nImprove hybrid ranking for the search results page.",
       "observation": {
@@ -21437,7 +21935,8 @@
         "jobops-policy@0.2.2",
         "jobops-policy@0.2.3",
         "jobops-policy@0.2.4",
-        "jobops-policy@0.2.5"
+        "jobops-policy@0.2.5",
+        "jobops-policy@0.2.6"
       ],
       "posting_text": "AI Engineer — Synthetic Product Co\n[work mode] Remote\n[location] Berlin, Germany\nSynthetic Product Co builds and sells its own AI software product.\nSalary: ₹26 LPA fixed base.\nEmployment type: Full-time, permanent.\nWorking language: English.\nExperience: 3 years building AI applications.\nYou will build a RAG pipeline using embeddings, vector retrieval with BM25 hybrid search, reranking and LLM evaluation (groundedness, faithfulness) in Python and FastAPI, deployed with Docker and CI/CD.\nOperate our hybrid cloud footprint across AWS and GCP.",
       "observation": {
@@ -21538,7 +22037,8 @@
         "jobops-policy@0.2.2",
         "jobops-policy@0.2.3",
         "jobops-policy@0.2.4",
-        "jobops-policy@0.2.5"
+        "jobops-policy@0.2.5",
+        "jobops-policy@0.2.6"
       ],
       "posting_text": "AI Engineer — Synthetic Product Co\n[work mode] Remote\n[location] India\nSynthetic Product Co builds and sells its own AI software product.\nSalary: ₹26 LPA fixed base.\nEmployment type: Full-time, permanent.\nWorking language: English.\nExperience: 3 years building AI applications.\nYou will build a RAG pipeline using embeddings, vector retrieval with BM25 hybrid search, reranking and LLM evaluation (groundedness, faithfulness) in Python and FastAPI, deployed with Docker and CI/CD.\nThe retrieval layer is hybrid: BM25 first, then a cross-encoder reranker.",
       "observation": {
@@ -21638,7 +22138,8 @@
         "jobops-policy@0.2.2",
         "jobops-policy@0.2.3",
         "jobops-policy@0.2.4",
-        "jobops-policy@0.2.5"
+        "jobops-policy@0.2.5",
+        "jobops-policy@0.2.6"
       ],
       "posting_text": "AI Engineer — Synthetic Product Co\n[work mode] Work from office\n[location] Pune, Maharashtra, India\nSynthetic Product Co builds and sells its own AI software product.\nSalary: ₹26 LPA fixed base.\nEmployment type: Full-time, permanent.\nWorking language: English.\nExperience: 3 years building AI applications.\nYou will build a RAG pipeline using embeddings, vector retrieval with BM25 hybrid search, reranking and LLM evaluation (groundedness, faithfulness) in Python and FastAPI, deployed with Docker and CI/CD.\nShip hybrid BM25 + vector search for internal documents.",
       "observation": {
@@ -21738,7 +22239,8 @@
         "jobops-policy@0.2.2",
         "jobops-policy@0.2.3",
         "jobops-policy@0.2.4",
-        "jobops-policy@0.2.5"
+        "jobops-policy@0.2.5",
+        "jobops-policy@0.2.6"
       ],
       "posting_text": "AI Engineer — Synthetic Product Co\n[work mode] Remote – APAC\n[location] Singapore\nSynthetic Product Co builds and sells its own AI software product.\nSalary: ₹26 LPA fixed base.\nEmployment type: Full-time, permanent.\nWorking language: English.\nExperience: 3 years building AI applications.\nYou will build a RAG pipeline using embeddings, vector retrieval with BM25 hybrid search, reranking and LLM evaluation (groundedness, faithfulness) in Python and FastAPI, deployed with Docker and CI/CD.\nWe are moving to a hybrid architecture that mixes managed and self-hosted models.",
       "observation": {
@@ -21839,7 +22341,8 @@
         "jobops-policy@0.2.2",
         "jobops-policy@0.2.3",
         "jobops-policy@0.2.4",
-        "jobops-policy@0.2.5"
+        "jobops-policy@0.2.5",
+        "jobops-policy@0.2.6"
       ],
       "posting_text": "AI Engineer — Synthetic Product Co\n[work mode] Remote\n[location] India\nSynthetic Product Co builds and sells its own AI software product.\nSalary: ₹26 LPA fixed base.\nEmployment type: Full-time, permanent.\nWorking language: English.\nExperience: 3 years building AI applications.\nYou will build a RAG pipeline using embeddings, vector retrieval with BM25 hybrid search, reranking and LLM evaluation (groundedness, faithfulness) in Python and FastAPI, deployed with Docker and CI/CD.\nTech we use: Python, FastAPI, pgvector, hybrid",
       "observation": {
@@ -21939,7 +22442,8 @@
         "jobops-policy@0.2.2",
         "jobops-policy@0.2.3",
         "jobops-policy@0.2.4",
-        "jobops-policy@0.2.5"
+        "jobops-policy@0.2.5",
+        "jobops-policy@0.2.6"
       ],
       "posting_text": "AI Engineer — Synthetic Product Co\n[location] Bengaluru, Karnataka, India\nSynthetic Product Co builds and sells its own AI software product.\nSalary: ₹26 LPA fixed base.\nEmployment type: Full-time, permanent.\nWorking language: English.\nExperience: 3 years building AI applications.\nYou will build a RAG pipeline using embeddings, vector retrieval with BM25 hybrid search, reranking and LLM evaluation (groundedness, faithfulness) in Python and FastAPI, deployed with Docker and CI/CD.\nWe follow a hybrid work model.",
       "observation": {
@@ -22039,7 +22543,8 @@
         "jobops-policy@0.2.2",
         "jobops-policy@0.2.3",
         "jobops-policy@0.2.4",
-        "jobops-policy@0.2.5"
+        "jobops-policy@0.2.5",
+        "jobops-policy@0.2.6"
       ],
       "posting_text": "AI Engineer — Synthetic Product Co\n[location] Bengaluru, Karnataka, India\nSynthetic Product Co builds and sells its own AI software product.\nSalary: ₹26 LPA fixed base.\nEmployment type: Full-time, permanent.\nWorking language: English.\nExperience: 3 years building AI applications.\nYou will build a RAG pipeline using embeddings, vector retrieval with BM25 hybrid search, reranking and LLM evaluation (groundedness, faithfulness) in Python and FastAPI, deployed with Docker and CI/CD.\nThis is a hybrid role with 2 days a week in our Bengaluru office.",
       "observation": {
@@ -22138,7 +22643,8 @@
         "jobops-policy@0.2.2",
         "jobops-policy@0.2.3",
         "jobops-policy@0.2.4",
-        "jobops-policy@0.2.5"
+        "jobops-policy@0.2.5",
+        "jobops-policy@0.2.6"
       ],
       "posting_text": "AI Engineer — Synthetic Product Co\n[location] Bangalore Urban, Karnataka, India\nSynthetic Product Co builds and sells its own AI software product.\nSalary: ₹26 LPA fixed base.\nEmployment type: Full-time, permanent.\nWorking language: English.\nExperience: 3 years building AI applications.\nYou will build a RAG pipeline using embeddings, vector retrieval with BM25 hybrid search, reranking and LLM evaluation (groundedness, faithfulness) in Python and FastAPI, deployed with Docker and CI/CD.\nHybrid workplace: 3 days in office.",
       "observation": {
@@ -22237,7 +22743,8 @@
         "jobops-policy@0.2.2",
         "jobops-policy@0.2.3",
         "jobops-policy@0.2.4",
-        "jobops-policy@0.2.5"
+        "jobops-policy@0.2.5",
+        "jobops-policy@0.2.6"
       ],
       "posting_text": "AI Engineer — Synthetic Product Co\n[work mode] Hybrid — 3 days in office\n[location] Bengaluru, Karnataka, India\nSynthetic Product Co builds and sells its own AI software product.\nSalary: ₹26 LPA fixed base.\nEmployment type: Full-time, permanent.\nWorking language: English.\nExperience: 3 years building AI applications.\nYou will build a RAG pipeline using embeddings, vector retrieval with BM25 hybrid search, reranking and LLM evaluation (groundedness, faithfulness) in Python and FastAPI, deployed with Docker and CI/CD.",
       "observation": {
@@ -22337,7 +22844,8 @@
         "jobops-policy@0.2.2",
         "jobops-policy@0.2.3",
         "jobops-policy@0.2.4",
-        "jobops-policy@0.2.5"
+        "jobops-policy@0.2.5",
+        "jobops-policy@0.2.6"
       ],
       "posting_text": "AI Engineer — Synthetic Product Co\n[work mode] Hybrid — 2 days onsite\n[location] Greater Bengaluru Area\nSynthetic Product Co builds and sells its own AI software product.\nSalary: ₹26 LPA fixed base.\nEmployment type: Full-time, permanent.\nWorking language: English.\nExperience: 3 years building AI applications.\nYou will build a RAG pipeline using embeddings, vector retrieval with BM25 hybrid search, reranking and LLM evaluation (groundedness, faithfulness) in Python and FastAPI, deployed with Docker and CI/CD.",
       "observation": {
@@ -22437,7 +22945,8 @@
         "jobops-policy@0.2.2",
         "jobops-policy@0.2.3",
         "jobops-policy@0.2.4",
-        "jobops-policy@0.2.5"
+        "jobops-policy@0.2.5",
+        "jobops-policy@0.2.6"
       ],
       "posting_text": "AI Engineer — Synthetic Product Co\n[location] Bengaluru hybrid 3 days\nSynthetic Product Co builds and sells its own AI software product.\nSalary: ₹26 LPA fixed base.\nEmployment type: Full-time, permanent.\nWorking language: English.\nExperience: 3 years building AI applications.\nYou will build a RAG pipeline using embeddings, vector retrieval with BM25 hybrid search, reranking and LLM evaluation (groundedness, faithfulness) in Python and FastAPI, deployed with Docker and CI/CD.",
       "observation": {
@@ -22536,7 +23045,8 @@
         "jobops-policy@0.2.2",
         "jobops-policy@0.2.3",
         "jobops-policy@0.2.4",
-        "jobops-policy@0.2.5"
+        "jobops-policy@0.2.5",
+        "jobops-policy@0.2.6"
       ],
       "posting_text": "AI Engineer — Synthetic Product Co\n[location] Bengaluru hybrid 4 days\nSynthetic Product Co builds and sells its own AI software product.\nSalary: ₹26 LPA fixed base.\nEmployment type: Full-time, permanent.\nWorking language: English.\nExperience: 3 years building AI applications.\nYou will build a RAG pipeline using embeddings, vector retrieval with BM25 hybrid search, reranking and LLM evaluation (groundedness, faithfulness) in Python and FastAPI, deployed with Docker and CI/CD.",
       "observation": {
@@ -22635,7 +23145,8 @@
         "jobops-policy@0.2.2",
         "jobops-policy@0.2.3",
         "jobops-policy@0.2.4",
-        "jobops-policy@0.2.5"
+        "jobops-policy@0.2.5",
+        "jobops-policy@0.2.6"
       ],
       "posting_text": "AI Engineer — Synthetic Product Co\n[location] Pune, Maharashtra, India\nSynthetic Product Co builds and sells its own AI software product.\nSalary: ₹26 LPA fixed base.\nEmployment type: Full-time, permanent.\nWorking language: English.\nExperience: 3 years building AI applications.\nYou will build a RAG pipeline using embeddings, vector retrieval with BM25 hybrid search, reranking and LLM evaluation (groundedness, faithfulness) in Python and FastAPI, deployed with Docker and CI/CD.\nWe run a hybrid work model with 2 days a week in office.",
       "observation": {
@@ -22734,7 +23245,8 @@
         "jobops-policy@0.2.2",
         "jobops-policy@0.2.3",
         "jobops-policy@0.2.4",
-        "jobops-policy@0.2.5"
+        "jobops-policy@0.2.5",
+        "jobops-policy@0.2.6"
       ],
       "posting_text": "AI Engineer — Synthetic Product Co\n[work mode] Flexible hybrid\n[location] Bengaluru, Karnataka, India\nSynthetic Product Co builds and sells its own AI software product.\nSalary: ₹26 LPA fixed base.\nEmployment type: Full-time, permanent.\nWorking language: English.\nExperience: 3 years building AI applications.\nYou will build a RAG pipeline using embeddings, vector retrieval with BM25 hybrid search, reranking and LLM evaluation (groundedness, faithfulness) in Python and FastAPI, deployed with Docker and CI/CD.",
       "observation": {
@@ -22835,7 +23347,8 @@
         "jobops-policy@0.2.2",
         "jobops-policy@0.2.3",
         "jobops-policy@0.2.4",
-        "jobops-policy@0.2.5"
+        "jobops-policy@0.2.5",
+        "jobops-policy@0.2.6"
       ],
       "posting_text": "AI Engineer — Synthetic Product Co\n[work mode] Hybrid (5 days WFO)\n[location] Bengaluru, Karnataka, India\nSynthetic Product Co builds and sells its own AI software product.\nSalary: ₹26 LPA fixed base.\nEmployment type: Full-time, permanent.\nWorking language: English.\nExperience: 3 years building AI applications.\nYou will build a RAG pipeline using embeddings, vector retrieval with BM25 hybrid search, reranking and LLM evaluation (groundedness, faithfulness) in Python and FastAPI, deployed with Docker and CI/CD.",
       "observation": {
@@ -22935,7 +23448,8 @@
         "jobops-policy@0.2.2",
         "jobops-policy@0.2.3",
         "jobops-policy@0.2.4",
-        "jobops-policy@0.2.5"
+        "jobops-policy@0.2.5",
+        "jobops-policy@0.2.6"
       ],
       "posting_text": "AI Engineer — Synthetic Product Co\n[work mode] Hybrid (2 office days per week)\n[location] Bengaluru East, Karnataka, India\nSynthetic Product Co builds and sells its own AI software product.\nSalary: ₹26 LPA fixed base.\nEmployment type: Full-time, permanent.\nWorking language: English.\nExperience: 3 years building AI applications.\nYou will build a RAG pipeline using embeddings, vector retrieval with BM25 hybrid search, reranking and LLM evaluation (groundedness, faithfulness) in Python and FastAPI, deployed with Docker and CI/CD.",
       "observation": {
@@ -23035,7 +23549,8 @@
         "jobops-policy@0.2.2",
         "jobops-policy@0.2.3",
         "jobops-policy@0.2.4",
-        "jobops-policy@0.2.5"
+        "jobops-policy@0.2.5",
+        "jobops-policy@0.2.6"
       ],
       "posting_text": "AI Engineer — Synthetic Product Co\n[work mode] Hybrid\n[location] Bengaluru, Karnataka, India\nSynthetic Product Co builds and sells its own AI software product.\nSalary: ₹26 LPA fixed base.\nEmployment type: Full-time, permanent.\nWorking language: English.\nExperience: 3 years building AI applications.\nYou will build a RAG pipeline using embeddings, vector retrieval with BM25 hybrid search, reranking and LLM evaluation (groundedness, faithfulness) in Python and FastAPI, deployed with Docker and CI/CD.\nOur office policy is 3 days a week in office.",
       "observation": {
@@ -23135,7 +23650,8 @@
         "jobops-policy@0.2.2",
         "jobops-policy@0.2.3",
         "jobops-policy@0.2.4",
-        "jobops-policy@0.2.5"
+        "jobops-policy@0.2.5",
+        "jobops-policy@0.2.6"
       ],
       "posting_text": "AI Engineer — Synthetic Product Co\n[work mode] Remote\n[location] India\nSynthetic Product Co builds and sells its own AI software product.\nSalary: ₹26 LPA fixed base.\nEmployment type: Full-time, permanent.\nWorking language: English.\nExperience: 3 years building AI applications.\nYou will build a RAG pipeline using embeddings, vector retrieval with BM25 hybrid search, reranking and LLM evaluation (groundedness, faithfulness) in Python and FastAPI, deployed with Docker and CI/CD.\nWe have a hybrid work model with 3 days a week in office.",
       "observation": {
@@ -23236,7 +23752,8 @@
         "jobops-policy@0.2.2",
         "jobops-policy@0.2.3",
         "jobops-policy@0.2.4",
-        "jobops-policy@0.2.5"
+        "jobops-policy@0.2.5",
+        "jobops-policy@0.2.6"
       ],
       "posting_text": "AI Engineer — Synthetic Product Co\n[work mode] Remote\n[location] India\nSynthetic Product Co builds and sells its own AI software product.\nSalary: ₹26 LPA fixed base.\nEmployment type: Full-time, permanent.\nWorking language: English.\nExperience: 3 years building AI applications.\nYou will build a RAG pipeline using embeddings, vector retrieval with BM25 hybrid search, reranking and LLM evaluation (groundedness, faithfulness) in Python and FastAPI, deployed with Docker and CI/CD.\nYou will be expected in office 3 days a week.",
       "observation": {
@@ -23337,7 +23854,8 @@
         "jobops-policy@0.2.2",
         "jobops-policy@0.2.3",
         "jobops-policy@0.2.4",
-        "jobops-policy@0.2.5"
+        "jobops-policy@0.2.5",
+        "jobops-policy@0.2.6"
       ],
       "posting_text": "AI Engineer — Synthetic Product Co\n[work mode] Remote\n[location] India\nSynthetic Product Co builds and sells its own AI software product.\nSalary: ₹26 LPA fixed base.\nEmployment type: Full-time, permanent.\nWorking language: English.\nExperience: 3 years building AI applications.\nYou will build a RAG pipeline using embeddings, vector retrieval with BM25 hybrid search, reranking and LLM evaluation (groundedness, faithfulness) in Python and FastAPI, deployed with Docker and CI/CD.\nThis is a hybrid role with 2 office days.",
       "observation": {
@@ -23438,7 +23956,8 @@
         "jobops-policy@0.2.2",
         "jobops-policy@0.2.3",
         "jobops-policy@0.2.4",
-        "jobops-policy@0.2.5"
+        "jobops-policy@0.2.5",
+        "jobops-policy@0.2.6"
       ],
       "posting_text": "AI Engineer — Synthetic Product Co\n[location] Remote - India\nSynthetic Product Co builds and sells its own AI software product.\nSalary: ₹26 LPA fixed base.\nEmployment type: Full-time, permanent.\nWorking language: English.\nExperience: 3 years building AI applications.\nYou will build a RAG pipeline using embeddings, vector retrieval with BM25 hybrid search, reranking and LLM evaluation (groundedness, faithfulness) in Python and FastAPI, deployed with Docker and CI/CD.\nHybrid work: 2 days per week at the Bengaluru office.",
       "observation": {
@@ -23538,7 +24057,8 @@
         "jobops-policy@0.2.2",
         "jobops-policy@0.2.3",
         "jobops-policy@0.2.4",
-        "jobops-policy@0.2.5"
+        "jobops-policy@0.2.5",
+        "jobops-policy@0.2.6"
       ],
       "posting_text": "AI Engineer — Synthetic Product Co\n[work mode] Remote\n[location] Berlin, Germany\nSynthetic Product Co builds and sells its own AI software product.\nSalary: ₹26 LPA fixed base.\nEmployment type: Full-time, permanent.\nWorking language: English.\nExperience: 3 years building AI applications.\nYou will build a RAG pipeline using embeddings, vector retrieval with BM25 hybrid search, reranking and LLM evaluation (groundedness, faithfulness) in Python and FastAPI, deployed with Docker and CI/CD.",
       "observation": {
@@ -23639,7 +24159,8 @@
         "jobops-policy@0.2.2",
         "jobops-policy@0.2.3",
         "jobops-policy@0.2.4",
-        "jobops-policy@0.2.5"
+        "jobops-policy@0.2.5",
+        "jobops-policy@0.2.6"
       ],
       "posting_text": "AI Engineer — Synthetic Product Co\n[work mode] Remote\n[location] London, United Kingdom\nSynthetic Product Co builds and sells its own AI software product.\nSalary: ₹26 LPA fixed base.\nEmployment type: Full-time, permanent.\nWorking language: English.\nExperience: 3 years building AI applications.\nYou will build a RAG pipeline using embeddings, vector retrieval with BM25 hybrid search, reranking and LLM evaluation (groundedness, faithfulness) in Python and FastAPI, deployed with Docker and CI/CD.",
       "observation": {
@@ -23740,7 +24261,8 @@
         "jobops-policy@0.2.2",
         "jobops-policy@0.2.3",
         "jobops-policy@0.2.4",
-        "jobops-policy@0.2.5"
+        "jobops-policy@0.2.5",
+        "jobops-policy@0.2.6"
       ],
       "posting_text": "AI Engineer — Synthetic Product Co\n[work mode] Remote (US only)\n[location] United States\nSynthetic Product Co builds and sells its own AI software product.\nSalary: ₹26 LPA fixed base.\nEmployment type: Full-time, permanent.\nWorking language: English.\nExperience: 3 years building AI applications.\nYou will build a RAG pipeline using embeddings, vector retrieval with BM25 hybrid search, reranking and LLM evaluation (groundedness, faithfulness) in Python and FastAPI, deployed with Docker and CI/CD.",
       "observation": {
@@ -23840,7 +24362,8 @@
         "jobops-policy@0.2.2",
         "jobops-policy@0.2.3",
         "jobops-policy@0.2.4",
-        "jobops-policy@0.2.5"
+        "jobops-policy@0.2.5",
+        "jobops-policy@0.2.6"
       ],
       "posting_text": "AI Engineer — Synthetic Product Co\n[work mode] Remote – EMEA\n[location] Germany\nSynthetic Product Co builds and sells its own AI software product.\nSalary: ₹26 LPA fixed base.\nEmployment type: Full-time, permanent.\nWorking language: English.\nExperience: 3 years building AI applications.\nYou will build a RAG pipeline using embeddings, vector retrieval with BM25 hybrid search, reranking and LLM evaluation (groundedness, faithfulness) in Python and FastAPI, deployed with Docker and CI/CD.",
       "observation": {
@@ -23940,7 +24463,8 @@
         "jobops-policy@0.2.2",
         "jobops-policy@0.2.3",
         "jobops-policy@0.2.4",
-        "jobops-policy@0.2.5"
+        "jobops-policy@0.2.5",
+        "jobops-policy@0.2.6"
       ],
       "posting_text": "AI Engineer — Synthetic Product Co\n[work mode] Remote\n[location] India\nSynthetic Product Co builds and sells its own AI software product.\nSalary: ₹26 LPA fixed base.\nEmployment type: Full-time, permanent.\nWorking language: English.\nExperience: 3 years building AI applications.\nYou will build a RAG pipeline using embeddings, vector retrieval with BM25 hybrid search, reranking and LLM evaluation (groundedness, faithfulness) in Python and FastAPI, deployed with Docker and CI/CD.",
       "observation": {
@@ -24040,7 +24564,8 @@
         "jobops-policy@0.2.2",
         "jobops-policy@0.2.3",
         "jobops-policy@0.2.4",
-        "jobops-policy@0.2.5"
+        "jobops-policy@0.2.5",
+        "jobops-policy@0.2.6"
       ],
       "posting_text": "AI Engineer — Synthetic Product Co\n[work mode] Remote – APAC\n[location] Singapore\nSynthetic Product Co builds and sells its own AI software product.\nSalary: ₹26 LPA fixed base.\nEmployment type: Full-time, permanent.\nWorking language: English.\nExperience: 3 years building AI applications.\nYou will build a RAG pipeline using embeddings, vector retrieval with BM25 hybrid search, reranking and LLM evaluation (groundedness, faithfulness) in Python and FastAPI, deployed with Docker and CI/CD.",
       "observation": {
@@ -24141,7 +24666,8 @@
         "jobops-policy@0.2.2",
         "jobops-policy@0.2.3",
         "jobops-policy@0.2.4",
-        "jobops-policy@0.2.5"
+        "jobops-policy@0.2.5",
+        "jobops-policy@0.2.6"
       ],
       "posting_text": "AI Engineer — Synthetic Product Co\n[work mode] Remote\n[location] Pune, Maharashtra, India\nSynthetic Product Co builds and sells its own AI software product.\nSalary: ₹26 LPA fixed base.\nEmployment type: Full-time, permanent.\nWorking language: English.\nExperience: 3 years building AI applications.\nYou will build a RAG pipeline using embeddings, vector retrieval with BM25 hybrid search, reranking and LLM evaluation (groundedness, faithfulness) in Python and FastAPI, deployed with Docker and CI/CD.",
       "observation": {
@@ -24242,7 +24768,8 @@
         "jobops-policy@0.2.2",
         "jobops-policy@0.2.3",
         "jobops-policy@0.2.4",
-        "jobops-policy@0.2.5"
+        "jobops-policy@0.2.5",
+        "jobops-policy@0.2.6"
       ],
       "posting_text": "AI Engineer — Synthetic Product Co\n[work mode] Remote\n[location] Berlin, Germany\nSynthetic Product Co builds and sells its own AI software product.\nSalary: ₹26 LPA fixed base.\nEmployment type: Full-time, permanent.\nWorking language: English.\nExperience: 3 years building AI applications.\nYou will build a RAG pipeline using embeddings, vector retrieval with BM25 hybrid search, reranking and LLM evaluation (groundedness, faithfulness) in Python and FastAPI, deployed with Docker and CI/CD.\nYou must be authorized to work in the country where this job is posted.",
       "observation": {
@@ -24342,7 +24869,8 @@
         "jobops-policy@0.2.2",
         "jobops-policy@0.2.3",
         "jobops-policy@0.2.4",
-        "jobops-policy@0.2.5"
+        "jobops-policy@0.2.5",
+        "jobops-policy@0.2.6"
       ],
       "posting_text": "AI Engineer — Synthetic Product Co\n[work mode] Remote\n[location] India\nSynthetic Product Co builds and sells its own AI software product.\nSalary: ₹26 LPA fixed base.\nEmployment type: Full-time, permanent.\nWorking language: English.\nExperience: 3 years building AI applications.\nYou will build a RAG pipeline using embeddings, vector retrieval with BM25 hybrid search, reranking and LLM evaluation (groundedness, faithfulness) in Python and FastAPI, deployed with Docker and CI/CD.\nYou must be authorized to work in the country where this job is posted.",
       "observation": {
@@ -24442,7 +24970,8 @@
         "jobops-policy@0.2.2",
         "jobops-policy@0.2.3",
         "jobops-policy@0.2.4",
-        "jobops-policy@0.2.5"
+        "jobops-policy@0.2.5",
+        "jobops-policy@0.2.6"
       ],
       "posting_text": "AI Engineer — Synthetic Product Co\n[work mode] Remote\n[location] India\nSynthetic Product Co builds and sells its own AI software product.\nEmployment type: Full-time, permanent.\nWorking language: English.\nExperience: 3 years building AI applications.\nYou will build a RAG pipeline using embeddings, vector retrieval with BM25 hybrid search, reranking and LLM evaluation (groundedness, faithfulness) in Python and FastAPI, deployed with Docker and CI/CD.",
       "observation": {
@@ -24543,7 +25072,8 @@
         "jobops-policy@0.2.2",
         "jobops-policy@0.2.3",
         "jobops-policy@0.2.4",
-        "jobops-policy@0.2.5"
+        "jobops-policy@0.2.5",
+        "jobops-policy@0.2.6"
       ],
       "posting_text": "AI Engineer — Synthetic Product Co\n[work mode] Remote\n[location] India\nSynthetic Product Co builds and sells its own AI software product.\nEmployment type: Full-time, permanent.\nWorking language: English.\nExperience: 3 years building AI applications.\nYou will build a RAG pipeline using embeddings, vector retrieval with BM25 hybrid search, reranking and LLM evaluation (groundedness, faithfulness) in Python and FastAPI, deployed with Docker and CI/CD.",
       "observation": {
@@ -24644,7 +25174,8 @@
         "jobops-policy@0.2.2",
         "jobops-policy@0.2.3",
         "jobops-policy@0.2.4",
-        "jobops-policy@0.2.5"
+        "jobops-policy@0.2.5",
+        "jobops-policy@0.2.6"
       ],
       "posting_text": "AI Engineer — Synthetic Product Co\n[work mode] Remote\n[location] India\nSynthetic Product Co builds and sells its own AI software product.\nEmployment type: Full-time, permanent.\nWorking language: English.\nExperience: 3 years building AI applications.\nYou will build a RAG pipeline using embeddings, vector retrieval with BM25 hybrid search, reranking and LLM evaluation (groundedness, faithfulness) in Python and FastAPI, deployed with Docker and CI/CD.",
       "observation": {
@@ -24745,7 +25276,8 @@
         "jobops-policy@0.2.2",
         "jobops-policy@0.2.3",
         "jobops-policy@0.2.4",
-        "jobops-policy@0.2.5"
+        "jobops-policy@0.2.5",
+        "jobops-policy@0.2.6"
       ],
       "posting_text": "AI Engineer — Synthetic Product Co\n[work mode] Remote\n[location] India\nSynthetic Product Co builds and sells its own AI software product.\nEmployment type: Full-time, permanent.\nWorking language: English.\nExperience: 3 years building AI applications.\nYou will build a RAG pipeline using embeddings, vector retrieval with BM25 hybrid search, reranking and LLM evaluation (groundedness, faithfulness) in Python and FastAPI, deployed with Docker and CI/CD.",
       "observation": {
@@ -24846,7 +25378,8 @@
         "jobops-policy@0.2.2",
         "jobops-policy@0.2.3",
         "jobops-policy@0.2.4",
-        "jobops-policy@0.2.5"
+        "jobops-policy@0.2.5",
+        "jobops-policy@0.2.6"
       ],
       "posting_text": "AI Engineer — Synthetic Product Co\n[work mode] Remote\n[location] India\nSynthetic Product Co builds and sells its own AI software product.\nEmployment type: Full-time, permanent.\nWorking language: English.\nExperience: 3 years building AI applications.\nYou will build a RAG pipeline using embeddings, vector retrieval with BM25 hybrid search, reranking and LLM evaluation (groundedness, faithfulness) in Python and FastAPI, deployed with Docker and CI/CD.",
       "observation": {
@@ -24945,7 +25478,8 @@
         "jobops-policy@0.2.2",
         "jobops-policy@0.2.3",
         "jobops-policy@0.2.4",
-        "jobops-policy@0.2.5"
+        "jobops-policy@0.2.5",
+        "jobops-policy@0.2.6"
       ],
       "posting_text": "AI Engineer — Synthetic Product Co\n[work mode] Remote\n[location] India\nSynthetic Product Co builds and sells its own AI software product.\nEmployment type: Full-time, permanent.\nWorking language: English.\nExperience: 3 years building AI applications.\nYou will build a RAG pipeline using embeddings, vector retrieval with BM25 hybrid search, reranking and LLM evaluation (groundedness, faithfulness) in Python and FastAPI, deployed with Docker and CI/CD.",
       "observation": {
@@ -25044,7 +25578,8 @@
         "jobops-policy@0.2.2",
         "jobops-policy@0.2.3",
         "jobops-policy@0.2.4",
-        "jobops-policy@0.2.5"
+        "jobops-policy@0.2.5",
+        "jobops-policy@0.2.6"
       ],
       "posting_text": "AI Engineer — Synthetic Product Co\n[work mode] Remote\n[location] India\nSynthetic Product Co builds and sells its own AI software product.\nEmployment type: Full-time, permanent.\nWorking language: English.\nExperience: 3 years building AI applications.\nYou will build a RAG pipeline using embeddings, vector retrieval with BM25 hybrid search, reranking and LLM evaluation (groundedness, faithfulness) in Python and FastAPI, deployed with Docker and CI/CD.",
       "observation": {
@@ -25145,7 +25680,8 @@
         "jobops-policy@0.2.2",
         "jobops-policy@0.2.3",
         "jobops-policy@0.2.4",
-        "jobops-policy@0.2.5"
+        "jobops-policy@0.2.5",
+        "jobops-policy@0.2.6"
       ],
       "posting_text": "AI Engineer — Synthetic Product Co\n[work mode] Remote\n[location] India\nSynthetic Product Co builds and sells its own AI software product.\nEmployment type: Full-time, permanent.\nWorking language: English.\nExperience: 3 years building AI applications.\nYou will build a RAG pipeline using embeddings, vector retrieval with BM25 hybrid search, reranking and LLM evaluation (groundedness, faithfulness) in Python and FastAPI, deployed with Docker and CI/CD.",
       "observation": {
@@ -25246,7 +25782,8 @@
         "jobops-policy@0.2.2",
         "jobops-policy@0.2.3",
         "jobops-policy@0.2.4",
-        "jobops-policy@0.2.5"
+        "jobops-policy@0.2.5",
+        "jobops-policy@0.2.6"
       ],
       "posting_text": "AI Engineer — Synthetic Product Co\n[work mode] Remote\n[location] India\nSynthetic Product Co builds and sells its own AI software product.\nEmployment type: Full-time, permanent.\nWorking language: English.\nExperience: 3 years building AI applications.\nYou will build a RAG pipeline using embeddings, vector retrieval with BM25 hybrid search, reranking and LLM evaluation (groundedness, faithfulness) in Python and FastAPI, deployed with Docker and CI/CD.",
       "observation": {
@@ -25347,7 +25884,8 @@
         "jobops-policy@0.2.2",
         "jobops-policy@0.2.3",
         "jobops-policy@0.2.4",
-        "jobops-policy@0.2.5"
+        "jobops-policy@0.2.5",
+        "jobops-policy@0.2.6"
       ],
       "posting_text": "AI Engineer — Synthetic Product Co\n[work mode] Remote\n[location] India\nSynthetic Product Co builds and sells its own AI software product.\nEmployment type: Full-time, permanent.\nWorking language: English.\nExperience: 3 years building AI applications.\nYou will build a RAG pipeline using embeddings, vector retrieval with BM25 hybrid search, reranking and LLM evaluation (groundedness, faithfulness) in Python and FastAPI, deployed with Docker and CI/CD.",
       "observation": {
@@ -25448,7 +25986,8 @@
         "jobops-policy@0.2.2",
         "jobops-policy@0.2.3",
         "jobops-policy@0.2.4",
-        "jobops-policy@0.2.5"
+        "jobops-policy@0.2.5",
+        "jobops-policy@0.2.6"
       ],
       "posting_text": "AI Engineer — Synthetic Product Co\n[work mode] Remote\n[location] India\nSynthetic Product Co builds and sells its own AI software product.\nEmployment type: Full-time, permanent.\nWorking language: English.\nExperience: 3 years building AI applications.\nYou will build a RAG pipeline using embeddings, vector retrieval with BM25 hybrid search, reranking and LLM evaluation (groundedness, faithfulness) in Python and FastAPI, deployed with Docker and CI/CD.",
       "observation": {
@@ -25549,7 +26088,8 @@
         "jobops-policy@0.2.2",
         "jobops-policy@0.2.3",
         "jobops-policy@0.2.4",
-        "jobops-policy@0.2.5"
+        "jobops-policy@0.2.5",
+        "jobops-policy@0.2.6"
       ],
       "posting_text": "AI Engineer — Synthetic Product Co\n[work mode] Remote\n[location] India\nSynthetic Product Co builds and sells its own AI software product.\nEmployment type: Full-time, permanent.\nWorking language: English.\nExperience: 3 years building AI applications.\nYou will build a RAG pipeline using embeddings, vector retrieval with BM25 hybrid search, reranking and LLM evaluation (groundedness, faithfulness) in Python and FastAPI, deployed with Docker and CI/CD.",
       "observation": {
@@ -25651,7 +26191,8 @@
         "jobops-policy@0.2.2",
         "jobops-policy@0.2.3",
         "jobops-policy@0.2.4",
-        "jobops-policy@0.2.5"
+        "jobops-policy@0.2.5",
+        "jobops-policy@0.2.6"
       ],
       "posting_text": "AI Engineer — Synthetic Product Co\n[work mode] Remote\n[location] India\nSynthetic Product Co builds and sells its own AI software product.\nEmployment type: Full-time, permanent.\nWorking language: English.\nExperience: 3 years building AI applications.\nYou will build a RAG pipeline using embeddings, vector retrieval with BM25 hybrid search, reranking and LLM evaluation (groundedness, faithfulness) in Python and FastAPI, deployed with Docker and CI/CD.",
       "observation": {
@@ -25752,7 +26293,8 @@
         "jobops-policy@0.2.2",
         "jobops-policy@0.2.3",
         "jobops-policy@0.2.4",
-        "jobops-policy@0.2.5"
+        "jobops-policy@0.2.5",
+        "jobops-policy@0.2.6"
       ],
       "posting_text": "AI Engineer — Synthetic Product Co\n[work mode] Remote\n[location] India\nSynthetic Product Co builds and sells its own AI software product.\nEmployment type: Full-time, permanent.\nWorking language: English.\nExperience: 3 years building AI applications.\nYou will build a RAG pipeline using embeddings, vector retrieval with BM25 hybrid search, reranking and LLM evaluation (groundedness, faithfulness) in Python and FastAPI, deployed with Docker and CI/CD.",
       "observation": {
@@ -25854,7 +26396,8 @@
         "jobops-policy@0.2.2",
         "jobops-policy@0.2.3",
         "jobops-policy@0.2.4",
-        "jobops-policy@0.2.5"
+        "jobops-policy@0.2.5",
+        "jobops-policy@0.2.6"
       ],
       "posting_text": "AI Engineer — Synthetic Product Co\n[work mode] Remote\n[location] India\nSynthetic Product Co builds and sells its own AI software product.\nEmployment type: Full-time, permanent.\nWorking language: English.\nExperience: 3 years building AI applications.\nYou will build a RAG pipeline using embeddings, vector retrieval with BM25 hybrid search, reranking and LLM evaluation (groundedness, faithfulness) in Python and FastAPI, deployed with Docker and CI/CD.",
       "observation": {
@@ -25956,7 +26499,8 @@
         "jobops-policy@0.2.2",
         "jobops-policy@0.2.3",
         "jobops-policy@0.2.4",
-        "jobops-policy@0.2.5"
+        "jobops-policy@0.2.5",
+        "jobops-policy@0.2.6"
       ],
       "posting_text": "AI Engineer — Synthetic Product Co\n[work mode] Remote\n[location] India\nSynthetic Product Co builds and sells its own AI software product.\nEmployment type: Full-time, permanent.\nWorking language: English.\nExperience: 3 years building AI applications.\nYou will build a RAG pipeline using embeddings, vector retrieval with BM25 hybrid search, reranking and LLM evaluation (groundedness, faithfulness) in Python and FastAPI, deployed with Docker and CI/CD.",
       "observation": {
@@ -26058,7 +26602,8 @@
         "jobops-policy@0.2.2",
         "jobops-policy@0.2.3",
         "jobops-policy@0.2.4",
-        "jobops-policy@0.2.5"
+        "jobops-policy@0.2.5",
+        "jobops-policy@0.2.6"
       ],
       "posting_text": "AI Engineer — Synthetic Product Co\n[work mode] Remote\n[location] India\nSynthetic Product Co builds and sells its own AI software product.\nEmployment type: Full-time, permanent.\nWorking language: English.\nExperience: 3 years building AI applications.\nYou will build a RAG pipeline using embeddings, vector retrieval with BM25 hybrid search, reranking and LLM evaluation (groundedness, faithfulness) in Python and FastAPI, deployed with Docker and CI/CD.",
       "observation": {
@@ -26159,7 +26704,8 @@
         "jobops-policy@0.2.2",
         "jobops-policy@0.2.3",
         "jobops-policy@0.2.4",
-        "jobops-policy@0.2.5"
+        "jobops-policy@0.2.5",
+        "jobops-policy@0.2.6"
       ],
       "posting_text": "AI Engineer — Synthetic Product Co\n[work mode] Remote\n[location] India\nSynthetic Product Co builds and sells its own AI software product.\nEmployment type: Full-time, permanent.\nWorking language: English.\nExperience: 3 years building AI applications.\nYou will build a RAG pipeline using embeddings, vector retrieval with BM25 hybrid search, reranking and LLM evaluation (groundedness, faithfulness) in Python and FastAPI, deployed with Docker and CI/CD.",
       "observation": {
@@ -26258,7 +26804,8 @@
         "jobops-policy@0.2.2",
         "jobops-policy@0.2.3",
         "jobops-policy@0.2.4",
-        "jobops-policy@0.2.5"
+        "jobops-policy@0.2.5",
+        "jobops-policy@0.2.6"
       ],
       "posting_text": "AI Engineer — Synthetic Product Co\n[work mode] Remote\n[location] India\nSynthetic Product Co builds and sells its own AI software product.\nEmployment type: Full-time, permanent.\nWorking language: English.\nExperience: 3 years building AI applications.\nYou will build a RAG pipeline using embeddings, vector retrieval with BM25 hybrid search, reranking and LLM evaluation (groundedness, faithfulness) in Python and FastAPI, deployed with Docker and CI/CD.",
       "observation": {
@@ -26360,7 +26907,8 @@
         "jobops-policy@0.2.2",
         "jobops-policy@0.2.3",
         "jobops-policy@0.2.4",
-        "jobops-policy@0.2.5"
+        "jobops-policy@0.2.5",
+        "jobops-policy@0.2.6"
       ],
       "posting_text": "AI Engineer — Synthetic Product Co\n[work mode] Remote\n[location] India\nSynthetic Product Co builds and sells its own AI software product.\nSalary: ₹26 LPA fixed base.\nWorking language: English.\nExperience: 3 years building AI applications.\nYou will build a RAG pipeline using embeddings, vector retrieval with BM25 hybrid search, reranking and LLM evaluation (groundedness, faithfulness) in Python and FastAPI, deployed with Docker and CI/CD.",
       "observation": {
@@ -26462,7 +27010,8 @@
         "jobops-policy@0.2.2",
         "jobops-policy@0.2.3",
         "jobops-policy@0.2.4",
-        "jobops-policy@0.2.5"
+        "jobops-policy@0.2.5",
+        "jobops-policy@0.2.6"
       ],
       "posting_text": "AI Engineer — Synthetic Product Co\n[work mode] Remote\n[location] India\nSynthetic Product Co builds and sells its own AI software product.\nSalary: ₹26 LPA fixed base.\nWorking language: English.\nExperience: 3 years building AI applications.\nYou will build a RAG pipeline using embeddings, vector retrieval with BM25 hybrid search, reranking and LLM evaluation (groundedness, faithfulness) in Python and FastAPI, deployed with Docker and CI/CD.",
       "observation": {
@@ -26564,7 +27113,8 @@
         "jobops-policy@0.2.2",
         "jobops-policy@0.2.3",
         "jobops-policy@0.2.4",
-        "jobops-policy@0.2.5"
+        "jobops-policy@0.2.5",
+        "jobops-policy@0.2.6"
       ],
       "posting_text": "AI Engineer — Synthetic Product Co\n[work mode] Remote\n[location] India\nSynthetic Product Co builds and sells its own AI software product.\nSalary: ₹26 LPA fixed base.\nWorking language: English.\nExperience: 3 years building AI applications.\nYou will build a RAG pipeline using embeddings, vector retrieval with BM25 hybrid search, reranking and LLM evaluation (groundedness, faithfulness) in Python and FastAPI, deployed with Docker and CI/CD.",
       "observation": {
@@ -26666,7 +27216,8 @@
         "jobops-policy@0.2.2",
         "jobops-policy@0.2.3",
         "jobops-policy@0.2.4",
-        "jobops-policy@0.2.5"
+        "jobops-policy@0.2.5",
+        "jobops-policy@0.2.6"
       ],
       "posting_text": "AI Engineer — Synthetic Product Co\n[work mode] Remote\n[location] India\nSynthetic Product Co builds and sells its own AI software product.\nSalary: ₹26 LPA fixed base.\nWorking language: English.\nExperience: 3 years building AI applications.\nYou will build a RAG pipeline using embeddings, vector retrieval with BM25 hybrid search, reranking and LLM evaluation (groundedness, faithfulness) in Python and FastAPI, deployed with Docker and CI/CD.",
       "observation": {
@@ -26768,7 +27319,8 @@
         "jobops-policy@0.2.2",
         "jobops-policy@0.2.3",
         "jobops-policy@0.2.4",
-        "jobops-policy@0.2.5"
+        "jobops-policy@0.2.5",
+        "jobops-policy@0.2.6"
       ],
       "posting_text": "AI Engineer — Synthetic Product Co\n[work mode] Remote\n[location] India\nSynthetic Product Co builds and sells its own AI software product.\nSalary: ₹26 LPA fixed base.\nWorking language: English.\nExperience: 3 years building AI applications.\nYou will build a RAG pipeline using embeddings, vector retrieval with BM25 hybrid search, reranking and LLM evaluation (groundedness, faithfulness) in Python and FastAPI, deployed with Docker and CI/CD.",
       "observation": {
@@ -26870,7 +27422,8 @@
         "jobops-policy@0.2.2",
         "jobops-policy@0.2.3",
         "jobops-policy@0.2.4",
-        "jobops-policy@0.2.5"
+        "jobops-policy@0.2.5",
+        "jobops-policy@0.2.6"
       ],
       "posting_text": "AI Engineer — Synthetic Product Co\n[work mode] Remote\n[location] India\nSynthetic Product Co builds and sells its own AI software product.\nSalary: ₹26 LPA fixed base.\nWorking language: English.\nExperience: 3 years building AI applications.\nYou will build a RAG pipeline using embeddings, vector retrieval with BM25 hybrid search, reranking and LLM evaluation (groundedness, faithfulness) in Python and FastAPI, deployed with Docker and CI/CD.",
       "observation": {
@@ -26972,7 +27525,8 @@
         "jobops-policy@0.2.2",
         "jobops-policy@0.2.3",
         "jobops-policy@0.2.4",
-        "jobops-policy@0.2.5"
+        "jobops-policy@0.2.5",
+        "jobops-policy@0.2.6"
       ],
       "posting_text": "AI Engineer — Synthetic Product Co\n[work mode] Remote\n[location] India\nSynthetic Product Co builds and sells its own AI software product.\nSalary: ₹26 LPA fixed base.\nWorking language: English.\nExperience: 3 years building AI applications.\nYou will build a RAG pipeline using embeddings, vector retrieval with BM25 hybrid search, reranking and LLM evaluation (groundedness, faithfulness) in Python and FastAPI, deployed with Docker and CI/CD.",
       "observation": {
@@ -27073,7 +27627,8 @@
         "jobops-policy@0.2.2",
         "jobops-policy@0.2.3",
         "jobops-policy@0.2.4",
-        "jobops-policy@0.2.5"
+        "jobops-policy@0.2.5",
+        "jobops-policy@0.2.6"
       ],
       "posting_text": "AI Engineer — Synthetic Product Co\n[work mode] Remote\n[location] India\nSynthetic Product Co builds and sells its own AI software product.\nSalary: ₹26 LPA fixed base.\nWorking language: English.\nExperience: 3 years building AI applications.\nYou will build a RAG pipeline using embeddings, vector retrieval with BM25 hybrid search, reranking and LLM evaluation (groundedness, faithfulness) in Python and FastAPI, deployed with Docker and CI/CD.",
       "observation": {
@@ -27174,7 +27729,8 @@
         "jobops-policy@0.2.2",
         "jobops-policy@0.2.3",
         "jobops-policy@0.2.4",
-        "jobops-policy@0.2.5"
+        "jobops-policy@0.2.5",
+        "jobops-policy@0.2.6"
       ],
       "posting_text": "AI Engineer — Synthetic Product Co\n[work mode] Remote\n[location] India\nSynthetic Product Co builds and sells its own AI software product.\nSalary: ₹26 LPA fixed base.\nWorking language: English.\nExperience: 3 years building AI applications.\nYou will build a RAG pipeline using embeddings, vector retrieval with BM25 hybrid search, reranking and LLM evaluation (groundedness, faithfulness) in Python and FastAPI, deployed with Docker and CI/CD.",
       "observation": {
@@ -27275,7 +27831,8 @@
         "jobops-policy@0.2.2",
         "jobops-policy@0.2.3",
         "jobops-policy@0.2.4",
-        "jobops-policy@0.2.5"
+        "jobops-policy@0.2.5",
+        "jobops-policy@0.2.6"
       ],
       "posting_text": "AI Engineer — Synthetic Product Co\n[work mode] Remote\n[location] India\nSynthetic Product Co builds and sells its own AI software product.\nSalary: ₹26 LPA fixed base.\nWorking language: English.\nExperience: 3 years building AI applications.\nYou will build a RAG pipeline using embeddings, vector retrieval with BM25 hybrid search, reranking and LLM evaluation (groundedness, faithfulness) in Python and FastAPI, deployed with Docker and CI/CD.",
       "observation": {
@@ -27377,7 +27934,8 @@
         "jobops-policy@0.2.2",
         "jobops-policy@0.2.3",
         "jobops-policy@0.2.4",
-        "jobops-policy@0.2.5"
+        "jobops-policy@0.2.5",
+        "jobops-policy@0.2.6"
       ],
       "posting_text": "AI Engineer — Synthetic Product Co\n[work mode] Remote\n[location] India\nSynthetic Product Co builds and sells its own AI software product.\nSalary: ₹26 LPA fixed base.\nWorking language: English.\nExperience: 3 years building AI applications.\nYou will build a RAG pipeline using embeddings, vector retrieval with BM25 hybrid search, reranking and LLM evaluation (groundedness, faithfulness) in Python and FastAPI, deployed with Docker and CI/CD.",
       "observation": {
@@ -27478,7 +28036,8 @@
         "jobops-policy@0.2.2",
         "jobops-policy@0.2.3",
         "jobops-policy@0.2.4",
-        "jobops-policy@0.2.5"
+        "jobops-policy@0.2.5",
+        "jobops-policy@0.2.6"
       ],
       "posting_text": "AI Engineer — Synthetic Product Co\n[work mode] Remote\n[location] India\nSynthetic Product Co builds and sells its own AI software product.\nSalary: ₹26 LPA fixed base.\nWorking language: English.\nExperience: 3 years building AI applications.\nYou will build a RAG pipeline using embeddings, vector retrieval with BM25 hybrid search, reranking and LLM evaluation (groundedness, faithfulness) in Python and FastAPI, deployed with Docker and CI/CD.",
       "observation": {
@@ -27579,7 +28138,8 @@
         "jobops-policy@0.2.2",
         "jobops-policy@0.2.3",
         "jobops-policy@0.2.4",
-        "jobops-policy@0.2.5"
+        "jobops-policy@0.2.5",
+        "jobops-policy@0.2.6"
       ],
       "posting_text": "AI Engineer — Synthetic Product Co\n[work mode] Remote\n[location] India\nSynthetic Product Co builds and sells its own AI software product.\nSalary: ₹26 LPA fixed base.\nWorking language: English.\nExperience: 3 years building AI applications.\nYou will build a RAG pipeline using embeddings, vector retrieval with BM25 hybrid search, reranking and LLM evaluation (groundedness, faithfulness) in Python and FastAPI, deployed with Docker and CI/CD.",
       "observation": {
@@ -27682,7 +28242,8 @@
         "jobops-policy@0.2.2",
         "jobops-policy@0.2.3",
         "jobops-policy@0.2.4",
-        "jobops-policy@0.2.5"
+        "jobops-policy@0.2.5",
+        "jobops-policy@0.2.6"
       ],
       "posting_text": "AI Engineer — Synthetic Product Co\n[work mode] Remote\n[location] India\nSynthetic Product Co builds and sells its own AI software product.\nSalary: ₹26 LPA fixed base.\nWorking language: English.\nExperience: 3 years building AI applications.\nYou will build a RAG pipeline using embeddings, vector retrieval with BM25 hybrid search, reranking and LLM evaluation (groundedness, faithfulness) in Python and FastAPI, deployed with Docker and CI/CD.",
       "observation": {
@@ -27785,7 +28346,8 @@
         "jobops-policy@0.2.2",
         "jobops-policy@0.2.3",
         "jobops-policy@0.2.4",
-        "jobops-policy@0.2.5"
+        "jobops-policy@0.2.5",
+        "jobops-policy@0.2.6"
       ],
       "posting_text": "AI Engineer — Synthetic Product Co\n[work mode] Remote\n[location] India\nSynthetic Product Co builds and sells its own AI software product.\nSalary: ₹26 LPA fixed base.\nWorking language: English.\nExperience: 3 years building AI applications.\nYou will build a RAG pipeline using embeddings, vector retrieval with BM25 hybrid search, reranking and LLM evaluation (groundedness, faithfulness) in Python and FastAPI, deployed with Docker and CI/CD.",
       "observation": {
@@ -27887,7 +28449,8 @@
         "jobops-policy@0.2.2",
         "jobops-policy@0.2.3",
         "jobops-policy@0.2.4",
-        "jobops-policy@0.2.5"
+        "jobops-policy@0.2.5",
+        "jobops-policy@0.2.6"
       ],
       "posting_text": "AI Engineer — Synthetic Product Co\n[work mode] Remote\n[location] India\nSynthetic Product Co builds and sells its own AI software product.\nSalary: ₹26 LPA fixed base.\nWorking language: English.\nExperience: 3 years building AI applications.\nYou will build a RAG pipeline using embeddings, vector retrieval with BM25 hybrid search, reranking and LLM evaluation (groundedness, faithfulness) in Python and FastAPI, deployed with Docker and CI/CD.",
       "observation": {
@@ -27990,7 +28553,8 @@
         "jobops-policy@0.2.2",
         "jobops-policy@0.2.3",
         "jobops-policy@0.2.4",
-        "jobops-policy@0.2.5"
+        "jobops-policy@0.2.5",
+        "jobops-policy@0.2.6"
       ],
       "posting_text": "AI Engineer — Synthetic Product Co\n[work mode] Remote\n[location] India\nSynthetic Product Co builds and sells its own AI software product.\nSalary: ₹26 LPA fixed base.\nWorking language: English.\nExperience: 3 years building AI applications.\nYou will build a RAG pipeline using embeddings, vector retrieval with BM25 hybrid search, reranking and LLM evaluation (groundedness, faithfulness) in Python and FastAPI, deployed with Docker and CI/CD.",
       "observation": {
@@ -28092,7 +28656,8 @@
         "jobops-policy@0.2.2",
         "jobops-policy@0.2.3",
         "jobops-policy@0.2.4",
-        "jobops-policy@0.2.5"
+        "jobops-policy@0.2.5",
+        "jobops-policy@0.2.6"
       ],
       "posting_text": "AI Engineer — Synthetic Product Co\n[work mode] Remote\n[location] India\nSynthetic Product Co builds and sells its own AI software product.\nSalary: ₹26 LPA fixed base.\nWorking language: English.\nExperience: 3 years building AI applications.\nYou will build a RAG pipeline using embeddings, vector retrieval with BM25 hybrid search, reranking and LLM evaluation (groundedness, faithfulness) in Python and FastAPI, deployed with Docker and CI/CD.",
       "observation": {
@@ -28194,7 +28759,8 @@
         "jobops-policy@0.2.2",
         "jobops-policy@0.2.3",
         "jobops-policy@0.2.4",
-        "jobops-policy@0.2.5"
+        "jobops-policy@0.2.5",
+        "jobops-policy@0.2.6"
       ],
       "posting_text": "AI Engineer — Synthetic Product Co\n[work mode] Remote\n[location] India\nSynthetic Product Co builds and sells its own AI software product.\nSalary: ₹26 LPA fixed base.\nWorking language: English.\nExperience: 3 years building AI applications.\nYou will build a RAG pipeline using embeddings, vector retrieval with BM25 hybrid search, reranking and LLM evaluation (groundedness, faithfulness) in Python and FastAPI, deployed with Docker and CI/CD.",
       "observation": {
@@ -28296,7 +28862,8 @@
         "jobops-policy@0.2.2",
         "jobops-policy@0.2.3",
         "jobops-policy@0.2.4",
-        "jobops-policy@0.2.5"
+        "jobops-policy@0.2.5",
+        "jobops-policy@0.2.6"
       ],
       "posting_text": "AI Engineer — Synthetic Product Co\n[work mode] Remote\n[location] India\nSynthetic Product Co builds and sells its own AI software product.\nSalary: ₹26 LPA fixed base.\nWorking language: English.\nExperience: 3 years building AI applications.\nYou will build a RAG pipeline using embeddings, vector retrieval with BM25 hybrid search, reranking and LLM evaluation (groundedness, faithfulness) in Python and FastAPI, deployed with Docker and CI/CD.",
       "observation": {
@@ -28398,7 +28965,8 @@
         "jobops-policy@0.2.2",
         "jobops-policy@0.2.3",
         "jobops-policy@0.2.4",
-        "jobops-policy@0.2.5"
+        "jobops-policy@0.2.5",
+        "jobops-policy@0.2.6"
       ],
       "posting_text": "AI Engineer — Synthetic Product Co\n[work mode] Remote\n[location] India\nSynthetic Product Co builds and sells its own AI software product.\nSalary: ₹26 LPA fixed base.\nWorking language: English.\nExperience: 3 years building AI applications.\nYou will build a RAG pipeline using embeddings, vector retrieval with BM25 hybrid search, reranking and LLM evaluation (groundedness, faithfulness) in Python and FastAPI, deployed with Docker and CI/CD.",
       "observation": {
@@ -28500,7 +29068,8 @@
         "jobops-policy@0.2.2",
         "jobops-policy@0.2.3",
         "jobops-policy@0.2.4",
-        "jobops-policy@0.2.5"
+        "jobops-policy@0.2.5",
+        "jobops-policy@0.2.6"
       ],
       "posting_text": "AI Engineer — Synthetic Product Co\n[work mode] Remote\n[location] India\nSynthetic Product Co builds and sells its own AI software product.\nSalary: ₹26 LPA fixed base.\nWorking language: English.\nExperience: 3 years building AI applications.\nYou will build a RAG pipeline using embeddings, vector retrieval with BM25 hybrid search, reranking and LLM evaluation (groundedness, faithfulness) in Python and FastAPI, deployed with Docker and CI/CD.\nYou will be engaged as an independent contractor.",
       "observation": {
@@ -28601,7 +29170,8 @@
         "jobops-policy@0.2.2",
         "jobops-policy@0.2.3",
         "jobops-policy@0.2.4",
-        "jobops-policy@0.2.5"
+        "jobops-policy@0.2.5",
+        "jobops-policy@0.2.6"
       ],
       "posting_text": "AI Engineer — Synthetic Product Co\n[work mode] Remote\n[location] India\nSynthetic Product Co builds and sells its own AI software product.\nSalary: ₹26 LPA fixed base.\nWorking language: English.\nExperience: 3 years building AI applications.\nYou will build a RAG pipeline using embeddings, vector retrieval with BM25 hybrid search, reranking and LLM evaluation (groundedness, faithfulness) in Python and FastAPI, deployed with Docker and CI/CD.\nYou will work closely with external contractors and vendors.",
       "observation": {
@@ -28702,7 +29272,8 @@
         "jobops-policy@0.2.2",
         "jobops-policy@0.2.3",
         "jobops-policy@0.2.4",
-        "jobops-policy@0.2.5"
+        "jobops-policy@0.2.5",
+        "jobops-policy@0.2.6"
       ],
       "posting_text": "AI Engineer — Synthetic Product Co\n[work mode] Remote\n[location] India\nSynthetic Product Co builds and sells its own AI software product.\nSalary: ₹26 LPA fixed base.\nWorking language: English.\nExperience: 3 years building AI applications.\nYou will build a RAG pipeline using embeddings, vector retrieval with BM25 hybrid search, reranking and LLM evaluation (groundedness, faithfulness) in Python and FastAPI, deployed with Docker and CI/CD.\nWe sell B2B analytics software to retailers.",
       "observation": {
@@ -28803,7 +29374,8 @@
         "jobops-policy@0.2.2",
         "jobops-policy@0.2.3",
         "jobops-policy@0.2.4",
-        "jobops-policy@0.2.5"
+        "jobops-policy@0.2.5",
+        "jobops-policy@0.2.6"
       ],
       "posting_text": null,
       "observations": [
@@ -28907,7 +29479,8 @@
         "jobops-policy@0.2.2",
         "jobops-policy@0.2.3",
         "jobops-policy@0.2.4",
-        "jobops-policy@0.2.5"
+        "jobops-policy@0.2.5",
+        "jobops-policy@0.2.6"
       ],
       "posting_text": null,
       "observations": [
@@ -29011,7 +29584,8 @@
         "jobops-policy@0.2.2",
         "jobops-policy@0.2.3",
         "jobops-policy@0.2.4",
-        "jobops-policy@0.2.5"
+        "jobops-policy@0.2.5",
+        "jobops-policy@0.2.6"
       ],
       "posting_text": null,
       "observations": [
@@ -29112,7 +29686,8 @@
         "jobops-policy@0.2.2",
         "jobops-policy@0.2.3",
         "jobops-policy@0.2.4",
-        "jobops-policy@0.2.5"
+        "jobops-policy@0.2.5",
+        "jobops-policy@0.2.6"
       ],
       "posting_text": null,
       "observations": [

@@ -1586,3 +1586,51 @@ The frozen Round-3 corpus contains an authoring defect in 11 posting cases. Each
 ---
 
 **Addendum I status:** OI-053, OI-054 and OI-055 recorded as OPEN. No ruling recorded. No earlier content of this log was modified.
+
+---
+
+# Addendum J — P8b: owner rulings on OI-053, OI-054, OI-055 (appended 2026-10-01)
+
+**Source:** Owner command "JobOps v2 — P8b: Resolve OI-053..055 → Policy 0.2.6 if Required" §5–§7.
+**Recording rule:** append-only; numbering continues from OR-88. Addendum I (the open questions) is not edited; its `RULING:` fields stay as recorded, and the answers are recorded here. No earlier entry is rewritten.
+**Effective policy version:** `jobops-policy@0.2.6` (narrow governance release over 0.2.5). `jobops-policy@0.2.0`–`0.2.5` are unchanged and byte-identical; 0.2.5 (`27fe5d1a…3c93`) keeps its OI-pending behaviour for replay.
+
+| id | OI | Item | Status |
+|---|---|---|---|
+| OR-89 | OI-053 | India preference / priority is explicit India eligibility | ☑ RULED (YES) |
+| OR-90 | OI-054 | Authorization in "the country where the job is posted" with no named country | ☑ RULED (UNKNOWN → REVIEW) |
+| OR-91 | OI-055 | Structured Hybrid + explicit 4–5 office days | ☑ RULED (FAIL) |
+
+---
+
+## 86. OR-89 — India preference / priority is explicit India eligibility (OI-053)
+**Date:** 2026-10-01 · **OI:** OI-053 · **Effective:** `jobops-policy@0.2.6`
+**Question:** Does an India-resident preference/priority statement count as explicit India eligibility for geography purposes?
+### RULING:
+YES. Statements such as "India residents are our priority", "India candidates are preferred", "India-based candidates are preferred" and "India residents are given priority" establish that India is an eligible candidate location and are explicit India eligibility for geography purposes (OR-79 / OR-83 apply). A preference does NOT override an explicit exclusion: "India candidates preferred, but applicants must reside in the United States" keeps the foreign-country restriction; "India preferred, but candidates in India are not eligible" remains excluded. There is no generic "preference always wins" rule: explicit India preference/priority → India eligibility evidence, subject to existing explicit-exclusion precedence.
+**BASIS:** Owner P8b command §5.
+**SUPERSEDES:** the open-item reading of Addendum I OI-053 (UNKNOWN + GEO_INDIA_PREFERENCE_UNRESOLVED, GEO-R29) going forward, via `jobops-policy@0.2.6` (parameter `india_preference_is_eligibility`; `india_eligibility.precedence` puts a negated India clause above a preference). 0.2.5 keeps GEO-R29 for replay.
+
+---
+
+## 87. OR-90 — Authorization in "the country where the job is posted" with no named country (OI-054)
+**Date:** 2026-10-01 · **OI:** OI-054 · **Effective:** `jobops-policy@0.2.5` and `0.2.6` (no behaviour change)
+**Question:** When a posting requires authorization to work in "the country where the job is posted" and names no country, is geography FAIL?
+### RULING:
+UNKNOWN → REVIEW, unless an actual country is separately identified by the posting. The unnamed condition by itself never produces FAIL / EXCLUDED. A named foreign country (United States, Canada, Germany, United Kingdom …) keeps the existing foreign-authorization rules; India keeps the existing India eligibility logic. The country is not inferred from company headquarters, domain, salary currency, job-board metadata, posting source or generic "country where posted" wording, unless it is established by the existing accepted evidence model.
+**BASIS:** Owner P8b command §6.
+**SUPERSEDES:** nothing. Confirms the 0.2.5 behaviour (GEO-R05 UNKNOWN; the OR-50 / 0.2.1 posting-listing fallback applies only when the posting's own location establishes the country).
+
+---
+
+## 88. OR-91 — Structured Hybrid + explicit office-day requirement (OI-055)
+**Date:** 2026-10-01 · **OI:** OI-055 · **Effective:** `jobops-policy@0.2.6`
+**Question:** Structured work mode Hybrid, JD explicitly states five days in the office: FAIL or UNKNOWN + WORK_MODE_CONFLICT?
+### RULING:
+FAIL. The explicit attendance requirement controls the work-mode verdict. Hybrid + explicit 5 office days → FAIL → EXCLUDED; Hybrid + explicit 4 office days → FAIL → EXCLUDED (OR-15: 4–5 office days are FAIL). UNKNOWN + WORK_MODE_CONFLICT is not kept for an unambiguous explicit office-day requirement. It is kept where the evidence genuinely conflicts without a determinable attendance requirement (e.g. structured Hybrid + "office attendance may be required"). Explicit measurable attendance requirement > generic structured work-mode label.
+**BASIS:** Owner P8b command §7, §10.
+**SUPERSEDES:** the OD25 interpretation — golden case OD25 (`tests/fixtures/policy_v023_golden_cases.json`, "Structured Hybrid contradicted by 'every weekday' in the office -> UNKNOWN + WORK_MODE_CONFLICT") and Addendum E implementation note 3 ("structured Hybrid contradicted by 'every weekday in the office' is WORK_MODE_CONFLICT") — going forward, via `jobops-policy@0.2.6` (parameter `office_days_override_hybrid_label`). OD25's historical expectation is not edited and still governs 0.2.3–0.2.5; the superseding 0.2.6 expectation is recorded in `tests/fixtures/policy_v026_golden_cases.json` (`supersessions`). Structured Remote + five office days stays WORK_MODE_CONFLICT (OR-71).
+
+---
+
+**Addendum J status:** OR-89, OR-90, OR-91 recorded; OI-053, OI-054, OI-055 resolved. No earlier content of this log was modified.

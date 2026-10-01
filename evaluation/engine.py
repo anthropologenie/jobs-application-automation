@@ -85,7 +85,9 @@ def evaluate(observations: List[Dict[str, Any]], evidence: List[Dict[str, Any]],
                 break
     geo_facts = D.summarize_geography(geo_rows, listing_rows, places,
                                       bool(policy.params.get("work_authorization_fallback_to_listing")),
-                                      bool(policy.params.get("lock_lists_including_india_do_not_exclude")))  # 0.2.5
+                                      bool(policy.params.get("lock_lists_including_india_do_not_exclude")),  # 0.2.5
+                                      bool(policy.params.get("india_preference_is_eligibility")),  # 0.2.6
+                                      bool(policy.params.get("office_days_override_hybrid_label")))  # 0.2.6
     geo = _verdict(policy, "geography", geo_facts)
 
     # ---------------------------------------------------------- compensation

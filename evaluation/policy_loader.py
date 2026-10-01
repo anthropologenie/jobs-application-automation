@@ -29,6 +29,7 @@ POLICY_PATHS = {
     "jobops-policy@0.2.3": REPO_ROOT / "policy" / "jobops-policy-0.2.3.json",
     "jobops-policy@0.2.4": REPO_ROOT / "policy" / "jobops-policy-0.2.4.json",
     "jobops-policy@0.2.5": REPO_ROOT / "policy" / "jobops-policy-0.2.5.json",
+    "jobops-policy@0.2.6": REPO_ROOT / "policy" / "jobops-policy-0.2.6.json",
 }
 EVIDENCE_GAPS = ("missing", "known")  # OR-80: exactly two classes, no third
 # The default for new evaluations. Switched to 0.2.1 on 2026-09-29 only after
@@ -46,6 +47,8 @@ EVIDENCE_GAPS = ("missing", "known")  # OR-80: exactly two classes, no third
 # 0.2.5 (P8, 2026-10-01) is registered for evaluation and replay but is NOT the default:
 # Round 3 informed it, so its Gate E measurement is a fresh independent Round-4 holdout.
 # The owner switches the default after that measurement.
+# 0.2.6 (P8b, 2026-10-01) adds only the owner rulings OR-89..OR-91 (OI-053..OI-055) to 0.2.5. It is
+# registered for evaluation and replay and is likewise NOT the default.
 DEFAULT_VERSION = "jobops-policy@0.2.4"
 DEFAULT_POLICY_PATH = POLICY_PATHS[DEFAULT_VERSION]
 EXPECTED_VERSION = "ANY_SUPPORTED"

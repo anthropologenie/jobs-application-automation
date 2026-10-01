@@ -1,0 +1,782 @@
+{
+  "artifact": {
+    "id": "jobops-policy-v026-golden-cases",
+    "phase": "P8b (OI-053..OI-055 owner rulings)",
+    "policy_version": "jobops-policy@0.2.6",
+    "harness": "tests/test_p8b_policy_026.py (mutations: tests/p8b_mutations.py)",
+    "base": "Observations are merged over the base observation and JD prefix of tests/fixtures/policy_v025_golden_cases.json (same harness function).",
+    "supersession_rule": "A historical golden expectation is never edited. When an owner ruling changes it, the case is listed under `supersessions` with its historical expectation verbatim, the versions it still governs, the superseding ruling and the expectation from 0.2.6 on. tests/test_p8b_policy_026.py checks both."
+  },
+  "case_count": 20,
+  "cases": [
+    {
+      "case_id": "B53-01",
+      "oi": "OI-053",
+      "ruling": "OR-89",
+      "polarity": "positive",
+      "description": "Priority statement on plain Remote is India eligibility.",
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_location": "Remote",
+        "raw_work_mode": "Remote",
+        "raw_text": "India residents are our priority."
+      },
+      "expected": {
+        "dimensions": {
+          "geography": "PASS"
+        },
+        "rules": {
+          "geography": "GEO-R26"
+        },
+        "lane": "SHORTLIST",
+        "flags_include": []
+      },
+      "mutation": {
+        "remove": "OR-89",
+        "expected_without_ruling": {
+          "verdict": "UNKNOWN",
+          "rule": "GEO-R29",
+          "lane": "REVIEW"
+        },
+        "fails_without_ruling": true
+      }
+    },
+    {
+      "case_id": "B53-02",
+      "oi": "OI-053",
+      "ruling": "OR-89",
+      "polarity": "positive",
+      "description": "Preference resolves APAC ambiguity.",
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_location": "Remote — APAC",
+        "raw_work_mode": "Remote",
+        "raw_text": "India candidates are preferred."
+      },
+      "expected": {
+        "dimensions": {
+          "geography": "PASS"
+        },
+        "rules": {
+          "geography": "GEO-R26"
+        },
+        "lane": "SHORTLIST",
+        "flags_include": []
+      },
+      "mutation": {
+        "remove": "OR-89",
+        "expected_without_ruling": {
+          "verdict": "UNKNOWN",
+          "rule": "GEO-R05",
+          "lane": "REVIEW"
+        },
+        "fails_without_ruling": true
+      }
+    },
+    {
+      "case_id": "B53-03",
+      "oi": "OI-053",
+      "ruling": "OR-89",
+      "polarity": "positive",
+      "description": "Priority lifts a single-country lock.",
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_location": "Remote — Germany",
+        "raw_work_mode": "Remote",
+        "raw_text": "India-based applicants are given priority."
+      },
+      "expected": {
+        "dimensions": {
+          "geography": "PASS"
+        },
+        "rules": {
+          "geography": "GEO-R26"
+        },
+        "lane": "SHORTLIST",
+        "flags_include": []
+      },
+      "mutation": {
+        "remove": "OR-89",
+        "expected_without_ruling": {
+          "verdict": "UNKNOWN",
+          "rule": "GEO-R29",
+          "lane": "REVIEW"
+        },
+        "fails_without_ruling": true
+      }
+    },
+    {
+      "case_id": "B53-04",
+      "oi": "OI-053",
+      "ruling": "OR-89",
+      "polarity": "positive",
+      "description": "Priority lifts a multi-country lock (OR-83 precedence).",
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_location": "Remote — EMEA",
+        "raw_work_mode": "Remote",
+        "raw_text": "India residents are given priority for this role."
+      },
+      "expected": {
+        "dimensions": {
+          "geography": "PASS"
+        },
+        "rules": {
+          "geography": "GEO-R27"
+        },
+        "lane": "SHORTLIST",
+        "flags_include": []
+      },
+      "mutation": {
+        "remove": "OR-89",
+        "expected_without_ruling": {
+          "verdict": "UNKNOWN",
+          "rule": "GEO-R29",
+          "lane": "REVIEW"
+        },
+        "fails_without_ruling": true
+      }
+    },
+    {
+      "case_id": "B53-N1",
+      "oi": "OI-053",
+      "ruling": "OR-89",
+      "polarity": "negative",
+      "description": "A preference never overrides an explicit foreign residence requirement.",
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_location": "Remote",
+        "raw_work_mode": "Remote",
+        "raw_text": "India candidates are preferred, but applicants must reside in the US."
+      },
+      "expected": {
+        "dimensions": {
+          "geography": "FAIL"
+        },
+        "rules": {
+          "geography": "GEO-R18"
+        },
+        "lane": "EXCLUDED",
+        "flags_include": []
+      },
+      "mutation": {
+        "remove": "OR-89",
+        "expected_without_ruling": {
+          "verdict": "FAIL",
+          "rule": "GEO-R18",
+          "lane": "EXCLUDED"
+        },
+        "fails_without_ruling": false
+      }
+    },
+    {
+      "case_id": "B53-N2",
+      "oi": "OI-053",
+      "ruling": "OR-89",
+      "polarity": "negative",
+      "description": "An explicit India exclusion keeps the lock.",
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_location": "Remote — Germany",
+        "raw_work_mode": "Remote",
+        "raw_text": "India preferred, but candidates in India are not eligible."
+      },
+      "expected": {
+        "dimensions": {
+          "geography": "FAIL"
+        },
+        "rules": {
+          "geography": "GEO-R03"
+        },
+        "lane": "EXCLUDED",
+        "flags_include": []
+      },
+      "mutation": {
+        "remove": "OR-89",
+        "expected_without_ruling": {
+          "verdict": "FAIL",
+          "rule": "GEO-R03",
+          "lane": "EXCLUDED"
+        },
+        "fails_without_ruling": false
+      }
+    },
+    {
+      "case_id": "B53-N3",
+      "oi": "OI-053",
+      "ruling": "OR-89",
+      "polarity": "negative",
+      "description": "A negated India clause outranks a preference clause in the same sentence.",
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_location": "Remote — Germany",
+        "raw_work_mode": "Remote",
+        "raw_text": "India candidates are preferred, but candidates in India are not eligible."
+      },
+      "expected": {
+        "dimensions": {
+          "geography": "FAIL"
+        },
+        "rules": {
+          "geography": "GEO-R03"
+        },
+        "lane": "EXCLUDED",
+        "flags_include": []
+      },
+      "mutation": {
+        "remove": "OR-89-precedence",
+        "expected_without_ruling": {
+          "verdict": "PASS",
+          "rule": "GEO-R26",
+          "lane": "SHORTLIST"
+        },
+        "fails_without_ruling": true
+      }
+    },
+    {
+      "case_id": "B53-N4",
+      "oi": "OI-053",
+      "ruling": "OR-89",
+      "polarity": "negative",
+      "description": "An excluded India is never eligibility on plain Remote.",
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_location": "Remote",
+        "raw_work_mode": "Remote",
+        "raw_text": "India preferred, but candidates in India are not eligible."
+      },
+      "expected": {
+        "dimensions": {
+          "geography": "UNKNOWN"
+        },
+        "rules": {
+          "geography": "GEO-R05"
+        },
+        "lane": "REVIEW",
+        "flags_include": [
+          "GEO_REGION_AMBIGUOUS"
+        ]
+      },
+      "mutation": {
+        "remove": "OR-89",
+        "expected_without_ruling": {
+          "verdict": "UNKNOWN",
+          "rule": "GEO-R05",
+          "lane": "REVIEW"
+        },
+        "fails_without_ruling": false
+      }
+    },
+    {
+      "case_id": "B54-01",
+      "oi": "OI-054",
+      "ruling": "OR-90",
+      "polarity": "positive",
+      "description": "Unnamed posting country: UNKNOWN -> REVIEW, never FAIL.",
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_location": "Remote",
+        "raw_work_mode": "Remote",
+        "raw_text": "Candidates must be authorized to work in the country where the job is posted."
+      },
+      "expected": {
+        "dimensions": {
+          "geography": "UNKNOWN"
+        },
+        "rules": {
+          "geography": "GEO-R05"
+        },
+        "lane": "REVIEW",
+        "flags_include": [
+          "GEO_REGION_AMBIGUOUS"
+        ]
+      },
+      "mutation": {
+        "remove": null,
+        "note": "OR-90 changed no behaviour (already 0.2.5); mutation not applicable."
+      }
+    },
+    {
+      "case_id": "B54-02",
+      "oi": "OI-054",
+      "ruling": "OR-90",
+      "polarity": "negative",
+      "description": "A named foreign country keeps the foreign-authorization FAIL.",
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_location": "Remote",
+        "raw_work_mode": "Remote",
+        "raw_text": "Candidates must be authorized to work in the United States."
+      },
+      "expected": {
+        "dimensions": {
+          "geography": "FAIL"
+        },
+        "rules": {
+          "geography": "GEO-R04"
+        },
+        "lane": "EXCLUDED",
+        "flags_include": []
+      },
+      "mutation": {
+        "remove": null,
+        "note": "OR-90 changed no behaviour (already 0.2.5); mutation not applicable."
+      }
+    },
+    {
+      "case_id": "B54-03",
+      "oi": "OI-054",
+      "ruling": "OR-90",
+      "polarity": "negative",
+      "description": "India authorization on an India listing: PASS.",
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_location": "Remote — India",
+        "raw_work_mode": "Remote",
+        "raw_text": "Candidates must be authorized to work in India."
+      },
+      "expected": {
+        "dimensions": {
+          "geography": "PASS"
+        },
+        "rules": {
+          "geography": "GEO-R02"
+        },
+        "lane": "SHORTLIST",
+        "flags_include": []
+      },
+      "mutation": {
+        "remove": null,
+        "note": "OR-90 changed no behaviour (already 0.2.5); mutation not applicable."
+      }
+    },
+    {
+      "case_id": "B54-04",
+      "oi": "OI-054",
+      "ruling": "OR-90",
+      "polarity": "negative",
+      "description": "India authorization never FAILs.",
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_location": "Remote",
+        "raw_work_mode": "Remote",
+        "raw_text": "Candidates must be authorized to work in India."
+      },
+      "expected": {
+        "dimensions": {
+          "geography": "UNKNOWN"
+        },
+        "rules": {
+          "geography": "GEO-R05"
+        },
+        "lane": "REVIEW",
+        "flags_include": [
+          "GEO_REGION_AMBIGUOUS"
+        ]
+      },
+      "mutation": {
+        "remove": null,
+        "note": "OR-90 changed no behaviour (already 0.2.5); mutation not applicable."
+      }
+    },
+    {
+      "case_id": "B55-01",
+      "oi": "OI-055",
+      "ruling": "OR-91",
+      "polarity": "positive",
+      "description": "Hybrid + explicit 5 office days: FAIL.",
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_location": "Bengaluru",
+        "raw_work_mode": "Hybrid",
+        "raw_text": "You will be in the office five days a week."
+      },
+      "expected": {
+        "dimensions": {
+          "geography": "FAIL"
+        },
+        "rules": {
+          "geography": "GEO-R07"
+        },
+        "lane": "EXCLUDED",
+        "flags_include": []
+      },
+      "mutation": {
+        "remove": "OR-91",
+        "expected_without_ruling": {
+          "verdict": "UNKNOWN",
+          "rule": "GEO-R25",
+          "lane": "REVIEW"
+        },
+        "fails_without_ruling": true
+      }
+    },
+    {
+      "case_id": "B55-02",
+      "oi": "OI-055",
+      "ruling": "OR-91",
+      "polarity": "positive",
+      "description": "Hybrid + 5 days at the Bengaluru office: FAIL.",
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_location": "Bengaluru",
+        "raw_work_mode": "Hybrid",
+        "raw_text": "You will work from our Bengaluru office five days per week."
+      },
+      "expected": {
+        "dimensions": {
+          "geography": "FAIL"
+        },
+        "rules": {
+          "geography": "GEO-R07"
+        },
+        "lane": "EXCLUDED",
+        "flags_include": []
+      },
+      "mutation": {
+        "remove": "OR-91",
+        "expected_without_ruling": {
+          "verdict": "UNKNOWN",
+          "rule": "GEO-R25",
+          "lane": "REVIEW"
+        },
+        "fails_without_ruling": true
+      }
+    },
+    {
+      "case_id": "B55-03",
+      "oi": "OI-055",
+      "ruling": "OR-91",
+      "polarity": "positive",
+      "description": "Hybrid + all five working days: FAIL.",
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_location": "Bengaluru",
+        "raw_work_mode": "Hybrid",
+        "raw_text": "Attendance at the Koramangala campus is required on all five working days."
+      },
+      "expected": {
+        "dimensions": {
+          "geography": "FAIL"
+        },
+        "rules": {
+          "geography": "GEO-R07"
+        },
+        "lane": "EXCLUDED",
+        "flags_include": []
+      },
+      "mutation": {
+        "remove": "OR-91",
+        "expected_without_ruling": {
+          "verdict": "UNKNOWN",
+          "rule": "GEO-R25",
+          "lane": "REVIEW"
+        },
+        "fails_without_ruling": true
+      }
+    },
+    {
+      "case_id": "B55-04",
+      "oi": "OI-055",
+      "ruling": "OR-91",
+      "polarity": "positive",
+      "description": "Hybrid + explicit 4 office days: FAIL (already 0.2.5).",
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_location": "Bengaluru",
+        "raw_work_mode": "Hybrid",
+        "raw_text": "You will be in the office four days a week."
+      },
+      "expected": {
+        "dimensions": {
+          "geography": "FAIL"
+        },
+        "rules": {
+          "geography": "GEO-R07"
+        },
+        "lane": "EXCLUDED",
+        "flags_include": []
+      },
+      "mutation": {
+        "remove": "OR-91",
+        "expected_without_ruling": {
+          "verdict": "FAIL",
+          "rule": "GEO-R07",
+          "lane": "EXCLUDED"
+        },
+        "fails_without_ruling": false
+      }
+    },
+    {
+      "case_id": "B55-N1",
+      "oi": "OI-055",
+      "ruling": "OR-91",
+      "polarity": "negative",
+      "description": "Attendance without a count stays days-unspecified UNKNOWN.",
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_location": "Bengaluru",
+        "raw_work_mode": "Hybrid",
+        "raw_text": "Office attendance may occasionally be required."
+      },
+      "expected": {
+        "dimensions": {
+          "geography": "UNKNOWN"
+        },
+        "rules": {
+          "geography": "GEO-R08"
+        },
+        "lane": "REVIEW",
+        "flags_include": [
+          "HYBRID_DAYS_UNSPECIFIED"
+        ]
+      },
+      "mutation": {
+        "remove": "OR-91",
+        "expected_without_ruling": {
+          "verdict": "UNKNOWN",
+          "rule": "GEO-R08",
+          "lane": "REVIEW"
+        },
+        "fails_without_ruling": false
+      }
+    },
+    {
+      "case_id": "B55-N2",
+      "oi": "OI-055",
+      "ruling": "OR-91",
+      "polarity": "negative",
+      "description": "A bare on-site statement with no count stays WORK_MODE_CONFLICT.",
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_location": "Bengaluru",
+        "raw_work_mode": "Hybrid",
+        "raw_text": "This is an on-site role."
+      },
+      "expected": {
+        "dimensions": {
+          "geography": "UNKNOWN"
+        },
+        "rules": {
+          "geography": "GEO-R25"
+        },
+        "lane": "REVIEW",
+        "flags_include": [
+          "WORK_MODE_CONFLICT"
+        ]
+      },
+      "mutation": {
+        "remove": "OR-91",
+        "expected_without_ruling": {
+          "verdict": "UNKNOWN",
+          "rule": "GEO-R25",
+          "lane": "REVIEW"
+        },
+        "fails_without_ruling": false
+      }
+    },
+    {
+      "case_id": "B55-N3",
+      "oi": "OI-055",
+      "ruling": "OR-91",
+      "polarity": "negative",
+      "description": "Structured Remote + five office days stays WORK_MODE_CONFLICT (OR-71).",
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_location": "Remote - India",
+        "raw_work_mode": "Remote",
+        "raw_text": "The team operates from our Chennai delivery centre five days a week."
+      },
+      "expected": {
+        "dimensions": {
+          "geography": "UNKNOWN"
+        },
+        "rules": {
+          "geography": "GEO-R25"
+        },
+        "lane": "REVIEW",
+        "flags_include": [
+          "WORK_MODE_CONFLICT"
+        ]
+      },
+      "mutation": {
+        "remove": "OR-91",
+        "expected_without_ruling": {
+          "verdict": "UNKNOWN",
+          "rule": "GEO-R25",
+          "lane": "REVIEW"
+        },
+        "fails_without_ruling": false
+      }
+    },
+    {
+      "case_id": "B55-N4",
+      "oi": "OI-055",
+      "ruling": "OR-91",
+      "polarity": "negative",
+      "description": "Hybrid + 2 office days stays PASS.",
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_location": "Bengaluru",
+        "raw_work_mode": "Hybrid",
+        "raw_text": "Two days a week in the office."
+      },
+      "expected": {
+        "dimensions": {
+          "geography": "PASS"
+        },
+        "rules": {
+          "geography": "GEO-R06"
+        },
+        "lane": "SHORTLIST",
+        "flags_include": []
+      },
+      "mutation": {
+        "remove": "OR-91",
+        "expected_without_ruling": {
+          "verdict": "PASS",
+          "rule": "GEO-R06",
+          "lane": "SHORTLIST"
+        },
+        "fails_without_ruling": false
+      }
+    }
+  ],
+  "supersessions": [
+    {
+      "fixture": "tests/fixtures/policy_v023_golden_cases.json",
+      "case_id": "OD25",
+      "historical_versions": [
+        "jobops-policy@0.2.3",
+        "jobops-policy@0.2.4",
+        "jobops-policy@0.2.5"
+      ],
+      "historical_expected": {
+        "dimensions": {
+          "geography": "UNKNOWN"
+        },
+        "flags_include": [
+          "WORK_MODE_CONFLICT"
+        ]
+      },
+      "superseded_by": "OR-91 (OI-055 = FAIL)",
+      "why": "Structured Hybrid + 'Office every weekday at our Whitefield campus' is an explicit, measurable 5-day attendance requirement. OR-91 rules it FAIL (OR-15: Bengaluru hybrid 4-5 days -> FAIL) and supersedes the WORK_MODE_CONFLICT interpretation recorded as Addendum E implementation note 3.",
+      "expected_from_0_2_6": {
+        "dimensions": {
+          "geography": "FAIL"
+        },
+        "rules": {
+          "geography": "GEO-R07"
+        },
+        "lane": "EXCLUDED",
+        "flags_exclude": [
+          "WORK_MODE_CONFLICT"
+        ]
+      }
+    },
+    {
+      "fixture": "tests/fixtures/policy_v025_golden_cases.json",
+      "case_id": "P8-PRF-01",
+      "historical_versions": [
+        "jobops-policy@0.2.5"
+      ],
+      "historical_expected": {
+        "dimensions": {
+          "geography": "UNKNOWN"
+        },
+        "rules": {
+          "geography": "GEO-R29"
+        },
+        "lane": "REVIEW",
+        "flags_include": [
+          "GEO_INDIA_PREFERENCE_UNRESOLVED"
+        ],
+        "flags_exclude": []
+      },
+      "superseded_by": "OR-89 (OI-053 = YES)",
+      "why": "0.2.5 held India preference/priority as UNKNOWN pending OI-053 (GEO-R29). OR-89 rules it explicit India eligibility.",
+      "expected_from_0_2_6": {
+        "dimensions": {
+          "geography": "PASS"
+        },
+        "rules": {
+          "geography": "GEO-R26"
+        },
+        "lane": "SHORTLIST",
+        "flags_exclude": [
+          "GEO_INDIA_PREFERENCE_UNRESOLVED"
+        ]
+      }
+    },
+    {
+      "fixture": "tests/fixtures/policy_v025_golden_cases.json",
+      "case_id": "P8-PRF-02",
+      "historical_versions": [
+        "jobops-policy@0.2.5"
+      ],
+      "historical_expected": {
+        "dimensions": {
+          "geography": "UNKNOWN"
+        },
+        "rules": {
+          "geography": "GEO-R29"
+        },
+        "lane": "REVIEW",
+        "flags_include": [
+          "GEO_INDIA_PREFERENCE_UNRESOLVED"
+        ],
+        "flags_exclude": []
+      },
+      "superseded_by": "OR-89 (OI-053 = YES)",
+      "why": "0.2.5 held India preference/priority as UNKNOWN pending OI-053 (GEO-R29). OR-89 rules it explicit India eligibility.",
+      "expected_from_0_2_6": {
+        "dimensions": {
+          "geography": "PASS"
+        },
+        "rules": {
+          "geography": "GEO-R26"
+        },
+        "lane": "SHORTLIST",
+        "flags_exclude": [
+          "GEO_INDIA_PREFERENCE_UNRESOLVED"
+        ]
+      }
+    },
+    {
+      "fixture": "tests/fixtures/policy_v025_golden_cases.json",
+      "case_id": "P8-PRF-03",
+      "historical_versions": [
+        "jobops-policy@0.2.5"
+      ],
+      "historical_expected": {
+        "dimensions": {
+          "geography": "UNKNOWN"
+        },
+        "rules": {
+          "geography": "GEO-R29"
+        },
+        "lane": "REVIEW",
+        "flags_include": [
+          "GEO_INDIA_PREFERENCE_UNRESOLVED"
+        ],
+        "flags_exclude": [
+          "GEO_REGION_AMBIGUOUS"
+        ]
+      },
+      "superseded_by": "OR-89 (OI-053 = YES)",
+      "why": "0.2.5 held India preference/priority as UNKNOWN pending OI-053 (GEO-R29). OR-89 rules it explicit India eligibility.",
+      "expected_from_0_2_6": {
+        "dimensions": {
+          "geography": "PASS"
+        },
+        "rules": {
+          "geography": "GEO-R26"
+        },
+        "lane": "SHORTLIST",
+        "flags_exclude": [
+          "GEO_INDIA_PREFERENCE_UNRESOLVED"
+        ]
+      }
+    }
+  ]
+}
