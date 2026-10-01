@@ -1441,3 +1441,63 @@ YES. An explicit statement that candidates in India (or worldwide candidates) ar
 Precedence: (1) explicit India/worldwide eligibility statement; (2) explicit regional/country restriction; (3) plain Remote with insufficient eligibility evidence. The single foreign-country rule of OR-79 is unchanged ("Remote — Canada" → FAIL; + India/worldwide eligibility → PASS); the same evidence precedence now applies to multi-country regions (EMEA, LATAM, UK/Europe, …).
 **BASIS:** Owner post-P6 command resolving OI-052.
 **SUPERSEDES:** the temporary recall-safe reading of OI-052 (UNKNOWN + GEO_REGION_AMBIGUOUS, GEO-R27) in the P6 build of `jobops-policy@0.2.4`, going forward, via the updated `jobops-policy@0.2.4` (GEO-R27 → PASS). 0.2.0–0.2.3 are unchanged.
+
+---
+
+# Addendum G — P7a-Final Round-3 corpus resolutions (appended 2026-10-01)
+
+**Source:** Owner command "JobOps v2 — P7a-Final Round3 Corpus Resolution" §1–§4.
+**Recording rule:** append-only; numbering continues from OR-83. No earlier entry is rewritten.
+**Effective policy version:** `jobops-policy@0.2.4` for all four. Each ruling makes explicit a boundary that the accepted 0.2.4 rules already apply. None changes policy semantics, so no 0.2.5 is created and the 0.2.4 artifact and its accepted hash are untouched. 0.2.0–0.2.3 are unchanged.
+**Corpus:** `data/fixtures/round3/blind_cases_round3.json`. Pre-resolution authoring hash `1ad02692fcdad4a9fd02070a8a30e7b20cd3f3d4fa5180cc9d6c2d69172429fe`; the final measurement hash is in `blind_cases_round3.sha256`.
+
+| id | Corpus item | Item | Status |
+|---|---|---|---|
+| OR-84 | R3-105 | An 8–10 year requirement is STRETCH | ☑ RULED (YES) |
+| OR-85 | R3-106 | Range with minimum < ₹18L and maximum exactly ₹18L | ☑ RULED (UNKNOWN) |
+| OR-86 | R3-107 | Direct fixed-term contract of exactly 6 months | ☑ RULED (UNKNOWN) |
+| OR-87 | S-08 | Order of newness states in the REVIEW queue | ☑ RULED |
+
+---
+
+## 81. OR-84 — An 8–10 year requirement is STRETCH (R3-105)
+**Date:** 2026-10-01 · **Affects:** Round-3 R3-105 · **Effective:** `jobops-policy@0.2.4`
+**Question:** Is an 8–10 year experience requirement classified as STRETCH?
+### RULING:
+YES. `experience_label = STRETCH`. A stated range whose minimum is above the relevant experience (3 years) is STRETCH, whatever its upper bound. DIRECT (range entirely ≤ 3) and REASONABLE (range containing 3 and extending above it) keep the definitions of OR-21 and OR-53. STRETCH carries `EXPERIENCE_STRETCH` and routes to REVIEW, never EXCLUDED (OR-68). An 8+ year minimum is also a "7+ years" seniority-parking signal under OR-54, which affects the lane only when relevance is MODERATE. Experience is never an eligibility FAIL.
+**RATIONALE:** OR-21 lists "7+ years → STRETCH" and OR-53 lists "4–6, 5–7 and 7+ → STRETCH". 8–10 lies entirely above 7, so STRETCH is the only label consistent with both. 0.2.4 rule EXP-R07 (RANGE, minimum > 3 → STRETCH) already implements this. The owner sheet given to the corpus author left the STRETCH boundary out, but the policy did not.
+**SUPERSEDES:** nothing. Makes the STRETCH range boundary explicit.
+
+---
+
+## 82. OR-85 — Compensation range ending exactly at ₹18L (R3-106)
+**Date:** 2026-10-01 · **Affects:** Round-3 R3-106 · **Effective:** `jobops-policy@0.2.4`
+**Question:** Is a compensation range with minimum < ₹18L and maximum = ₹18L (e.g. ₹12–18L) FAIL, UNKNOWN or PASS?
+### RULING:
+UNKNOWN. This is the general boundary rule, not a special case: a range is FAIL only when its maximum is strictly below ₹18L. A range whose minimum is below ₹18L and whose maximum is at or above ₹18L (the maximum may equal ₹18L) is a floor straddle → UNKNOWN + `SALARY_RANGE_STRADDLES_FLOOR` (base salary) or `CTC_RANGE_STRADDLES_FLOOR` (CTC), which routes to REVIEW. It is never EXCLUDED on compensation.
+**RATIONALE:** OR-18 fails only compensation that is "clearly below ₹18L". A ₹12–18L range can be paid at the floor, and OR-33 holds that exactly ₹18L passes eligibility. So the range is not clearly below the floor, and not wholly at or above it either. That is the straddle condition. 0.2.4 already applies it: COMP-R01 fails only on `max_inr < floor`, and COMP-R04 / COMP-C05 return UNKNOWN + straddle flag on `min_inr < floor`.
+**SUPERSEDES:** nothing. Makes the inclusive upper-bound boundary of the straddle rule explicit.
+
+---
+
+## 83. OR-86 — Direct fixed-term contract of exactly 6 months (R3-107)
+**Date:** 2026-10-01 · **Affects:** Round-3 R3-107 · **Effective:** `jobops-policy@0.2.4`
+**Question:** Is a direct-company fixed-term contract of exactly 6 months FAIL, UNKNOWN or PASS?
+### RULING:
+UNKNOWN + `LONG_TERM_DIRECT_CONTRACT`, routing to REVIEW. Short-term means strictly under 6 months (`contract_months < short_term_contract_months`, default 6). A direct-company contract of 6 months or more is long-term. This is an explicit ruling on the 6-month boundary, not an inference from "< 6 months". A 6-month contract with no direct-employment evidence is still governed by OR-19 / OR-75 (plain contract → FAIL), and a 6-month internship or temporary role is still FAIL as internship or temporary.
+**RATIONALE:** OR-19 defines short-term as "< 6 months". The Career doc wording it superseded called a 6-month duration the minimum acceptable one. Treating exactly 6 months as long-term keeps that intent, and REVIEW rather than FAIL is the recall-safe reading at the boundary. 0.2.4 rules EMP-R09 (`lt 6` → FAIL) and EMP-R10 (direct, `gte 6` → UNKNOWN + LONG_TERM_DIRECT_CONTRACT) already implement it.
+**SUPERSEDES:** nothing. Makes the 6-month boundary of OR-19 explicit.
+
+---
+
+## 84. OR-87 — Order of newness states in the REVIEW queue (S-08)
+**Date:** 2026-10-01 · **Affects:** Round-3 sequence S-08 · **Effective:** `jobops-policy@0.2.4`
+**Question:** Within the newness ordering key, what is the relative order of NEW, UPDATED and SEEN_BEFORE?
+### RULING:
+NEW > UPDATED > SEEN_BEFORE, strictly. There are no ties. Newness is the second ordering key, after relevance and before evidence completeness (OR-28), so it decides only between items of equal relevance. Overflow carry-forward and the STRONG exemption are unchanged (OR-29, OR-65). An item carried over from an earlier day is SEEN_BEFORE unless a material change makes it UPDATED.
+**RATIONALE:** OR-28 made newness the second overflow key without stating the order of its states. 0.2.4 `queue.ordering[newness]` already lists `["NEW", "UPDATED", "SEEN_BEFORE"]`. Unseen requisitions are surfaced first. A materially changed requisition needs a fresh look, so it outranks one already seen unchanged, but not a never-seen one.
+**SUPERSEDES:** nothing. Makes the 0.2.4 newness order an owner ruling. The S-08 corpus assumption ("NEW ranks above SEEN_BEFORE") is confirmed and is no longer an assumption.
+
+---
+
+**Addendum G status:** OR-84 … OR-87 recorded. No earlier content of this log was modified. No policy artifact was created or changed.
