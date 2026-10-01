@@ -1,0 +1,73 @@
+{
+  "corpus": "blind_cases_round3.json",
+  "applies_to_hash": "25aef0e0c0096d31231cc8ea96ea8c4796ba981c0160daa148ebeecad7c639cb",
+  "kind": "author expected-output corrections (authoring defect)",
+  "corrections": [
+    {
+      "id": "R3-004",
+      "geography": "FAIL",
+      "excluded": true,
+      "basis": "Region lock that excludes India: FAIL | Single foreign country remote with no India-or-worldwide statement is a region lock."
+    },
+    {
+      "id": "R3-007",
+      "geography": "FAIL",
+      "excluded": true,
+      "basis": "'Remote – EMEA' is FAIL because India is outside EMEA | EMEA region lock with no India statement."
+    },
+    {
+      "id": "R3-011",
+      "geography": "FAIL",
+      "excluded": true,
+      "basis": "Statements welcoming other countries do not count as India eligibility | LATAM lock stays FAIL; a welcome to US candidates is not India eligibility."
+    },
+    {
+      "id": "R3-012",
+      "geography": "FAIL",
+      "excluded": true,
+      "basis": "Work authorization required elsewhere: FAIL | Explicit authorization-to-work statement beats plain Remote."
+    },
+    {
+      "id": "R3-014",
+      "geography": "FAIL",
+      "excluded": true,
+      "basis": "Region lock that excludes India (US) | Explicit multi-word residence requirement for the United States."
+    },
+    {
+      "id": "R3-017",
+      "geography": "FAIL",
+      "excluded": true,
+      "basis": "Bengaluru hybrid: 4 or 5 days FAIL | Monday through Thursday is four office days."
+    },
+    {
+      "id": "R3-018",
+      "geography": "FAIL",
+      "excluded": true,
+      "basis": "Bengaluru hybrid: 4 or 5 days FAIL | Five office days under a hybrid label is FAIL."
+    },
+    {
+      "id": "R3-025",
+      "geography": "FAIL",
+      "excluded": true,
+      "basis": "Bengaluru on-site: FAIL | Structured field On-site in Bengaluru."
+    },
+    {
+      "id": "R3-026",
+      "geography": "FAIL",
+      "excluded": true,
+      "basis": "Hybrid outside Bengaluru: FAIL | Hyderabad hybrid fails regardless of days."
+    },
+    {
+      "id": "R3-027",
+      "geography": "FAIL",
+      "excluded": true,
+      "basis": "On-site abroad, relocation or visa roles: FAIL | On-site abroad with relocation and visa."
+    },
+    {
+      "id": "R3-029",
+      "geography": "FAIL",
+      "excluded": true,
+      "basis": "Explicit requirement to reside in a non-Bengaluru Indian city: FAIL | Explicit multi-word residence requirement for Chennai."
+    }
+  ]
+}

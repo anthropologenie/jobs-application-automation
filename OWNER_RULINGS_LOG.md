@@ -1501,3 +1501,43 @@ NEW > UPDATED > SEEN_BEFORE, strictly. There are no ties. Newness is the second 
 ---
 
 **Addendum G status:** OR-84 … OR-87 recorded. No earlier content of this log was modified. No policy artifact was created or changed.
+
+---
+
+# Addendum H — P7b Round-3 follow-up: OR-88 and the Round-3 authoring defect (appended 2026-10-01)
+
+**Source:** Owner command "JobOps v2 — P7b Follow-up: OR-88 + Round 3 Author-Correction Overlay" §3–§5.
+**Recording rule:** append-only; numbering continues from OR-87. No earlier entry, including Addendum G, is rewritten.
+**Effective policy version:** `jobops-policy@0.2.4`. No 0.2.5 is created; the 0.2.4 artifact and its accepted hash (`735934bf33533a31d207349cf689a3df6dafcdacc9c6a11b889b92e5af8c8136`) are untouched. 0.2.0–0.2.3 are unchanged.
+**Corpus:** `data/fixtures/round3/blind_cases_round3.json`, SHA-256 `25aef0e0c0096d31231cc8ea96ea8c4796ba981c0160daa148ebeecad7c639cb` (unchanged).
+
+| id | Corpus item | Item | Status |
+|---|---|---|---|
+| OR-88 | S-08 | D+3 overflow parking is time-based and unconditional | ☑ RULED (YES) |
+| — | R3-004, 007, 011, 012, 014, 017, 018, 025, 026, 027, 029 | Round-3 authoring defect: expected-output corrections | ☑ RECORDED |
+
+---
+
+## 85. OR-88 — S-08 D+3 parking behaviour
+**Date:** 2026-10-01 · **Affects:** Round-3 sequence S-08 · **Effective:** `jobops-policy@0.2.4`
+**Question:** Does the D+3 parking rule apply unconditionally to a non-STRONG item, or only when the REVIEW queue has exhausted its daily capacity?
+### RULING:
+YES — D+3 parking is time-based and unconditional. A non-STRONG item reaching D+3 is PARKED regardless of whether the REVIEW queue currently has fewer than 10 items. The daily REVIEW cap of 10 is an independent capacity constraint; it does not override the D+3 parking rule. **D+3 + non-STRONG → PARKED**, even when the REVIEW queue size is < 10. The STRONG exemption (OR-29) and the carry counting of OR-65 (first overflow day D is carry day 1; eligible D+1 and D+2) are unchanged.
+**RATIONALE:** The existing Addendum D language (OR-65) says a non-STRONG item is "PARKED at D+3". Reading this as conditional on queue capacity would introduce a new condition not stated by the existing rule.
+**SUPERSEDES:** no ruling. It resolves the P7b SPEC_AMBIGUITY on S-08 and confirms the S-08 corpus expectation (N01 PARKED on 2026-09-27). Note: OR-65 described the then-existing queue behaviour as already implementing D+3 parking; the P7b measurement shows the 0.2.4 `plan_day` parks a carried item only when it overflows the cap again, so the implementation does not yet conform to OR-88 when the queue is below the cap. The 0.2.4 implementation is not altered by this ruling.
+
+---
+
+## Round-3 authoring defect — author expected-output corrections (R3-004, R3-007, R3-011, R3-012, R3-014, R3-017, R3-018, R3-025, R3-026, R3-027, R3-029)
+**Date:** 2026-10-01 · **Found by:** P7b initial measurement (`docs/reports/JOBOPS_P7B_ROUND3_GATE_E_MEASUREMENT_2026-10-01.md`)
+### RECORD:
+The frozen Round-3 corpus contains an authoring defect in 11 posting cases. Each case's own `tests` label and `rationale` already specify geography FAIL, but the `expected` object carries `geography = PASS` and `excluded = false`. The defect was a failure to copy the intended FAIL verdict into the `expected` object. The intended expectation for each of the 11 cases is `geography = FAIL`, `excluded = true`; no other dimension, posting text, test label or rationale is affected.
+- **The frozen corpus remains unchanged** and byte-identical; **its SHA-256 remains `25aef0e0c0096d31231cc8ea96ea8c4796ba981c0160daa148ebeecad7c639cb`.**
+- The correction is represented by an external expected-output overlay, `data/fixtures/round3/blind_round3_expected_output_corrections.json` ("author expected-output corrections (authoring defect)", `applies_to_hash` = the frozen corpus SHA).
+- This is a **corpus expected-output error, not an engine error.** These 11 cases are not engine failures.
+- The overlay is for measurement only. It does not alter policy semantics, rulings, the corpus or its hash.
+**SUPERSEDES:** nothing.
+
+---
+
+**Addendum H status:** OR-88 and the Round-3 authoring-defect record appended. No earlier content of this log was modified. No policy artifact was created or changed.
