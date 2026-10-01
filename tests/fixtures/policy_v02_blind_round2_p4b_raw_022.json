@@ -1,0 +1,8997 @@
+{
+ "fixture_sha_before": "f54eb41bc805a28162e69e77495557b3647dd82e3b7c110c2987981edee421e5",
+ "fixture_sha_after": "f54eb41bc805a28162e69e77495557b3647dd82e3b7c110c2987981edee421e5",
+ "policy_022_sha": "3743bbaebce2b5f3143ec0a211d6c63aa35b8113dce03b1622876ef43eeed734",
+ "target": "jobops-policy@0.2.2",
+ "posting_cases": [
+  {
+   "id": "R2-001",
+   "actual": {
+    "geography": "PASS",
+    "compensation": "PASS",
+    "language": "PASS",
+    "employment_type": "PASS",
+    "employer_type": "PASS",
+    "relevance": "STRONG",
+    "experience_label": "REASONABLE",
+    "lane": "SHORTLIST",
+    "flags": [
+     "ABOVE_TARGET"
+    ],
+    "overall": "PASS"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "PASS",
+     "rule_id": "COMP-R17"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R01"
+    },
+    "geography": {
+     "verdict": "PASS",
+     "rule_id": "GEO-R02"
+    },
+    "language": {
+     "verdict": "PASS",
+     "rule_id": "LANG-R01"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": []
+  },
+  {
+   "id": "R2-002",
+   "actual": {
+    "geography": "PASS",
+    "compensation": "PASS",
+    "language": "PASS",
+    "employment_type": "PASS",
+    "employer_type": "PASS",
+    "relevance": "STRONG",
+    "experience_label": "REASONABLE",
+    "lane": "SHORTLIST",
+    "flags": [
+     "ABOVE_TARGET"
+    ],
+    "overall": "PASS"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "PASS",
+     "rule_id": "COMP-R17"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R02"
+    },
+    "geography": {
+     "verdict": "PASS",
+     "rule_id": "GEO-R02"
+    },
+    "language": {
+     "verdict": "PASS",
+     "rule_id": "LANG-R01"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": []
+  },
+  {
+   "id": "R2-003",
+   "actual": {
+    "geography": "PASS",
+    "compensation": "PASS",
+    "language": "PASS",
+    "employment_type": "PASS",
+    "employer_type": "PASS",
+    "relevance": "MODERATE",
+    "experience_label": "REASONABLE",
+    "lane": "SHORTLIST",
+    "flags": [
+     "ABOVE_TARGET"
+    ],
+    "overall": "PASS"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "PASS",
+     "rule_id": "COMP-R17"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R01"
+    },
+    "geography": {
+     "verdict": "PASS",
+     "rule_id": "GEO-R01"
+    },
+    "language": {
+     "verdict": "PASS",
+     "rule_id": "LANG-R01"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": [
+    {
+     "field": "relevance",
+     "expected": "STRONG",
+     "actual": "MODERATE"
+    }
+   ]
+  },
+  {
+   "id": "R2-004",
+   "actual": {
+    "geography": "PASS",
+    "compensation": "PASS",
+    "language": "PASS",
+    "employment_type": "PASS",
+    "employer_type": "PASS",
+    "relevance": "MODERATE",
+    "experience_label": "REASONABLE",
+    "lane": "SHORTLIST",
+    "flags": [
+     "ABOVE_TARGET"
+    ],
+    "overall": "PASS"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "PASS",
+     "rule_id": "COMP-R17"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R02"
+    },
+    "geography": {
+     "verdict": "PASS",
+     "rule_id": "GEO-R02"
+    },
+    "language": {
+     "verdict": "PASS",
+     "rule_id": "LANG-R01"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": [
+    {
+     "field": "relevance",
+     "expected": "STRONG",
+     "actual": "MODERATE"
+    }
+   ]
+  },
+  {
+   "id": "R2-005",
+   "actual": {
+    "geography": "UNKNOWN",
+    "compensation": "PASS",
+    "language": "PASS",
+    "employment_type": "PASS",
+    "employer_type": "PASS",
+    "relevance": "STRONG",
+    "experience_label": "REASONABLE",
+    "lane": "REVIEW",
+    "flags": [
+     "ABOVE_TARGET",
+     "COMP_BASIS_UNSTATED",
+     "HYBRID_DAYS_UNSPECIFIED"
+    ],
+    "overall": "UNKNOWN"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "PASS",
+     "rule_id": "COMP-R17"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R01"
+    },
+    "geography": {
+     "verdict": "UNKNOWN",
+     "rule_id": "GEO-R08"
+    },
+    "language": {
+     "verdict": "PASS",
+     "rule_id": "LANG-R01"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": [
+    {
+     "field": "geography",
+     "expected": "PASS",
+     "actual": "UNKNOWN"
+    },
+    {
+     "field": "lane",
+     "expected": "SHORTLIST",
+     "actual": "REVIEW"
+    }
+   ]
+  },
+  {
+   "id": "R2-006",
+   "actual": {
+    "geography": "PASS",
+    "compensation": "PASS",
+    "language": "PASS",
+    "employment_type": "PASS",
+    "employer_type": "PASS",
+    "relevance": "WEAK",
+    "experience_label": "REASONABLE",
+    "lane": "PARKED",
+    "flags": [
+     "ABOVE_TARGET",
+     "COMP_BASIS_UNSTATED"
+    ],
+    "overall": "PASS"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "PASS",
+     "rule_id": "COMP-R17"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R02"
+    },
+    "geography": {
+     "verdict": "PASS",
+     "rule_id": "GEO-R02"
+    },
+    "language": {
+     "verdict": "PASS",
+     "rule_id": "LANG-R01"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": [
+    {
+     "field": "relevance",
+     "expected": "STRONG",
+     "actual": "WEAK"
+    },
+    {
+     "field": "lane",
+     "expected": "SHORTLIST",
+     "actual": "PARKED"
+    }
+   ]
+  },
+  {
+   "id": "R2-007",
+   "actual": {
+    "geography": "UNKNOWN",
+    "compensation": "PASS",
+    "language": "PASS",
+    "employment_type": "PASS",
+    "employer_type": "PASS",
+    "relevance": "STRONG",
+    "experience_label": "REASONABLE",
+    "lane": "REVIEW",
+    "flags": [
+     "ABOVE_TARGET",
+     "WORK_MODE_CONFLICT"
+    ],
+    "overall": "UNKNOWN"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "PASS",
+     "rule_id": "COMP-R17"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R02"
+    },
+    "geography": {
+     "verdict": "UNKNOWN",
+     "rule_id": "GEO-R25"
+    },
+    "language": {
+     "verdict": "PASS",
+     "rule_id": "LANG-R01"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": []
+  },
+  {
+   "id": "R2-008",
+   "actual": {
+    "geography": "UNKNOWN",
+    "compensation": "PASS",
+    "language": "PASS",
+    "employment_type": "PASS",
+    "employer_type": "PASS",
+    "relevance": "WEAK",
+    "experience_label": "REASONABLE",
+    "lane": "PARKED",
+    "flags": [
+     "ABOVE_TARGET",
+     "WORK_MODE_CONFLICT"
+    ],
+    "overall": "UNKNOWN"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "PASS",
+     "rule_id": "COMP-R17"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R01"
+    },
+    "geography": {
+     "verdict": "UNKNOWN",
+     "rule_id": "GEO-R25"
+    },
+    "language": {
+     "verdict": "PASS",
+     "rule_id": "LANG-R01"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": [
+    {
+     "field": "geography",
+     "expected": "PASS",
+     "actual": "UNKNOWN"
+    },
+    {
+     "field": "must_not_have_flags",
+     "expected": [
+      "WORK_MODE_CONFLICT"
+     ],
+     "actual": [
+      "ABOVE_TARGET",
+      "WORK_MODE_CONFLICT"
+     ],
+     "present": [
+      "WORK_MODE_CONFLICT"
+     ]
+    },
+    {
+     "field": "relevance",
+     "expected": "STRONG",
+     "actual": "WEAK"
+    },
+    {
+     "field": "lane",
+     "expected": "SHORTLIST",
+     "actual": "PARKED"
+    }
+   ]
+  },
+  {
+   "id": "R2-009",
+   "actual": {
+    "geography": "UNKNOWN",
+    "compensation": "PASS",
+    "language": "PASS",
+    "employment_type": "PASS",
+    "employer_type": "PASS",
+    "relevance": "STRONG",
+    "experience_label": "REASONABLE",
+    "lane": "REVIEW",
+    "flags": [
+     "ABOVE_TARGET",
+     "COMP_BASIS_UNSTATED",
+     "HYBRID_DAYS_UNSPECIFIED"
+    ],
+    "overall": "UNKNOWN"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "PASS",
+     "rule_id": "COMP-R17"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R01"
+    },
+    "geography": {
+     "verdict": "UNKNOWN",
+     "rule_id": "GEO-R08"
+    },
+    "language": {
+     "verdict": "PASS",
+     "rule_id": "LANG-R01"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": []
+  },
+  {
+   "id": "R2-010",
+   "actual": {
+    "geography": "UNKNOWN",
+    "compensation": "PASS",
+    "language": "PASS",
+    "employment_type": "PASS",
+    "employer_type": "PASS",
+    "relevance": "MODERATE",
+    "experience_label": "REASONABLE",
+    "lane": "REVIEW",
+    "flags": [
+     "ABOVE_TARGET",
+     "COMP_BASIS_UNSTATED",
+     "HYBRID_DAYS_UNSPECIFIED",
+     "SENIORITY_SENIOR"
+    ],
+    "overall": "UNKNOWN"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "PASS",
+     "rule_id": "COMP-R17"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R02"
+    },
+    "geography": {
+     "verdict": "UNKNOWN",
+     "rule_id": "GEO-R08"
+    },
+    "language": {
+     "verdict": "PASS",
+     "rule_id": "LANG-R01"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": [
+    {
+     "field": "geography",
+     "expected": "PASS",
+     "actual": "UNKNOWN"
+    },
+    {
+     "field": "relevance",
+     "expected": "STRONG",
+     "actual": "MODERATE"
+    },
+    {
+     "field": "lane",
+     "expected": "SHORTLIST",
+     "actual": "REVIEW"
+    }
+   ]
+  },
+  {
+   "id": "R2-011",
+   "actual": {
+    "geography": "UNKNOWN",
+    "compensation": "PASS",
+    "language": "PASS",
+    "employment_type": "PASS",
+    "employer_type": "PASS",
+    "relevance": "WEAK",
+    "experience_label": "REASONABLE",
+    "lane": "PARKED",
+    "flags": [
+     "ABOVE_TARGET",
+     "WORK_MODE_CONFLICT"
+    ],
+    "overall": "UNKNOWN"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "PASS",
+     "rule_id": "COMP-R17"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R02"
+    },
+    "geography": {
+     "verdict": "UNKNOWN",
+     "rule_id": "GEO-R25"
+    },
+    "language": {
+     "verdict": "PASS",
+     "rule_id": "LANG-R01"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": [
+    {
+     "field": "relevance",
+     "expected": "STRONG",
+     "actual": "WEAK"
+    },
+    {
+     "field": "lane",
+     "expected": "REVIEW",
+     "actual": "PARKED"
+    }
+   ]
+  },
+  {
+   "id": "R2-012",
+   "actual": {
+    "geography": "UNKNOWN",
+    "compensation": "PASS",
+    "language": "PASS",
+    "employment_type": "PASS",
+    "employer_type": "PASS",
+    "relevance": "WEAK",
+    "experience_label": "REASONABLE",
+    "lane": "PARKED",
+    "flags": [
+     "CTC_BASIS_UNVERIFIED",
+     "WORK_MODE_CONFLICT"
+    ],
+    "overall": "UNKNOWN"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "PASS",
+     "rule_id": "COMP-C01"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R02"
+    },
+    "geography": {
+     "verdict": "UNKNOWN",
+     "rule_id": "GEO-R25"
+    },
+    "language": {
+     "verdict": "PASS",
+     "rule_id": "LANG-R01"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": [
+    {
+     "field": "geography",
+     "expected": "PASS",
+     "actual": "UNKNOWN"
+    },
+    {
+     "field": "must_not_have_flags",
+     "expected": [
+      "IN_TARGET",
+      "BELOW_TARGET",
+      "WORK_MODE_CONFLICT"
+     ],
+     "actual": [
+      "CTC_BASIS_UNVERIFIED",
+      "WORK_MODE_CONFLICT"
+     ],
+     "present": [
+      "WORK_MODE_CONFLICT"
+     ]
+    },
+    {
+     "field": "relevance",
+     "expected": "STRONG",
+     "actual": "WEAK"
+    },
+    {
+     "field": "lane",
+     "expected": "SHORTLIST",
+     "actual": "PARKED"
+    }
+   ]
+  },
+  {
+   "id": "R2-013",
+   "actual": {
+    "geography": "UNKNOWN",
+    "compensation": "PASS",
+    "language": "PASS",
+    "employment_type": "PASS",
+    "employer_type": "PASS",
+    "relevance": "WEAK",
+    "experience_label": "REASONABLE",
+    "lane": "PARKED",
+    "flags": [
+     "ABOVE_TARGET",
+     "HYBRID_DAYS_UNSPECIFIED"
+    ],
+    "overall": "UNKNOWN"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "PASS",
+     "rule_id": "COMP-R17"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R01"
+    },
+    "geography": {
+     "verdict": "UNKNOWN",
+     "rule_id": "GEO-R08"
+    },
+    "language": {
+     "verdict": "PASS",
+     "rule_id": "LANG-R01"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": [
+    {
+     "field": "geography",
+     "expected": "PASS",
+     "actual": "UNKNOWN"
+    },
+    {
+     "field": "relevance",
+     "expected": "STRONG",
+     "actual": "WEAK"
+    },
+    {
+     "field": "lane",
+     "expected": "SHORTLIST",
+     "actual": "PARKED"
+    }
+   ]
+  },
+  {
+   "id": "R2-014",
+   "actual": {
+    "geography": "FAIL",
+    "compensation": "PASS",
+    "language": "UNKNOWN",
+    "employment_type": "PASS",
+    "employer_type": "PASS",
+    "relevance": "MODERATE",
+    "experience_label": "REASONABLE",
+    "lane": "EXCLUDED",
+    "flags": [
+     "ABOVE_TARGET",
+     "COMP_BASIS_UNSTATED",
+     "LANGUAGE_UNCERTAIN"
+    ],
+    "overall": "FAIL"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "PASS",
+     "rule_id": "COMP-R17"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R01"
+    },
+    "geography": {
+     "verdict": "FAIL",
+     "rule_id": "GEO-R07"
+    },
+    "language": {
+     "verdict": "UNKNOWN",
+     "rule_id": "LANG-R05"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": [
+    {
+     "field": "language",
+     "expected": "PASS",
+     "actual": "UNKNOWN"
+    },
+    {
+     "field": "relevance",
+     "expected": "STRONG",
+     "actual": "MODERATE"
+    }
+   ]
+  },
+  {
+   "id": "R2-015",
+   "actual": {
+    "geography": "FAIL",
+    "compensation": "PASS",
+    "language": "PASS",
+    "employment_type": "PASS",
+    "employer_type": "PASS",
+    "relevance": "WEAK",
+    "experience_label": "REASONABLE",
+    "lane": "EXCLUDED",
+    "flags": [
+     "ABOVE_TARGET",
+     "COMP_BASIS_UNSTATED"
+    ],
+    "overall": "FAIL"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "PASS",
+     "rule_id": "COMP-R17"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R01"
+    },
+    "geography": {
+     "verdict": "FAIL",
+     "rule_id": "GEO-R10"
+    },
+    "language": {
+     "verdict": "PASS",
+     "rule_id": "LANG-R01"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": [
+    {
+     "field": "relevance",
+     "expected": "STRONG",
+     "actual": "WEAK"
+    }
+   ]
+  },
+  {
+   "id": "R2-016",
+   "actual": {
+    "geography": "UNKNOWN",
+    "compensation": "PASS",
+    "language": "PASS",
+    "employment_type": "PASS",
+    "employer_type": "PASS",
+    "relevance": "WEAK",
+    "experience_label": "REASONABLE",
+    "lane": "PARKED",
+    "flags": [
+     "HYBRID_DAYS_UNSPECIFIED",
+     "IN_TARGET"
+    ],
+    "overall": "UNKNOWN"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "PASS",
+     "rule_id": "COMP-R18"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R01"
+    },
+    "geography": {
+     "verdict": "UNKNOWN",
+     "rule_id": "GEO-R08"
+    },
+    "language": {
+     "verdict": "PASS",
+     "rule_id": "LANG-R01"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": [
+    {
+     "field": "geography",
+     "expected": "PASS",
+     "actual": "UNKNOWN"
+    },
+    {
+     "field": "relevance",
+     "expected": "STRONG",
+     "actual": "WEAK"
+    },
+    {
+     "field": "lane",
+     "expected": "SHORTLIST",
+     "actual": "PARKED"
+    }
+   ]
+  },
+  {
+   "id": "R2-017",
+   "actual": {
+    "geography": "UNKNOWN",
+    "compensation": "PASS",
+    "language": "UNKNOWN",
+    "employment_type": "PASS",
+    "employer_type": "PASS",
+    "relevance": "WEAK",
+    "experience_label": "REASONABLE",
+    "lane": "PARKED",
+    "flags": [
+     "ABOVE_TARGET",
+     "HYBRID_DAYS_UNSPECIFIED",
+     "LANGUAGE_UNCERTAIN"
+    ],
+    "overall": "UNKNOWN"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "PASS",
+     "rule_id": "COMP-R17"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R02"
+    },
+    "geography": {
+     "verdict": "UNKNOWN",
+     "rule_id": "GEO-R08"
+    },
+    "language": {
+     "verdict": "UNKNOWN",
+     "rule_id": "LANG-R05"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": [
+    {
+     "field": "geography",
+     "expected": "PASS",
+     "actual": "UNKNOWN"
+    },
+    {
+     "field": "language",
+     "expected": "PASS",
+     "actual": "UNKNOWN"
+    },
+    {
+     "field": "relevance",
+     "expected": "STRONG",
+     "actual": "WEAK"
+    },
+    {
+     "field": "lane",
+     "expected": "SHORTLIST",
+     "actual": "PARKED"
+    }
+   ]
+  },
+  {
+   "id": "R2-018",
+   "actual": {
+    "geography": "UNKNOWN",
+    "compensation": "PASS",
+    "language": "PASS",
+    "employment_type": "PASS",
+    "employer_type": "PASS",
+    "relevance": "WEAK",
+    "experience_label": "REASONABLE",
+    "lane": "PARKED",
+    "flags": [
+     "ABOVE_TARGET",
+     "COMP_BASIS_UNSTATED",
+     "HYBRID_DAYS_UNSPECIFIED"
+    ],
+    "overall": "UNKNOWN"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "PASS",
+     "rule_id": "COMP-R17"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R01"
+    },
+    "geography": {
+     "verdict": "UNKNOWN",
+     "rule_id": "GEO-R08"
+    },
+    "language": {
+     "verdict": "PASS",
+     "rule_id": "LANG-R01"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": [
+    {
+     "field": "geography",
+     "expected": "PASS",
+     "actual": "UNKNOWN"
+    },
+    {
+     "field": "relevance",
+     "expected": "STRONG",
+     "actual": "WEAK"
+    },
+    {
+     "field": "lane",
+     "expected": "SHORTLIST",
+     "actual": "PARKED"
+    }
+   ]
+  },
+  {
+   "id": "R2-019",
+   "actual": {
+    "geography": "UNKNOWN",
+    "compensation": "PASS",
+    "language": "PASS",
+    "employment_type": "PASS",
+    "employer_type": "PASS",
+    "relevance": "MODERATE",
+    "experience_label": "REASONABLE",
+    "lane": "REVIEW",
+    "flags": [
+     "ABOVE_TARGET",
+     "COMP_BASIS_UNSTATED",
+     "HYBRID_DAYS_UNSPECIFIED"
+    ],
+    "overall": "UNKNOWN"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "PASS",
+     "rule_id": "COMP-R17"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R01"
+    },
+    "geography": {
+     "verdict": "UNKNOWN",
+     "rule_id": "GEO-R08"
+    },
+    "language": {
+     "verdict": "PASS",
+     "rule_id": "LANG-R01"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": [
+    {
+     "field": "geography",
+     "expected": "FAIL",
+     "actual": "UNKNOWN"
+    },
+    {
+     "field": "relevance",
+     "expected": "STRONG",
+     "actual": "MODERATE"
+    },
+    {
+     "field": "lane",
+     "expected": "EXCLUDED",
+     "actual": "REVIEW"
+    }
+   ]
+  },
+  {
+   "id": "R2-020",
+   "actual": {
+    "geography": "UNKNOWN",
+    "compensation": "PASS",
+    "language": "PASS",
+    "employment_type": "PASS",
+    "employer_type": "PASS",
+    "relevance": "WEAK",
+    "experience_label": "REASONABLE",
+    "lane": "PARKED",
+    "flags": [
+     "ABOVE_TARGET",
+     "HYBRID_DAYS_UNSPECIFIED"
+    ],
+    "overall": "UNKNOWN"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "PASS",
+     "rule_id": "COMP-R17"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R02"
+    },
+    "geography": {
+     "verdict": "UNKNOWN",
+     "rule_id": "GEO-R08"
+    },
+    "language": {
+     "verdict": "PASS",
+     "rule_id": "LANG-R01"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": [
+    {
+     "field": "geography",
+     "expected": "FAIL",
+     "actual": "UNKNOWN"
+    },
+    {
+     "field": "relevance",
+     "expected": "STRONG",
+     "actual": "WEAK"
+    },
+    {
+     "field": "lane",
+     "expected": "EXCLUDED",
+     "actual": "PARKED"
+    }
+   ]
+  },
+  {
+   "id": "R2-021",
+   "actual": {
+    "geography": "UNKNOWN",
+    "compensation": "PASS",
+    "language": "PASS",
+    "employment_type": "PASS",
+    "employer_type": "PASS",
+    "relevance": "MODERATE",
+    "experience_label": "REASONABLE",
+    "lane": "REVIEW",
+    "flags": [
+     "COMP_BASIS_UNSTATED",
+     "IN_TARGET",
+     "WORK_MODE_CONFLICT"
+    ],
+    "overall": "UNKNOWN"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "PASS",
+     "rule_id": "COMP-R18"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R01"
+    },
+    "geography": {
+     "verdict": "UNKNOWN",
+     "rule_id": "GEO-R25"
+    },
+    "language": {
+     "verdict": "PASS",
+     "rule_id": "LANG-R01"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": [
+    {
+     "field": "geography",
+     "expected": "PASS",
+     "actual": "UNKNOWN"
+    },
+    {
+     "field": "relevance",
+     "expected": "STRONG",
+     "actual": "MODERATE"
+    },
+    {
+     "field": "lane",
+     "expected": "SHORTLIST",
+     "actual": "REVIEW"
+    }
+   ]
+  },
+  {
+   "id": "R2-022",
+   "actual": {
+    "geography": "UNKNOWN",
+    "compensation": "PASS",
+    "language": "PASS",
+    "employment_type": "PASS",
+    "employer_type": "PASS",
+    "relevance": "STRONG",
+    "experience_label": "REASONABLE",
+    "lane": "REVIEW",
+    "flags": [
+     "ABOVE_TARGET",
+     "WORK_MODE_CONFLICT"
+    ],
+    "overall": "UNKNOWN"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "PASS",
+     "rule_id": "COMP-R17"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R02"
+    },
+    "geography": {
+     "verdict": "UNKNOWN",
+     "rule_id": "GEO-R25"
+    },
+    "language": {
+     "verdict": "PASS",
+     "rule_id": "LANG-R01"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": [
+    {
+     "field": "geography",
+     "expected": "FAIL",
+     "actual": "UNKNOWN"
+    },
+    {
+     "field": "lane",
+     "expected": "EXCLUDED",
+     "actual": "REVIEW"
+    }
+   ]
+  },
+  {
+   "id": "R2-023",
+   "actual": {
+    "geography": "FAIL",
+    "compensation": "UNKNOWN",
+    "language": "UNKNOWN",
+    "employment_type": "PASS",
+    "employer_type": "PASS",
+    "relevance": "WEAK",
+    "experience_label": "REASONABLE",
+    "lane": "EXCLUDED",
+    "flags": [
+     "COMP_UNDISCLOSED",
+     "LANGUAGE_UNCERTAIN"
+    ],
+    "overall": "FAIL"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "UNKNOWN",
+     "rule_id": "COMP-R06"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R02"
+    },
+    "geography": {
+     "verdict": "FAIL",
+     "rule_id": "GEO-R03"
+    },
+    "language": {
+     "verdict": "UNKNOWN",
+     "rule_id": "LANG-R05"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": [
+    {
+     "field": "geography",
+     "expected": "UNKNOWN",
+     "actual": "FAIL"
+    },
+    {
+     "field": "compensation",
+     "expected": "PASS",
+     "actual": "UNKNOWN"
+    },
+    {
+     "field": "language",
+     "expected": "PASS",
+     "actual": "UNKNOWN"
+    },
+    {
+     "field": "relevance",
+     "expected": "STRONG",
+     "actual": "WEAK"
+    },
+    {
+     "field": "lane",
+     "expected": "REVIEW",
+     "actual": "EXCLUDED"
+    }
+   ]
+  },
+  {
+   "id": "R2-024",
+   "actual": {
+    "geography": "UNKNOWN",
+    "compensation": "UNKNOWN",
+    "language": "PASS",
+    "employment_type": "PASS",
+    "employer_type": "PASS",
+    "relevance": "WEAK",
+    "experience_label": "REASONABLE",
+    "lane": "PARKED",
+    "flags": [
+     "COMP_UNDISCLOSED",
+     "GEO_REGION_AMBIGUOUS"
+    ],
+    "overall": "UNKNOWN"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "UNKNOWN",
+     "rule_id": "COMP-R06"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R02"
+    },
+    "geography": {
+     "verdict": "UNKNOWN",
+     "rule_id": "GEO-R05"
+    },
+    "language": {
+     "verdict": "PASS",
+     "rule_id": "LANG-R01"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": [
+    {
+     "field": "compensation",
+     "expected": "PASS",
+     "actual": "UNKNOWN"
+    },
+    {
+     "field": "relevance",
+     "expected": "STRONG",
+     "actual": "WEAK"
+    },
+    {
+     "field": "lane",
+     "expected": "REVIEW",
+     "actual": "PARKED"
+    }
+   ]
+  },
+  {
+   "id": "R2-025",
+   "actual": {
+    "geography": "PASS",
+    "compensation": "PASS",
+    "language": "PASS",
+    "employment_type": "PASS",
+    "employer_type": "PASS",
+    "relevance": "MODERATE",
+    "experience_label": "REASONABLE",
+    "lane": "SHORTLIST",
+    "flags": [
+     "IN_TARGET"
+    ],
+    "overall": "PASS"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "PASS",
+     "rule_id": "COMP-R18"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R02"
+    },
+    "geography": {
+     "verdict": "PASS",
+     "rule_id": "GEO-R02"
+    },
+    "language": {
+     "verdict": "PASS",
+     "rule_id": "LANG-R01"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": [
+    {
+     "field": "geography",
+     "expected": "UNKNOWN",
+     "actual": "PASS"
+    },
+    {
+     "field": "must_have_flags",
+     "expected": [
+      "WORK_MODE_CONFLICT"
+     ],
+     "actual": [
+      "IN_TARGET"
+     ],
+     "missing": [
+      "WORK_MODE_CONFLICT"
+     ]
+    },
+    {
+     "field": "relevance",
+     "expected": "STRONG",
+     "actual": "MODERATE"
+    },
+    {
+     "field": "lane",
+     "expected": "REVIEW",
+     "actual": "SHORTLIST"
+    }
+   ]
+  },
+  {
+   "id": "R2-026",
+   "actual": {
+    "geography": "FAIL",
+    "compensation": "PASS",
+    "language": "PASS",
+    "employment_type": "PASS",
+    "employer_type": "PASS",
+    "relevance": "MODERATE",
+    "experience_label": "REASONABLE",
+    "lane": "EXCLUDED",
+    "flags": [
+     "ABOVE_TARGET",
+     "COMP_BASIS_UNSTATED"
+    ],
+    "overall": "FAIL"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "PASS",
+     "rule_id": "COMP-R17"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R01"
+    },
+    "geography": {
+     "verdict": "FAIL",
+     "rule_id": "GEO-R11"
+    },
+    "language": {
+     "verdict": "PASS",
+     "rule_id": "LANG-R01"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": [
+    {
+     "field": "relevance",
+     "expected": "STRONG",
+     "actual": "MODERATE"
+    }
+   ]
+  },
+  {
+   "id": "R2-027",
+   "actual": {
+    "geography": "FAIL",
+    "compensation": "PASS",
+    "language": "PASS",
+    "employment_type": "PASS",
+    "employer_type": "PASS",
+    "relevance": "WEAK",
+    "experience_label": "REASONABLE",
+    "lane": "EXCLUDED",
+    "flags": [
+     "ABOVE_TARGET"
+    ],
+    "overall": "FAIL"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "PASS",
+     "rule_id": "COMP-R17"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R01"
+    },
+    "geography": {
+     "verdict": "FAIL",
+     "rule_id": "GEO-R10"
+    },
+    "language": {
+     "verdict": "PASS",
+     "rule_id": "LANG-R01"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": [
+    {
+     "field": "relevance",
+     "expected": "STRONG",
+     "actual": "WEAK"
+    }
+   ]
+  },
+  {
+   "id": "R2-028",
+   "actual": {
+    "geography": "UNKNOWN",
+    "compensation": "PASS",
+    "language": "PASS",
+    "employment_type": "PASS",
+    "employer_type": "PASS",
+    "relevance": "WEAK",
+    "experience_label": "REASONABLE",
+    "lane": "PARKED",
+    "flags": [
+     "ABOVE_TARGET",
+     "HYBRID_DAYS_UNSPECIFIED"
+    ],
+    "overall": "UNKNOWN"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "PASS",
+     "rule_id": "COMP-R17"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R02"
+    },
+    "geography": {
+     "verdict": "UNKNOWN",
+     "rule_id": "GEO-R08"
+    },
+    "language": {
+     "verdict": "PASS",
+     "rule_id": "LANG-R01"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": [
+    {
+     "field": "relevance",
+     "expected": "STRONG",
+     "actual": "WEAK"
+    },
+    {
+     "field": "lane",
+     "expected": "REVIEW",
+     "actual": "PARKED"
+    }
+   ]
+  },
+  {
+   "id": "R2-029",
+   "actual": {
+    "geography": "PASS",
+    "compensation": "PASS",
+    "language": "UNKNOWN",
+    "employment_type": "PASS",
+    "employer_type": "PASS",
+    "relevance": "WEAK",
+    "experience_label": "DIRECT",
+    "lane": "PARKED",
+    "flags": [
+     "COMP_BASIS_UNSTATED",
+     "IN_TARGET",
+     "LANGUAGE_UNCERTAIN"
+    ],
+    "overall": "UNKNOWN"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "PASS",
+     "rule_id": "COMP-R18"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R01"
+    },
+    "geography": {
+     "verdict": "PASS",
+     "rule_id": "GEO-R21"
+    },
+    "language": {
+     "verdict": "UNKNOWN",
+     "rule_id": "LANG-R05"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": [
+    {
+     "field": "language",
+     "expected": "PASS",
+     "actual": "UNKNOWN"
+    },
+    {
+     "field": "relevance",
+     "expected": "STRONG",
+     "actual": "WEAK"
+    },
+    {
+     "field": "lane",
+     "expected": "SHORTLIST",
+     "actual": "PARKED"
+    }
+   ]
+  },
+  {
+   "id": "R2-030",
+   "actual": {
+    "geography": "FAIL",
+    "compensation": "UNKNOWN",
+    "language": "UNKNOWN",
+    "employment_type": "PASS",
+    "employer_type": "PASS",
+    "relevance": "WEAK",
+    "experience_label": "REASONABLE",
+    "lane": "EXCLUDED",
+    "flags": [
+     "COMP_PERIOD_UNSTATED",
+     "LANGUAGE_UNCERTAIN"
+    ],
+    "overall": "FAIL"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "UNKNOWN",
+     "rule_id": "COMP-R16"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R02"
+    },
+    "geography": {
+     "verdict": "FAIL",
+     "rule_id": "GEO-R03"
+    },
+    "language": {
+     "verdict": "UNKNOWN",
+     "rule_id": "LANG-R05"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": [
+    {
+     "field": "language",
+     "expected": "PASS",
+     "actual": "UNKNOWN"
+    },
+    {
+     "field": "relevance",
+     "expected": "STRONG",
+     "actual": "WEAK"
+    }
+   ]
+  },
+  {
+   "id": "R2-031",
+   "actual": {
+    "geography": "UNKNOWN",
+    "compensation": "PASS",
+    "language": "UNKNOWN",
+    "employment_type": "PASS",
+    "employer_type": "PASS",
+    "relevance": "WEAK",
+    "experience_label": "REASONABLE",
+    "lane": "PARKED",
+    "flags": [
+     "ABOVE_TARGET",
+     "GEO_REGION_AMBIGUOUS",
+     "LANGUAGE_UNCERTAIN"
+    ],
+    "overall": "UNKNOWN"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "PASS",
+     "rule_id": "COMP-R17"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R02"
+    },
+    "geography": {
+     "verdict": "UNKNOWN",
+     "rule_id": "GEO-R05"
+    },
+    "language": {
+     "verdict": "UNKNOWN",
+     "rule_id": "LANG-R05"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": [
+    {
+     "field": "language",
+     "expected": "PASS",
+     "actual": "UNKNOWN"
+    },
+    {
+     "field": "relevance",
+     "expected": "STRONG",
+     "actual": "WEAK"
+    },
+    {
+     "field": "lane",
+     "expected": "REVIEW",
+     "actual": "PARKED"
+    }
+   ]
+  },
+  {
+   "id": "R2-032",
+   "actual": {
+    "geography": "FAIL",
+    "compensation": "UNKNOWN",
+    "language": "PASS",
+    "employment_type": "PASS",
+    "employer_type": "PASS",
+    "relevance": "WEAK",
+    "experience_label": "REASONABLE",
+    "lane": "EXCLUDED",
+    "flags": [
+     "COMP_PERIOD_UNSTATED"
+    ],
+    "overall": "FAIL"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "UNKNOWN",
+     "rule_id": "COMP-R16"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R02"
+    },
+    "geography": {
+     "verdict": "FAIL",
+     "rule_id": "GEO-R03"
+    },
+    "language": {
+     "verdict": "PASS",
+     "rule_id": "LANG-R01"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": [
+    {
+     "field": "relevance",
+     "expected": "STRONG",
+     "actual": "WEAK"
+    }
+   ]
+  },
+  {
+   "id": "R2-033",
+   "actual": {
+    "geography": "PASS",
+    "compensation": "PASS",
+    "language": "PASS",
+    "employment_type": "PASS",
+    "employer_type": "PASS",
+    "relevance": "STRONG",
+    "experience_label": "REASONABLE",
+    "lane": "SHORTLIST",
+    "flags": [
+     "ABOVE_TARGET"
+    ],
+    "overall": "PASS"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "PASS",
+     "rule_id": "COMP-R17"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R02"
+    },
+    "geography": {
+     "verdict": "PASS",
+     "rule_id": "GEO-R02"
+    },
+    "language": {
+     "verdict": "PASS",
+     "rule_id": "LANG-R01"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": []
+  },
+  {
+   "id": "R2-034",
+   "actual": {
+    "geography": "PASS",
+    "compensation": "PASS",
+    "language": "PASS",
+    "employment_type": "PASS",
+    "employer_type": "PASS",
+    "relevance": "WEAK",
+    "experience_label": "REASONABLE",
+    "lane": "PARKED",
+    "flags": [
+     "ABOVE_TARGET",
+     "TIMEZONE_OVERLAP_US"
+    ],
+    "overall": "PASS"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "PASS",
+     "rule_id": "COMP-R17"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R01"
+    },
+    "geography": {
+     "verdict": "PASS",
+     "rule_id": "GEO-R02"
+    },
+    "language": {
+     "verdict": "PASS",
+     "rule_id": "LANG-R01"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": [
+    {
+     "field": "relevance",
+     "expected": "STRONG",
+     "actual": "WEAK"
+    },
+    {
+     "field": "lane",
+     "expected": "SHORTLIST",
+     "actual": "PARKED"
+    }
+   ]
+  },
+  {
+   "id": "R2-035",
+   "actual": {
+    "geography": "UNKNOWN",
+    "compensation": "PASS",
+    "language": "PASS",
+    "employment_type": "PASS",
+    "employer_type": "PASS",
+    "relevance": "MODERATE",
+    "experience_label": "REASONABLE",
+    "lane": "REVIEW",
+    "flags": [
+     "ABOVE_TARGET",
+     "WORK_MODE_CONFLICT"
+    ],
+    "overall": "UNKNOWN"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "PASS",
+     "rule_id": "COMP-R17"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R02"
+    },
+    "geography": {
+     "verdict": "UNKNOWN",
+     "rule_id": "GEO-R25"
+    },
+    "language": {
+     "verdict": "PASS",
+     "rule_id": "LANG-R01"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": [
+    {
+     "field": "relevance",
+     "expected": "STRONG",
+     "actual": "MODERATE"
+    }
+   ]
+  },
+  {
+   "id": "R2-036",
+   "actual": {
+    "geography": "FAIL",
+    "compensation": "UNKNOWN",
+    "language": "UNKNOWN",
+    "employment_type": "PASS",
+    "employer_type": "PASS",
+    "relevance": "WEAK",
+    "experience_label": "REASONABLE",
+    "lane": "EXCLUDED",
+    "flags": [
+     "COMP_UNDISCLOSED",
+     "LANGUAGE_UNCERTAIN"
+    ],
+    "overall": "FAIL"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "UNKNOWN",
+     "rule_id": "COMP-R06"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R02"
+    },
+    "geography": {
+     "verdict": "FAIL",
+     "rule_id": "GEO-R14"
+    },
+    "language": {
+     "verdict": "UNKNOWN",
+     "rule_id": "LANG-R05"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": [
+    {
+     "field": "language",
+     "expected": "PASS",
+     "actual": "UNKNOWN"
+    },
+    {
+     "field": "relevance",
+     "expected": "STRONG",
+     "actual": "WEAK"
+    }
+   ]
+  },
+  {
+   "id": "R2-037",
+   "actual": {
+    "geography": "PASS",
+    "compensation": "UNKNOWN",
+    "language": "UNKNOWN",
+    "employment_type": "PASS",
+    "employer_type": "PASS",
+    "relevance": "MODERATE",
+    "experience_label": "REASONABLE",
+    "lane": "REVIEW",
+    "flags": [
+     "COMP_PERIOD_UNSTATED",
+     "LANGUAGE_UNCERTAIN"
+    ],
+    "overall": "UNKNOWN"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "UNKNOWN",
+     "rule_id": "COMP-R16"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R01"
+    },
+    "geography": {
+     "verdict": "PASS",
+     "rule_id": "GEO-R02"
+    },
+    "language": {
+     "verdict": "UNKNOWN",
+     "rule_id": "LANG-R05"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": [
+    {
+     "field": "compensation",
+     "expected": "PASS",
+     "actual": "UNKNOWN"
+    },
+    {
+     "field": "language",
+     "expected": "PASS",
+     "actual": "UNKNOWN"
+    },
+    {
+     "field": "must_have_flags",
+     "expected": [
+      "IN_TARGET"
+     ],
+     "actual": [
+      "COMP_PERIOD_UNSTATED",
+      "LANGUAGE_UNCERTAIN"
+     ],
+     "missing": [
+      "IN_TARGET"
+     ]
+    },
+    {
+     "field": "relevance",
+     "expected": "STRONG",
+     "actual": "MODERATE"
+    },
+    {
+     "field": "lane",
+     "expected": "SHORTLIST",
+     "actual": "REVIEW"
+    }
+   ]
+  },
+  {
+   "id": "R2-038",
+   "actual": {
+    "geography": "PASS",
+    "compensation": "FAIL",
+    "language": "UNKNOWN",
+    "employment_type": "PASS",
+    "employer_type": "PASS",
+    "relevance": "WEAK",
+    "experience_label": "REASONABLE",
+    "lane": "EXCLUDED",
+    "flags": [
+     "LANGUAGE_UNCERTAIN"
+    ],
+    "overall": "FAIL"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "FAIL",
+     "rule_id": "COMP-R01"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R01"
+    },
+    "geography": {
+     "verdict": "PASS",
+     "rule_id": "GEO-R02"
+    },
+    "language": {
+     "verdict": "UNKNOWN",
+     "rule_id": "LANG-R05"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": [
+    {
+     "field": "language",
+     "expected": "PASS",
+     "actual": "UNKNOWN"
+    },
+    {
+     "field": "relevance",
+     "expected": "STRONG",
+     "actual": "WEAK"
+    }
+   ]
+  },
+  {
+   "id": "R2-039",
+   "actual": {
+    "geography": "PASS",
+    "compensation": "PASS",
+    "language": "UNKNOWN",
+    "employment_type": "PASS",
+    "employer_type": "PASS",
+    "relevance": "WEAK",
+    "experience_label": "REASONABLE",
+    "lane": "PARKED",
+    "flags": [
+     "IN_TARGET",
+     "LANGUAGE_UNCERTAIN"
+    ],
+    "overall": "UNKNOWN"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "PASS",
+     "rule_id": "COMP-R02"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R02"
+    },
+    "geography": {
+     "verdict": "PASS",
+     "rule_id": "GEO-R02"
+    },
+    "language": {
+     "verdict": "UNKNOWN",
+     "rule_id": "LANG-R05"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": [
+    {
+     "field": "language",
+     "expected": "PASS",
+     "actual": "UNKNOWN"
+    },
+    {
+     "field": "relevance",
+     "expected": "STRONG",
+     "actual": "WEAK"
+    },
+    {
+     "field": "lane",
+     "expected": "SHORTLIST",
+     "actual": "PARKED"
+    }
+   ]
+  },
+  {
+   "id": "R2-040",
+   "actual": {
+    "geography": "PASS",
+    "compensation": "FAIL",
+    "language": "UNKNOWN",
+    "employment_type": "PASS",
+    "employer_type": "PASS",
+    "relevance": "WEAK",
+    "experience_label": "DIRECT",
+    "lane": "EXCLUDED",
+    "flags": [
+     "LANGUAGE_UNCERTAIN"
+    ],
+    "overall": "FAIL"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "FAIL",
+     "rule_id": "COMP-R01"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R01"
+    },
+    "geography": {
+     "verdict": "PASS",
+     "rule_id": "GEO-R21"
+    },
+    "language": {
+     "verdict": "UNKNOWN",
+     "rule_id": "LANG-R05"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": [
+    {
+     "field": "language",
+     "expected": "PASS",
+     "actual": "UNKNOWN"
+    },
+    {
+     "field": "relevance",
+     "expected": "STRONG",
+     "actual": "WEAK"
+    }
+   ]
+  },
+  {
+   "id": "R2-041",
+   "actual": {
+    "geography": "PASS",
+    "compensation": "UNKNOWN",
+    "language": "UNKNOWN",
+    "employment_type": "PASS",
+    "employer_type": "PASS",
+    "relevance": "WEAK",
+    "experience_label": "REASONABLE",
+    "lane": "PARKED",
+    "flags": [
+     "LANGUAGE_UNCERTAIN",
+     "SALARY_RANGE_STRADDLES_FLOOR"
+    ],
+    "overall": "UNKNOWN"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "UNKNOWN",
+     "rule_id": "COMP-R04"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R01"
+    },
+    "geography": {
+     "verdict": "PASS",
+     "rule_id": "GEO-R02"
+    },
+    "language": {
+     "verdict": "UNKNOWN",
+     "rule_id": "LANG-R05"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": [
+    {
+     "field": "compensation",
+     "expected": "PASS",
+     "actual": "UNKNOWN"
+    },
+    {
+     "field": "language",
+     "expected": "PASS",
+     "actual": "UNKNOWN"
+    },
+    {
+     "field": "must_have_flags",
+     "expected": [
+      "IN_TARGET"
+     ],
+     "actual": [
+      "LANGUAGE_UNCERTAIN",
+      "SALARY_RANGE_STRADDLES_FLOOR"
+     ],
+     "missing": [
+      "IN_TARGET"
+     ]
+    },
+    {
+     "field": "relevance",
+     "expected": "STRONG",
+     "actual": "WEAK"
+    },
+    {
+     "field": "lane",
+     "expected": "SHORTLIST",
+     "actual": "PARKED"
+    }
+   ]
+  },
+  {
+   "id": "R2-042",
+   "actual": {
+    "geography": "PASS",
+    "compensation": "PASS",
+    "language": "UNKNOWN",
+    "employment_type": "PASS",
+    "employer_type": "PASS",
+    "relevance": "WEAK",
+    "experience_label": "REASONABLE",
+    "lane": "PARKED",
+    "flags": [
+     "ABOVE_TARGET",
+     "COMP_BASIS_UNSTATED",
+     "LANGUAGE_UNCERTAIN"
+    ],
+    "overall": "UNKNOWN"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "PASS",
+     "rule_id": "COMP-R17"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R02"
+    },
+    "geography": {
+     "verdict": "PASS",
+     "rule_id": "GEO-R02"
+    },
+    "language": {
+     "verdict": "UNKNOWN",
+     "rule_id": "LANG-R05"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": [
+    {
+     "field": "language",
+     "expected": "PASS",
+     "actual": "UNKNOWN"
+    },
+    {
+     "field": "relevance",
+     "expected": "STRONG",
+     "actual": "WEAK"
+    },
+    {
+     "field": "lane",
+     "expected": "SHORTLIST",
+     "actual": "PARKED"
+    }
+   ]
+  },
+  {
+   "id": "R2-043",
+   "actual": {
+    "geography": "PASS",
+    "compensation": "PASS",
+    "language": "UNKNOWN",
+    "employment_type": "PASS",
+    "employer_type": "UNKNOWN",
+    "relevance": "WEAK",
+    "experience_label": "REASONABLE",
+    "lane": "PARKED",
+    "flags": [
+     "BELOW_TARGET",
+     "COMP_BASIS_UNSTATED",
+     "CONSULTANCY",
+     "LANGUAGE_UNCERTAIN"
+    ],
+    "overall": "UNKNOWN"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "PASS",
+     "rule_id": "COMP-R03"
+    },
+    "employer_type": {
+     "verdict": "UNKNOWN",
+     "rule_id": "EMPR-R02"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R01"
+    },
+    "geography": {
+     "verdict": "PASS",
+     "rule_id": "GEO-R02"
+    },
+    "language": {
+     "verdict": "UNKNOWN",
+     "rule_id": "LANG-R05"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": [
+    {
+     "field": "language",
+     "expected": "PASS",
+     "actual": "UNKNOWN"
+    },
+    {
+     "field": "relevance",
+     "expected": "STRONG",
+     "actual": "WEAK"
+    },
+    {
+     "field": "lane",
+     "expected": "REVIEW",
+     "actual": "PARKED"
+    }
+   ]
+  },
+  {
+   "id": "R2-044",
+   "actual": {
+    "geography": "PASS",
+    "compensation": "PASS",
+    "language": "UNKNOWN",
+    "employment_type": "PASS",
+    "employer_type": "PASS",
+    "relevance": "MODERATE",
+    "experience_label": "REASONABLE",
+    "lane": "REVIEW",
+    "flags": [
+     "COMP_BASIS_UNSTATED",
+     "IN_TARGET",
+     "LANGUAGE_UNCERTAIN"
+    ],
+    "overall": "UNKNOWN"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "PASS",
+     "rule_id": "COMP-R02"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R01"
+    },
+    "geography": {
+     "verdict": "PASS",
+     "rule_id": "GEO-R02"
+    },
+    "language": {
+     "verdict": "UNKNOWN",
+     "rule_id": "LANG-R05"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": [
+    {
+     "field": "language",
+     "expected": "PASS",
+     "actual": "UNKNOWN"
+    },
+    {
+     "field": "relevance",
+     "expected": "STRONG",
+     "actual": "MODERATE"
+    },
+    {
+     "field": "lane",
+     "expected": "SHORTLIST",
+     "actual": "REVIEW"
+    }
+   ]
+  },
+  {
+   "id": "R2-045",
+   "actual": {
+    "geography": "PASS",
+    "compensation": "FAIL",
+    "language": "UNKNOWN",
+    "employment_type": "PASS",
+    "employer_type": "PASS",
+    "relevance": "WEAK",
+    "experience_label": "DIRECT",
+    "lane": "EXCLUDED",
+    "flags": [
+     "LANGUAGE_UNCERTAIN"
+    ],
+    "overall": "FAIL"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "FAIL",
+     "rule_id": "COMP-R01"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R01"
+    },
+    "geography": {
+     "verdict": "PASS",
+     "rule_id": "GEO-R01"
+    },
+    "language": {
+     "verdict": "UNKNOWN",
+     "rule_id": "LANG-R05"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": [
+    {
+     "field": "language",
+     "expected": "PASS",
+     "actual": "UNKNOWN"
+    },
+    {
+     "field": "relevance",
+     "expected": "STRONG",
+     "actual": "WEAK"
+    }
+   ]
+  },
+  {
+   "id": "R2-046",
+   "actual": {
+    "geography": "PASS",
+    "compensation": "PASS",
+    "language": "UNKNOWN",
+    "employment_type": "PASS",
+    "employer_type": "PASS",
+    "relevance": "WEAK",
+    "experience_label": "DIRECT",
+    "lane": "PARKED",
+    "flags": [
+     "BELOW_TARGET",
+     "CTC_BASIS_UNVERIFIED",
+     "LANGUAGE_UNCERTAIN"
+    ],
+    "overall": "UNKNOWN"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "PASS",
+     "rule_id": "COMP-C06"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R01"
+    },
+    "geography": {
+     "verdict": "PASS",
+     "rule_id": "GEO-R21"
+    },
+    "language": {
+     "verdict": "UNKNOWN",
+     "rule_id": "LANG-R05"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": true,
+   "mismatches_vs_determined_subset": [
+    {
+     "field": "language",
+     "expected": "PASS",
+     "actual": "UNKNOWN"
+    },
+    {
+     "field": "relevance",
+     "expected": "STRONG",
+     "actual": "WEAK"
+    }
+   ],
+   "mismatches": []
+  },
+  {
+   "id": "R2-047",
+   "actual": {
+    "geography": "PASS",
+    "compensation": "UNKNOWN",
+    "language": "UNKNOWN",
+    "employment_type": "UNKNOWN",
+    "employer_type": "UNKNOWN",
+    "relevance": "MODERATE",
+    "experience_label": "REASONABLE",
+    "lane": "REVIEW",
+    "flags": [
+     "COMP_UNDISCLOSED",
+     "EMPLOYER_TYPE_REVIEW",
+     "LANGUAGE_UNCERTAIN",
+     "STAFFING"
+    ],
+    "overall": "UNKNOWN"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "UNKNOWN",
+     "rule_id": "COMP-R06"
+    },
+    "employer_type": {
+     "verdict": "UNKNOWN",
+     "rule_id": "EMPR-R01"
+    },
+    "employment_relationship": {
+     "verdict": "UNKNOWN",
+     "rule_id": "REL-R08"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R01"
+    },
+    "geography": {
+     "verdict": "PASS",
+     "rule_id": "GEO-R02"
+    },
+    "language": {
+     "verdict": "UNKNOWN",
+     "rule_id": "LANG-R05"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": [
+    {
+     "field": "compensation",
+     "expected": "PASS",
+     "actual": "UNKNOWN"
+    },
+    {
+     "field": "employment_type",
+     "expected": "PASS",
+     "actual": "UNKNOWN"
+    },
+    {
+     "field": "language",
+     "expected": "PASS",
+     "actual": "UNKNOWN"
+    },
+    {
+     "field": "must_have_flags",
+     "expected": [
+      "CTC_BASIS_UNVERIFIED",
+      "BELOW_TARGET"
+     ],
+     "actual": [
+      "COMP_UNDISCLOSED",
+      "EMPLOYER_TYPE_REVIEW",
+      "LANGUAGE_UNCERTAIN",
+      "STAFFING"
+     ],
+     "missing": [
+      "CTC_BASIS_UNVERIFIED",
+      "BELOW_TARGET"
+     ]
+    },
+    {
+     "field": "relevance",
+     "expected": "STRONG",
+     "actual": "MODERATE"
+    }
+   ]
+  },
+  {
+   "id": "R2-048",
+   "actual": {
+    "geography": "PASS",
+    "compensation": "PASS",
+    "language": "UNKNOWN",
+    "employment_type": "PASS",
+    "employer_type": "PASS",
+    "relevance": "WEAK",
+    "experience_label": "REASONABLE",
+    "lane": "PARKED",
+    "flags": [
+     "CTC_BASIS_UNVERIFIED",
+     "LANGUAGE_UNCERTAIN"
+    ],
+    "overall": "UNKNOWN"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "PASS",
+     "rule_id": "COMP-C01"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R01"
+    },
+    "geography": {
+     "verdict": "PASS",
+     "rule_id": "GEO-R02"
+    },
+    "language": {
+     "verdict": "UNKNOWN",
+     "rule_id": "LANG-R05"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": [
+    {
+     "field": "language",
+     "expected": "PASS",
+     "actual": "UNKNOWN"
+    },
+    {
+     "field": "relevance",
+     "expected": "STRONG",
+     "actual": "WEAK"
+    },
+    {
+     "field": "lane",
+     "expected": "SHORTLIST",
+     "actual": "PARKED"
+    }
+   ]
+  },
+  {
+   "id": "R2-049",
+   "actual": {
+    "geography": "PASS",
+    "compensation": "PASS",
+    "language": "UNKNOWN",
+    "employment_type": "PASS",
+    "employer_type": "PASS",
+    "relevance": "WEAK",
+    "experience_label": "REASONABLE",
+    "lane": "PARKED",
+    "flags": [
+     "CTC_BASIS_UNVERIFIED",
+     "LANGUAGE_UNCERTAIN"
+    ],
+    "overall": "UNKNOWN"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "PASS",
+     "rule_id": "COMP-C01"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R02"
+    },
+    "geography": {
+     "verdict": "PASS",
+     "rule_id": "GEO-R02"
+    },
+    "language": {
+     "verdict": "UNKNOWN",
+     "rule_id": "LANG-R05"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": [
+    {
+     "field": "language",
+     "expected": "PASS",
+     "actual": "UNKNOWN"
+    },
+    {
+     "field": "relevance",
+     "expected": "STRONG",
+     "actual": "WEAK"
+    },
+    {
+     "field": "lane",
+     "expected": "SHORTLIST",
+     "actual": "PARKED"
+    }
+   ]
+  },
+  {
+   "id": "R2-050",
+   "actual": {
+    "geography": "PASS",
+    "compensation": "UNKNOWN",
+    "language": "UNKNOWN",
+    "employment_type": "PASS",
+    "employer_type": "PASS",
+    "relevance": "MODERATE",
+    "experience_label": "REASONABLE",
+    "lane": "REVIEW",
+    "flags": [
+     "COMP_BASIS_UNSTATED",
+     "LANGUAGE_UNCERTAIN",
+     "SALARY_RANGE_STRADDLES_FLOOR"
+    ],
+    "overall": "UNKNOWN"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "UNKNOWN",
+     "rule_id": "COMP-R04"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R07"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R01"
+    },
+    "geography": {
+     "verdict": "PASS",
+     "rule_id": "GEO-R21"
+    },
+    "language": {
+     "verdict": "UNKNOWN",
+     "rule_id": "LANG-R05"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": [
+    {
+     "field": "language",
+     "expected": "PASS",
+     "actual": "UNKNOWN"
+    },
+    {
+     "field": "relevance",
+     "expected": "STRONG",
+     "actual": "MODERATE"
+    }
+   ]
+  },
+  {
+   "id": "R2-051",
+   "actual": {
+    "geography": "PASS",
+    "compensation": "PASS",
+    "language": "UNKNOWN",
+    "employment_type": "PASS",
+    "employer_type": "PASS",
+    "relevance": "WEAK",
+    "experience_label": "REASONABLE",
+    "lane": "PARKED",
+    "flags": [
+     "COMPENSATION_REVIEW",
+     "LANGUAGE_UNCERTAIN"
+    ],
+    "overall": "UNKNOWN"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "PASS",
+     "rule_id": "COMP-R15"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R01"
+    },
+    "geography": {
+     "verdict": "PASS",
+     "rule_id": "GEO-R02"
+    },
+    "language": {
+     "verdict": "UNKNOWN",
+     "rule_id": "LANG-R05"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": true,
+   "mismatches_vs_determined_subset": [
+    {
+     "field": "language",
+     "expected": "PASS",
+     "actual": "UNKNOWN"
+    },
+    {
+     "field": "relevance",
+     "expected": "STRONG",
+     "actual": "WEAK"
+    }
+   ],
+   "mismatches": []
+  },
+  {
+   "id": "R2-052",
+   "actual": {
+    "geography": "UNKNOWN",
+    "compensation": "PASS",
+    "language": "UNKNOWN",
+    "employment_type": "PASS",
+    "employer_type": "PASS",
+    "relevance": "WEAK",
+    "experience_label": "REASONABLE",
+    "lane": "PARKED",
+    "flags": [
+     "COMPENSATION_REVIEW",
+     "CTC_BASIS_UNVERIFIED",
+     "HYBRID_DAYS_UNSPECIFIED",
+     "LANGUAGE_UNCERTAIN"
+    ],
+    "overall": "UNKNOWN"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "PASS",
+     "rule_id": "COMP-C03"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R02"
+    },
+    "geography": {
+     "verdict": "UNKNOWN",
+     "rule_id": "GEO-R08"
+    },
+    "language": {
+     "verdict": "UNKNOWN",
+     "rule_id": "LANG-R05"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": [
+    {
+     "field": "language",
+     "expected": "PASS",
+     "actual": "UNKNOWN"
+    },
+    {
+     "field": "relevance",
+     "expected": "STRONG",
+     "actual": "WEAK"
+    },
+    {
+     "field": "lane",
+     "expected": "REVIEW",
+     "actual": "PARKED"
+    }
+   ]
+  },
+  {
+   "id": "R2-053",
+   "actual": {
+    "geography": "PASS",
+    "compensation": "PASS",
+    "language": "UNKNOWN",
+    "employment_type": "PASS",
+    "employer_type": "PASS",
+    "relevance": "WEAK",
+    "experience_label": "REASONABLE",
+    "lane": "PARKED",
+    "flags": [
+     "COMP_BASIS_UNSTATED",
+     "IN_TARGET",
+     "LANGUAGE_UNCERTAIN"
+    ],
+    "overall": "UNKNOWN"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "PASS",
+     "rule_id": "COMP-R18"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R02"
+    },
+    "geography": {
+     "verdict": "PASS",
+     "rule_id": "GEO-R02"
+    },
+    "language": {
+     "verdict": "UNKNOWN",
+     "rule_id": "LANG-R05"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": [
+    {
+     "field": "language",
+     "expected": "PASS",
+     "actual": "UNKNOWN"
+    },
+    {
+     "field": "relevance",
+     "expected": "STRONG",
+     "actual": "WEAK"
+    },
+    {
+     "field": "lane",
+     "expected": "SHORTLIST",
+     "actual": "PARKED"
+    }
+   ]
+  },
+  {
+   "id": "R2-054",
+   "actual": {
+    "geography": "PASS",
+    "compensation": "PASS",
+    "language": "UNKNOWN",
+    "employment_type": "PASS",
+    "employer_type": "PASS",
+    "relevance": "WEAK",
+    "experience_label": "REASONABLE",
+    "lane": "PARKED",
+    "flags": [
+     "ABOVE_TARGET",
+     "LANGUAGE_UNCERTAIN"
+    ],
+    "overall": "UNKNOWN"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "PASS",
+     "rule_id": "COMP-R17"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R01"
+    },
+    "geography": {
+     "verdict": "PASS",
+     "rule_id": "GEO-R02"
+    },
+    "language": {
+     "verdict": "UNKNOWN",
+     "rule_id": "LANG-R05"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": [
+    {
+     "field": "language",
+     "expected": "PASS",
+     "actual": "UNKNOWN"
+    },
+    {
+     "field": "relevance",
+     "expected": "STRONG",
+     "actual": "WEAK"
+    },
+    {
+     "field": "lane",
+     "expected": "SHORTLIST",
+     "actual": "PARKED"
+    }
+   ]
+  },
+  {
+   "id": "R2-055",
+   "actual": {
+    "geography": "PASS",
+    "compensation": "PASS",
+    "language": "UNKNOWN",
+    "employment_type": "PASS",
+    "employer_type": "PASS",
+    "relevance": "WEAK",
+    "experience_label": "REASONABLE",
+    "lane": "PARKED",
+    "flags": [
+     "COMP_BASIS_UNSTATED",
+     "IN_TARGET",
+     "LANGUAGE_UNCERTAIN",
+     "MONTHLY_ASSUMED"
+    ],
+    "overall": "UNKNOWN"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "PASS",
+     "rule_id": "COMP-R02"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R01"
+    },
+    "geography": {
+     "verdict": "PASS",
+     "rule_id": "GEO-R21"
+    },
+    "language": {
+     "verdict": "UNKNOWN",
+     "rule_id": "LANG-R05"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": [
+    {
+     "field": "language",
+     "expected": "PASS",
+     "actual": "UNKNOWN"
+    },
+    {
+     "field": "relevance",
+     "expected": "STRONG",
+     "actual": "WEAK"
+    },
+    {
+     "field": "lane",
+     "expected": "SHORTLIST",
+     "actual": "PARKED"
+    }
+   ]
+  },
+  {
+   "id": "R2-056",
+   "actual": {
+    "geography": "PASS",
+    "compensation": "FAIL",
+    "language": "UNKNOWN",
+    "employment_type": "PASS",
+    "employer_type": "PASS",
+    "relevance": "WEAK",
+    "experience_label": "DIRECT",
+    "lane": "EXCLUDED",
+    "flags": [
+     "COMP_BASIS_UNSTATED",
+     "LANGUAGE_UNCERTAIN",
+     "MONTHLY_ASSUMED"
+    ],
+    "overall": "FAIL"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "FAIL",
+     "rule_id": "COMP-R01"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R01"
+    },
+    "geography": {
+     "verdict": "PASS",
+     "rule_id": "GEO-R02"
+    },
+    "language": {
+     "verdict": "UNKNOWN",
+     "rule_id": "LANG-R05"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": [
+    {
+     "field": "language",
+     "expected": "PASS",
+     "actual": "UNKNOWN"
+    },
+    {
+     "field": "relevance",
+     "expected": "STRONG",
+     "actual": "WEAK"
+    }
+   ]
+  },
+  {
+   "id": "R2-057",
+   "actual": {
+    "geography": "PASS",
+    "compensation": "PASS",
+    "language": "UNKNOWN",
+    "employment_type": "UNKNOWN",
+    "employer_type": "PASS",
+    "relevance": "WEAK",
+    "experience_label": "REASONABLE",
+    "lane": "PARKED",
+    "flags": [
+     "BELOW_TARGET",
+     "COMP_BASIS_UNSTATED",
+     "LANGUAGE_UNCERTAIN",
+     "LONG_TERM_DIRECT_CONTRACT",
+     "MONTHLY_ASSUMED"
+    ],
+    "overall": "UNKNOWN"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "PASS",
+     "rule_id": "COMP-R03"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "UNKNOWN",
+     "rule_id": "EMP-R10"
+    },
+    "geography": {
+     "verdict": "PASS",
+     "rule_id": "GEO-R02"
+    },
+    "language": {
+     "verdict": "UNKNOWN",
+     "rule_id": "LANG-R05"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": [
+    {
+     "field": "language",
+     "expected": "PASS",
+     "actual": "UNKNOWN"
+    },
+    {
+     "field": "relevance",
+     "expected": "STRONG",
+     "actual": "WEAK"
+    },
+    {
+     "field": "lane",
+     "expected": "REVIEW",
+     "actual": "PARKED"
+    }
+   ]
+  },
+  {
+   "id": "R2-058",
+   "actual": {
+    "geography": "PASS",
+    "compensation": "UNKNOWN",
+    "language": "UNKNOWN",
+    "employment_type": "PASS",
+    "employer_type": "PASS",
+    "relevance": "WEAK",
+    "experience_label": "REASONABLE",
+    "lane": "PARKED",
+    "flags": [
+     "COMP_UPPER_BOUND_ONLY",
+     "LANGUAGE_UNCERTAIN"
+    ],
+    "overall": "UNKNOWN"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "UNKNOWN",
+     "rule_id": "COMP-R05"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R02"
+    },
+    "geography": {
+     "verdict": "PASS",
+     "rule_id": "GEO-R02"
+    },
+    "language": {
+     "verdict": "UNKNOWN",
+     "rule_id": "LANG-R05"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": [
+    {
+     "field": "language",
+     "expected": "PASS",
+     "actual": "UNKNOWN"
+    },
+    {
+     "field": "relevance",
+     "expected": "STRONG",
+     "actual": "WEAK"
+    },
+    {
+     "field": "lane",
+     "expected": "REVIEW",
+     "actual": "PARKED"
+    }
+   ]
+  },
+  {
+   "id": "R2-059",
+   "actual": {
+    "geography": "PASS",
+    "compensation": "UNKNOWN",
+    "language": "UNKNOWN",
+    "employment_type": "PASS",
+    "employer_type": "PASS",
+    "relevance": "WEAK",
+    "experience_label": "REASONABLE",
+    "lane": "PARKED",
+    "flags": [
+     "COMP_UNDISCLOSED",
+     "LANGUAGE_UNCERTAIN"
+    ],
+    "overall": "UNKNOWN"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "UNKNOWN",
+     "rule_id": "COMP-R06"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R01"
+    },
+    "geography": {
+     "verdict": "PASS",
+     "rule_id": "GEO-R21"
+    },
+    "language": {
+     "verdict": "UNKNOWN",
+     "rule_id": "LANG-R05"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": [
+    {
+     "field": "language",
+     "expected": "PASS",
+     "actual": "UNKNOWN"
+    },
+    {
+     "field": "relevance",
+     "expected": "STRONG",
+     "actual": "WEAK"
+    },
+    {
+     "field": "lane",
+     "expected": "REVIEW",
+     "actual": "PARKED"
+    }
+   ]
+  },
+  {
+   "id": "R2-060",
+   "actual": {
+    "geography": "PASS",
+    "compensation": "UNKNOWN",
+    "language": "UNKNOWN",
+    "employment_type": "PASS",
+    "employer_type": "PASS",
+    "relevance": "WEAK",
+    "experience_label": "REASONABLE",
+    "lane": "PARKED",
+    "flags": [
+     "COMP_PERIOD_UNSTATED",
+     "LANGUAGE_UNCERTAIN"
+    ],
+    "overall": "UNKNOWN"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "UNKNOWN",
+     "rule_id": "COMP-R16"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R01"
+    },
+    "geography": {
+     "verdict": "PASS",
+     "rule_id": "GEO-R02"
+    },
+    "language": {
+     "verdict": "UNKNOWN",
+     "rule_id": "LANG-R05"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": [
+    {
+     "field": "compensation",
+     "expected": "PASS",
+     "actual": "UNKNOWN"
+    },
+    {
+     "field": "language",
+     "expected": "PASS",
+     "actual": "UNKNOWN"
+    },
+    {
+     "field": "relevance",
+     "expected": "STRONG",
+     "actual": "WEAK"
+    },
+    {
+     "field": "lane",
+     "expected": "SHORTLIST",
+     "actual": "PARKED"
+    }
+   ]
+  },
+  {
+   "id": "R2-061",
+   "actual": {
+    "geography": "PASS",
+    "compensation": "UNKNOWN",
+    "language": "UNKNOWN",
+    "employment_type": "PASS",
+    "employer_type": "PASS",
+    "relevance": "WEAK",
+    "experience_label": "REASONABLE",
+    "lane": "PARKED",
+    "flags": [
+     "COMP_PERIOD_UNSTATED",
+     "LANGUAGE_UNCERTAIN"
+    ],
+    "overall": "UNKNOWN"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "UNKNOWN",
+     "rule_id": "COMP-R16"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R01"
+    },
+    "geography": {
+     "verdict": "PASS",
+     "rule_id": "GEO-R02"
+    },
+    "language": {
+     "verdict": "UNKNOWN",
+     "rule_id": "LANG-R05"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": [
+    {
+     "field": "language",
+     "expected": "PASS",
+     "actual": "UNKNOWN"
+    },
+    {
+     "field": "must_have_flags",
+     "expected": [
+      "FX_STALE"
+     ],
+     "actual": [
+      "COMP_PERIOD_UNSTATED",
+      "LANGUAGE_UNCERTAIN"
+     ],
+     "missing": [
+      "FX_STALE"
+     ]
+    },
+    {
+     "field": "relevance",
+     "expected": "STRONG",
+     "actual": "WEAK"
+    },
+    {
+     "field": "lane",
+     "expected": "REVIEW",
+     "actual": "PARKED"
+    }
+   ]
+  },
+  {
+   "id": "R2-062",
+   "actual": {
+    "geography": "PASS",
+    "compensation": "UNKNOWN",
+    "language": "UNKNOWN",
+    "employment_type": "PASS",
+    "employer_type": "PASS",
+    "relevance": "WEAK",
+    "experience_label": "DIRECT",
+    "lane": "PARKED",
+    "flags": [
+     "FX_RATE_UNAVAILABLE",
+     "LANGUAGE_UNCERTAIN"
+    ],
+    "overall": "UNKNOWN"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "UNKNOWN",
+     "rule_id": "COMP-R14"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R02"
+    },
+    "geography": {
+     "verdict": "PASS",
+     "rule_id": "GEO-R02"
+    },
+    "language": {
+     "verdict": "UNKNOWN",
+     "rule_id": "LANG-R05"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": [
+    {
+     "field": "language",
+     "expected": "PASS",
+     "actual": "UNKNOWN"
+    },
+    {
+     "field": "must_have_flags",
+     "expected": [
+      "FX_STALE"
+     ],
+     "actual": [
+      "FX_RATE_UNAVAILABLE",
+      "LANGUAGE_UNCERTAIN"
+     ],
+     "missing": [
+      "FX_STALE"
+     ]
+    },
+    {
+     "field": "relevance",
+     "expected": "STRONG",
+     "actual": "WEAK"
+    },
+    {
+     "field": "lane",
+     "expected": "REVIEW",
+     "actual": "PARKED"
+    }
+   ]
+  },
+  {
+   "id": "R2-063",
+   "actual": {
+    "geography": "PASS",
+    "compensation": "UNKNOWN",
+    "language": "UNKNOWN",
+    "employment_type": "PASS",
+    "employer_type": "PASS",
+    "relevance": "WEAK",
+    "experience_label": "REASONABLE",
+    "lane": "PARKED",
+    "flags": [
+     "COMP_UNDISCLOSED",
+     "LANGUAGE_UNCERTAIN"
+    ],
+    "overall": "UNKNOWN"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "UNKNOWN",
+     "rule_id": "COMP-R06"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R01"
+    },
+    "geography": {
+     "verdict": "PASS",
+     "rule_id": "GEO-R02"
+    },
+    "language": {
+     "verdict": "UNKNOWN",
+     "rule_id": "LANG-R05"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": [
+    {
+     "field": "compensation",
+     "expected": "PASS",
+     "actual": "UNKNOWN"
+    },
+    {
+     "field": "language",
+     "expected": "PASS",
+     "actual": "UNKNOWN"
+    },
+    {
+     "field": "relevance",
+     "expected": "STRONG",
+     "actual": "WEAK"
+    },
+    {
+     "field": "lane",
+     "expected": "SHORTLIST",
+     "actual": "PARKED"
+    }
+   ]
+  },
+  {
+   "id": "R2-064",
+   "actual": {
+    "geography": "PASS",
+    "compensation": "UNKNOWN",
+    "language": "UNKNOWN",
+    "employment_type": "PASS",
+    "employer_type": "PASS",
+    "relevance": "WEAK",
+    "experience_label": "REASONABLE",
+    "lane": "PARKED",
+    "flags": [
+     "COMP_UNDISCLOSED",
+     "LANGUAGE_UNCERTAIN"
+    ],
+    "overall": "UNKNOWN"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "UNKNOWN",
+     "rule_id": "COMP-R06"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R01"
+    },
+    "geography": {
+     "verdict": "PASS",
+     "rule_id": "GEO-R02"
+    },
+    "language": {
+     "verdict": "UNKNOWN",
+     "rule_id": "LANG-R05"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": [
+    {
+     "field": "language",
+     "expected": "PASS",
+     "actual": "UNKNOWN"
+    },
+    {
+     "field": "must_have_flags",
+     "expected": [
+      "FX_STALE"
+     ],
+     "actual": [
+      "COMP_UNDISCLOSED",
+      "LANGUAGE_UNCERTAIN"
+     ],
+     "missing": [
+      "FX_STALE"
+     ]
+    },
+    {
+     "field": "relevance",
+     "expected": "STRONG",
+     "actual": "WEAK"
+    },
+    {
+     "field": "lane",
+     "expected": "REVIEW",
+     "actual": "PARKED"
+    }
+   ]
+  },
+  {
+   "id": "R2-065",
+   "actual": {
+    "geography": "PASS",
+    "compensation": "UNKNOWN",
+    "language": "UNKNOWN",
+    "employment_type": "PASS",
+    "employer_type": "PASS",
+    "relevance": "WEAK",
+    "experience_label": "REASONABLE",
+    "lane": "PARKED",
+    "flags": [
+     "COMP_PERIOD_UNSTATED",
+     "LANGUAGE_UNCERTAIN"
+    ],
+    "overall": "UNKNOWN"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "UNKNOWN",
+     "rule_id": "COMP-R16"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R02"
+    },
+    "geography": {
+     "verdict": "PASS",
+     "rule_id": "GEO-R02"
+    },
+    "language": {
+     "verdict": "UNKNOWN",
+     "rule_id": "LANG-R05"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": [
+    {
+     "field": "language",
+     "expected": "PASS",
+     "actual": "UNKNOWN"
+    },
+    {
+     "field": "relevance",
+     "expected": "STRONG",
+     "actual": "WEAK"
+    },
+    {
+     "field": "lane",
+     "expected": "REVIEW",
+     "actual": "PARKED"
+    }
+   ]
+  },
+  {
+   "id": "R2-066",
+   "actual": {
+    "geography": "PASS",
+    "compensation": "FAIL",
+    "language": "UNKNOWN",
+    "employment_type": "PASS",
+    "employer_type": "PASS",
+    "relevance": "WEAK",
+    "experience_label": "REASONABLE",
+    "lane": "EXCLUDED",
+    "flags": [
+     "LANGUAGE_UNCERTAIN"
+    ],
+    "overall": "FAIL"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "FAIL",
+     "rule_id": "COMP-R01"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R01"
+    },
+    "geography": {
+     "verdict": "PASS",
+     "rule_id": "GEO-R02"
+    },
+    "language": {
+     "verdict": "UNKNOWN",
+     "rule_id": "LANG-R05"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": [
+    {
+     "field": "compensation",
+     "expected": "PASS",
+     "actual": "FAIL"
+    },
+    {
+     "field": "language",
+     "expected": "PASS",
+     "actual": "UNKNOWN"
+    },
+    {
+     "field": "relevance",
+     "expected": "STRONG",
+     "actual": "WEAK"
+    },
+    {
+     "field": "lane",
+     "expected": "SHORTLIST",
+     "actual": "EXCLUDED"
+    }
+   ]
+  },
+  {
+   "id": "R2-067",
+   "actual": {
+    "geography": "PASS",
+    "compensation": "PASS",
+    "language": "UNKNOWN",
+    "employment_type": "PASS",
+    "employer_type": "PASS",
+    "relevance": "MODERATE",
+    "experience_label": "REASONABLE",
+    "lane": "REVIEW",
+    "flags": [
+     "COMP_BASIS_UNSTATED",
+     "IN_TARGET",
+     "LANGUAGE_UNCERTAIN"
+    ],
+    "overall": "UNKNOWN"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "PASS",
+     "rule_id": "COMP-R02"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R07"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R01"
+    },
+    "geography": {
+     "verdict": "PASS",
+     "rule_id": "GEO-R02"
+    },
+    "language": {
+     "verdict": "UNKNOWN",
+     "rule_id": "LANG-R05"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": [
+    {
+     "field": "language",
+     "expected": "PASS",
+     "actual": "UNKNOWN"
+    },
+    {
+     "field": "relevance",
+     "expected": "STRONG",
+     "actual": "MODERATE"
+    },
+    {
+     "field": "lane",
+     "expected": "SHORTLIST",
+     "actual": "REVIEW"
+    }
+   ]
+  },
+  {
+   "id": "R2-068",
+   "actual": {
+    "geography": "PASS",
+    "compensation": "PASS",
+    "language": "UNKNOWN",
+    "employment_type": "PASS",
+    "employer_type": "PASS",
+    "relevance": "STRONG",
+    "experience_label": "DIRECT",
+    "lane": "REVIEW",
+    "flags": [
+     "COMP_BASIS_UNSTATED",
+     "IN_TARGET",
+     "LANGUAGE_UNCERTAIN"
+    ],
+    "overall": "UNKNOWN"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "PASS",
+     "rule_id": "COMP-R02"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R01"
+    },
+    "geography": {
+     "verdict": "PASS",
+     "rule_id": "GEO-R21"
+    },
+    "language": {
+     "verdict": "UNKNOWN",
+     "rule_id": "LANG-R05"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": [
+    {
+     "field": "compensation",
+     "expected": "UNKNOWN",
+     "actual": "PASS"
+    },
+    {
+     "field": "language",
+     "expected": "PASS",
+     "actual": "UNKNOWN"
+    }
+   ]
+  },
+  {
+   "id": "R2-069",
+   "actual": {
+    "geography": "PASS",
+    "compensation": "PASS",
+    "language": "UNKNOWN",
+    "employment_type": "PASS",
+    "employer_type": "PASS",
+    "relevance": "MODERATE",
+    "experience_label": "REASONABLE",
+    "lane": "REVIEW",
+    "flags": [
+     "COMP_BASIS_UNSTATED",
+     "IN_TARGET",
+     "LANGUAGE_UNCERTAIN"
+    ],
+    "overall": "UNKNOWN"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "PASS",
+     "rule_id": "COMP-R02"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R01"
+    },
+    "geography": {
+     "verdict": "PASS",
+     "rule_id": "GEO-R21"
+    },
+    "language": {
+     "verdict": "UNKNOWN",
+     "rule_id": "LANG-R05"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": [
+    {
+     "field": "language",
+     "expected": "PASS",
+     "actual": "UNKNOWN"
+    },
+    {
+     "field": "relevance",
+     "expected": "STRONG",
+     "actual": "MODERATE"
+    },
+    {
+     "field": "lane",
+     "expected": "SHORTLIST",
+     "actual": "REVIEW"
+    }
+   ]
+  },
+  {
+   "id": "R2-070",
+   "actual": {
+    "geography": "PASS",
+    "compensation": "PASS",
+    "language": "UNKNOWN",
+    "employment_type": "PASS",
+    "employer_type": "PASS",
+    "relevance": "WEAK",
+    "experience_label": "DIRECT",
+    "lane": "PARKED",
+    "flags": [
+     "BELOW_TARGET",
+     "LANGUAGE_UNCERTAIN"
+    ],
+    "overall": "UNKNOWN"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "PASS",
+     "rule_id": "COMP-R03"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R01"
+    },
+    "geography": {
+     "verdict": "PASS",
+     "rule_id": "GEO-R02"
+    },
+    "language": {
+     "verdict": "UNKNOWN",
+     "rule_id": "LANG-R06"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": [
+    {
+     "field": "relevance",
+     "expected": "STRONG",
+     "actual": "WEAK"
+    },
+    {
+     "field": "lane",
+     "expected": "REVIEW",
+     "actual": "PARKED"
+    }
+   ]
+  },
+  {
+   "id": "R2-071",
+   "actual": {
+    "geography": "PASS",
+    "compensation": "PASS",
+    "language": "UNKNOWN",
+    "employment_type": "PASS",
+    "employer_type": "PASS",
+    "relevance": "WEAK",
+    "experience_label": "DIRECT",
+    "lane": "PARKED",
+    "flags": [
+     "IN_TARGET",
+     "LANGUAGE_UNCERTAIN"
+    ],
+    "overall": "UNKNOWN"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "PASS",
+     "rule_id": "COMP-R02"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R02"
+    },
+    "geography": {
+     "verdict": "PASS",
+     "rule_id": "GEO-R02"
+    },
+    "language": {
+     "verdict": "UNKNOWN",
+     "rule_id": "LANG-R05"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": [
+    {
+     "field": "language",
+     "expected": "PASS",
+     "actual": "UNKNOWN"
+    },
+    {
+     "field": "relevance",
+     "expected": "STRONG",
+     "actual": "WEAK"
+    },
+    {
+     "field": "lane",
+     "expected": "SHORTLIST",
+     "actual": "PARKED"
+    }
+   ]
+  },
+  {
+   "id": "R2-072",
+   "actual": {
+    "geography": "PASS",
+    "compensation": "PASS",
+    "language": "PASS",
+    "employment_type": "FAIL",
+    "employer_type": "PASS",
+    "relevance": "WEAK",
+    "experience_label": "REASONABLE",
+    "lane": "EXCLUDED",
+    "flags": [
+     "ABOVE_TARGET"
+    ],
+    "overall": "FAIL"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "PASS",
+     "rule_id": "COMP-R17"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "FAIL",
+     "rule_id": "EMP-R03"
+    },
+    "geography": {
+     "verdict": "PASS",
+     "rule_id": "GEO-R02"
+    },
+    "language": {
+     "verdict": "PASS",
+     "rule_id": "LANG-R01"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": [
+    {
+     "field": "employment_type",
+     "expected": "UNKNOWN",
+     "actual": "FAIL"
+    },
+    {
+     "field": "relevance",
+     "expected": "STRONG",
+     "actual": "WEAK"
+    },
+    {
+     "field": "lane",
+     "expected": "REVIEW",
+     "actual": "EXCLUDED"
+    }
+   ]
+  },
+  {
+   "id": "R2-073",
+   "actual": {
+    "geography": "PASS",
+    "compensation": "PASS",
+    "language": "PASS",
+    "employment_type": "FAIL",
+    "employer_type": "PASS",
+    "relevance": "WEAK",
+    "experience_label": "REASONABLE",
+    "lane": "EXCLUDED",
+    "flags": [
+     "ABOVE_TARGET"
+    ],
+    "overall": "FAIL"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "PASS",
+     "rule_id": "COMP-R17"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "FAIL",
+     "rule_id": "EMP-R03"
+    },
+    "geography": {
+     "verdict": "PASS",
+     "rule_id": "GEO-R02"
+    },
+    "language": {
+     "verdict": "PASS",
+     "rule_id": "LANG-R01"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": [
+    {
+     "field": "employment_type",
+     "expected": "UNKNOWN",
+     "actual": "FAIL"
+    },
+    {
+     "field": "must_have_flags",
+     "expected": [
+      "CONTRACT_DURATION_UNSTATED"
+     ],
+     "actual": [
+      "ABOVE_TARGET"
+     ],
+     "missing": [
+      "CONTRACT_DURATION_UNSTATED"
+     ]
+    },
+    {
+     "field": "relevance",
+     "expected": "STRONG",
+     "actual": "WEAK"
+    },
+    {
+     "field": "lane",
+     "expected": "REVIEW",
+     "actual": "EXCLUDED"
+    }
+   ]
+  },
+  {
+   "id": "R2-074",
+   "actual": {
+    "geography": "PASS",
+    "compensation": "PASS",
+    "language": "UNKNOWN",
+    "employment_type": "FAIL",
+    "employer_type": "PASS",
+    "relevance": "WEAK",
+    "experience_label": "REASONABLE",
+    "lane": "EXCLUDED",
+    "flags": [
+     "ABOVE_TARGET",
+     "COMP_BASIS_UNSTATED",
+     "LANGUAGE_UNCERTAIN"
+    ],
+    "overall": "FAIL"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "PASS",
+     "rule_id": "COMP-R17"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "FAIL",
+     "rule_id": "EMP-R03"
+    },
+    "geography": {
+     "verdict": "PASS",
+     "rule_id": "GEO-R02"
+    },
+    "language": {
+     "verdict": "UNKNOWN",
+     "rule_id": "LANG-R05"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": [
+    {
+     "field": "language",
+     "expected": "PASS",
+     "actual": "UNKNOWN"
+    },
+    {
+     "field": "relevance",
+     "expected": "STRONG",
+     "actual": "WEAK"
+    }
+   ]
+  },
+  {
+   "id": "R2-075",
+   "actual": {
+    "geography": "PASS",
+    "compensation": "UNKNOWN",
+    "language": "PASS",
+    "employment_type": "UNKNOWN",
+    "employer_type": "PASS",
+    "relevance": "WEAK",
+    "experience_label": "REASONABLE",
+    "lane": "PARKED",
+    "flags": [
+     "COMP_PERIOD_UNSTATED",
+     "EOR"
+    ],
+    "overall": "UNKNOWN"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "UNKNOWN",
+     "rule_id": "COMP-R16"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "UNKNOWN",
+     "rule_id": "EOR-R01"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R02"
+    },
+    "geography": {
+     "verdict": "PASS",
+     "rule_id": "GEO-R02"
+    },
+    "language": {
+     "verdict": "PASS",
+     "rule_id": "LANG-R01"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": true,
+   "mismatches_vs_determined_subset": [
+    {
+     "field": "compensation",
+     "expected": "PASS",
+     "actual": "UNKNOWN"
+    },
+    {
+     "field": "relevance",
+     "expected": "STRONG",
+     "actual": "WEAK"
+    }
+   ],
+   "mismatches": []
+  },
+  {
+   "id": "R2-076",
+   "actual": {
+    "geography": "PASS",
+    "compensation": "PASS",
+    "language": "PASS",
+    "employment_type": "UNKNOWN",
+    "employer_type": "PASS",
+    "relevance": "WEAK",
+    "experience_label": "REASONABLE",
+    "lane": "PARKED",
+    "flags": [
+     "ABOVE_TARGET",
+     "EOR"
+    ],
+    "overall": "UNKNOWN"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "PASS",
+     "rule_id": "COMP-R17"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "UNKNOWN",
+     "rule_id": "EOR-R01"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R02"
+    },
+    "geography": {
+     "verdict": "PASS",
+     "rule_id": "GEO-R02"
+    },
+    "language": {
+     "verdict": "PASS",
+     "rule_id": "LANG-R01"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": true,
+   "mismatches_vs_determined_subset": [
+    {
+     "field": "relevance",
+     "expected": "STRONG",
+     "actual": "WEAK"
+    }
+   ],
+   "mismatches": []
+  },
+  {
+   "id": "R2-077",
+   "actual": {
+    "geography": "PASS",
+    "compensation": "PASS",
+    "language": "UNKNOWN",
+    "employment_type": "FAIL",
+    "employer_type": "PASS",
+    "relevance": "WEAK",
+    "experience_label": "REASONABLE",
+    "lane": "EXCLUDED",
+    "flags": [
+     "ABOVE_TARGET",
+     "COMP_BASIS_UNSTATED",
+     "LANGUAGE_UNCERTAIN"
+    ],
+    "overall": "FAIL"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "PASS",
+     "rule_id": "COMP-R17"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "FAIL",
+     "rule_id": "REL-R02"
+    },
+    "employment_type": {
+     "verdict": "FAIL",
+     "rule_id": "EMP-R13"
+    },
+    "geography": {
+     "verdict": "PASS",
+     "rule_id": "GEO-R02"
+    },
+    "language": {
+     "verdict": "UNKNOWN",
+     "rule_id": "LANG-R05"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": [
+    {
+     "field": "language",
+     "expected": "PASS",
+     "actual": "UNKNOWN"
+    },
+    {
+     "field": "relevance",
+     "expected": "STRONG",
+     "actual": "WEAK"
+    }
+   ]
+  },
+  {
+   "id": "R2-078",
+   "actual": {
+    "geography": "PASS",
+    "compensation": "PASS",
+    "language": "PASS",
+    "employment_type": "FAIL",
+    "employer_type": "PASS",
+    "relevance": "WEAK",
+    "experience_label": "REASONABLE",
+    "lane": "EXCLUDED",
+    "flags": [
+     "ABOVE_TARGET",
+     "COMP_BASIS_UNSTATED"
+    ],
+    "overall": "FAIL"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "PASS",
+     "rule_id": "COMP-R17"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "FAIL",
+     "rule_id": "REL-R04"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R02"
+    },
+    "geography": {
+     "verdict": "PASS",
+     "rule_id": "GEO-R02"
+    },
+    "language": {
+     "verdict": "PASS",
+     "rule_id": "LANG-R01"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": [
+    {
+     "field": "relevance",
+     "expected": "STRONG",
+     "actual": "WEAK"
+    }
+   ]
+  },
+  {
+   "id": "R2-079",
+   "actual": {
+    "geography": "PASS",
+    "compensation": "UNKNOWN",
+    "language": "UNKNOWN",
+    "employment_type": "FAIL",
+    "employer_type": "PASS",
+    "relevance": "WEAK",
+    "experience_label": "REASONABLE",
+    "lane": "EXCLUDED",
+    "flags": [
+     "COMP_NOT_ANNUALIZABLE",
+     "LANGUAGE_UNCERTAIN"
+    ],
+    "overall": "FAIL"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "UNKNOWN",
+     "rule_id": "COMP-R13"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "FAIL",
+     "rule_id": "REL-R03"
+    },
+    "employment_type": {
+     "verdict": "FAIL",
+     "rule_id": "EMP-R03"
+    },
+    "geography": {
+     "verdict": "PASS",
+     "rule_id": "GEO-R02"
+    },
+    "language": {
+     "verdict": "UNKNOWN",
+     "rule_id": "LANG-R05"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": [
+    {
+     "field": "language",
+     "expected": "PASS",
+     "actual": "UNKNOWN"
+    },
+    {
+     "field": "relevance",
+     "expected": "STRONG",
+     "actual": "WEAK"
+    }
+   ]
+  },
+  {
+   "id": "R2-080",
+   "actual": {
+    "geography": "PASS",
+    "compensation": "UNKNOWN",
+    "language": "UNKNOWN",
+    "employment_type": "FAIL",
+    "employer_type": "PASS",
+    "relevance": "MODERATE",
+    "experience_label": "DIRECT",
+    "lane": "EXCLUDED",
+    "flags": [
+     "COMP_NOT_ANNUALIZABLE",
+     "EMPLOYMENT_UNSTATED",
+     "LANGUAGE_UNCERTAIN"
+    ],
+    "overall": "FAIL"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "UNKNOWN",
+     "rule_id": "COMP-R13"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "FAIL",
+     "rule_id": "REL-R05"
+    },
+    "employment_type": {
+     "verdict": "UNKNOWN",
+     "rule_id": "EMP-R12"
+    },
+    "geography": {
+     "verdict": "PASS",
+     "rule_id": "GEO-R02"
+    },
+    "language": {
+     "verdict": "UNKNOWN",
+     "rule_id": "LANG-R05"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": [
+    {
+     "field": "language",
+     "expected": "PASS",
+     "actual": "UNKNOWN"
+    },
+    {
+     "field": "relevance",
+     "expected": "STRONG",
+     "actual": "MODERATE"
+    }
+   ]
+  },
+  {
+   "id": "R2-081",
+   "actual": {
+    "geography": "UNKNOWN",
+    "compensation": "PASS",
+    "language": "UNKNOWN",
+    "employment_type": "FAIL",
+    "employer_type": "PASS",
+    "relevance": "WEAK",
+    "experience_label": "REASONABLE",
+    "lane": "EXCLUDED",
+    "flags": [
+     "ABOVE_TARGET",
+     "COMP_BASIS_UNSTATED",
+     "GEO_REGION_AMBIGUOUS",
+     "LANGUAGE_UNCERTAIN"
+    ],
+    "overall": "FAIL"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "PASS",
+     "rule_id": "COMP-R17"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "FAIL",
+     "rule_id": "EMP-R04"
+    },
+    "geography": {
+     "verdict": "UNKNOWN",
+     "rule_id": "GEO-R05"
+    },
+    "language": {
+     "verdict": "UNKNOWN",
+     "rule_id": "LANG-R05"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": [
+    {
+     "field": "geography",
+     "expected": "PASS",
+     "actual": "UNKNOWN"
+    },
+    {
+     "field": "language",
+     "expected": "PASS",
+     "actual": "UNKNOWN"
+    },
+    {
+     "field": "relevance",
+     "expected": "STRONG",
+     "actual": "WEAK"
+    }
+   ]
+  },
+  {
+   "id": "R2-082",
+   "actual": {
+    "geography": "PASS",
+    "compensation": "PASS",
+    "language": "PASS",
+    "employment_type": "FAIL",
+    "employer_type": "FAIL",
+    "relevance": "MODERATE",
+    "experience_label": "REASONABLE",
+    "lane": "EXCLUDED",
+    "flags": [
+     "ABOVE_TARGET",
+     "COMP_BASIS_UNSTATED",
+     "EMPLOYER_UNCLASSIFIED"
+    ],
+    "overall": "FAIL"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "PASS",
+     "rule_id": "COMP-R17"
+    },
+    "employer_type": {
+     "verdict": "UNKNOWN",
+     "rule_id": "EMPR-R04"
+    },
+    "employment_relationship": {
+     "verdict": "FAIL",
+     "rule_id": "REL-R06"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R01"
+    },
+    "geography": {
+     "verdict": "PASS",
+     "rule_id": "GEO-R02"
+    },
+    "language": {
+     "verdict": "PASS",
+     "rule_id": "LANG-R01"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": [
+    {
+     "field": "relevance",
+     "expected": "STRONG",
+     "actual": "MODERATE"
+    }
+   ]
+  },
+  {
+   "id": "R2-083",
+   "actual": {
+    "geography": "PASS",
+    "compensation": "PASS",
+    "language": "PASS",
+    "employment_type": "FAIL",
+    "employer_type": "PASS",
+    "relevance": "STRONG",
+    "experience_label": "REASONABLE",
+    "lane": "EXCLUDED",
+    "flags": [
+     "ABOVE_TARGET"
+    ],
+    "overall": "FAIL"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "PASS",
+     "rule_id": "COMP-R17"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "FAIL",
+     "rule_id": "EMP-R03"
+    },
+    "geography": {
+     "verdict": "PASS",
+     "rule_id": "GEO-R02"
+    },
+    "language": {
+     "verdict": "PASS",
+     "rule_id": "LANG-R01"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": [
+    {
+     "field": "employment_type",
+     "expected": "PASS",
+     "actual": "FAIL"
+    },
+    {
+     "field": "lane",
+     "expected": "SHORTLIST",
+     "actual": "EXCLUDED"
+    }
+   ]
+  },
+  {
+   "id": "R2-084",
+   "actual": {
+    "geography": "PASS",
+    "compensation": "PASS",
+    "language": "UNKNOWN",
+    "employment_type": "UNKNOWN",
+    "employer_type": "PASS",
+    "relevance": "WEAK",
+    "experience_label": "REASONABLE",
+    "lane": "PARKED",
+    "flags": [
+     "ABOVE_TARGET",
+     "COMP_BASIS_UNSTATED",
+     "EMPLOYMENT_MIXED",
+     "LANGUAGE_UNCERTAIN"
+    ],
+    "overall": "UNKNOWN"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "PASS",
+     "rule_id": "COMP-R17"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "UNKNOWN",
+     "rule_id": "EMP-R11"
+    },
+    "geography": {
+     "verdict": "PASS",
+     "rule_id": "GEO-R21"
+    },
+    "language": {
+     "verdict": "UNKNOWN",
+     "rule_id": "LANG-R05"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": [
+    {
+     "field": "language",
+     "expected": "PASS",
+     "actual": "UNKNOWN"
+    },
+    {
+     "field": "relevance",
+     "expected": "STRONG",
+     "actual": "WEAK"
+    },
+    {
+     "field": "lane",
+     "expected": "REVIEW",
+     "actual": "PARKED"
+    }
+   ]
+  },
+  {
+   "id": "R2-085",
+   "actual": {
+    "geography": "PASS",
+    "compensation": "PASS",
+    "language": "PASS",
+    "employment_type": "FAIL",
+    "employer_type": "PASS",
+    "relevance": "WEAK",
+    "experience_label": "REASONABLE",
+    "lane": "EXCLUDED",
+    "flags": [
+     "ABOVE_TARGET",
+     "COMP_BASIS_UNSTATED",
+     "MONTHLY_ASSUMED"
+    ],
+    "overall": "FAIL"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "PASS",
+     "rule_id": "COMP-R17"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "FAIL",
+     "rule_id": "EMP-R09"
+    },
+    "geography": {
+     "verdict": "PASS",
+     "rule_id": "GEO-R02"
+    },
+    "language": {
+     "verdict": "PASS",
+     "rule_id": "LANG-R01"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": [
+    {
+     "field": "relevance",
+     "expected": "STRONG",
+     "actual": "WEAK"
+    }
+   ]
+  },
+  {
+   "id": "R2-086",
+   "actual": {
+    "geography": "PASS",
+    "compensation": "PASS",
+    "language": "PASS",
+    "employment_type": "FAIL",
+    "employer_type": "PASS",
+    "relevance": "WEAK",
+    "experience_label": "REASONABLE",
+    "lane": "EXCLUDED",
+    "flags": [
+     "ABOVE_TARGET"
+    ],
+    "overall": "FAIL"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "PASS",
+     "rule_id": "COMP-R17"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "FAIL",
+     "rule_id": "EMP-R05"
+    },
+    "geography": {
+     "verdict": "PASS",
+     "rule_id": "GEO-R02"
+    },
+    "language": {
+     "verdict": "PASS",
+     "rule_id": "LANG-R01"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": [
+    {
+     "field": "relevance",
+     "expected": "STRONG",
+     "actual": "WEAK"
+    }
+   ]
+  },
+  {
+   "id": "R2-087",
+   "actual": {
+    "geography": "PASS",
+    "compensation": "FAIL",
+    "language": "UNKNOWN",
+    "employment_type": "FAIL",
+    "employer_type": "PASS",
+    "relevance": "WEAK",
+    "experience_label": "REASONABLE",
+    "lane": "EXCLUDED",
+    "flags": [
+     "COMP_BASIS_UNSTATED",
+     "LANGUAGE_UNCERTAIN"
+    ],
+    "overall": "FAIL"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "FAIL",
+     "rule_id": "COMP-R01"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "FAIL",
+     "rule_id": "EMP-R07"
+    },
+    "geography": {
+     "verdict": "PASS",
+     "rule_id": "GEO-R02"
+    },
+    "language": {
+     "verdict": "UNKNOWN",
+     "rule_id": "LANG-R05"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": [
+    {
+     "field": "language",
+     "expected": "PASS",
+     "actual": "UNKNOWN"
+    },
+    {
+     "field": "relevance",
+     "expected": "STRONG",
+     "actual": "WEAK"
+    }
+   ]
+  },
+  {
+   "id": "R2-088",
+   "actual": {
+    "geography": "PASS",
+    "compensation": "FAIL",
+    "language": "UNKNOWN",
+    "employment_type": "FAIL",
+    "employer_type": "PASS",
+    "relevance": "WEAK",
+    "experience_label": null,
+    "lane": "EXCLUDED",
+    "flags": [
+     "COMP_BASIS_UNSTATED",
+     "LANGUAGE_UNCERTAIN",
+     "MONTHLY_ASSUMED"
+    ],
+    "overall": "FAIL"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "FAIL",
+     "rule_id": "COMP-R01"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "FAIL",
+     "rule_id": "EMP-R08"
+    },
+    "geography": {
+     "verdict": "PASS",
+     "rule_id": "GEO-R02"
+    },
+    "language": {
+     "verdict": "UNKNOWN",
+     "rule_id": "LANG-R05"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": [
+    {
+     "field": "language",
+     "expected": "PASS",
+     "actual": "UNKNOWN"
+    },
+    {
+     "field": "relevance",
+     "expected": "STRONG",
+     "actual": "WEAK"
+    }
+   ]
+  },
+  {
+   "id": "R2-089",
+   "actual": {
+    "geography": "UNKNOWN",
+    "compensation": "UNKNOWN",
+    "language": "UNKNOWN",
+    "employment_type": "FAIL",
+    "employer_type": "PASS",
+    "relevance": "WEAK",
+    "experience_label": null,
+    "lane": "EXCLUDED",
+    "flags": [
+     "COMP_UNDISCLOSED",
+     "GEO_REGION_AMBIGUOUS",
+     "LANGUAGE_UNCERTAIN"
+    ],
+    "overall": "FAIL"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "UNKNOWN",
+     "rule_id": "COMP-R06"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "FAIL",
+     "rule_id": "EMP-R06"
+    },
+    "geography": {
+     "verdict": "UNKNOWN",
+     "rule_id": "GEO-R05"
+    },
+    "language": {
+     "verdict": "UNKNOWN",
+     "rule_id": "LANG-R05"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": [
+    {
+     "field": "geography",
+     "expected": "PASS",
+     "actual": "UNKNOWN"
+    },
+    {
+     "field": "language",
+     "expected": "PASS",
+     "actual": "UNKNOWN"
+    },
+    {
+     "field": "relevance",
+     "expected": "STRONG",
+     "actual": "WEAK"
+    }
+   ]
+  },
+  {
+   "id": "R2-090",
+   "actual": {
+    "geography": "PASS",
+    "compensation": "PASS",
+    "language": "PASS",
+    "employment_type": "PASS",
+    "employer_type": "PASS",
+    "relevance": "WEAK",
+    "experience_label": "REASONABLE",
+    "lane": "PARKED",
+    "flags": [
+     "ABOVE_TARGET"
+    ],
+    "overall": "PASS"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "PASS",
+     "rule_id": "COMP-R17"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R02"
+    },
+    "geography": {
+     "verdict": "PASS",
+     "rule_id": "GEO-R02"
+    },
+    "language": {
+     "verdict": "PASS",
+     "rule_id": "LANG-R01"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": [
+    {
+     "field": "language",
+     "expected": "FAIL",
+     "actual": "PASS"
+    },
+    {
+     "field": "relevance",
+     "expected": "STRONG",
+     "actual": "WEAK"
+    },
+    {
+     "field": "lane",
+     "expected": "EXCLUDED",
+     "actual": "PARKED"
+    }
+   ]
+  },
+  {
+   "id": "R2-091",
+   "actual": {
+    "geography": "PASS",
+    "compensation": "PASS",
+    "language": "PASS",
+    "employment_type": "PASS",
+    "employer_type": "PASS",
+    "relevance": "MODERATE",
+    "experience_label": "REASONABLE",
+    "lane": "SHORTLIST",
+    "flags": [
+     "ABOVE_TARGET"
+    ],
+    "overall": "PASS"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "PASS",
+     "rule_id": "COMP-R17"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R01"
+    },
+    "geography": {
+     "verdict": "PASS",
+     "rule_id": "GEO-R02"
+    },
+    "language": {
+     "verdict": "PASS",
+     "rule_id": "LANG-R01"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": [
+    {
+     "field": "relevance",
+     "expected": "STRONG",
+     "actual": "MODERATE"
+    }
+   ]
+  },
+  {
+   "id": "R2-092",
+   "actual": {
+    "geography": "PASS",
+    "compensation": "PASS",
+    "language": "UNKNOWN",
+    "employment_type": "PASS",
+    "employer_type": "PASS",
+    "relevance": "MODERATE",
+    "experience_label": "REASONABLE",
+    "lane": "REVIEW",
+    "flags": [
+     "ABOVE_TARGET",
+     "LANGUAGE_UNCERTAIN"
+    ],
+    "overall": "UNKNOWN"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "PASS",
+     "rule_id": "COMP-R17"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R02"
+    },
+    "geography": {
+     "verdict": "PASS",
+     "rule_id": "GEO-R02"
+    },
+    "language": {
+     "verdict": "UNKNOWN",
+     "rule_id": "LANG-R06"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": [
+    {
+     "field": "relevance",
+     "expected": "STRONG",
+     "actual": "MODERATE"
+    }
+   ]
+  },
+  {
+   "id": "R2-093",
+   "actual": {
+    "geography": "PASS",
+    "compensation": "PASS",
+    "language": "UNKNOWN",
+    "employment_type": "PASS",
+    "employer_type": "PASS",
+    "relevance": "WEAK",
+    "experience_label": "REASONABLE",
+    "lane": "PARKED",
+    "flags": [
+     "ABOVE_TARGET",
+     "LANGUAGE_UNCERTAIN"
+    ],
+    "overall": "UNKNOWN"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "PASS",
+     "rule_id": "COMP-R17"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R01"
+    },
+    "geography": {
+     "verdict": "PASS",
+     "rule_id": "GEO-R02"
+    },
+    "language": {
+     "verdict": "UNKNOWN",
+     "rule_id": "LANG-R06"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": [
+    {
+     "field": "relevance",
+     "expected": "STRONG",
+     "actual": "WEAK"
+    },
+    {
+     "field": "lane",
+     "expected": "REVIEW",
+     "actual": "PARKED"
+    }
+   ]
+  },
+  {
+   "id": "R2-094",
+   "actual": {
+    "geography": "PASS",
+    "compensation": "UNKNOWN",
+    "language": "UNKNOWN",
+    "employment_type": "UNKNOWN",
+    "employer_type": "PASS",
+    "relevance": "WEAK",
+    "experience_label": null,
+    "lane": "PARKED",
+    "flags": [
+     "COMP_UNDISCLOSED",
+     "EMPLOYMENT_UNSTATED",
+     "LANGUAGE_UNCERTAIN"
+    ],
+    "overall": "UNKNOWN"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "UNKNOWN",
+     "rule_id": "COMP-R06"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R07"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "UNKNOWN",
+     "rule_id": "EMP-R12"
+    },
+    "geography": {
+     "verdict": "PASS",
+     "rule_id": "GEO-R02"
+    },
+    "language": {
+     "verdict": "UNKNOWN",
+     "rule_id": "LANG-R05"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": [
+    {
+     "field": "language",
+     "expected": "FAIL",
+     "actual": "UNKNOWN"
+    },
+    {
+     "field": "lane",
+     "expected": "EXCLUDED",
+     "actual": "PARKED"
+    }
+   ]
+  },
+  {
+   "id": "R2-095",
+   "actual": {
+    "geography": "PASS",
+    "compensation": "PASS",
+    "language": "PASS",
+    "employment_type": "PASS",
+    "employer_type": "PASS",
+    "relevance": "WEAK",
+    "experience_label": "REASONABLE",
+    "lane": "PARKED",
+    "flags": [
+     "ABOVE_TARGET",
+     "COMP_BASIS_UNSTATED"
+    ],
+    "overall": "PASS"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "PASS",
+     "rule_id": "COMP-R17"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R01"
+    },
+    "geography": {
+     "verdict": "PASS",
+     "rule_id": "GEO-R21"
+    },
+    "language": {
+     "verdict": "PASS",
+     "rule_id": "LANG-R01"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": [
+    {
+     "field": "relevance",
+     "expected": "STRONG",
+     "actual": "WEAK"
+    },
+    {
+     "field": "lane",
+     "expected": "SHORTLIST",
+     "actual": "PARKED"
+    }
+   ]
+  },
+  {
+   "id": "R2-096",
+   "actual": {
+    "geography": "PASS",
+    "compensation": "PASS",
+    "language": "FAIL",
+    "employment_type": "PASS",
+    "employer_type": "PASS",
+    "relevance": "WEAK",
+    "experience_label": "REASONABLE",
+    "lane": "EXCLUDED",
+    "flags": [
+     "ABOVE_TARGET"
+    ],
+    "overall": "FAIL"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "PASS",
+     "rule_id": "COMP-R17"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R01"
+    },
+    "geography": {
+     "verdict": "PASS",
+     "rule_id": "GEO-R02"
+    },
+    "language": {
+     "verdict": "FAIL",
+     "rule_id": "LANG-R02"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": [
+    {
+     "field": "relevance",
+     "expected": "STRONG",
+     "actual": "WEAK"
+    }
+   ]
+  },
+  {
+   "id": "R2-097",
+   "actual": {
+    "geography": "PASS",
+    "compensation": "PASS",
+    "language": "UNKNOWN",
+    "employment_type": "PASS",
+    "employer_type": "PASS",
+    "relevance": "MODERATE",
+    "experience_label": "DIRECT",
+    "lane": "REVIEW",
+    "flags": [
+     "IN_TARGET",
+     "LANGUAGE_UNCERTAIN"
+    ],
+    "overall": "UNKNOWN"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "PASS",
+     "rule_id": "COMP-R18"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R02"
+    },
+    "geography": {
+     "verdict": "PASS",
+     "rule_id": "GEO-R02"
+    },
+    "language": {
+     "verdict": "UNKNOWN",
+     "rule_id": "LANG-R05"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": [
+    {
+     "field": "language",
+     "expected": "PASS",
+     "actual": "UNKNOWN"
+    },
+    {
+     "field": "relevance",
+     "expected": "STRONG",
+     "actual": "MODERATE"
+    },
+    {
+     "field": "lane",
+     "expected": "SHORTLIST",
+     "actual": "REVIEW"
+    }
+   ]
+  },
+  {
+   "id": "R2-098",
+   "actual": {
+    "geography": "PASS",
+    "compensation": "PASS",
+    "language": "UNKNOWN",
+    "employment_type": "PASS",
+    "employer_type": "PASS",
+    "relevance": "MODERATE",
+    "experience_label": "DIRECT",
+    "lane": "REVIEW",
+    "flags": [
+     "COMP_BASIS_UNSTATED",
+     "IN_TARGET",
+     "LANGUAGE_UNCERTAIN"
+    ],
+    "overall": "UNKNOWN"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "PASS",
+     "rule_id": "COMP-R18"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R01"
+    },
+    "geography": {
+     "verdict": "PASS",
+     "rule_id": "GEO-R21"
+    },
+    "language": {
+     "verdict": "UNKNOWN",
+     "rule_id": "LANG-R05"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": [
+    {
+     "field": "language",
+     "expected": "PASS",
+     "actual": "UNKNOWN"
+    },
+    {
+     "field": "relevance",
+     "expected": "STRONG",
+     "actual": "MODERATE"
+    },
+    {
+     "field": "lane",
+     "expected": "SHORTLIST",
+     "actual": "REVIEW"
+    }
+   ]
+  },
+  {
+   "id": "R2-099",
+   "actual": {
+    "geography": "PASS",
+    "compensation": "PASS",
+    "language": "PASS",
+    "employment_type": "PASS",
+    "employer_type": "PASS",
+    "relevance": "WEAK",
+    "experience_label": "STRETCH",
+    "lane": "PARKED",
+    "flags": [
+     "ABOVE_TARGET",
+     "EXPERIENCE_STRETCH",
+     "EXPERIENCE_SUBSTANTIAL_MISMATCH",
+     "SENIORITY_LEAD"
+    ],
+    "overall": "PASS"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "PASS",
+     "rule_id": "COMP-R17"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R01"
+    },
+    "geography": {
+     "verdict": "PASS",
+     "rule_id": "GEO-R02"
+    },
+    "language": {
+     "verdict": "PASS",
+     "rule_id": "LANG-R01"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": [
+    {
+     "field": "relevance",
+     "expected": "STRONG",
+     "actual": "WEAK"
+    },
+    {
+     "field": "lane",
+     "expected": "SHORTLIST",
+     "actual": "PARKED"
+    }
+   ]
+  },
+  {
+   "id": "R2-100",
+   "actual": {
+    "geography": "PASS",
+    "compensation": "PASS",
+    "language": "PASS",
+    "employment_type": "PASS",
+    "employer_type": "PASS",
+    "relevance": "MODERATE",
+    "experience_label": "STRETCH",
+    "lane": "PARKED",
+    "flags": [
+     "ABOVE_TARGET",
+     "EXPERIENCE_STRETCH",
+     "EXPERIENCE_SUBSTANTIAL_MISMATCH",
+     "SENIORITY_SENIOR"
+    ],
+    "overall": "PASS"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "PASS",
+     "rule_id": "COMP-R17"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R02"
+    },
+    "geography": {
+     "verdict": "PASS",
+     "rule_id": "GEO-R02"
+    },
+    "language": {
+     "verdict": "PASS",
+     "rule_id": "LANG-R01"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": []
+  },
+  {
+   "id": "R2-101",
+   "actual": {
+    "geography": "PASS",
+    "compensation": "PASS",
+    "language": "PASS",
+    "employment_type": "PASS",
+    "employer_type": "PASS",
+    "relevance": "MODERATE",
+    "experience_label": "STRETCH",
+    "lane": "PARKED",
+    "flags": [
+     "ABOVE_TARGET",
+     "EXPERIENCE_STRETCH",
+     "SENIORITY_PRINCIPAL"
+    ],
+    "overall": "PASS"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "PASS",
+     "rule_id": "COMP-R17"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R01"
+    },
+    "geography": {
+     "verdict": "PASS",
+     "rule_id": "GEO-R02"
+    },
+    "language": {
+     "verdict": "PASS",
+     "rule_id": "LANG-R01"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": []
+  },
+  {
+   "id": "R2-102",
+   "actual": {
+    "geography": "PASS",
+    "compensation": "PASS",
+    "language": "PASS",
+    "employment_type": "PASS",
+    "employer_type": "PASS",
+    "relevance": "STRONG",
+    "experience_label": "REASONABLE",
+    "lane": "SHORTLIST",
+    "flags": [
+     "COMP_BASIS_UNSTATED",
+     "IN_TARGET"
+    ],
+    "overall": "PASS"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "PASS",
+     "rule_id": "COMP-R18"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R01"
+    },
+    "geography": {
+     "verdict": "PASS",
+     "rule_id": "GEO-R21"
+    },
+    "language": {
+     "verdict": "PASS",
+     "rule_id": "LANG-R01"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": []
+  },
+  {
+   "id": "R2-103",
+   "actual": {
+    "geography": "PASS",
+    "compensation": "PASS",
+    "language": "PASS",
+    "employment_type": "PASS",
+    "employer_type": "PASS",
+    "relevance": "WEAK",
+    "experience_label": "REASONABLE",
+    "lane": "PARKED",
+    "flags": [
+     "COMP_BASIS_UNSTATED",
+     "IN_TARGET"
+    ],
+    "overall": "PASS"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "PASS",
+     "rule_id": "COMP-R02"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R07"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R01"
+    },
+    "geography": {
+     "verdict": "PASS",
+     "rule_id": "GEO-R21"
+    },
+    "language": {
+     "verdict": "PASS",
+     "rule_id": "LANG-R01"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": []
+  },
+  {
+   "id": "R2-104",
+   "actual": {
+    "geography": "PASS",
+    "compensation": "PASS",
+    "language": "PASS",
+    "employment_type": "PASS",
+    "employer_type": "PASS",
+    "relevance": "WEAK",
+    "experience_label": "DIRECT",
+    "lane": "PARKED",
+    "flags": [
+     "IN_TARGET"
+    ],
+    "overall": "PASS"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "PASS",
+     "rule_id": "COMP-R18"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R07"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R02"
+    },
+    "geography": {
+     "verdict": "PASS",
+     "rule_id": "GEO-R02"
+    },
+    "language": {
+     "verdict": "PASS",
+     "rule_id": "LANG-R01"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": []
+  },
+  {
+   "id": "R2-105",
+   "actual": {
+    "geography": "PASS",
+    "compensation": "PASS",
+    "language": "PASS",
+    "employment_type": "PASS",
+    "employer_type": "PASS",
+    "relevance": "MODERATE",
+    "experience_label": "REASONABLE",
+    "lane": "SHORTLIST",
+    "flags": [
+     "ABOVE_TARGET"
+    ],
+    "overall": "PASS"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "PASS",
+     "rule_id": "COMP-R17"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R01"
+    },
+    "geography": {
+     "verdict": "PASS",
+     "rule_id": "GEO-R02"
+    },
+    "language": {
+     "verdict": "PASS",
+     "rule_id": "LANG-R01"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": [
+    {
+     "field": "relevance",
+     "expected": "STRONG",
+     "actual": "MODERATE"
+    }
+   ]
+  },
+  {
+   "id": "R2-106",
+   "actual": {
+    "geography": "PASS",
+    "compensation": "PASS",
+    "language": "PASS",
+    "employment_type": "PASS",
+    "employer_type": "PASS",
+    "relevance": "WEAK",
+    "experience_label": "REASONABLE",
+    "lane": "PARKED",
+    "flags": [
+     "ABOVE_TARGET"
+    ],
+    "overall": "PASS"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "PASS",
+     "rule_id": "COMP-R17"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R02"
+    },
+    "geography": {
+     "verdict": "PASS",
+     "rule_id": "GEO-R02"
+    },
+    "language": {
+     "verdict": "PASS",
+     "rule_id": "LANG-R01"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": [
+    {
+     "field": "relevance",
+     "expected": "MODERATE",
+     "actual": "WEAK"
+    },
+    {
+     "field": "lane",
+     "expected": "SHORTLIST",
+     "actual": "PARKED"
+    }
+   ]
+  },
+  {
+   "id": "R2-107",
+   "actual": {
+    "geography": "PASS",
+    "compensation": "UNKNOWN",
+    "language": "UNKNOWN",
+    "employment_type": "PASS",
+    "employer_type": "PASS",
+    "relevance": "NOT_ASSESSED",
+    "experience_label": null,
+    "lane": "REVIEW",
+    "flags": [
+     "COMP_UNDISCLOSED",
+     "LANGUAGE_UNCERTAIN"
+    ],
+    "overall": "UNKNOWN"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "UNKNOWN",
+     "rule_id": "COMP-R06"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R02"
+    },
+    "geography": {
+     "verdict": "PASS",
+     "rule_id": "GEO-R02"
+    },
+    "language": {
+     "verdict": "UNKNOWN",
+     "rule_id": "LANG-R05"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": []
+  },
+  {
+   "id": "R2-108",
+   "actual": {
+    "geography": "PASS",
+    "compensation": "UNKNOWN",
+    "language": "UNKNOWN",
+    "employment_type": "PASS",
+    "employer_type": "PASS",
+    "relevance": "NOT_ASSESSED",
+    "experience_label": null,
+    "lane": "REVIEW",
+    "flags": [
+     "COMP_UNDISCLOSED",
+     "LANGUAGE_UNCERTAIN",
+     "SENIORITY_STAFF"
+    ],
+    "overall": "UNKNOWN"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "UNKNOWN",
+     "rule_id": "COMP-R06"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R02"
+    },
+    "geography": {
+     "verdict": "PASS",
+     "rule_id": "GEO-R02"
+    },
+    "language": {
+     "verdict": "UNKNOWN",
+     "rule_id": "LANG-R05"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": []
+  },
+  {
+   "id": "R2-109",
+   "actual": {
+    "geography": "FAIL",
+    "compensation": "UNKNOWN",
+    "language": "UNKNOWN",
+    "employment_type": "PASS",
+    "employer_type": "PASS",
+    "relevance": "NOT_ASSESSED",
+    "experience_label": null,
+    "lane": "EXCLUDED",
+    "flags": [
+     "COMP_UNDISCLOSED",
+     "LANGUAGE_UNCERTAIN",
+     "SENIORITY_PRINCIPAL"
+    ],
+    "overall": "FAIL"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "UNKNOWN",
+     "rule_id": "COMP-R06"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R01"
+    },
+    "geography": {
+     "verdict": "FAIL",
+     "rule_id": "GEO-R12"
+    },
+    "language": {
+     "verdict": "UNKNOWN",
+     "rule_id": "LANG-R05"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": []
+  },
+  {
+   "id": "R2-110",
+   "actual": {
+    "geography": "PASS",
+    "compensation": "PASS",
+    "language": "UNKNOWN",
+    "employment_type": "PASS",
+    "employer_type": "PASS",
+    "relevance": "NOT_ASSESSED",
+    "experience_label": null,
+    "lane": "PARKED",
+    "flags": [
+     "ABOVE_TARGET",
+     "LANGUAGE_UNCERTAIN",
+     "SENIORITY_SENIOR"
+    ],
+    "overall": "UNKNOWN"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "PASS",
+     "rule_id": "COMP-R17"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R02"
+    },
+    "geography": {
+     "verdict": "PASS",
+     "rule_id": "GEO-R02"
+    },
+    "language": {
+     "verdict": "UNKNOWN",
+     "rule_id": "LANG-R05"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": []
+  },
+  {
+   "id": "R2-111",
+   "actual": {
+    "geography": "PASS",
+    "compensation": "PASS",
+    "language": "PASS",
+    "employment_type": "UNKNOWN",
+    "employer_type": "UNKNOWN",
+    "relevance": "MODERATE",
+    "experience_label": "REASONABLE",
+    "lane": "REVIEW",
+    "flags": [
+     "ABOVE_TARGET",
+     "COMP_BASIS_UNSTATED",
+     "EMPLOYER_TYPE_REVIEW",
+     "STAFFING"
+    ],
+    "overall": "UNKNOWN"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "PASS",
+     "rule_id": "COMP-R17"
+    },
+    "employer_type": {
+     "verdict": "UNKNOWN",
+     "rule_id": "EMPR-R01"
+    },
+    "employment_relationship": {
+     "verdict": "UNKNOWN",
+     "rule_id": "REL-R08"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R01"
+    },
+    "geography": {
+     "verdict": "PASS",
+     "rule_id": "GEO-R21"
+    },
+    "language": {
+     "verdict": "PASS",
+     "rule_id": "LANG-R01"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": [
+    {
+     "field": "employment_type",
+     "expected": "PASS",
+     "actual": "UNKNOWN"
+    },
+    {
+     "field": "relevance",
+     "expected": "STRONG",
+     "actual": "MODERATE"
+    }
+   ]
+  },
+  {
+   "id": "R2-112",
+   "actual": {
+    "geography": "PASS",
+    "compensation": "PASS",
+    "language": "UNKNOWN",
+    "employment_type": "PASS",
+    "employer_type": "UNKNOWN",
+    "relevance": "STRONG",
+    "experience_label": "REASONABLE",
+    "lane": "REVIEW",
+    "flags": [
+     "ABOVE_TARGET",
+     "CONSULTANCY",
+     "LANGUAGE_UNCERTAIN"
+    ],
+    "overall": "UNKNOWN"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "PASS",
+     "rule_id": "COMP-R17"
+    },
+    "employer_type": {
+     "verdict": "UNKNOWN",
+     "rule_id": "EMPR-R02"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R02"
+    },
+    "geography": {
+     "verdict": "PASS",
+     "rule_id": "GEO-R02"
+    },
+    "language": {
+     "verdict": "UNKNOWN",
+     "rule_id": "LANG-R05"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": [
+    {
+     "field": "language",
+     "expected": "PASS",
+     "actual": "UNKNOWN"
+    }
+   ]
+  },
+  {
+   "id": "R2-113",
+   "actual": {
+    "geography": "PASS",
+    "compensation": "PASS",
+    "language": "UNKNOWN",
+    "employment_type": "PASS",
+    "employer_type": "UNKNOWN",
+    "relevance": "WEAK",
+    "experience_label": "REASONABLE",
+    "lane": "PARKED",
+    "flags": [
+     "ABOVE_TARGET",
+     "EMPLOYER_UNCLASSIFIED",
+     "LANGUAGE_UNCERTAIN"
+    ],
+    "overall": "UNKNOWN"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "PASS",
+     "rule_id": "COMP-R17"
+    },
+    "employer_type": {
+     "verdict": "UNKNOWN",
+     "rule_id": "EMPR-R04"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R02"
+    },
+    "geography": {
+     "verdict": "PASS",
+     "rule_id": "GEO-R02"
+    },
+    "language": {
+     "verdict": "UNKNOWN",
+     "rule_id": "LANG-R05"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": [
+    {
+     "field": "language",
+     "expected": "PASS",
+     "actual": "UNKNOWN"
+    },
+    {
+     "field": "relevance",
+     "expected": "STRONG",
+     "actual": "WEAK"
+    },
+    {
+     "field": "lane",
+     "expected": "REVIEW",
+     "actual": "PARKED"
+    }
+   ]
+  },
+  {
+   "id": "R2-114",
+   "actual": {
+    "geography": "PASS",
+    "compensation": "PASS",
+    "language": "UNKNOWN",
+    "employment_type": "PASS",
+    "employer_type": "UNKNOWN",
+    "relevance": "WEAK",
+    "experience_label": "REASONABLE",
+    "lane": "PARKED",
+    "flags": [
+     "COMP_BASIS_UNSTATED",
+     "EMPLOYER_UNCLASSIFIED",
+     "IN_TARGET",
+     "LANGUAGE_UNCERTAIN"
+    ],
+    "overall": "UNKNOWN"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "PASS",
+     "rule_id": "COMP-R02"
+    },
+    "employer_type": {
+     "verdict": "UNKNOWN",
+     "rule_id": "EMPR-R04"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R01"
+    },
+    "geography": {
+     "verdict": "PASS",
+     "rule_id": "GEO-R21"
+    },
+    "language": {
+     "verdict": "UNKNOWN",
+     "rule_id": "LANG-R05"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": [
+    {
+     "field": "language",
+     "expected": "PASS",
+     "actual": "UNKNOWN"
+    }
+   ]
+  },
+  {
+   "id": "R2-115",
+   "actual": {
+    "geography": "UNKNOWN",
+    "compensation": "PASS",
+    "language": "PASS",
+    "employment_type": "PASS",
+    "employer_type": "PASS",
+    "relevance": "MODERATE",
+    "experience_label": "REASONABLE",
+    "lane": "REVIEW",
+    "flags": [
+     "ABOVE_TARGET",
+     "HYBRID_DAYS_UNSPECIFIED"
+    ],
+    "overall": "UNKNOWN"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "PASS",
+     "rule_id": "COMP-R17"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R07"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R01"
+    },
+    "geography": {
+     "verdict": "UNKNOWN",
+     "rule_id": "GEO-R08"
+    },
+    "language": {
+     "verdict": "PASS",
+     "rule_id": "LANG-R01"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": [
+    {
+     "field": "geography",
+     "expected": "PASS",
+     "actual": "UNKNOWN"
+    },
+    {
+     "field": "relevance",
+     "expected": "STRONG",
+     "actual": "MODERATE"
+    },
+    {
+     "field": "lane",
+     "expected": "SHORTLIST",
+     "actual": "REVIEW"
+    }
+   ]
+  },
+  {
+   "id": "R2-116",
+   "actual": {
+    "geography": "PASS",
+    "compensation": "PASS",
+    "language": "UNKNOWN",
+    "employment_type": "PASS",
+    "employer_type": "PASS",
+    "relevance": "MODERATE",
+    "experience_label": "REASONABLE",
+    "lane": "REVIEW",
+    "flags": [
+     "ABOVE_TARGET",
+     "LANGUAGE_UNCERTAIN"
+    ],
+    "overall": "UNKNOWN"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "PASS",
+     "rule_id": "COMP-R17"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R01"
+    },
+    "geography": {
+     "verdict": "PASS",
+     "rule_id": "GEO-R02"
+    },
+    "language": {
+     "verdict": "UNKNOWN",
+     "rule_id": "LANG-R05"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": [
+    {
+     "field": "language",
+     "expected": "PASS",
+     "actual": "UNKNOWN"
+    },
+    {
+     "field": "relevance",
+     "expected": "STRONG",
+     "actual": "MODERATE"
+    },
+    {
+     "field": "lane",
+     "expected": "SHORTLIST",
+     "actual": "REVIEW"
+    }
+   ]
+  },
+  {
+   "id": "R2-117",
+   "actual": {
+    "geography": "UNKNOWN",
+    "compensation": "PASS",
+    "language": "UNKNOWN",
+    "employment_type": "PASS",
+    "employer_type": "PASS",
+    "relevance": "WEAK",
+    "experience_label": "REASONABLE",
+    "lane": "PARKED",
+    "flags": [
+     "ABOVE_TARGET",
+     "CITY_HUB_LISTED",
+     "LANGUAGE_UNCERTAIN"
+    ],
+    "overall": "UNKNOWN"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "PASS",
+     "rule_id": "COMP-R17"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R02"
+    },
+    "geography": {
+     "verdict": "UNKNOWN",
+     "rule_id": "GEO-R22"
+    },
+    "language": {
+     "verdict": "UNKNOWN",
+     "rule_id": "LANG-R05"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": [
+    {
+     "field": "language",
+     "expected": "PASS",
+     "actual": "UNKNOWN"
+    },
+    {
+     "field": "relevance",
+     "expected": "STRONG",
+     "actual": "WEAK"
+    },
+    {
+     "field": "lane",
+     "expected": "REVIEW",
+     "actual": "PARKED"
+    }
+   ]
+  },
+  {
+   "id": "R2-118",
+   "actual": {
+    "geography": "UNKNOWN",
+    "compensation": "PASS",
+    "language": "PASS",
+    "employment_type": "PASS",
+    "employer_type": "PASS",
+    "relevance": "WEAK",
+    "experience_label": "REASONABLE",
+    "lane": "PARKED",
+    "flags": [
+     "ABOVE_TARGET",
+     "CITY_HUB_LISTED"
+    ],
+    "overall": "UNKNOWN"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "PASS",
+     "rule_id": "COMP-R17"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R01"
+    },
+    "geography": {
+     "verdict": "UNKNOWN",
+     "rule_id": "GEO-R22"
+    },
+    "language": {
+     "verdict": "PASS",
+     "rule_id": "LANG-R01"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": [
+    {
+     "field": "relevance",
+     "expected": "STRONG",
+     "actual": "WEAK"
+    },
+    {
+     "field": "lane",
+     "expected": "REVIEW",
+     "actual": "PARKED"
+    }
+   ]
+  },
+  {
+   "id": "R2-119",
+   "actual": {
+    "geography": "FAIL",
+    "compensation": "PASS",
+    "language": "PASS",
+    "employment_type": "PASS",
+    "employer_type": "PASS",
+    "relevance": "MODERATE",
+    "experience_label": "REASONABLE",
+    "lane": "EXCLUDED",
+    "flags": [
+     "ABOVE_TARGET"
+    ],
+    "overall": "FAIL"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "PASS",
+     "rule_id": "COMP-R17"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R02"
+    },
+    "geography": {
+     "verdict": "FAIL",
+     "rule_id": "GEO-R17"
+    },
+    "language": {
+     "verdict": "PASS",
+     "rule_id": "LANG-R01"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": [
+    {
+     "field": "relevance",
+     "expected": "STRONG",
+     "actual": "MODERATE"
+    }
+   ]
+  },
+  {
+   "id": "R2-120",
+   "actual": {
+    "geography": "FAIL",
+    "compensation": "UNKNOWN",
+    "language": "PASS",
+    "employment_type": "PASS",
+    "employer_type": "PASS",
+    "relevance": "WEAK",
+    "experience_label": "REASONABLE",
+    "lane": "EXCLUDED",
+    "flags": [
+     "COMP_PERIOD_UNSTATED"
+    ],
+    "overall": "FAIL"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "UNKNOWN",
+     "rule_id": "COMP-R16"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R02"
+    },
+    "geography": {
+     "verdict": "FAIL",
+     "rule_id": "GEO-R04"
+    },
+    "language": {
+     "verdict": "PASS",
+     "rule_id": "LANG-R01"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": [
+    {
+     "field": "relevance",
+     "expected": "STRONG",
+     "actual": "WEAK"
+    }
+   ]
+  },
+  {
+   "id": "R2-121",
+   "actual": {
+    "geography": "FAIL",
+    "compensation": "UNKNOWN",
+    "language": "UNKNOWN",
+    "employment_type": "PASS",
+    "employer_type": "PASS",
+    "relevance": "WEAK",
+    "experience_label": "REASONABLE",
+    "lane": "EXCLUDED",
+    "flags": [
+     "COMP_PERIOD_UNSTATED",
+     "LANGUAGE_UNCERTAIN"
+    ],
+    "overall": "FAIL"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "UNKNOWN",
+     "rule_id": "COMP-R16"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R01"
+    },
+    "geography": {
+     "verdict": "FAIL",
+     "rule_id": "GEO-R15"
+    },
+    "language": {
+     "verdict": "UNKNOWN",
+     "rule_id": "LANG-R05"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": [
+    {
+     "field": "language",
+     "expected": "PASS",
+     "actual": "UNKNOWN"
+    },
+    {
+     "field": "relevance",
+     "expected": "STRONG",
+     "actual": "WEAK"
+    }
+   ]
+  },
+  {
+   "id": "R2-122",
+   "actual": {
+    "geography": "PASS",
+    "compensation": "PASS",
+    "language": "UNKNOWN",
+    "employment_type": "PASS",
+    "employer_type": "UNKNOWN",
+    "relevance": "WEAK",
+    "experience_label": "REASONABLE",
+    "lane": "PARKED",
+    "flags": [
+     "ABOVE_TARGET",
+     "COMP_BASIS_UNSTATED",
+     "EMPLOYER_UNCLASSIFIED",
+     "LANGUAGE_UNCERTAIN"
+    ],
+    "overall": "UNKNOWN"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "PASS",
+     "rule_id": "COMP-R17"
+    },
+    "employer_type": {
+     "verdict": "UNKNOWN",
+     "rule_id": "EMPR-R04"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R01"
+    },
+    "geography": {
+     "verdict": "PASS",
+     "rule_id": "GEO-R21"
+    },
+    "language": {
+     "verdict": "UNKNOWN",
+     "rule_id": "LANG-R05"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": [
+    {
+     "field": "employer_type",
+     "expected": "FAIL",
+     "actual": "UNKNOWN"
+    },
+    {
+     "field": "language",
+     "expected": "PASS",
+     "actual": "UNKNOWN"
+    },
+    {
+     "field": "relevance",
+     "expected": "STRONG",
+     "actual": "WEAK"
+    },
+    {
+     "field": "lane",
+     "expected": "EXCLUDED",
+     "actual": "PARKED"
+    }
+   ]
+  },
+  {
+   "id": "R2-123",
+   "actual": {
+    "geography": "PASS",
+    "compensation": "PASS",
+    "language": "PASS",
+    "employment_type": "PASS",
+    "employer_type": "PASS",
+    "relevance": "WEAK",
+    "experience_label": "REASONABLE",
+    "lane": "PARKED",
+    "flags": [
+     "ABOVE_TARGET"
+    ],
+    "overall": "PASS"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "PASS",
+     "rule_id": "COMP-R17"
+    },
+    "employer_type": {
+     "verdict": "PASS",
+     "rule_id": "EMPR-R05"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R01"
+    },
+    "geography": {
+     "verdict": "PASS",
+     "rule_id": "GEO-R02"
+    },
+    "language": {
+     "verdict": "PASS",
+     "rule_id": "LANG-R01"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": [
+    {
+     "field": "relevance",
+     "expected": "STRONG",
+     "actual": "WEAK"
+    },
+    {
+     "field": "lane",
+     "expected": "SHORTLIST",
+     "actual": "PARKED"
+    }
+   ]
+  },
+  {
+   "id": "R2-124",
+   "actual": {
+    "geography": "PASS",
+    "compensation": "PASS",
+    "language": "PASS",
+    "employment_type": "PASS",
+    "employer_type": "UNKNOWN",
+    "relevance": "WEAK",
+    "experience_label": "REASONABLE",
+    "lane": "PARKED",
+    "flags": [
+     "BELOW_TARGET",
+     "CTC_BASIS_UNVERIFIED",
+     "EMPLOYER_UNCLASSIFIED"
+    ],
+    "overall": "UNKNOWN"
+   },
+   "dimensions_raw": {
+    "compensation": {
+     "verdict": "PASS",
+     "rule_id": "COMP-C06"
+    },
+    "employer_type": {
+     "verdict": "UNKNOWN",
+     "rule_id": "EMPR-R04"
+    },
+    "employment_relationship": {
+     "verdict": "PASS",
+     "rule_id": "REL-R01"
+    },
+    "employment_type": {
+     "verdict": "PASS",
+     "rule_id": "EMP-R01"
+    },
+    "geography": {
+     "verdict": "PASS",
+     "rule_id": "GEO-R06"
+    },
+    "language": {
+     "verdict": "PASS",
+     "rule_id": "LANG-R01"
+    }
+   },
+   "newness": "NEW",
+   "undetermined": false,
+   "mismatches": [
+    {
+     "field": "relevance",
+     "expected": "STRONG",
+     "actual": "WEAK"
+    },
+    {
+     "field": "lane",
+     "expected": "REVIEW",
+     "actual": "PARKED"
+    }
+   ]
+  }
+ ],
+ "sequences": [
+  {
+   "id": "R2-SEQ-01",
+   "runs": [
+    {
+     "run_id": "S1-R1",
+     "requisition_ids": [
+      "req_0000001"
+     ],
+     "mismatches": [],
+     "actual": {
+      "geography": "PASS",
+      "compensation": "PASS",
+      "language": "PASS",
+      "employment_type": "PASS",
+      "employer_type": "PASS",
+      "relevance": "STRONG",
+      "experience_label": "REASONABLE",
+      "lane": "SHORTLIST",
+      "flags": [
+       "ABOVE_TARGET"
+      ],
+      "overall": "PASS"
+     },
+     "newness": "NEW",
+     "single_requisition": true,
+     "undetermined_fields": []
+    },
+    {
+     "run_id": "S1-R2",
+     "requisition_ids": [
+      "req_0000001"
+     ],
+     "mismatches": [
+      {
+       "field": "lane",
+       "expected": "SHORTLIST",
+       "actual": "REVIEW"
+      },
+      {
+       "field": "must_not_have_flags",
+       "expected": [
+        "SOURCE_CONFLICT"
+       ],
+       "actual": [
+        "ABOVE_TARGET",
+        "SOURCE_CONFLICT"
+       ],
+       "present": [
+        "SOURCE_CONFLICT"
+       ]
+      }
+     ],
+     "actual": {
+      "geography": "PASS",
+      "compensation": "PASS",
+      "language": "PASS",
+      "employment_type": "PASS",
+      "employer_type": "PASS",
+      "relevance": "STRONG",
+      "experience_label": "REASONABLE",
+      "lane": "REVIEW",
+      "flags": [
+       "ABOVE_TARGET",
+       "SOURCE_CONFLICT"
+      ],
+      "overall": "PASS"
+     },
+     "newness": "SEEN_BEFORE",
+     "single_requisition": true,
+     "undetermined_fields": []
+    }
+   ],
+   "mismatches": [
+    {
+     "field": "lane",
+     "expected": "SHORTLIST",
+     "actual": "REVIEW",
+     "run_id": "S1-R2"
+    },
+    {
+     "field": "must_not_have_flags",
+     "expected": [
+      "SOURCE_CONFLICT"
+     ],
+     "actual": [
+      "ABOVE_TARGET",
+      "SOURCE_CONFLICT"
+     ],
+     "present": [
+      "SOURCE_CONFLICT"
+     ],
+     "run_id": "S1-R2"
+    }
+   ]
+  },
+  {
+   "id": "R2-SEQ-02",
+   "runs": [
+    {
+     "run_id": "S2-R1",
+     "requisition_ids": [
+      "req_0000001"
+     ],
+     "mismatches": [],
+     "actual": {
+      "geography": "FAIL",
+      "compensation": "PASS",
+      "language": "PASS",
+      "employment_type": "PASS",
+      "employer_type": "PASS",
+      "relevance": "STRONG",
+      "experience_label": "REASONABLE",
+      "lane": "EXCLUDED",
+      "flags": [
+       "ABOVE_TARGET"
+      ],
+      "overall": "FAIL"
+     },
+     "newness": "NEW",
+     "single_requisition": true,
+     "undetermined_fields": []
+    },
+    {
+     "run_id": "S2-R2",
+     "requisition_ids": [
+      "req_0000001"
+     ],
+     "mismatches": [],
+     "actual": {
+      "geography": "FAIL",
+      "compensation": "PASS",
+      "language": "PASS",
+      "employment_type": "PASS",
+      "employer_type": "PASS",
+      "relevance": "STRONG",
+      "experience_label": "REASONABLE",
+      "lane": "EXCLUDED",
+      "flags": [
+       "ABOVE_TARGET",
+       "SOURCE_CONFLICT"
+      ],
+      "overall": "FAIL"
+     },
+     "newness": "SEEN_BEFORE",
+     "single_requisition": true,
+     "undetermined_fields": []
+    }
+   ],
+   "mismatches": []
+  },
+  {
+   "id": "R2-SEQ-03",
+   "runs": [
+    {
+     "run_id": "S3-R1",
+     "requisition_ids": [
+      "req_0000001"
+     ],
+     "mismatches": [],
+     "actual": {
+      "geography": "PASS",
+      "compensation": "PASS",
+      "language": "PASS",
+      "employment_type": "PASS",
+      "employer_type": "PASS",
+      "relevance": "STRONG",
+      "experience_label": "REASONABLE",
+      "lane": "SHORTLIST",
+      "flags": [
+       "ABOVE_TARGET"
+      ],
+      "overall": "PASS"
+     },
+     "newness": "NEW",
+     "single_requisition": true,
+     "undetermined_fields": []
+    },
+    {
+     "run_id": "S3-R2",
+     "requisition_ids": [
+      "req_0000001"
+     ],
+     "mismatches": [],
+     "actual": {
+      "geography": "PASS",
+      "compensation": "PASS",
+      "language": "PASS",
+      "employment_type": "PASS",
+      "employer_type": "PASS",
+      "relevance": "STRONG",
+      "experience_label": "REASONABLE",
+      "lane": "REVIEW",
+      "flags": [
+       "ABOVE_TARGET",
+       "SOURCE_CONFLICT"
+      ],
+      "overall": "PASS"
+     },
+     "newness": "UPDATED",
+     "single_requisition": true,
+     "undetermined_fields": []
+    }
+   ],
+   "mismatches": []
+  },
+  {
+   "id": "R2-SEQ-04",
+   "runs": [
+    {
+     "run_id": "S4-R1",
+     "requisition_ids": [
+      "req_0000001"
+     ],
+     "mismatches": [
+      {
+       "field": "verdict.employment_type",
+       "expected": "PASS",
+       "actual": "FAIL"
+      },
+      {
+       "field": "verdict.overall",
+       "expected": "PASS",
+       "actual": "FAIL"
+      },
+      {
+       "field": "lane",
+       "expected": "SHORTLIST",
+       "actual": "EXCLUDED"
+      }
+     ],
+     "actual": {
+      "geography": "PASS",
+      "compensation": "PASS",
+      "language": "PASS",
+      "employment_type": "FAIL",
+      "employer_type": "PASS",
+      "relevance": "STRONG",
+      "experience_label": "REASONABLE",
+      "lane": "EXCLUDED",
+      "flags": [
+       "ABOVE_TARGET"
+      ],
+      "overall": "FAIL"
+     },
+     "newness": "NEW",
+     "single_requisition": true,
+     "undetermined_fields": []
+    },
+    {
+     "run_id": "S4-R2",
+     "requisition_ids": [
+      "req_0000001"
+     ],
+     "mismatches": [
+      {
+       "field": "verdict.employment_type",
+       "expected": "PASS",
+       "actual": "FAIL"
+      },
+      {
+       "field": "verdict.overall",
+       "expected": "PASS",
+       "actual": "FAIL"
+      },
+      {
+       "field": "lane",
+       "expected": "SHORTLIST",
+       "actual": "EXCLUDED"
+      }
+     ],
+     "actual": {
+      "geography": "PASS",
+      "compensation": "PASS",
+      "language": "PASS",
+      "employment_type": "FAIL",
+      "employer_type": "PASS",
+      "relevance": "STRONG",
+      "experience_label": "REASONABLE",
+      "lane": "EXCLUDED",
+      "flags": [
+       "ABOVE_TARGET"
+      ],
+      "overall": "FAIL"
+     },
+     "newness": "SEEN_BEFORE",
+     "single_requisition": true,
+     "undetermined_fields": []
+    }
+   ],
+   "mismatches": [
+    {
+     "field": "verdict.employment_type",
+     "expected": "PASS",
+     "actual": "FAIL",
+     "run_id": "S4-R1"
+    },
+    {
+     "field": "verdict.overall",
+     "expected": "PASS",
+     "actual": "FAIL",
+     "run_id": "S4-R1"
+    },
+    {
+     "field": "lane",
+     "expected": "SHORTLIST",
+     "actual": "EXCLUDED",
+     "run_id": "S4-R1"
+    },
+    {
+     "field": "verdict.employment_type",
+     "expected": "PASS",
+     "actual": "FAIL",
+     "run_id": "S4-R2"
+    },
+    {
+     "field": "verdict.overall",
+     "expected": "PASS",
+     "actual": "FAIL",
+     "run_id": "S4-R2"
+    },
+    {
+     "field": "lane",
+     "expected": "SHORTLIST",
+     "actual": "EXCLUDED",
+     "run_id": "S4-R2"
+    }
+   ]
+  },
+  {
+   "id": "R2-SEQ-05",
+   "runs": [
+    {
+     "run_id": "S5-R1",
+     "requisition_ids": [
+      "req_0000001",
+      "req_0000001"
+     ],
+     "mismatches": [
+      {
+       "field": "verdict.geography",
+       "expected": "PASS",
+       "actual": "UNKNOWN"
+      },
+      {
+       "field": "verdict.overall",
+       "expected": "PASS",
+       "actual": "UNKNOWN"
+      }
+     ],
+     "actual": {
+      "geography": "UNKNOWN",
+      "compensation": "PASS",
+      "language": "PASS",
+      "employment_type": "PASS",
+      "employer_type": "PASS",
+      "relevance": "STRONG",
+      "experience_label": "REASONABLE",
+      "lane": "REVIEW",
+      "flags": [
+       "ABOVE_TARGET",
+       "HYBRID_DAYS_UNSPECIFIED",
+       "SOURCE_CONFLICT"
+      ],
+      "overall": "UNKNOWN"
+     },
+     "newness": "NEW",
+     "single_requisition": true,
+     "undetermined_fields": []
+    }
+   ],
+   "mismatches": [
+    {
+     "field": "verdict.geography",
+     "expected": "PASS",
+     "actual": "UNKNOWN",
+     "run_id": "S5-R1"
+    },
+    {
+     "field": "verdict.overall",
+     "expected": "PASS",
+     "actual": "UNKNOWN",
+     "run_id": "S5-R1"
+    }
+   ]
+  },
+  {
+   "id": "R2-SEQ-06",
+   "runs": [
+    {
+     "run_id": "S6-R1",
+     "requisition_ids": [
+      "req_0000001"
+     ],
+     "mismatches": [],
+     "actual": {
+      "geography": "PASS",
+      "compensation": "PASS",
+      "language": "PASS",
+      "employment_type": "PASS",
+      "employer_type": "PASS",
+      "relevance": "STRONG",
+      "experience_label": "REASONABLE",
+      "lane": "SHORTLIST",
+      "flags": [
+       "ABOVE_TARGET"
+      ],
+      "overall": "PASS"
+     },
+     "newness": "NEW",
+     "single_requisition": true,
+     "undetermined_fields": []
+    },
+    {
+     "run_id": "S6-R2",
+     "requisition_ids": [
+      "req_0000001"
+     ],
+     "mismatches": [],
+     "actual": {
+      "geography": "PASS",
+      "compensation": "PASS",
+      "language": "PASS",
+      "employment_type": "PASS",
+      "employer_type": "PASS",
+      "relevance": "STRONG",
+      "experience_label": "REASONABLE",
+      "lane": "SHORTLIST",
+      "flags": [
+       "ABOVE_TARGET"
+      ],
+      "overall": "PASS"
+     },
+     "newness": "SEEN_BEFORE",
+     "single_requisition": true,
+     "undetermined_fields": []
+    }
+   ],
+   "mismatches": []
+  },
+  {
+   "id": "R2-SEQ-07",
+   "runs": [
+    {
+     "run_id": "S7-D",
+     "requisition_ids": [
+      "req_0000001",
+      "req_0000002",
+      "req_0000003",
+      "req_0000005",
+      "req_0000006",
+      "req_0000007",
+      "req_0000008",
+      "req_0000009",
+      "req_0000010",
+      "req_0000011",
+      "req_0000013",
+      "req_0000014"
+     ],
+     "mismatches": [
+      {
+       "field": "all_items_lane",
+       "expected": "REVIEW",
+       "actual": {
+        "M1": "PARKED",
+        "M2": "PARKED",
+        "M3": "PARKED",
+        "M4": "PARKED",
+        "M5": "PARKED",
+        "M6": "PARKED",
+        "M7": "PARKED"
+       }
+      },
+      {
+       "field": "surfaced",
+       "expected": [
+        "M1",
+        "M2",
+        "M3",
+        "M4",
+        "M5",
+        "S1",
+        "S2",
+        "S3",
+        "S4",
+        "S5"
+       ],
+       "actual": [
+        "S1",
+        "S2",
+        "S3",
+        "S4",
+        "S5",
+        "req_0000004"
+       ]
+      },
+      {
+       "field": "rank_groups_best_first",
+       "expected": [
+        [
+         "S1",
+         "S5"
+        ],
+        [
+         "S2"
+        ],
+        [
+         "S3"
+        ],
+        [
+         "S4"
+        ],
+        [
+         "M1",
+         "M3"
+        ],
+        [
+         "M2"
+        ],
+        [
+         "M4",
+         "M5"
+        ],
+        [
+         "M7"
+        ],
+        [
+         "M6"
+        ]
+       ],
+       "actual": [
+        "S4",
+        "S1",
+        "S5",
+        "S3",
+        "S2"
+       ]
+      },
+      {
+       "field": "overflow.M7",
+       "expected": "carry day 1 (D)",
+       "actual": "absent"
+      },
+      {
+       "field": "overflow.M6",
+       "expected": "carry day 1 (D)",
+       "actual": "absent"
+      }
+     ],
+     "surfaced_order": [
+      "req_0000004",
+      "S4",
+      "S1",
+      "S5",
+      "S3",
+      "S2"
+     ],
+     "carried_order": [],
+     "overflow_parked": [],
+     "item_states": {
+      "S1": {
+       "lane": "REVIEW",
+       "relevance": "STRONG",
+       "flags": [
+        "ABOVE_TARGET",
+        "CONSULTANCY"
+       ]
+      },
+      "S2": {
+       "lane": "REVIEW",
+       "relevance": "STRONG",
+       "flags": [
+        "ABOVE_TARGET",
+        "CONSULTANCY",
+        "HYBRID_DAYS_UNSPECIFIED"
+       ]
+      },
+      "S3": {
+       "lane": "REVIEW",
+       "relevance": "STRONG",
+       "flags": [
+        "COMP_UNDISCLOSED"
+       ]
+      },
+      "S4": {
+       "lane": "REVIEW",
+       "relevance": "STRONG",
+       "flags": [
+        "ABOVE_TARGET",
+        "CONSULTANCY",
+        "IDENTITY_UNCERTAIN"
+       ]
+      },
+      "S5": {
+       "lane": "REVIEW",
+       "relevance": "STRONG",
+       "flags": [
+        "ABOVE_TARGET",
+        "CONSULTANCY"
+       ]
+      },
+      "M1": {
+       "lane": "PARKED",
+       "relevance": "WEAK",
+       "flags": [
+        "ABOVE_TARGET",
+        "CONSULTANCY"
+       ]
+      },
+      "M2": {
+       "lane": "PARKED",
+       "relevance": "WEAK",
+       "flags": [
+        "ABOVE_TARGET",
+        "CONSULTANCY",
+        "HYBRID_DAYS_UNSPECIFIED"
+       ]
+      },
+      "M3": {
+       "lane": "PARKED",
+       "relevance": "WEAK",
+       "flags": [
+        "ABOVE_TARGET",
+        "CONSULTANCY"
+       ]
+      },
+      "M4": {
+       "lane": "PARKED",
+       "relevance": "WEAK",
+       "flags": [
+        "COMP_UNDISCLOSED"
+       ]
+      },
+      "M5": {
+       "lane": "PARKED",
+       "relevance": "WEAK",
+       "flags": [
+        "COMP_UNDISCLOSED"
+       ]
+      },
+      "M6": {
+       "lane": "PARKED",
+       "relevance": "WEAK",
+       "flags": [
+        "ABOVE_TARGET",
+        "CONSULTANCY",
+        "IDENTITY_UNCERTAIN"
+       ]
+      },
+      "M7": {
+       "lane": "PARKED",
+       "relevance": "WEAK",
+       "flags": [
+        "COMP_UNDISCLOSED",
+        "HYBRID_DAYS_UNSPECIFIED"
+       ]
+      }
+     }
+    },
+    {
+     "run_id": "S7-D+1",
+     "requisition_ids": [
+      "req_0000015",
+      "req_0000016",
+      "req_0000017",
+      "req_0000018",
+      "req_0000019",
+      "req_0000020",
+      "req_0000021",
+      "req_0000022",
+      "req_0000023",
+      "req_0000024",
+      "req_0000025"
+     ],
+     "mismatches": [
+      {
+       "field": "overflow.M6",
+       "expected": "eligible (D+1)",
+       "actual": "absent"
+      },
+      {
+       "field": "overflow.M7",
+       "expected": "eligible (D+1)",
+       "actual": "absent"
+      }
+     ],
+     "surfaced_order": [
+      "F1",
+      "F2",
+      "F3",
+      "F4",
+      "F5",
+      "F6",
+      "F7",
+      "F8",
+      "F9",
+      "F10"
+     ],
+     "carried_order": [
+      "S13"
+     ],
+     "overflow_parked": [],
+     "item_states": {
+      "F1": {
+       "lane": "REVIEW",
+       "relevance": "STRONG",
+       "flags": [
+        "ABOVE_TARGET",
+        "CONSULTANCY"
+       ]
+      },
+      "F2": {
+       "lane": "REVIEW",
+       "relevance": "STRONG",
+       "flags": [
+        "ABOVE_TARGET",
+        "CONSULTANCY"
+       ]
+      },
+      "F3": {
+       "lane": "REVIEW",
+       "relevance": "STRONG",
+       "flags": [
+        "ABOVE_TARGET",
+        "CONSULTANCY"
+       ]
+      },
+      "F4": {
+       "lane": "REVIEW",
+       "relevance": "STRONG",
+       "flags": [
+        "ABOVE_TARGET",
+        "CONSULTANCY"
+       ]
+      },
+      "F5": {
+       "lane": "REVIEW",
+       "relevance": "STRONG",
+       "flags": [
+        "ABOVE_TARGET",
+        "CONSULTANCY"
+       ]
+      },
+      "F6": {
+       "lane": "REVIEW",
+       "relevance": "STRONG",
+       "flags": [
+        "ABOVE_TARGET",
+        "CONSULTANCY"
+       ]
+      },
+      "F7": {
+       "lane": "REVIEW",
+       "relevance": "STRONG",
+       "flags": [
+        "ABOVE_TARGET",
+        "CONSULTANCY"
+       ]
+      },
+      "F8": {
+       "lane": "REVIEW",
+       "relevance": "STRONG",
+       "flags": [
+        "ABOVE_TARGET",
+        "CONSULTANCY"
+       ]
+      },
+      "F9": {
+       "lane": "REVIEW",
+       "relevance": "STRONG",
+       "flags": [
+        "ABOVE_TARGET",
+        "CONSULTANCY"
+       ]
+      },
+      "F10": {
+       "lane": "REVIEW",
+       "relevance": "STRONG",
+       "flags": [
+        "ABOVE_TARGET",
+        "CONSULTANCY"
+       ]
+      },
+      "S13": {
+       "lane": "REVIEW",
+       "relevance": "STRONG",
+       "flags": [
+        "COMP_UNDISCLOSED",
+        "HYBRID_DAYS_UNSPECIFIED"
+       ]
+      }
+     }
+    },
+    {
+     "run_id": "S7-D+2",
+     "requisition_ids": [
+      "req_0000026",
+      "req_0000027",
+      "req_0000028",
+      "req_0000029",
+      "req_0000030",
+      "req_0000031",
+      "req_0000032",
+      "req_0000033",
+      "req_0000034",
+      "req_0000035"
+     ],
+     "mismatches": [
+      {
+       "field": "overflow.M6",
+       "expected": "eligible (D+2)",
+       "actual": "absent"
+      },
+      {
+       "field": "overflow.M7",
+       "expected": "eligible (D+2)",
+       "actual": "absent"
+      }
+     ],
+     "surfaced_order": [
+      "G1",
+      "G2",
+      "G3",
+      "G4",
+      "G5",
+      "G6",
+      "G7",
+      "G8",
+      "G9",
+      "G10"
+     ],
+     "carried_order": [
+      "S13"
+     ],
+     "overflow_parked": [],
+     "item_states": {
+      "G1": {
+       "lane": "REVIEW",
+       "relevance": "STRONG",
+       "flags": [
+        "ABOVE_TARGET",
+        "CONSULTANCY"
+       ]
+      },
+      "G2": {
+       "lane": "REVIEW",
+       "relevance": "STRONG",
+       "flags": [
+        "ABOVE_TARGET",
+        "CONSULTANCY"
+       ]
+      },
+      "G3": {
+       "lane": "REVIEW",
+       "relevance": "STRONG",
+       "flags": [
+        "ABOVE_TARGET",
+        "CONSULTANCY"
+       ]
+      },
+      "G4": {
+       "lane": "REVIEW",
+       "relevance": "STRONG",
+       "flags": [
+        "ABOVE_TARGET",
+        "CONSULTANCY"
+       ]
+      },
+      "G5": {
+       "lane": "REVIEW",
+       "relevance": "STRONG",
+       "flags": [
+        "ABOVE_TARGET",
+        "CONSULTANCY"
+       ]
+      },
+      "G6": {
+       "lane": "REVIEW",
+       "relevance": "STRONG",
+       "flags": [
+        "ABOVE_TARGET",
+        "CONSULTANCY"
+       ]
+      },
+      "G7": {
+       "lane": "REVIEW",
+       "relevance": "STRONG",
+       "flags": [
+        "ABOVE_TARGET",
+        "CONSULTANCY"
+       ]
+      },
+      "G8": {
+       "lane": "REVIEW",
+       "relevance": "STRONG",
+       "flags": [
+        "ABOVE_TARGET",
+        "CONSULTANCY"
+       ]
+      },
+      "G9": {
+       "lane": "REVIEW",
+       "relevance": "STRONG",
+       "flags": [
+        "ABOVE_TARGET",
+        "CONSULTANCY"
+       ]
+      },
+      "G10": {
+       "lane": "REVIEW",
+       "relevance": "STRONG",
+       "flags": [
+        "ABOVE_TARGET",
+        "CONSULTANCY"
+       ]
+      }
+     }
+    },
+    {
+     "run_id": "S7-D+3",
+     "requisition_ids": [
+      "req_0000036",
+      "req_0000037",
+      "req_0000038",
+      "req_0000039",
+      "req_0000040",
+      "req_0000041",
+      "req_0000042",
+      "req_0000043",
+      "req_0000044",
+      "req_0000045"
+     ],
+     "mismatches": [
+      {
+       "field": "lanes.M6",
+       "expected": "PARKED",
+       "actual": "absent"
+      },
+      {
+       "field": "lanes.M7",
+       "expected": "PARKED",
+       "actual": "absent"
+      }
+     ],
+     "surfaced_order": [
+      "H1",
+      "H2",
+      "H3",
+      "H4",
+      "H5",
+      "H6",
+      "H7",
+      "H8",
+      "H9",
+      "H10"
+     ],
+     "carried_order": [
+      "S13"
+     ],
+     "overflow_parked": [],
+     "item_states": {
+      "H1": {
+       "lane": "REVIEW",
+       "relevance": "STRONG",
+       "flags": [
+        "ABOVE_TARGET",
+        "CONSULTANCY"
+       ]
+      },
+      "H2": {
+       "lane": "REVIEW",
+       "relevance": "STRONG",
+       "flags": [
+        "ABOVE_TARGET",
+        "CONSULTANCY"
+       ]
+      },
+      "H3": {
+       "lane": "REVIEW",
+       "relevance": "STRONG",
+       "flags": [
+        "ABOVE_TARGET",
+        "CONSULTANCY"
+       ]
+      },
+      "H4": {
+       "lane": "REVIEW",
+       "relevance": "STRONG",
+       "flags": [
+        "ABOVE_TARGET",
+        "CONSULTANCY"
+       ]
+      },
+      "H5": {
+       "lane": "REVIEW",
+       "relevance": "STRONG",
+       "flags": [
+        "ABOVE_TARGET",
+        "CONSULTANCY"
+       ]
+      },
+      "H6": {
+       "lane": "REVIEW",
+       "relevance": "STRONG",
+       "flags": [
+        "ABOVE_TARGET",
+        "CONSULTANCY"
+       ]
+      },
+      "H7": {
+       "lane": "REVIEW",
+       "relevance": "STRONG",
+       "flags": [
+        "ABOVE_TARGET",
+        "CONSULTANCY"
+       ]
+      },
+      "H8": {
+       "lane": "REVIEW",
+       "relevance": "STRONG",
+       "flags": [
+        "ABOVE_TARGET",
+        "CONSULTANCY"
+       ]
+      },
+      "H9": {
+       "lane": "REVIEW",
+       "relevance": "STRONG",
+       "flags": [
+        "ABOVE_TARGET",
+        "CONSULTANCY"
+       ]
+      },
+      "H10": {
+       "lane": "REVIEW",
+       "relevance": "STRONG",
+       "flags": [
+        "ABOVE_TARGET",
+        "CONSULTANCY"
+       ]
+      }
+     }
+    },
+    {
+     "run_id": "S7-D+4",
+     "requisition_ids": [
+      "req_0000046",
+      "req_0000047",
+      "req_0000048",
+      "req_0000049",
+      "req_0000050",
+      "req_0000051",
+      "req_0000052",
+      "req_0000053",
+      "req_0000054",
+      "req_0000055"
+     ],
+     "mismatches": [],
+     "surfaced_order": [
+      "J1",
+      "J2",
+      "J3",
+      "J4",
+      "J5",
+      "J6",
+      "J7",
+      "J8",
+      "J9",
+      "J10"
+     ],
+     "carried_order": [
+      "S13"
+     ],
+     "overflow_parked": [],
+     "item_states": {
+      "J1": {
+       "lane": "REVIEW",
+       "relevance": "STRONG",
+       "flags": [
+        "ABOVE_TARGET",
+        "CONSULTANCY"
+       ]
+      },
+      "J2": {
+       "lane": "REVIEW",
+       "relevance": "STRONG",
+       "flags": [
+        "ABOVE_TARGET",
+        "CONSULTANCY"
+       ]
+      },
+      "J3": {
+       "lane": "REVIEW",
+       "relevance": "STRONG",
+       "flags": [
+        "ABOVE_TARGET",
+        "CONSULTANCY"
+       ]
+      },
+      "J4": {
+       "lane": "REVIEW",
+       "relevance": "STRONG",
+       "flags": [
+        "ABOVE_TARGET",
+        "CONSULTANCY"
+       ]
+      },
+      "J5": {
+       "lane": "REVIEW",
+       "relevance": "STRONG",
+       "flags": [
+        "ABOVE_TARGET",
+        "CONSULTANCY"
+       ]
+      },
+      "J6": {
+       "lane": "REVIEW",
+       "relevance": "STRONG",
+       "flags": [
+        "ABOVE_TARGET",
+        "CONSULTANCY"
+       ]
+      },
+      "J7": {
+       "lane": "REVIEW",
+       "relevance": "STRONG",
+       "flags": [
+        "ABOVE_TARGET",
+        "CONSULTANCY"
+       ]
+      },
+      "J8": {
+       "lane": "REVIEW",
+       "relevance": "STRONG",
+       "flags": [
+        "ABOVE_TARGET",
+        "CONSULTANCY"
+       ]
+      },
+      "J9": {
+       "lane": "REVIEW",
+       "relevance": "STRONG",
+       "flags": [
+        "ABOVE_TARGET",
+        "CONSULTANCY"
+       ]
+      },
+      "J10": {
+       "lane": "REVIEW",
+       "relevance": "STRONG",
+       "flags": [
+        "ABOVE_TARGET",
+        "CONSULTANCY"
+       ]
+      }
+     }
+    }
+   ],
+   "mismatches": [
+    {
+     "field": "all_items_lane",
+     "expected": "REVIEW",
+     "actual": {
+      "M1": "PARKED",
+      "M2": "PARKED",
+      "M3": "PARKED",
+      "M4": "PARKED",
+      "M5": "PARKED",
+      "M6": "PARKED",
+      "M7": "PARKED"
+     },
+     "run_id": "S7-D"
+    },
+    {
+     "field": "surfaced",
+     "expected": [
+      "M1",
+      "M2",
+      "M3",
+      "M4",
+      "M5",
+      "S1",
+      "S2",
+      "S3",
+      "S4",
+      "S5"
+     ],
+     "actual": [
+      "S1",
+      "S2",
+      "S3",
+      "S4",
+      "S5",
+      "req_0000004"
+     ],
+     "run_id": "S7-D"
+    },
+    {
+     "field": "rank_groups_best_first",
+     "expected": [
+      [
+       "S1",
+       "S5"
+      ],
+      [
+       "S2"
+      ],
+      [
+       "S3"
+      ],
+      [
+       "S4"
+      ],
+      [
+       "M1",
+       "M3"
+      ],
+      [
+       "M2"
+      ],
+      [
+       "M4",
+       "M5"
+      ],
+      [
+       "M7"
+      ],
+      [
+       "M6"
+      ]
+     ],
+     "actual": [
+      "S4",
+      "S1",
+      "S5",
+      "S3",
+      "S2"
+     ],
+     "run_id": "S7-D"
+    },
+    {
+     "field": "overflow.M7",
+     "expected": "carry day 1 (D)",
+     "actual": "absent",
+     "run_id": "S7-D"
+    },
+    {
+     "field": "overflow.M6",
+     "expected": "carry day 1 (D)",
+     "actual": "absent",
+     "run_id": "S7-D"
+    },
+    {
+     "field": "overflow.M6",
+     "expected": "eligible (D+1)",
+     "actual": "absent",
+     "run_id": "S7-D+1"
+    },
+    {
+     "field": "overflow.M7",
+     "expected": "eligible (D+1)",
+     "actual": "absent",
+     "run_id": "S7-D+1"
+    },
+    {
+     "field": "overflow.M6",
+     "expected": "eligible (D+2)",
+     "actual": "absent",
+     "run_id": "S7-D+2"
+    },
+    {
+     "field": "overflow.M7",
+     "expected": "eligible (D+2)",
+     "actual": "absent",
+     "run_id": "S7-D+2"
+    },
+    {
+     "field": "lanes.M6",
+     "expected": "PARKED",
+     "actual": "absent",
+     "run_id": "S7-D+3"
+    },
+    {
+     "field": "lanes.M7",
+     "expected": "PARKED",
+     "actual": "absent",
+     "run_id": "S7-D+3"
+    }
+   ]
+  },
+  {
+   "id": "R2-SEQ-08",
+   "runs": [
+    {
+     "run_id": "S8-R1",
+     "requisition_ids": [
+      "req_0000001",
+      "req_0000002"
+     ],
+     "mismatches": [
+      {
+       "field": "verdict.geography",
+       "expected": "PASS",
+       "actual": "UNKNOWN",
+       "requisition": "req_0000001"
+      },
+      {
+       "field": "verdict.overall",
+       "expected": "PASS",
+       "actual": "UNKNOWN",
+       "requisition": "req_0000001"
+      },
+      {
+       "field": "verdict.geography",
+       "expected": "PASS",
+       "actual": "UNKNOWN",
+       "requisition": "req_0000002"
+      },
+      {
+       "field": "verdict.overall",
+       "expected": "PASS",
+       "actual": "UNKNOWN",
+       "requisition": "req_0000002"
+      }
+     ],
+     "states": {
+      "req_0000001": {
+       "actual": {
+        "geography": "UNKNOWN",
+        "compensation": "PASS",
+        "language": "PASS",
+        "employment_type": "PASS",
+        "employer_type": "PASS",
+        "relevance": "STRONG",
+        "experience_label": "REASONABLE",
+        "lane": "REVIEW",
+        "flags": [
+         "ABOVE_TARGET",
+         "HYBRID_DAYS_UNSPECIFIED",
+         "IDENTITY_UNCERTAIN"
+        ],
+        "overall": "UNKNOWN"
+       },
+       "newness": "NEW"
+      },
+      "req_0000002": {
+       "actual": {
+        "geography": "UNKNOWN",
+        "compensation": "PASS",
+        "language": "PASS",
+        "employment_type": "PASS",
+        "employer_type": "PASS",
+        "relevance": "STRONG",
+        "experience_label": "REASONABLE",
+        "lane": "REVIEW",
+        "flags": [
+         "ABOVE_TARGET",
+         "COMP_BASIS_UNSTATED",
+         "HYBRID_DAYS_UNSPECIFIED",
+         "IDENTITY_UNCERTAIN"
+        ],
+        "overall": "UNKNOWN"
+       },
+       "newness": "NEW"
+      }
+     },
+     "review_units": [
+      [
+       "req_0000001",
+       "req_0000002"
+      ]
+     ]
+    }
+   ],
+   "mismatches": [
+    {
+     "field": "verdict.geography",
+     "expected": "PASS",
+     "actual": "UNKNOWN",
+     "requisition": "req_0000001",
+     "run_id": "S8-R1"
+    },
+    {
+     "field": "verdict.overall",
+     "expected": "PASS",
+     "actual": "UNKNOWN",
+     "requisition": "req_0000001",
+     "run_id": "S8-R1"
+    },
+    {
+     "field": "verdict.geography",
+     "expected": "PASS",
+     "actual": "UNKNOWN",
+     "requisition": "req_0000002",
+     "run_id": "S8-R1"
+    },
+    {
+     "field": "verdict.overall",
+     "expected": "PASS",
+     "actual": "UNKNOWN",
+     "requisition": "req_0000002",
+     "run_id": "S8-R1"
+    }
+   ]
+  },
+  {
+   "id": "R2-SEQ-09",
+   "runs": [
+    {
+     "run_id": "S9-R1",
+     "requisition_ids": [
+      "req_0000001"
+     ],
+     "mismatches": [],
+     "actual": {
+      "geography": "UNKNOWN",
+      "compensation": "UNKNOWN",
+      "language": "UNKNOWN",
+      "employment_type": "UNKNOWN",
+      "employer_type": "PASS",
+      "relevance": "NOT_ASSESSED",
+      "experience_label": null,
+      "lane": "REVIEW",
+      "flags": [
+       "COMP_UNDISCLOSED",
+       "EMPLOYMENT_UNSTATED",
+       "HYBRID_DAYS_UNSPECIFIED",
+       "LANGUAGE_UNCERTAIN"
+      ],
+      "overall": "UNKNOWN"
+     },
+     "newness": "NEW",
+     "single_requisition": true,
+     "undetermined_fields": []
+    },
+    {
+     "run_id": "S9-R2",
+     "requisition_ids": [
+      "req_0000001"
+     ],
+     "mismatches": [
+      {
+       "field": "verdict.geography",
+       "expected": "PASS",
+       "actual": "UNKNOWN"
+      },
+      {
+       "field": "verdict.overall",
+       "expected": "PASS",
+       "actual": "UNKNOWN"
+      },
+      {
+       "field": "lane",
+       "expected": "SHORTLIST",
+       "actual": "REVIEW"
+      }
+     ],
+     "actual": {
+      "geography": "UNKNOWN",
+      "compensation": "PASS",
+      "language": "PASS",
+      "employment_type": "PASS",
+      "employer_type": "PASS",
+      "relevance": "STRONG",
+      "experience_label": "REASONABLE",
+      "lane": "REVIEW",
+      "flags": [
+       "ABOVE_TARGET",
+       "HYBRID_DAYS_UNSPECIFIED"
+      ],
+      "overall": "UNKNOWN"
+     },
+     "newness": "SEEN_BEFORE",
+     "single_requisition": true,
+     "undetermined_fields": [
+      "newness"
+     ]
+    }
+   ],
+   "mismatches": [
+    {
+     "field": "verdict.geography",
+     "expected": "PASS",
+     "actual": "UNKNOWN",
+     "run_id": "S9-R2"
+    },
+    {
+     "field": "verdict.overall",
+     "expected": "PASS",
+     "actual": "UNKNOWN",
+     "run_id": "S9-R2"
+    },
+    {
+     "field": "lane",
+     "expected": "SHORTLIST",
+     "actual": "REVIEW",
+     "run_id": "S9-R2"
+    }
+   ]
+  },
+  {
+   "id": "R2-SEQ-10",
+   "runs": [
+    {
+     "run_id": "S10-R1",
+     "requisition_ids": [
+      "req_0000001"
+     ],
+     "mismatches": [],
+     "actual": {
+      "geography": "PASS",
+      "compensation": "PASS",
+      "language": "PASS",
+      "employment_type": "PASS",
+      "employer_type": "PASS",
+      "relevance": "STRONG",
+      "experience_label": "REASONABLE",
+      "lane": "SHORTLIST",
+      "flags": [
+       "ABOVE_TARGET"
+      ],
+      "overall": "PASS"
+     },
+     "newness": "NEW",
+     "single_requisition": true,
+     "undetermined_fields": []
+    },
+    {
+     "run_id": "S10-R2",
+     "requisition_ids": [
+      "req_0000001"
+     ],
+     "mismatches": [],
+     "actual": {
+      "geography": "PASS",
+      "compensation": "PASS",
+      "language": "PASS",
+      "employment_type": "PASS",
+      "employer_type": "PASS",
+      "relevance": "STRONG",
+      "experience_label": "REASONABLE",
+      "lane": "REVIEW",
+      "flags": [
+       "ABOVE_TARGET",
+       "SOURCE_CONFLICT"
+      ],
+      "overall": "PASS"
+     },
+     "newness": "SEEN_BEFORE",
+     "single_requisition": true,
+     "undetermined_fields": []
+    }
+   ],
+   "mismatches": []
+  }
+ ]
+}

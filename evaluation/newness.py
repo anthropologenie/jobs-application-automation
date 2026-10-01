@@ -38,16 +38,31 @@ def material_snapshot(obs: Dict[str, Any], rows: List[Dict[str, Any]], policy, p
     }
 
 
-def changed_fields(current: Dict[str, Any], previous: Optional[Dict[str, Any]], fields: List[str]) -> List[str]:
+def differs(a: Any, b: Any, absent_tolerant: bool = False) -> bool:
+    """
+    True when two present values disagree. With `absent_tolerant` (0.2.3, owner resolution of
+    R2-SEQ-09 / F4), a list compared element-wise treats an element absent on either side as
+    compatible: a later sighting that adds a detail ("Hybrid" -> "Hybrid, 2 office days") is
+    enrichment, not a change or a contradiction.
+    """
+    if a is None or b is None:
+        return False
+    if absent_tolerant and isinstance(a, (list, tuple)) and isinstance(b, (list, tuple)) and len(a) == len(b):
+        return any(x is not None and y is not None and x != y for x, y in zip(a, b))
+    return a != b
+
+
+def changed_fields(current: Dict[str, Any], previous: Optional[Dict[str, Any]], fields: List[str],
+                   absent_tolerant: bool = False) -> List[str]:
     if previous is None:
         return []
     changed = []
     for f in fields:
         a, b = current.get(f), previous.get(f)
         if isinstance(a, dict) and isinstance(b, dict):
-            if any(a.get(k) is not None and b.get(k) is not None and a[k] != b[k] for k in a):
+            if any(differs(a.get(k), b.get(k), absent_tolerant) for k in a):
                 changed.append(f)
-        elif a is not None and b is not None and a != b:
+        elif differs(a, b, absent_tolerant):
             changed.append(f)
     return changed
 
@@ -83,7 +98,7 @@ def cross_source_changes(current: Dict[str, Any], observations: List[Dict[str, A
         a, b = snapshots[current["observation_id"]], snapshots[before["observation_id"]]
         if field == "location" and cfg.get("location_compare") == "arrangement":
             a, b = {field: a[field]["arrangement"]}, {field: b[field]["arrangement"]}
-        if field in changed_fields(a, b, [field]):
+        if field in changed_fields(a, b, [field], bool(cfg.get("absent_detail_is_enrichment"))):
             changed.append(field)
     return changed
 
@@ -117,4 +132,4 @@ def classify(created: bool, requisition: Optional[Dict[str, Any]], run_id: str,
             "newness_reason": reason}
 
 
-__all__ = ["material_snapshot", "changed_fields", "cross_source_changes", "classify", "date_precision"]
+__all__ = ["material_snapshot", "changed_fields", "differs", "cross_source_changes", "classify", "date_precision"]

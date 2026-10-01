@@ -150,11 +150,12 @@ class EvaluationService:
         snap = newness.material_snapshot(current, by_obs.get(oid, []), policy, places)
         changes: List[str] = []
         prior_same_source = [o for o in all_obs if o["source"] == obs["source"] and o["observation_id"] != oid]
+        tolerant = bool(policy.section("newness").get("absent_detail_is_enrichment"))  # 0.2.3
         for field in fields:
             for prev in reversed(prior_same_source):  # latest earlier sighting with the field
                 prev_snap = newness.material_snapshot(prev, by_obs.get(prev["observation_id"], []), policy, places)
                 if newness.has_field(prev_snap, field):
-                    if field in newness.changed_fields(snap, prev_snap, [field]):
+                    if field in newness.changed_fields(snap, prev_snap, [field], tolerant):
                         changes.append(field)
                     break
         cross = policy.section("newness").get("cross_source_update")

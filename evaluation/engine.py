@@ -15,6 +15,7 @@ from relevance.labeller import label_relevance, seniority_signal, title_tier
 
 from . import dimensions as D
 from . import compensation as C
+from .newness import differs as newness_differs
 from .selection import conflicts, select
 from .textutil import stable_hash
 
@@ -23,8 +24,11 @@ EVALUATOR_VERSION = "evaluator@2.0.0"
 
 def _verdict(policy, dimension: str, facts: Dict[str, Any]) -> Dict[str, Any]:
     rule = policy.first_match(dimension, facts)
-    return {"verdict": rule["verdict"], "rule_id": rule["rule_id"], "flags": list(rule["flags"]),
-            "band": rule.get("band"), "facts": facts}
+    out = {"verdict": rule["verdict"], "rule_id": rule["rule_id"], "flags": list(rule["flags"]),
+           "band": rule.get("band"), "facts": facts}
+    if "evidence_gap" in rule:  # 0.2.4 (OR-80): missing | known, on UNKNOWN rules only
+        out["evidence_gap"] = rule["evidence_gap"]
+    return out
 
 
 def _overall(verdicts: List[str]) -> str:
@@ -108,10 +112,15 @@ def evaluate(observations: List[Dict[str, Any]], evidence: List[Dict[str, Any]],
                                          empr_sel["rows"] if empr_sel else [])
     used["employer_classification"] = {k: empr_resolved[k] for k in ("classification", "basis", "classification_id")}
     content["employer_classification"] = used["employer_classification"]
-    empr = _verdict(policy, "employer_type", {"classification": empr_resolved["classification"]})
     rel_sel = pick("employment_relationship")
     rel_facts = D.summarize_relationship(rel_sel["rows"] if rel_sel else [], empr_resolved["classification"])
     rel = _verdict(policy, "employment_relationship", rel_facts)
+    empr_facts = {"classification": empr_resolved["classification"]}
+    if policy.params.get("employer_fail_on_third_party_relationship"):
+        # 0.2.3 (Owner Addendum E5): third-party payroll / client placement is an EMPLOYER-type
+        # failure in its own right, not merely an employment-type one.
+        empr_facts["third_party_relationship"] = bool(rel_facts["placement"] or rel_facts["third_party_payroll"])
+    empr = _verdict(policy, "employer_type", empr_facts)
 
     # ------------------------------------------------------------- language
     lang_sel = pick("language")
@@ -130,12 +139,21 @@ def evaluate(observations: List[Dict[str, Any]], evidence: List[Dict[str, Any]],
     relevance = label_relevance(spans, policy)
     tier = title_tier(title, relevance["relevance_label"], policy)
     seniority = seniority_signal(title, policy)
+    # 0.2.3 (Owner Addendum E7): a Tier 1 title is a prior, not proof. WEAK JD evidence that still
+    # contains at least one AI-specific term goes to REVIEW with RELEVANCE_TITLE_PRIOR; a Tier 1 JD
+    # with no AI-specific term stays WEAK (PARKED). The relevance label itself is not changed.
+    title_prior = ("RELEVANCE_TITLE_PRIOR" in policy.review_flags and tier == "TIER_1"
+                   and relevance["relevance_label"] == "WEAK" and bool(relevance["specific_terms"]))
 
     # -------------------------------------------------------------- conflicts
     source_conflicts = []
+    tolerant = None
+    if policy.section("source_authority").get("absent_detail_is_not_conflict"):  # 0.2.3
+        tolerant = lambda a, b: newness_differs(a, b, True)  # noqa: E731
     source_conflicts += conflicts(title_sel, "title", D.title_comparable)
     source_conflicts += conflicts(geo_sel, "geography",
-                                  lambda rows: D.geography_comparable(D.summarize_geography(rows, [], places)))
+                                  lambda rows: D.geography_comparable(D.summarize_geography(rows, [], places)),
+                                  tolerant)
     source_conflicts += conflicts(comp_sel, "compensation",
                                   lambda rows: C.comparable(D.summarize_compensation(rows, policy, fx_lookup, as_of,
                                                                                      evaluation_date)[0]))
@@ -154,6 +172,8 @@ def evaluate(observations: List[Dict[str, Any]], evidence: List[Dict[str, Any]],
     if seniority != "NONE":
         flags.add(f"SENIORITY_{seniority}")
     flags.update(context.get("identity_flags", []))
+    if title_prior:
+        flags.add("RELEVANCE_TITLE_PRIOR")
     if source_conflicts:
         flags.add("SOURCE_CONFLICT")
     for f in flags:
@@ -163,9 +183,16 @@ def evaluate(observations: List[Dict[str, Any]], evidence: List[Dict[str, Any]],
     parking_signal = exp["substantial_mismatch"] or seniority in policy.param("parking_seniority")
     lane = _lane(policy, {"duplicate": bool(context.get("duplicate")), "verdicts": verdicts,
                           "relevance": relevance["relevance_label"], "title_tier": tier,
-                          "parking_signal": parking_signal, "review_flags": review_flags})
+                          "parking_signal": parking_signal, "review_flags": review_flags,
+                          "relevance_title_prior": title_prior})
 
     unknown_dims = sorted(k for k, d in dims.items() if d["verdict"] == "UNKNOWN")
+    completeness = {"unknown_dimension_count": len(unknown_dims), "unknown_dimensions": unknown_dims}
+    if policy.params.get("completeness_counts_missing_only"):
+        # 0.2.4 (OR-80, F3): only UNKNOWNs caused by missing information count as incomplete evidence.
+        missing = sorted(k for k in unknown_dims if dims[k].get("evidence_gap") == "missing")
+        completeness.update({"missing_evidence_count": len(missing), "missing_dimensions": missing,
+                             "known_dimensions": sorted(k for k in unknown_dims if k not in missing)})
     preference = {
         "compensation_band": comp["band"],
         "employer_preference": policy.section("employer_preference").get(empr_resolved["classification"], "UNKNOWN"),
@@ -181,16 +208,20 @@ def evaluate(observations: List[Dict[str, Any]], evidence: List[Dict[str, Any]],
         "evaluator_version": EVALUATOR_VERSION,
         "evidence_hash": stable_hash(hash_inputs),
         "eligibility_dimensions": {k: {"verdict": d["verdict"], "rule_id": d["rule_id"], "flags": d["flags"],
-                                       "facts": d["facts"]} for k, d in dims.items()},
+                                       "facts": d["facts"],
+                                       **({"evidence_gap": d["evidence_gap"]} if "evidence_gap" in d else {})}
+                                   for k, d in dims.items()},
         "eligibility_overall": _overall(verdicts),
-        "relevance": {**relevance, "title_signal": tier, "experience_signal": exp["experience_fit"],
+        "relevance": {**relevance, "title_signal": tier,
+                      **({"title_prior": title_prior} if "RELEVANCE_TITLE_PRIOR" in policy.review_flags else {}),
+                      "experience_signal": exp["experience_fit"],
                       "experience_rule": exp["rule_id"], "seniority_signal": seniority,
                       "parking_signal": parking_signal},
         "preference_attributes": preference,
         "timezone": tz,
         "flags": sorted(flags),
         "review_flags": review_flags,
-        "evidence_completeness": {"unknown_dimension_count": len(unknown_dims), "unknown_dimensions": unknown_dims},
+        "evidence_completeness": completeness,
         "source_conflicts": source_conflicts,
         "lane": lane["lane"],
         "lane_rule": lane["lane_rule"],

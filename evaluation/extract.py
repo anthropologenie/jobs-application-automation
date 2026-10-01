@@ -16,10 +16,10 @@ from typing import Any, Dict, List, Optional
 from geo import PlaceIndex
 from relevance.labeller import extract_relevance_spans
 
-from . import compensation
+from . import compensation, officedays
 from .textutil import any_match, content_hash, split_sentences
 
-EXTRACTOR_CODE_VERSION = "extract@2.1.0"
+EXTRACTOR_CODE_VERSION = "extract@2.3.0"
 
 
 @dataclass
@@ -76,10 +76,14 @@ def hybrid_usage(sentence: str, policy, *, office_cue: bool, structured: str) ->
     work_after, tech_after = set(cfg["work_terms_after"]), set(cfg["technical_terms_after"])
     weak_after = set(cfg["weak_technical_terms_after"])
     work_before, tech_before = set(cfg["work_terms_before"]), set(cfg["technical_terms_before"])
+    negation = set(cfg.get("negation_terms_before", []))  # 0.2.3 (Addendum E6); absent before
     out = []
     for m in policy.regex("geo.hyb.token", cfg["token"]).finditer(sentence):
         after = _words(sentence[m.end():], policy, cfg)[:n]
         before = list(reversed(_words(sentence[:m.start()], policy, cfg)))[:n]
+        if negation and any(w in negation for w in before):
+            out.append("NEGATED")  # "not a hybrid role": never a work arrangement
+            continue
         right = next(("WORK" if w in work_after else "TECHNICAL" if w in tech_after else "WEAK"
                       for w in after if w in work_after or w in tech_after or w in weak_after), None)
         left = next(("WORK" if w in work_before else "TECHNICAL"
@@ -111,10 +115,17 @@ def _geography(sentences: List[str], listing: Optional[str], policy, places: Pla
     rank_of = {f: i + 1 for i, f in enumerate(sources["order"])} if sources else {}
     semantic = "hybrid_semantics" in lex
 
+    normalised = "office_day_normalization" in lex  # 0.2.3 (Addendum E6)
+
     def analyse(sentence: str, field: str, forced_listing: bool) -> Optional[EvidenceDraft]:
         remote = bool(any_match(rx("remote"), sentence))
         onsite = bool(any_match(rx("onsite"), sentence))
-        days = _office_days(sentence, policy)
+        days_info = None
+        if normalised:
+            days_info = officedays.normalize(sentence, policy, structured=field != "raw_text")
+            days = days_info["days"] if days_info else None
+        else:
+            days = _office_days(sentence, policy)
         hybrid_usages = None
         if semantic:
             structured = ("field" if field in ("raw_work_mode", "raw_location") or any_match(rx("location_line"), sentence)
@@ -124,13 +135,28 @@ def _geography(sentences: List[str], listing: Optional[str], policy, places: Pla
             hybrid = "WORK" in hybrid_usages
         else:
             hybrid = bool(any_match(rx("hybrid"), sentence))
+        # 0.2.3: a normalised office-day count with an attendance cue states a work mode by itself
+        # ("office on Tuesdays and Thursdays", "Friday is our WFH day", "five days a week at our
+        # Chennai centre"); a WFH-derived count is never read as a remote statement.
+        days_mode = None
+        if days_info and not hybrid and (onsite or days_info["office_cue"] or days_info["wfh_derived"]
+                                         or field != "raw_text"):
+            days_mode = "HYBRID" if days < policy.param("standard_work_week_days") else "ONSITE"
         relocation = bool(any_match(rx("relocation"), sentence)) and not any_match(rx("relocation_negation"), sentence)
         visa = bool(any_match(rx("visa"), sentence)) and not any_match(rx("visa_negation"), sentence)
         auth_m = any_match(rx("work_authorization"), sentence)
         res_m = any_match(rx("residence_requirement"), sentence)
-        is_location_line = forced_listing or bool(any_match(rx("location_line"), sentence))
+        explicit = None  # 0.2.4 (OR-79): explicit India / worldwide eligibility statement
+        for scope_name, pats in (lex.get("explicit_eligibility") or {}).items():
+            if any_match(policy.regexes("geo.explicit." + scope_name, pats), sentence):
+                explicit = scope_name
+                break
+        is_location_line = forced_listing or bool(any_match(rx("location_line"), sentence)) \
+            or bool(lex.get("eligibility_line") and any_match(rx("eligibility_line"), sentence)) or bool(explicit)
         if hybrid:
             mode = "HYBRID"
+        elif days_mode:
+            mode = days_mode
         elif onsite and days is not None and days < 5:
             mode = "HYBRID"
         elif onsite and remote:
@@ -157,6 +183,11 @@ def _geography(sentences: List[str], listing: Optional[str], policy, places: Pla
             value["source_rank"] = rank_of[field]
             if hybrid_usages:
                 value["hybrid_usage"] = hybrid_usages
+        if explicit:
+            value["explicit_eligibility"] = explicit
+        if days_info:
+            value["office_days_method"] = days_info["method"]
+            value["office_days_span"] = days_info["span"]
         strength = "CONTEXT" if value["is_listing"] else "PRIMARY"
         return EvidenceDraft("geography", "geography.statement", strength, sentence, value, field)
 
@@ -225,6 +256,48 @@ def _employment(sentences: List[str], policy) -> List[EvidenceDraft]:
     return out
 
 
+def _employment_by_field(tagged: List[tuple], policy) -> List[EvidenceDraft]:
+    """
+    0.2.3 (Owner Addendum E1): employment evidence with its source field.
+
+    The structured employment field keeps the single-word vocabulary (lexicon.employment:
+    "Contract", "Permanent", "Internship" are unambiguous there). The JD body and the salary
+    line use lexicon.employment_jd, which only recognises explicit multi-word employment
+    statements ("contract role", "12-month contract", "temporary position"), so words such
+    as "contract testing", "smart contract" or "contract-review assistant" never produce a
+    kind. Direct-employment evidence ("employed directly by", "on our payroll") is a
+    posting-level fact: it is recorded from any sentence, as CONTEXT evidence.
+    """
+    lex = policy.section("lexicon")
+    excl = policy.regexes("emp.excl", lex["employment_cue_exclusions"])
+    out = []
+    for s, field in tagged:
+        cleaned = s
+        for p in excl:
+            cleaned = p.sub(" ", cleaned)
+        labelled = field != "raw_employment_type" and any_match(
+            policy.regexes("emp.label_line", lex.get("employment_label_line", [])), s)
+        vocab = lex["employment"] if (field == "raw_employment_type" or labelled) else lex["employment_jd"]
+        kinds = [k for k, pats in vocab.items() if any_match(policy.regexes(f"emp.{field}." + k, pats), cleaned)]
+        direct_m = any_match(policy.regexes("emp.direct", lex["direct_contract"]), cleaned)
+        if not kinds and not direct_m:
+            continue
+        months = None
+        if kinds:
+            for p in policy.regexes("emp.duration", lex["contract_duration"]):
+                m = p.search(cleaned)
+                if m:
+                    n = int(m.group(1))
+                    months = n * 12 if "year" in m.group(0).lower() else n
+                    break
+        out.append(EvidenceDraft("employment_type", "employment.statement" if kinds else "employment.direct",
+                                 "PRIMARY" if kinds else "CONTEXT", s,
+                                 {"kinds": kinds, "contract_months": months, "direct": bool(direct_m),
+                                  "source_field": field,
+                                  "direct_span": direct_m.group(0) if direct_m else None}, field))
+    return out
+
+
 def _relationship(sentences: List[str], policy, employment_sentences: Optional[List[str]] = None) -> List[EvidenceDraft]:
     """Relationship signals from the JD body, and (0.2.2, lexicon.relationship_fields) the employment field."""
     lex = policy.section("lexicon")["relationship"]
@@ -273,6 +346,8 @@ def _language(sentences: List[str], text: Optional[str], detection: Optional[Dic
                                   "confidence": detection.get("confidence"),
                                   "detector": detection.get("detector", "supplied_with_observation")},
                                  "language_detection"))
+    elif text and lex.get("detector"):
+        out.append(_detect_language(text, lex["detector"], policy))
     elif text:
         words = [w.strip(".,:;()").lower() for w in text.split()]
         words = [w for w in words if w]
@@ -288,6 +363,76 @@ def _language(sentences: List[str], text: Optional[str], detection: Optional[Dic
                                       "detector": "stopword_heuristic", "english_ratio": round(ratio, 4)},
                                      "raw_text"))
     return out
+
+
+_WORD = re.compile(r"[^\W\d_]+(?:['’][^\W\d_]+)?", re.UNICODE)
+_LATIN_DIACRITIC = re.compile(r"[àáâãäåæçèéêëìíîïñòóôõöøùúûüýÿßœ]", re.I)
+
+
+def _non_latin(word: str) -> bool:
+    return any(ord(ch) > 0x024F for ch in word)
+
+
+def _detect_language(text: str, cfg: Dict[str, Any], policy) -> EvidenceDraft:
+    """
+    0.2.3 built-in document-language detector (Owner Addendum E4). Deterministic and local.
+
+    Evidence for English is the count of English function words; evidence for another
+    language is the count of that language's function words, plus words written with Latin
+    diacritics, plus words in a non-Latin script. Product names, tool names and technical
+    vocabulary are neither, so they never lower English confidence. With no function-word
+    evidence at all, all-ASCII text is read as English (there is no non-English evidence).
+
+        foreign share <= english_max_foreign_share        -> en,  confidence 1 - share (>= .95)
+        foreign share >= non_english_min_foreign_share    -> xx,  confidence = share
+        otherwise (mixed)                                  -> und, confidence = 1 - share
+    """
+    text = policy.regex("lang.strip", cfg["strip_pattern"]).sub(" ", text)  # URLs, e-mails, domains
+    words = [w.lower() for w in _WORD.findall(text)]
+    english = set(cfg["english_function_words"])
+    foreign = {lang: set(ws) for lang, ws in cfg["foreign_function_words"].items()}
+    en_hits = sum(1 for w in words if w in english)
+    per_lang = {lang: sum(1 for w in words if w in ws) for lang, ws in foreign.items()}
+    counted = {w for ws in foreign.values() for w in ws}
+    raw_tokens = _WORD.findall(text)
+    proper = {t.lower() for t in raw_tokens if t[:1].isupper() and _LATIN_DIACRITIC.search(t)}
+    diacritic = [w for w in words if w not in counted and w not in proper and not _non_latin(w)
+                 and _LATIN_DIACRITIC.search(w)]
+    script = [w for w in words if _non_latin(w)]
+    # Scripts written without spaces (Japanese, Chinese, Thai) put a whole clause in one token, so
+    # non-Latin evidence is measured in characters (about three per word) rather than in tokens.
+    script_units = sum(max(1, sum(1 for ch in w if ord(ch) > 0x024F) // 3) for w in script)
+    fo_raw = sum(per_lang.values()) + len(diacritic) + script_units
+    # An isolated stray token is noise, not evidence of another language.
+    fo_hits = fo_raw if fo_raw >= cfg["min_foreign_evidence"] or not en_hits else 0
+    total = en_hits + fo_hits
+    value: Dict[str, Any] = {"detector": "function_words_v2", "word_count": len(words), "foreign_raw": fo_raw,
+                             "english_function_words": en_hits, "foreign_function_words": per_lang,
+                             "diacritic_words": len(diacritic), "non_latin_script_words": len(script),
+                             "non_latin_script_units": script_units,
+                             "foreign_examples": sorted({w for w in words if w in counted} | set(diacritic) | set(script))[:8]}
+    if total == 0:
+        if words and not script:
+            share, detected, conf = 0.0, "en", float(cfg["no_evidence_ascii_confidence"])
+        else:
+            share, detected, conf = None, "und", 0.0
+    else:
+        share = fo_hits / total
+        if total < cfg["min_evidence_words"] and fo_hits:
+            detected, conf = "und", round(1 - share, 3)
+        elif share <= cfg["english_max_foreign_share"]:
+            detected, conf = "en", round(1 - share, 3)
+        elif share >= cfg["non_english_min_foreign_share"]:
+            if script and script_units >= sum(per_lang.values()):
+                detected = "non_latin"
+            else:
+                detected = max(per_lang, key=lambda k: (per_lang[k], k)) if any(per_lang.values()) else "xx"
+            conf = round(share, 3)
+        else:
+            detected, conf = "und", round(1 - share, 3)
+    value.update({"detected_language": detected, "confidence": conf,
+                  "foreign_share": None if share is None else round(share, 4)})
+    return EvidenceDraft("language", "language.detection", "PRIMARY", None, value, "raw_text")
 
 
 def _experience(sentences: List[str], policy) -> List[EvidenceDraft]:
@@ -334,7 +479,13 @@ def extract(obs: Dict[str, Any], policy, places: PlaceIndex) -> List[EvidenceDra
             strength = "PRIMARY" if clause["kind"] == "FIGURE" else "CONTEXT"
             drafts.append(EvidenceDraft("compensation", "compensation.clause", strength,
                                         clause["quoted_span"], clause, "raw_text"))
-    drafts += _employment(all_sentences, policy)
+    if "employment_jd" in policy.section("lexicon"):
+        tagged = ([(s, "raw_text") for s in sentences]
+                  + [(s, "raw_salary") for s in split_sentences(obs.get("raw_salary"), split)]
+                  + [(s, "raw_employment_type") for s in split_sentences(obs.get("raw_employment_type"), split)])
+        drafts += _employment_by_field(tagged, policy)
+    else:
+        drafts += _employment(all_sentences, policy)
     rel_fields = policy.section("lexicon").get("relationship_fields", {}).get("fields", ["raw_text"])
     emp_sentences = (split_sentences(obs.get("raw_employment_type"), split)
                      if "raw_employment_type" in rel_fields else None)

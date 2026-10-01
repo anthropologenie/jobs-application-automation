@@ -1,0 +1,786 @@
+{
+  "artifact": {
+    "id": "policy-v02-blind-round2-p6-classification",
+    "policy_version": "jobops-policy@0.2.4",
+    "classes": [
+      "ENGINE_BUG",
+      "CASE_ERROR",
+      "SPEC_AMBIGUITY",
+      "SUPERSEDED_RULING",
+      "ADAPTER_LIMIT"
+    ],
+    "note": "Labels mismatches of the frozen Round-2 corpus under 0.2.4 (P6). It never changes a numerator, a denominator or an expectation."
+  },
+  "classifications": [
+    {
+      "id": "R2-006",
+      "facet": "relevance",
+      "class": "SPEC_AMBIGUITY",
+      "evidence": "We're a remote-first team of 22 spread across six Indian cities — nobody commutes.\n\nYou'll extend our HybridRAG pipeline (graph-plus-vector) and migrate batch e…",
+      "engine": "MODERATE (2 distinct AI-specific terms across 1 clusters)",
+      "expected": "STRONG",
+      "rule": "Round-2 author rulings sheet §16 defines STRONG/MODERATE/WEAK labels but no threshold; OR-78 (F1): 'STRONG remains ≥ 3 distinct AI-specific terms across ≥ 2 capability clusters … no short-JD exception … Round-2 relevance expectations authored without this rule are diagnostic only.'",
+      "disposition": "Diagnostic only (Gate R). Relevance thresholds and vocabulary unchanged by ruling."
+    },
+    {
+      "id": "R2-012",
+      "facet": "relevance",
+      "class": "SPEC_AMBIGUITY",
+      "evidence": "Kanvi builds document-AI for Indian lenders. As an AI Solutions Engineer you'll prototype RAG pipelines on customer data, run structured evals to prove accuracy…",
+      "engine": "MODERATE (2 distinct AI-specific terms across 2 clusters)",
+      "expected": "STRONG",
+      "rule": "Round-2 author rulings sheet §16 defines STRONG/MODERATE/WEAK labels but no threshold; OR-78 (F1): 'STRONG remains ≥ 3 distinct AI-specific terms across ≥ 2 capability clusters … no short-JD exception … Round-2 relevance expectations authored without this rule are diagnostic only.'",
+      "disposition": "Diagnostic only (Gate R). Relevance thresholds and vocabulary unchanged by ruling."
+    },
+    {
+      "id": "R2-016",
+      "facet": "relevance",
+      "class": "SPEC_AMBIGUITY",
+      "evidence": "We sit in the HSR office on alternate days — Mon/Wed/Fri one week, Tue/Thu the next — so pods overlap without anyone commuting daily.\n\nYou'll build automated te…",
+      "engine": "MODERATE (2 distinct AI-specific terms across 2 clusters)",
+      "expected": "STRONG",
+      "rule": "Round-2 author rulings sheet §16 defines STRONG/MODERATE/WEAK labels but no threshold; OR-78 (F1): 'STRONG remains ≥ 3 distinct AI-specific terms across ≥ 2 capability clusters … no short-JD exception … Round-2 relevance expectations authored without this rule are diagnostic only.'",
+      "disposition": "Diagnostic only (Gate R). Relevance thresholds and vocabulary unchanged by ruling."
+    },
+    {
+      "id": "R2-017",
+      "facet": "relevance",
+      "class": "SPEC_AMBIGUITY",
+      "evidence": "One anchor day per week at our Indiranagar studio; otherwise work from wherever you're productive.\n\nThe eval team defines how we measure our Indic-language assi…",
+      "engine": "MODERATE (3 distinct AI-specific terms across 1 clusters)",
+      "expected": "STRONG",
+      "rule": "Round-2 author rulings sheet §16 defines STRONG/MODERATE/WEAK labels but no threshold; OR-78 (F1): 'STRONG remains ≥ 3 distinct AI-specific terms across ≥ 2 capability clusters … no short-JD exception … Round-2 relevance expectations authored without this rule are diagnostic only.'",
+      "disposition": "Diagnostic only (Gate R). Relevance thresholds and vocabulary unchanged by ruling."
+    },
+    {
+      "id": "R2-023",
+      "facet": "relevance",
+      "class": "SPEC_AMBIGUITY",
+      "evidence": "Maplestone builds AI copilots for property managers. You'll ship agent features end-to-end and own their eval suites. 2-5 years' experience.",
+      "engine": "MODERATE (2 distinct AI-specific terms across 2 clusters)",
+      "expected": "STRONG",
+      "rule": "Round-2 author rulings sheet §16 defines STRONG/MODERATE/WEAK labels but no threshold; OR-78 (F1): 'STRONG remains ≥ 3 distinct AI-specific terms across ≥ 2 capability clusters … no short-JD exception … Round-2 relevance expectations authored without this rule are diagnostic only.'",
+      "disposition": "Diagnostic only (Gate R). Relevance thresholds and vocabulary unchanged by ruling."
+    },
+    {
+      "id": "R2-024",
+      "facet": "relevance",
+      "class": "SPEC_AMBIGUITY",
+      "evidence": "Tidepool (HQ Singapore) builds perception + LLM planning for warehouse robots. You'll build the language-to-task planner and its simulation evals. 2-5 years.",
+      "engine": "WEAK (1 distinct AI-specific terms across 1 clusters)",
+      "expected": "STRONG",
+      "rule": "Round-2 author rulings sheet §16 defines STRONG/MODERATE/WEAK labels but no threshold; OR-78 (F1): 'STRONG remains ≥ 3 distinct AI-specific terms across ≥ 2 capability clusters … no short-JD exception … Round-2 relevance expectations authored without this rule are diagnostic only.'",
+      "disposition": "Diagnostic only (Gate R). Relevance thresholds and vocabulary unchanged by ruling."
+    },
+    {
+      "id": "R2-028",
+      "facet": "relevance",
+      "class": "SPEC_AMBIGUITY",
+      "evidence": "We're hybrid and flexible: come in when your pod needs you for whiteboarding, launches or offsites.\nYou'll build retrieval for 10k-page contracts and own citati…",
+      "engine": "WEAK (1 distinct AI-specific terms across 1 clusters)",
+      "expected": "STRONG",
+      "rule": "Round-2 author rulings sheet §16 defines STRONG/MODERATE/WEAK labels but no threshold; OR-78 (F1): 'STRONG remains ≥ 3 distinct AI-specific terms across ≥ 2 capability clusters … no short-JD exception … Round-2 relevance expectations authored without this rule are diagnostic only.'",
+      "disposition": "Diagnostic only (Gate R). Relevance thresholds and vocabulary unchanged by ruling."
+    },
+    {
+      "id": "R2-029",
+      "facet": "relevance",
+      "class": "SPEC_AMBIGUITY",
+      "evidence": "Permanent WFH opportunity.\nRoles & Responsibilities:\n- Build LLM pipelines for survey-response coding\n- Create evaluation datasets and automate accuracy reporti…",
+      "engine": "WEAK (1 distinct AI-specific terms across 1 clusters)",
+      "expected": "STRONG",
+      "rule": "Round-2 author rulings sheet §16 defines STRONG/MODERATE/WEAK labels but no threshold; OR-78 (F1): 'STRONG remains ≥ 3 distinct AI-specific terms across ≥ 2 capability clusters … no short-JD exception … Round-2 relevance expectations authored without this rule are diagnostic only.'",
+      "disposition": "Diagnostic only (Gate R). Relevance thresholds and vocabulary unchanged by ruling."
+    },
+    {
+      "id": "R2-032",
+      "facet": "relevance",
+      "class": "SPEC_AMBIGUITY",
+      "evidence": "This role is open only to candidates residing in the continental US. Build eval pipelines for healthcare LLMs. 3-5 years.",
+      "engine": "MODERATE (2 distinct AI-specific terms across 2 clusters)",
+      "expected": "STRONG",
+      "rule": "Round-2 author rulings sheet §16 defines STRONG/MODERATE/WEAK labels but no threshold; OR-78 (F1): 'STRONG remains ≥ 3 distinct AI-specific terms across ≥ 2 capability clusters … no short-JD exception … Round-2 relevance expectations authored without this rule are diagnostic only.'",
+      "disposition": "Diagnostic only (Gate R). Relevance thresholds and vocabulary unchanged by ruling."
+    },
+    {
+      "id": "R2-034",
+      "facet": "relevance",
+      "class": "SPEC_AMBIGUITY",
+      "evidence": "We're US-headquartered; we'd prefer ~3 hours of overlap with US Eastern mornings, but async is our default.\nYou'll run our model gateway, eval-gated rollouts an…",
+      "engine": "WEAK (1 distinct AI-specific terms across 1 clusters)",
+      "expected": "STRONG",
+      "rule": "Round-2 author rulings sheet §16 defines STRONG/MODERATE/WEAK labels but no threshold; OR-78 (F1): 'STRONG remains ≥ 3 distinct AI-specific terms across ≥ 2 capability clusters … no short-JD exception … Round-2 relevance expectations authored without this rule are diagnostic only.'",
+      "disposition": "Diagnostic only (Gate R). Relevance thresholds and vocabulary unchanged by ruling."
+    },
+    {
+      "id": "R2-036",
+      "facet": "relevance",
+      "class": "SPEC_AMBIGUITY",
+      "evidence": "Full relocation package to Dubai provided (flights, 30-day housing, visa). Build Arabic–English RAG assistants for port operations. 3-5 years.",
+      "engine": "WEAK (1 distinct AI-specific terms across 1 clusters)",
+      "expected": "STRONG",
+      "rule": "Round-2 author rulings sheet §16 defines STRONG/MODERATE/WEAK labels but no threshold; OR-78 (F1): 'STRONG remains ≥ 3 distinct AI-specific terms across ≥ 2 capability clusters … no short-JD exception … Round-2 relevance expectations authored without this rule are diagnostic only.'",
+      "disposition": "Diagnostic only (Gate R). Relevance thresholds and vocabulary unchanged by ruling."
+    },
+    {
+      "id": "R2-040",
+      "facet": "relevance",
+      "class": "SPEC_AMBIGUITY",
+      "evidence": "Remote. Build GenAI catalog enrichment and evaluate attribute-extraction accuracy. 1-2 years.",
+      "engine": "MODERATE (2 distinct AI-specific terms across 2 clusters)",
+      "expected": "STRONG",
+      "rule": "Round-2 author rulings sheet §16 defines STRONG/MODERATE/WEAK labels but no threshold; OR-78 (F1): 'STRONG remains ≥ 3 distinct AI-specific terms across ≥ 2 capability clusters … no short-JD exception … Round-2 relevance expectations authored without this rule are diagnostic only.'",
+      "disposition": "Diagnostic only (Gate R). Relevance thresholds and vocabulary unchanged by ruling."
+    },
+    {
+      "id": "R2-041",
+      "facet": "relevance",
+      "class": "SPEC_AMBIGUITY",
+      "evidence": "Build agent workflows for customs-document processing and own the eval harness. 3-5 years.",
+      "engine": "MODERATE (2 distinct AI-specific terms across 2 clusters)",
+      "expected": "STRONG",
+      "rule": "Round-2 author rulings sheet §16 defines STRONG/MODERATE/WEAK labels but no threshold; OR-78 (F1): 'STRONG remains ≥ 3 distinct AI-specific terms across ≥ 2 capability clusters … no short-JD exception … Round-2 relevance expectations authored without this rule are diagnostic only.'",
+      "disposition": "Diagnostic only (Gate R). Relevance thresholds and vocabulary unchanged by ruling."
+    },
+    {
+      "id": "R2-042",
+      "facet": "relevance",
+      "class": "SPEC_AMBIGUITY",
+      "evidence": "Build the backend for our AI design assistant: streaming inference, prompt registry, eval-gated deploys. 2–5 years.",
+      "engine": "MODERATE (2 distinct AI-specific terms across 2 clusters)",
+      "expected": "STRONG",
+      "rule": "Round-2 author rulings sheet §16 defines STRONG/MODERATE/WEAK labels but no threshold; OR-78 (F1): 'STRONG remains ≥ 3 distinct AI-specific terms across ≥ 2 capability clusters … no short-JD exception … Round-2 relevance expectations authored without this rule are diagnostic only.'",
+      "disposition": "Diagnostic only (Gate R). Relevance thresholds and vocabulary unchanged by ruling."
+    },
+    {
+      "id": "R2-043",
+      "facet": "relevance",
+      "class": "SPEC_AMBIGUITY",
+      "evidence": "Join our AI practice building RAG assistants for enterprise clients; own evaluation and handover. 2-5 years.",
+      "engine": "MODERATE (2 distinct AI-specific terms across 2 clusters)",
+      "expected": "STRONG",
+      "rule": "Round-2 author rulings sheet §16 defines STRONG/MODERATE/WEAK labels but no threshold; OR-78 (F1): 'STRONG remains ≥ 3 distinct AI-specific terms across ≥ 2 capability clusters … no short-JD exception … Round-2 relevance expectations authored without this rule are diagnostic only.'",
+      "disposition": "Diagnostic only (Gate R). Relevance thresholds and vocabulary unchanged by ruling."
+    },
+    {
+      "id": "R2-045",
+      "facet": "relevance",
+      "class": "SPEC_AMBIGUITY",
+      "evidence": "Work from home anywhere in India. Build chatbot features with RAG. 1-2 years.",
+      "engine": "MODERATE (2 distinct AI-specific terms across 2 clusters)",
+      "expected": "STRONG",
+      "rule": "Round-2 author rulings sheet §16 defines STRONG/MODERATE/WEAK labels but no threshold; OR-78 (F1): 'STRONG remains ≥ 3 distinct AI-specific terms across ≥ 2 capability clusters … no short-JD exception … Round-2 relevance expectations authored without this rule are diagnostic only.'",
+      "disposition": "Diagnostic only (Gate R). Relevance thresholds and vocabulary unchanged by ruling."
+    },
+    {
+      "id": "R2-047",
+      "facet": "relevance",
+      "class": "SPEC_AMBIGUITY",
+      "evidence": "Hiring for our client, a Series-B conversational-AI company. Build LLM features and evaluation pipelines. 2-5 years.",
+      "engine": "MODERATE (2 distinct AI-specific terms across 2 clusters)",
+      "expected": "STRONG",
+      "rule": "Round-2 author rulings sheet §16 defines STRONG/MODERATE/WEAK labels but no threshold; OR-78 (F1): 'STRONG remains ≥ 3 distinct AI-specific terms across ≥ 2 capability clusters … no short-JD exception … Round-2 relevance expectations authored without this rule are diagnostic only.'",
+      "disposition": "Diagnostic only (Gate R). Relevance thresholds and vocabulary unchanged by ruling."
+    },
+    {
+      "id": "R2-051",
+      "facet": "relevance",
+      "class": "SPEC_AMBIGUITY",
+      "evidence": "Build retrieval over case law and own citation-faithfulness evals. 2-5 years.",
+      "engine": "MODERATE (2 distinct AI-specific terms across 1 clusters)",
+      "expected": "STRONG",
+      "rule": "Round-2 author rulings sheet §16 defines STRONG/MODERATE/WEAK labels but no threshold; OR-78 (F1): 'STRONG remains ≥ 3 distinct AI-specific terms across ≥ 2 capability clusters … no short-JD exception … Round-2 relevance expectations authored without this rule are diagnostic only.'",
+      "disposition": "Diagnostic only (Gate R). Relevance thresholds and vocabulary unchanged by ruling."
+    },
+    {
+      "id": "R2-052",
+      "facet": "relevance",
+      "class": "SPEC_AMBIGUITY",
+      "evidence": "Build LLM copilots for solar-plant operators and evaluate recommendations against engineer feedback. 2-5 years.",
+      "engine": "MODERATE (2 distinct AI-specific terms across 2 clusters)",
+      "expected": "STRONG",
+      "rule": "Round-2 author rulings sheet §16 defines STRONG/MODERATE/WEAK labels but no threshold; OR-78 (F1): 'STRONG remains ≥ 3 distinct AI-specific terms across ≥ 2 capability clusters … no short-JD exception … Round-2 relevance expectations authored without this rule are diagnostic only.'",
+      "disposition": "Diagnostic only (Gate R). Relevance thresholds and vocabulary unchanged by ruling."
+    },
+    {
+      "id": "R2-056",
+      "facet": "relevance",
+      "class": "SPEC_AMBIGUITY",
+      "evidence": "WFH, India. Build GenAI product-description tools and evaluate quality. 1-2 years.",
+      "engine": "MODERATE (2 distinct AI-specific terms across 2 clusters)",
+      "expected": "STRONG",
+      "rule": "Round-2 author rulings sheet §16 defines STRONG/MODERATE/WEAK labels but no threshold; OR-78 (F1): 'STRONG remains ≥ 3 distinct AI-specific terms across ≥ 2 capability clusters … no short-JD exception … Round-2 relevance expectations authored without this rule are diagnostic only.'",
+      "disposition": "Diagnostic only (Gate R). Relevance thresholds and vocabulary unchanged by ruling."
+    },
+    {
+      "id": "R2-057",
+      "facet": "relevance",
+      "class": "SPEC_AMBIGUITY",
+      "evidence": "Build multilingual eval suites for our government-services chatbot. 2-5 years.",
+      "engine": "MODERATE (2 distinct AI-specific terms across 2 clusters)",
+      "expected": "STRONG",
+      "rule": "Round-2 author rulings sheet §16 defines STRONG/MODERATE/WEAK labels but no threshold; OR-78 (F1): 'STRONG remains ≥ 3 distinct AI-specific terms across ≥ 2 capability clusters … no short-JD exception … Round-2 relevance expectations authored without this rule are diagnostic only.'",
+      "disposition": "Diagnostic only (Gate R). Relevance thresholds and vocabulary unchanged by ruling."
+    },
+    {
+      "id": "R2-058",
+      "facet": "relevance",
+      "class": "SPEC_AMBIGUITY",
+      "evidence": "Build LLM-driven merchandising and evaluate uplift with offline replays. 2-5 years.",
+      "engine": "MODERATE (2 distinct AI-specific terms across 2 clusters)",
+      "expected": "STRONG",
+      "rule": "Round-2 author rulings sheet §16 defines STRONG/MODERATE/WEAK labels but no threshold; OR-78 (F1): 'STRONG remains ≥ 3 distinct AI-specific terms across ≥ 2 capability clusters … no short-JD exception … Round-2 relevance expectations authored without this rule are diagnostic only.'",
+      "disposition": "Diagnostic only (Gate R). Relevance thresholds and vocabulary unchanged by ruling."
+    },
+    {
+      "id": "R2-059",
+      "facet": "relevance",
+      "class": "SPEC_AMBIGUITY",
+      "evidence": "Remote. Own quality gates for our shopping assistant: golden sets, regression evals, red-teaming. 2-5 years.",
+      "engine": "MODERATE (4 distinct AI-specific terms across 1 clusters)",
+      "expected": "STRONG",
+      "rule": "Round-2 author rulings sheet §16 defines STRONG/MODERATE/WEAK labels but no threshold; OR-78 (F1): 'STRONG remains ≥ 3 distinct AI-specific terms across ≥ 2 capability clusters … no short-JD exception … Round-2 relevance expectations authored without this rule are diagnostic only.'",
+      "disposition": "Diagnostic only (Gate R). Relevance thresholds and vocabulary unchanged by ruling."
+    },
+    {
+      "id": "R2-060",
+      "facet": "relevance",
+      "class": "SPEC_AMBIGUITY",
+      "evidence": "We hire engineers in India through our Bengaluru-registered subsidiary. Build data-quality agents and their eval suites. 3-5 years.",
+      "engine": "MODERATE (2 distinct AI-specific terms across 2 clusters)",
+      "expected": "STRONG",
+      "rule": "Round-2 author rulings sheet §16 defines STRONG/MODERATE/WEAK labels but no threshold; OR-78 (F1): 'STRONG remains ≥ 3 distinct AI-specific terms across ≥ 2 capability clusters … no short-JD exception … Round-2 relevance expectations authored without this rule are diagnostic only.'",
+      "disposition": "Diagnostic only (Gate R). Relevance thresholds and vocabulary unchanged by ruling."
+    },
+    {
+      "id": "R2-062",
+      "facet": "relevance",
+      "class": "SPEC_AMBIGUITY",
+      "evidence": "Build LLM features for our UK-based journaling app; own evals. 1-2 years.",
+      "engine": "MODERATE (2 distinct AI-specific terms across 2 clusters)",
+      "expected": "STRONG",
+      "rule": "Round-2 author rulings sheet §16 defines STRONG/MODERATE/WEAK labels but no threshold; OR-78 (F1): 'STRONG remains ≥ 3 distinct AI-specific terms across ≥ 2 capability clusters … no short-JD exception … Round-2 relevance expectations authored without this rule are diagnostic only.'",
+      "disposition": "Diagnostic only (Gate R). Relevance thresholds and vocabulary unchanged by ruling."
+    },
+    {
+      "id": "R2-063",
+      "facet": "relevance",
+      "class": "SPEC_AMBIGUITY",
+      "evidence": "India-eligible remote role. Build hybrid dense/sparse retrieval and relevance evals for SEA marketplaces. 2-5 years.",
+      "engine": "WEAK (1 distinct AI-specific terms across 1 clusters)",
+      "expected": "STRONG",
+      "rule": "Round-2 author rulings sheet §16 defines STRONG/MODERATE/WEAK labels but no threshold; OR-78 (F1): 'STRONG remains ≥ 3 distinct AI-specific terms across ≥ 2 capability clusters … no short-JD exception … Round-2 relevance expectations authored without this rule are diagnostic only.'",
+      "disposition": "Diagnostic only (Gate R). Relevance thresholds and vocabulary unchanged by ruling."
+    },
+    {
+      "id": "R2-064",
+      "facet": "relevance",
+      "class": "SPEC_AMBIGUITY",
+      "evidence": "India-eligible remote role. Deploy RAG solutions for enterprise customers and run acceptance evals. 3-5 years.",
+      "engine": "MODERATE (2 distinct AI-specific terms across 2 clusters)",
+      "expected": "STRONG",
+      "rule": "Round-2 author rulings sheet §16 defines STRONG/MODERATE/WEAK labels but no threshold; OR-78 (F1): 'STRONG remains ≥ 3 distinct AI-specific terms across ≥ 2 capability clusters … no short-JD exception … Round-2 relevance expectations authored without this rule are diagnostic only.'",
+      "disposition": "Diagnostic only (Gate R). Relevance thresholds and vocabulary unchanged by ruling."
+    },
+    {
+      "id": "R2-065",
+      "facet": "relevance",
+      "class": "SPEC_AMBIGUITY",
+      "evidence": "Build the inference platform and eval-gated release pipeline for our AI features. 3-5 years.",
+      "engine": "MODERATE (2 distinct AI-specific terms across 2 clusters)",
+      "expected": "STRONG",
+      "rule": "Round-2 author rulings sheet §16 defines STRONG/MODERATE/WEAK labels but no threshold; OR-78 (F1): 'STRONG remains ≥ 3 distinct AI-specific terms across ≥ 2 capability clusters … no short-JD exception … Round-2 relevance expectations authored without this rule are diagnostic only.'",
+      "disposition": "Diagnostic only (Gate R). Relevance thresholds and vocabulary unchanged by ruling."
+    },
+    {
+      "id": "R2-066",
+      "facet": "relevance",
+      "class": "SPEC_AMBIGUITY",
+      "evidence": "Build agentic support features and their evaluation suites. 3-5 years.",
+      "engine": "MODERATE (2 distinct AI-specific terms across 2 clusters)",
+      "expected": "STRONG",
+      "rule": "Round-2 author rulings sheet §16 defines STRONG/MODERATE/WEAK labels but no threshold; OR-78 (F1): 'STRONG remains ≥ 3 distinct AI-specific terms across ≥ 2 capability clusters … no short-JD exception … Round-2 relevance expectations authored without this rule are diagnostic only.'",
+      "disposition": "Diagnostic only (Gate R). Relevance thresholds and vocabulary unchanged by ruling."
+    },
+    {
+      "id": "R2-070",
+      "facet": "relevance",
+      "class": "SPEC_AMBIGUITY",
+      "evidence": "Build LLM test automation for our Nordic banking clients' chat channels. Working knowledge of Swedish helps when reading test transcripts. 1-2 years.",
+      "engine": "MODERATE (2 distinct AI-specific terms across 2 clusters)",
+      "expected": "STRONG",
+      "rule": "Round-2 author rulings sheet §16 defines STRONG/MODERATE/WEAK labels but no threshold; OR-78 (F1): 'STRONG remains ≥ 3 distinct AI-specific terms across ≥ 2 capability clusters … no short-JD exception … Round-2 relevance expectations authored without this rule are diagnostic only.'",
+      "disposition": "Diagnostic only (Gate R). Relevance thresholds and vocabulary unchanged by ruling."
+    },
+    {
+      "id": "R2-074",
+      "facet": "relevance",
+      "class": "SPEC_AMBIGUITY",
+      "evidence": "WFH India. Build GenAI chat features and evaluation harnesses. 2-5 years.",
+      "engine": "MODERATE (2 distinct AI-specific terms across 2 clusters)",
+      "expected": "STRONG",
+      "rule": "Round-2 author rulings sheet §16 defines STRONG/MODERATE/WEAK labels but no threshold; OR-78 (F1): 'STRONG remains ≥ 3 distinct AI-specific terms across ≥ 2 capability clusters … no short-JD exception … Round-2 relevance expectations authored without this rule are diagnostic only.'",
+      "disposition": "Diagnostic only (Gate R). Relevance thresholds and vocabulary unchanged by ruling."
+    },
+    {
+      "id": "R2-075",
+      "facet": "relevance",
+      "class": "SPEC_AMBIGUITY",
+      "evidence": "We hire in India through our Employer of Record. Build RAG features and their evals for our B2B analytics product. 2-5 years.",
+      "engine": "MODERATE (2 distinct AI-specific terms across 2 clusters)",
+      "expected": "STRONG",
+      "rule": "Round-2 author rulings sheet §16 defines STRONG/MODERATE/WEAK labels but no threshold; OR-78 (F1): 'STRONG remains ≥ 3 distinct AI-specific terms across ≥ 2 capability clusters … no short-JD exception … Round-2 relevance expectations authored without this rule are diagnostic only.'",
+      "disposition": "Diagnostic only (Gate R). Relevance thresholds and vocabulary unchanged by ruling."
+    },
+    {
+      "id": "R2-077",
+      "facet": "relevance",
+      "class": "SPEC_AMBIGUITY",
+      "evidence": "Build LLM-based underwriting assistants and evals. 2-5 years.",
+      "engine": "MODERATE (2 distinct AI-specific terms across 2 clusters)",
+      "expected": "STRONG",
+      "rule": "Round-2 author rulings sheet §16 defines STRONG/MODERATE/WEAK labels but no threshold; OR-78 (F1): 'STRONG remains ≥ 3 distinct AI-specific terms across ≥ 2 capability clusters … no short-JD exception … Round-2 relevance expectations authored without this rule are diagnostic only.'",
+      "disposition": "Diagnostic only (Gate R). Relevance thresholds and vocabulary unchanged by ruling."
+    },
+    {
+      "id": "R2-078",
+      "facet": "relevance",
+      "class": "SPEC_AMBIGUITY",
+      "evidence": "This is a full-time independent-consultant engagement: you'll invoice us monthly and manage your own taxes and equipment.\nBuild analytics agents over customer w…",
+      "engine": "MODERATE (2 distinct AI-specific terms across 2 clusters)",
+      "expected": "STRONG",
+      "rule": "Round-2 author rulings sheet §16 defines STRONG/MODERATE/WEAK labels but no threshold; OR-78 (F1): 'STRONG remains ≥ 3 distinct AI-specific terms across ≥ 2 capability clusters … no short-JD exception … Round-2 relevance expectations authored without this rule are diagnostic only.'",
+      "disposition": "Diagnostic only (Gate R). Relevance thresholds and vocabulary unchanged by ruling."
+    },
+    {
+      "id": "R2-079",
+      "facet": "relevance",
+      "class": "SPEC_AMBIGUITY",
+      "evidence": "Long-term B2B collaboration with our Warsaw team building LLM document pipelines. 3-5 years.",
+      "engine": "WEAK (1 distinct AI-specific terms across 1 clusters)",
+      "expected": "STRONG",
+      "rule": "Round-2 author rulings sheet §16 defines STRONG/MODERATE/WEAK labels but no threshold; OR-78 (F1): 'STRONG remains ≥ 3 distinct AI-specific terms across ≥ 2 capability clusters … no short-JD exception … Round-2 relevance expectations authored without this rule are diagnostic only.'",
+      "disposition": "Diagnostic only (Gate R). Relevance thresholds and vocabulary unchanged by ruling."
+    },
+    {
+      "id": "R2-081",
+      "facet": "relevance",
+      "class": "SPEC_AMBIGUITY",
+      "evidence": "C2H: 6 months contract, then conversion to FTE based on performance. Build RAG + evaluation tooling. 2-5 years.",
+      "engine": "MODERATE (2 distinct AI-specific terms across 2 clusters)",
+      "expected": "STRONG",
+      "rule": "Round-2 author rulings sheet §16 defines STRONG/MODERATE/WEAK labels but no threshold; OR-78 (F1): 'STRONG remains ≥ 3 distinct AI-specific terms across ≥ 2 capability clusters … no short-JD exception … Round-2 relevance expectations authored without this rule are diagnostic only.'",
+      "disposition": "Diagnostic only (Gate R). Relevance thresholds and vocabulary unchanged by ruling."
+    },
+    {
+      "id": "R2-084",
+      "facet": "relevance",
+      "class": "SPEC_AMBIGUITY",
+      "evidence": "Remote. Build GenAI features for our ERP and evaluate them. 2-5 years.",
+      "engine": "MODERATE (2 distinct AI-specific terms across 2 clusters)",
+      "expected": "STRONG",
+      "rule": "Round-2 author rulings sheet §16 defines STRONG/MODERATE/WEAK labels but no threshold; OR-78 (F1): 'STRONG remains ≥ 3 distinct AI-specific terms across ≥ 2 capability clusters … no short-JD exception … Round-2 relevance expectations authored without this rule are diagnostic only.'",
+      "disposition": "Diagnostic only (Gate R). Relevance thresholds and vocabulary unchanged by ruling."
+    },
+    {
+      "id": "R2-085",
+      "facet": "relevance",
+      "class": "SPEC_AMBIGUITY",
+      "evidence": "A 5-month fixed-term role, directly on Aster Ridge's payroll, to build the launch eval suite for our Hindi assistant. 2-5 years.",
+      "engine": "WEAK (1 distinct AI-specific terms across 1 clusters)",
+      "expected": "STRONG",
+      "rule": "Round-2 author rulings sheet §16 defines STRONG/MODERATE/WEAK labels but no threshold; OR-78 (F1): 'STRONG remains ≥ 3 distinct AI-specific terms across ≥ 2 capability clusters … no short-JD exception … Round-2 relevance expectations authored without this rule are diagnostic only.'",
+      "disposition": "Diagnostic only (Gate R). Relevance thresholds and vocabulary unchanged by ruling."
+    },
+    {
+      "id": "R2-086",
+      "facet": "relevance",
+      "class": "SPEC_AMBIGUITY",
+      "evidence": "This is a temporary position covering a colleague's 4-month parental leave. You'll maintain our LLM statement-analysis pipeline and its evals. 2-5 years.",
+      "engine": "MODERATE (2 distinct AI-specific terms across 2 clusters)",
+      "expected": "STRONG",
+      "rule": "Round-2 author rulings sheet §16 defines STRONG/MODERATE/WEAK labels but no threshold; OR-78 (F1): 'STRONG remains ≥ 3 distinct AI-specific terms across ≥ 2 capability clusters … no short-JD exception … Round-2 relevance expectations authored without this rule are diagnostic only.'",
+      "disposition": "Diagnostic only (Gate R). Relevance thresholds and vocabulary unchanged by ruling."
+    },
+    {
+      "id": "R2-087",
+      "facet": "relevance",
+      "class": "SPEC_AMBIGUITY",
+      "evidence": "Part-time role supporting customer RAG deployments. 2-5 years.",
+      "engine": "WEAK (1 distinct AI-specific terms across 1 clusters)",
+      "expected": "STRONG",
+      "rule": "Round-2 author rulings sheet §16 defines STRONG/MODERATE/WEAK labels but no threshold; OR-78 (F1): 'STRONG remains ≥ 3 distinct AI-specific terms across ≥ 2 capability clusters … no short-JD exception … Round-2 relevance expectations authored without this rule are diagnostic only.'",
+      "disposition": "Diagnostic only (Gate R). Relevance thresholds and vocabulary unchanged by ruling."
+    },
+    {
+      "id": "R2-088",
+      "facet": "relevance",
+      "class": "SPEC_AMBIGUITY",
+      "evidence": "6-month internship building RAG evals. Students graduating in 2027.",
+      "engine": "MODERATE (2 distinct AI-specific terms across 2 clusters)",
+      "expected": "STRONG",
+      "rule": "Round-2 author rulings sheet §16 defines STRONG/MODERATE/WEAK labels but no threshold; OR-78 (F1): 'STRONG remains ≥ 3 distinct AI-specific terms across ≥ 2 capability clusters … no short-JD exception … Round-2 relevance expectations authored without this rule are diagnostic only.'",
+      "disposition": "Diagnostic only (Gate R). Relevance thresholds and vocabulary unchanged by ruling."
+    },
+    {
+      "id": "R2-089",
+      "facet": "relevance",
+      "class": "SPEC_AMBIGUITY",
+      "evidence": "Freelance engagements building custom GPTs and RAG bots for our agency's clients. India-based freelancers welcome.",
+      "engine": "WEAK (1 distinct AI-specific terms across 1 clusters)",
+      "expected": "STRONG",
+      "rule": "Round-2 author rulings sheet §16 defines STRONG/MODERATE/WEAK labels but no threshold; OR-78 (F1): 'STRONG remains ≥ 3 distinct AI-specific terms across ≥ 2 capability clusters … no short-JD exception … Round-2 relevance expectations authored without this rule are diagnostic only.'",
+      "disposition": "Diagnostic only (Gate R). Relevance thresholds and vocabulary unchanged by ruling."
+    },
+    {
+      "id": "R2-090",
+      "facet": "relevance",
+      "class": "SPEC_AMBIGUITY",
+      "evidence": "Build RAG assistants for our Tokyo stores' staff. Business-level Japanese (JLPT N2 or above) is mandatory as all source documents are Japanese. 2-5 years.",
+      "engine": "WEAK (1 distinct AI-specific terms across 1 clusters)",
+      "expected": "STRONG",
+      "rule": "Round-2 author rulings sheet §16 defines STRONG/MODERATE/WEAK labels but no threshold; OR-78 (F1): 'STRONG remains ≥ 3 distinct AI-specific terms across ≥ 2 capability clusters … no short-JD exception … Round-2 relevance expectations authored without this rule are diagnostic only.'",
+      "disposition": "Diagnostic only (Gate R). Relevance thresholds and vocabulary unchanged by ruling."
+    },
+    {
+      "id": "R2-091",
+      "facet": "relevance",
+      "class": "SPEC_AMBIGUITY",
+      "evidence": "Build evaluation pipelines for our German-market LLM products. Bonus points if you can read German, but all work is in English. 2-5 years.",
+      "engine": "MODERATE (2 distinct AI-specific terms across 2 clusters)",
+      "expected": "STRONG",
+      "rule": "Round-2 author rulings sheet §16 defines STRONG/MODERATE/WEAK labels but no threshold; OR-78 (F1): 'STRONG remains ≥ 3 distinct AI-specific terms across ≥ 2 capability clusters … no short-JD exception … Round-2 relevance expectations authored without this rule are diagnostic only.'",
+      "disposition": "Diagnostic only (Gate R). Relevance thresholds and vocabulary unchanged by ruling."
+    },
+    {
+      "id": "R2-092",
+      "facet": "relevance",
+      "class": "SPEC_AMBIGUITY",
+      "evidence": "Build LLM agents for our Rotterdam operations. Working knowledge of Dutch. 2-5 years.",
+      "engine": "MODERATE (2 distinct AI-specific terms across 2 clusters)",
+      "expected": "STRONG",
+      "rule": "Round-2 author rulings sheet §16 defines STRONG/MODERATE/WEAK labels but no threshold; OR-78 (F1): 'STRONG remains ≥ 3 distinct AI-specific terms across ≥ 2 capability clusters … no short-JD exception … Round-2 relevance expectations authored without this rule are diagnostic only.'",
+      "disposition": "Diagnostic only (Gate R). Relevance thresholds and vocabulary unchanged by ruling."
+    },
+    {
+      "id": "R2-093",
+      "facet": "relevance",
+      "class": "SPEC_AMBIGUITY",
+      "evidence": "We're looking for a Portuguese-speaking AI Solutions Engineer to help our Brazilian customers deploy RAG copilots and run acceptance evals. 2-5 years.",
+      "engine": "MODERATE (2 distinct AI-specific terms across 2 clusters)",
+      "expected": "STRONG",
+      "rule": "Round-2 author rulings sheet §16 defines STRONG/MODERATE/WEAK labels but no threshold; OR-78 (F1): 'STRONG remains ≥ 3 distinct AI-specific terms across ≥ 2 capability clusters … no short-JD exception … Round-2 relevance expectations authored without this rule are diagnostic only.'",
+      "disposition": "Diagnostic only (Gate R). Relevance thresholds and vocabulary unchanged by ruling."
+    },
+    {
+      "id": "R2-095",
+      "facet": "relevance",
+      "class": "SPEC_AMBIGUITY",
+      "evidence": "Remote. Build vernacular loan-support bots with RAG and evaluate them on real call transcripts. Kannada or Hindi preferred for occasional customer-call reviews.…",
+      "engine": "MODERATE (2 distinct AI-specific terms across 2 clusters)",
+      "expected": "STRONG",
+      "rule": "Round-2 author rulings sheet §16 defines STRONG/MODERATE/WEAK labels but no threshold; OR-78 (F1): 'STRONG remains ≥ 3 distinct AI-specific terms across ≥ 2 capability clusters … no short-JD exception … Round-2 relevance expectations authored without this rule are diagnostic only.'",
+      "disposition": "Diagnostic only (Gate R). Relevance thresholds and vocabulary unchanged by ruling."
+    },
+    {
+      "id": "R2-096",
+      "facet": "relevance",
+      "class": "SPEC_AMBIGUITY",
+      "evidence": "Fluency in Mandarin required — you'll debug model outputs for our Taiwan and mainland customers daily. Build the serving layer and eval pipeline. 3-5 years.",
+      "engine": "WEAK (0 distinct AI-specific terms across 0 clusters)",
+      "expected": "STRONG",
+      "rule": "Round-2 author rulings sheet §16 defines STRONG/MODERATE/WEAK labels but no threshold; OR-78 (F1): 'STRONG remains ≥ 3 distinct AI-specific terms across ≥ 2 capability clusters … no short-JD exception … Round-2 relevance expectations authored without this rule are diagnostic only.'",
+      "disposition": "Diagnostic only (Gate R). Relevance thresholds and vocabulary unchanged by ruling."
+    },
+    {
+      "id": "R2-101",
+      "facet": "relevance",
+      "class": "SPEC_AMBIGUITY",
+      "evidence": "Own intent-classification and slot-filling models (fastText, CRF, small BERTs) for our IVR platform; improve ASR-normalisation pipelines. Occasional evaluation …",
+      "engine": "STRONG (3 distinct AI-specific terms across 3 clusters)",
+      "expected": "MODERATE",
+      "rule": "Round-2 author rulings sheet §16 defines STRONG/MODERATE/WEAK labels but no threshold; OR-78 (F1): 'STRONG remains ≥ 3 distinct AI-specific terms across ≥ 2 capability clusters … no short-JD exception … Round-2 relevance expectations authored without this rule are diagnostic only.'",
+      "disposition": "Diagnostic only (Gate R). Relevance thresholds and vocabulary unchanged by ruling."
+    },
+    {
+      "id": "R2-111",
+      "facet": "relevance",
+      "class": "SPEC_AMBIGUITY",
+      "evidence": "Hiring for a leading product company (direct permanent role with the client). Remote. Build RAG assistants and evaluation pipelines. 2-5 years.",
+      "engine": "MODERATE (2 distinct AI-specific terms across 2 clusters)",
+      "expected": "STRONG",
+      "rule": "Round-2 author rulings sheet §16 defines STRONG/MODERATE/WEAK labels but no threshold; OR-78 (F1): 'STRONG remains ≥ 3 distinct AI-specific terms across ≥ 2 capability clusters … no short-JD exception … Round-2 relevance expectations authored without this rule are diagnostic only.'",
+      "disposition": "Diagnostic only (Gate R). Relevance thresholds and vocabulary unchanged by ruling."
+    },
+    {
+      "id": "R2-113",
+      "facet": "relevance",
+      "class": "SPEC_AMBIGUITY",
+      "evidence": "Build agent workflows and their eval harness for our (stealth) AI product. 2-5 years.",
+      "engine": "MODERATE (2 distinct AI-specific terms across 2 clusters)",
+      "expected": "STRONG",
+      "rule": "Round-2 author rulings sheet §16 defines STRONG/MODERATE/WEAK labels but no threshold; OR-78 (F1): 'STRONG remains ≥ 3 distinct AI-specific terms across ≥ 2 capability clusters … no short-JD exception … Round-2 relevance expectations authored without this rule are diagnostic only.'",
+      "disposition": "Diagnostic only (Gate R). Relevance thresholds and vocabulary unchanged by ruling."
+    },
+    {
+      "id": "R2-117",
+      "facet": "relevance",
+      "class": "SPEC_AMBIGUITY",
+      "evidence": "Remote-first; teammates can use our Pune or Hyderabad hubs whenever they like. Build clinical RAG and its evals. 2-5 years.",
+      "engine": "MODERATE (2 distinct AI-specific terms across 2 clusters)",
+      "expected": "STRONG",
+      "rule": "Round-2 author rulings sheet §16 defines STRONG/MODERATE/WEAK labels but no threshold; OR-78 (F1): 'STRONG remains ≥ 3 distinct AI-specific terms across ≥ 2 capability clusters … no short-JD exception … Round-2 relevance expectations authored without this rule are diagnostic only.'",
+      "disposition": "Diagnostic only (Gate R). Relevance thresholds and vocabulary unchanged by ruling."
+    },
+    {
+      "id": "R2-118",
+      "facet": "relevance",
+      "class": "SPEC_AMBIGUITY",
+      "evidence": "Fully remote with optional coworking at our Bengaluru or Noida hubs. Build retrieval over enterprise wikis and own answer-quality evals. 2-5 years.",
+      "engine": "WEAK (1 distinct AI-specific terms across 1 clusters)",
+      "expected": "STRONG",
+      "rule": "Round-2 author rulings sheet §16 defines STRONG/MODERATE/WEAK labels but no threshold; OR-78 (F1): 'STRONG remains ≥ 3 distinct AI-specific terms across ≥ 2 capability clusters … no short-JD exception … Round-2 relevance expectations authored without this rule are diagnostic only.'",
+      "disposition": "Diagnostic only (Gate R). Relevance thresholds and vocabulary unchanged by ruling."
+    },
+    {
+      "id": "R2-119",
+      "facet": "relevance",
+      "class": "SPEC_AMBIGUITY",
+      "evidence": "Remote role, but you must be based in Hyderabad (within commuting distance of our warehouse for occasional site visits). Build LLM agents for warehouse exceptio…",
+      "engine": "MODERATE (2 distinct AI-specific terms across 2 clusters)",
+      "expected": "STRONG",
+      "rule": "Round-2 author rulings sheet §16 defines STRONG/MODERATE/WEAK labels but no threshold; OR-78 (F1): 'STRONG remains ≥ 3 distinct AI-specific terms across ≥ 2 capability clusters … no short-JD exception … Round-2 relevance expectations authored without this rule are diagnostic only.'",
+      "disposition": "Diagnostic only (Gate R). Relevance thresholds and vocabulary unchanged by ruling."
+    },
+    {
+      "id": "R2-120",
+      "facet": "relevance",
+      "class": "SPEC_AMBIGUITY",
+      "evidence": "Applicants must already hold the right to work in Ireland; we are unable to sponsor permits. Build LLM analytics features. 3-5 years.",
+      "engine": "WEAK (1 distinct AI-specific terms across 1 clusters)",
+      "expected": "STRONG",
+      "rule": "Round-2 author rulings sheet §16 defines STRONG/MODERATE/WEAK labels but no threshold; OR-78 (F1): 'STRONG remains ≥ 3 distinct AI-specific terms across ≥ 2 capability clusters … no short-JD exception … Round-2 relevance expectations authored without this rule are diagnostic only.'",
+      "disposition": "Diagnostic only (Gate R). Relevance thresholds and vocabulary unchanged by ruling."
+    },
+    {
+      "id": "R2-121",
+      "facet": "relevance",
+      "class": "SPEC_AMBIGUITY",
+      "evidence": "We sponsor Blue Card visas and support your move to Berlin. Build agentic trip-planning and its evals. 3-5 years.",
+      "engine": "MODERATE (2 distinct AI-specific terms across 2 clusters)",
+      "expected": "STRONG",
+      "rule": "Round-2 author rulings sheet §16 defines STRONG/MODERATE/WEAK labels but no threshold; OR-78 (F1): 'STRONG remains ≥ 3 distinct AI-specific terms across ≥ 2 capability clusters … no short-JD exception … Round-2 relevance expectations authored without this rule are diagnostic only.'",
+      "disposition": "Diagnostic only (Gate R). Relevance thresholds and vocabulary unchanged by ruling."
+    },
+    {
+      "id": "R2-123",
+      "facet": "relevance",
+      "class": "SPEC_AMBIGUITY",
+      "evidence": "Parivar sells a SaaS HR suite. You'll work with our client success team to configure the AI assistant for each client, run acceptance evals on client data, and …",
+      "engine": "WEAK (1 distinct AI-specific terms across 1 clusters)",
+      "expected": "STRONG",
+      "rule": "Round-2 author rulings sheet §16 defines STRONG/MODERATE/WEAK labels but no threshold; OR-78 (F1): 'STRONG remains ≥ 3 distinct AI-specific terms across ≥ 2 capability clusters … no short-JD exception … Round-2 relevance expectations authored without this rule are diagnostic only.'",
+      "disposition": "Diagnostic only (Gate R). Relevance thresholds and vocabulary unchanged by ruling."
+    },
+    {
+      "id": "R2-124",
+      "facet": "relevance",
+      "class": "SPEC_AMBIGUITY",
+      "evidence": "Hybrid — 3 days onsite at our Bannerghatta Road office.\nBuild automated LLM test suites for our policy-servicing bot. 2-5 years.",
+      "engine": "WEAK (1 distinct AI-specific terms across 1 clusters)",
+      "expected": "STRONG",
+      "rule": "Round-2 author rulings sheet §16 defines STRONG/MODERATE/WEAK labels but no threshold; OR-78 (F1): 'STRONG remains ≥ 3 distinct AI-specific terms across ≥ 2 capability clusters … no short-JD exception … Round-2 relevance expectations authored without this rule are diagnostic only.'",
+      "disposition": "Diagnostic only (Gate R). Relevance thresholds and vocabulary unchanged by ruling."
+    },
+    {
+      "id": "R2-023",
+      "facet": "geography",
+      "class": "SUPERSEDED_RULING",
+      "evidence": "location_text: 'Remote — Canada'; JD has no India/worldwide eligibility statement",
+      "engine": "FAIL (GEO-R03, remote_scope REGION_EXCLUDES_INDIA)",
+      "expected": "UNKNOWN",
+      "rule": "Round-2 author sheet §3: 'foreign-only listing with no India eligibility evidence → UNKNOWN' is superseded by OR-79 (F2): 'A remote posting naming a single foreign country (\"Remote — Canada\" …) is a region lock → FAIL, unless the JD explicitly states that candidates in India, or worldwide candidates, are eligible.'",
+      "disposition": "Engine correct under OR-79. Fixture not altered."
+    },
+    {
+      "id": "R2-023",
+      "facet": "false_excluded",
+      "class": "SUPERSEDED_RULING",
+      "evidence": "location_text: 'Remote — Canada'",
+      "engine": "EXCLUDED (GEO-R03)",
+      "expected": "REVIEW",
+      "rule": "OR-79 (F2) single foreign-country Remote → FAIL; OR-82 (F5): 'A case that follows an owner ruling but conflicts with an old corpus expectation is NOT an engine false exclusion.'",
+      "disposition": "Explained false EXCLUDED; not an engine defect."
+    },
+    {
+      "id": "R2-081",
+      "facet": "geography",
+      "class": "CASE_ERROR",
+      "evidence": "location_text: 'Remote'; work_mode 'Work from Home'; JD 'C2H: 6 months contract, then conversion to FTE based on performance. Build RAG + evaluation tooling.' — no India listing, no region",
+      "engine": "UNKNOWN (GEO-R05)",
+      "expected": "PASS",
+      "rule": "Round-2 author sheet §3 itself: 'remote with no region and no India listing → UNKNOWN'; OR-38; OR-79 (F2): 'Plain \"Remote\" with no India listing and no region → UNKNOWN.'",
+      "disposition": "Fixture expectation contradicts its own rulings sheet. Lane is EXCLUDED either way (EMP-R04 contract-to-hire FAIL, expected)."
+    },
+    {
+      "id": "R2-099",
+      "facet": "lane",
+      "class": "SUPERSEDED_RULING",
+      "evidence": "JD: '9+ years of software/QA experience, including 2+ with LLM systems.'",
+      "engine": "REVIEW (EXPERIENCE_STRETCH, review-routing)",
+      "expected": "SHORTLIST",
+      "rule": "OR-68 (E3): 'If experience is classified STRETCH it routes to REVIEW. It must not automatically become EXCLUDED.' The Round-2 sheet §15/§17 did not route STRETCH to REVIEW.",
+      "disposition": "Engine follows OR-68. Fixture not altered."
+    },
+    {
+      "id": "R2-023",
+      "facet": "fx",
+      "class": "ADAPTER_LIMIT",
+      "evidence": "compensation_text: 'CAD 95,000–115,000 base'; fx_snapshot_age_days=5",
+      "engine": "compensation UNKNOWN (COMP-R16)",
+      "expected": "PASS",
+      "rule": "OR-27 / OR-37: foreign figures need an owner-maintained dated FX snapshot; the fixture supplies only an age, no rate. P6 §26: 'Do not invent FX rates.'",
+      "disposition": "Compensation and FX flags excluded from Gate E denominators and listed separately."
+    },
+    {
+      "id": "R2-024",
+      "facet": "fx",
+      "class": "ADAPTER_LIMIT",
+      "evidence": "compensation_text: 'SGD 72,000–90,000 base'; fx_snapshot_age_days=6",
+      "engine": "compensation UNKNOWN (COMP-R16)",
+      "expected": "PASS",
+      "rule": "OR-27 / OR-37: foreign figures need an owner-maintained dated FX snapshot; the fixture supplies only an age, no rate. P6 §26: 'Do not invent FX rates.'",
+      "disposition": "Compensation and FX flags excluded from Gate E denominators and listed separately."
+    },
+    {
+      "id": "R2-030",
+      "facet": "fx",
+      "class": "ADAPTER_LIMIT",
+      "evidence": "compensation_text: 'EUR 70,000 – 85,000'; fx_snapshot_age_days=4",
+      "engine": "compensation UNKNOWN (COMP-R16)",
+      "expected": "(not asserted)",
+      "rule": "OR-27 / OR-37: foreign figures need an owner-maintained dated FX snapshot; the fixture supplies only an age, no rate. P6 §26: 'Do not invent FX rates.'",
+      "disposition": "Compensation and FX flags excluded from Gate E denominators and listed separately."
+    },
+    {
+      "id": "R2-032",
+      "facet": "fx",
+      "class": "ADAPTER_LIMIT",
+      "evidence": "compensation_text: '$140,000 - $175,000'; fx_snapshot_age_days=3",
+      "engine": "compensation UNKNOWN (COMP-R16)",
+      "expected": "(not asserted)",
+      "rule": "OR-27 / OR-37: foreign figures need an owner-maintained dated FX snapshot; the fixture supplies only an age, no rate. P6 §26: 'Do not invent FX rates.'",
+      "disposition": "Compensation and FX flags excluded from Gate E denominators and listed separately."
+    },
+    {
+      "id": "R2-036",
+      "facet": "fx",
+      "class": "ADAPTER_LIMIT",
+      "evidence": "compensation_text: 'AED 32,000/month tax-free'; fx_snapshot_age_days=2",
+      "engine": "compensation UNKNOWN (COMP-R13)",
+      "expected": "(not asserted)",
+      "rule": "OR-27 / OR-37: foreign figures need an owner-maintained dated FX snapshot; the fixture supplies only an age, no rate. P6 §26: 'Do not invent FX rates.'",
+      "disposition": "Compensation and FX flags excluded from Gate E denominators and listed separately."
+    },
+    {
+      "id": "R2-060",
+      "facet": "fx",
+      "class": "ADAPTER_LIMIT",
+      "evidence": "compensation_text: 'Base salary USD 70,000–90,000'; fx_snapshot_age_days=3",
+      "engine": "compensation UNKNOWN (COMP-R16)",
+      "expected": "PASS",
+      "rule": "OR-27 / OR-37: foreign figures need an owner-maintained dated FX snapshot; the fixture supplies only an age, no rate. P6 §26: 'Do not invent FX rates.'",
+      "disposition": "Compensation and FX flags excluded from Gate E denominators and listed separately."
+    },
+    {
+      "id": "R2-061",
+      "facet": "fx",
+      "class": "ADAPTER_LIMIT",
+      "evidence": "compensation_text: 'EUR 55,000 – 65,000 gross base'; fx_snapshot_age_days=19",
+      "engine": "compensation UNKNOWN (COMP-R16)",
+      "expected": "UNKNOWN",
+      "rule": "OR-27 / OR-37: foreign figures need an owner-maintained dated FX snapshot; the fixture supplies only an age, no rate. P6 §26: 'Do not invent FX rates.'",
+      "disposition": "Compensation and FX flags excluded from Gate E denominators and listed separately."
+    },
+    {
+      "id": "R2-062",
+      "facet": "fx",
+      "class": "ADAPTER_LIMIT",
+      "evidence": "compensation_text: 'GBP 9,000 per year'; fx_snapshot_age_days=30",
+      "engine": "compensation UNKNOWN (COMP-R14)",
+      "expected": "UNKNOWN",
+      "rule": "OR-27 / OR-37: foreign figures need an owner-maintained dated FX snapshot; the fixture supplies only an age, no rate. P6 §26: 'Do not invent FX rates.'",
+      "disposition": "Compensation and FX flags excluded from Gate E denominators and listed separately."
+    },
+    {
+      "id": "R2-063",
+      "facet": "fx",
+      "class": "ADAPTER_LIMIT",
+      "evidence": "compensation_text: 'SGD 60,000–75,000 base'; fx_snapshot_age_days=14",
+      "engine": "compensation UNKNOWN (COMP-R16)",
+      "expected": "PASS",
+      "rule": "OR-27 / OR-37: foreign figures need an owner-maintained dated FX snapshot; the fixture supplies only an age, no rate. P6 §26: 'Do not invent FX rates.'",
+      "disposition": "Compensation and FX flags excluded from Gate E denominators and listed separately."
+    },
+    {
+      "id": "R2-064",
+      "facet": "fx",
+      "class": "ADAPTER_LIMIT",
+      "evidence": "compensation_text: 'SGD 80,000–95,000 base'; fx_snapshot_age_days=15",
+      "engine": "compensation UNKNOWN (COMP-R16)",
+      "expected": "UNKNOWN",
+      "rule": "OR-27 / OR-37: foreign figures need an owner-maintained dated FX snapshot; the fixture supplies only an age, no rate. P6 §26: 'Do not invent FX rates.'",
+      "disposition": "Compensation and FX flags excluded from Gate E denominators and listed separately."
+    },
+    {
+      "id": "R2-065",
+      "facet": "fx",
+      "class": "ADAPTER_LIMIT",
+      "evidence": "compensation_text: \"US base range $150k–$190k. Final pay is adjusted to the candidate's location.\"; fx_snapshot_age_days=4",
+      "engine": "compensation UNKNOWN (COMP-R16)",
+      "expected": "UNKNOWN",
+      "rule": "OR-27 / OR-37: foreign figures need an owner-maintained dated FX snapshot; the fixture supplies only an age, no rate. P6 §26: 'Do not invent FX rates.'",
+      "disposition": "Compensation and FX flags excluded from Gate E denominators and listed separately."
+    },
+    {
+      "id": "R2-075",
+      "facet": "fx",
+      "class": "ADAPTER_LIMIT",
+      "evidence": "compensation_text: 'USD 55,000–65,000 base'; fx_snapshot_age_days=4",
+      "engine": "compensation UNKNOWN (COMP-R16)",
+      "expected": "PASS",
+      "rule": "OR-27 / OR-37: foreign figures need an owner-maintained dated FX snapshot; the fixture supplies only an age, no rate. P6 §26: 'Do not invent FX rates.'",
+      "disposition": "Compensation and FX flags excluded from Gate E denominators and listed separately."
+    },
+    {
+      "id": "R2-080",
+      "facet": "fx",
+      "class": "ADAPTER_LIMIT",
+      "evidence": "compensation_text: 'USD 35/hour'; fx_snapshot_age_days=3",
+      "engine": "compensation UNKNOWN (COMP-R13)",
+      "expected": "(not asserted)",
+      "rule": "OR-27 / OR-37: foreign figures need an owner-maintained dated FX snapshot; the fixture supplies only an age, no rate. P6 §26: 'Do not invent FX rates.'",
+      "disposition": "Compensation and FX flags excluded from Gate E denominators and listed separately."
+    },
+    {
+      "id": "R2-120",
+      "facet": "fx",
+      "class": "ADAPTER_LIMIT",
+      "evidence": "compensation_text: 'EUR 65,000 – 80,000'; fx_snapshot_age_days=5",
+      "engine": "compensation UNKNOWN (COMP-R16)",
+      "expected": "(not asserted)",
+      "rule": "OR-27 / OR-37: foreign figures need an owner-maintained dated FX snapshot; the fixture supplies only an age, no rate. P6 §26: 'Do not invent FX rates.'",
+      "disposition": "Compensation and FX flags excluded from Gate E denominators and listed separately."
+    },
+    {
+      "id": "R2-121",
+      "facet": "fx",
+      "class": "ADAPTER_LIMIT",
+      "evidence": "compensation_text: 'EUR 75,000 – 90,000'; fx_snapshot_age_days=5",
+      "engine": "compensation UNKNOWN (COMP-R16)",
+      "expected": "(not asserted)",
+      "rule": "OR-27 / OR-37: foreign figures need an owner-maintained dated FX snapshot; the fixture supplies only an age, no rate. P6 §26: 'Do not invent FX rates.'",
+      "disposition": "Compensation and FX flags excluded from Gate E denominators and listed separately."
+    }
+  ]
+}

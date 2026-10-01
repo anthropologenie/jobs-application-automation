@@ -41,6 +41,14 @@ def parse_clauses(sentence: str, policy) -> List[Dict[str, Any]]:
                        for c, pats in lex["currency"].items())
     if not keyword and not currency_hit:
         return []
+    weak = lex.get("weak_currency_markers")
+    if weak is not None and not keyword:
+        # 0.2.3: "25 lakh users" is a count, not money. A lakh/crore word alone (no ₹ / Rs / INR /
+        # LPA / other currency symbol and no compensation keyword) does not open a salary clause.
+        strong = any(any_match(policy.regexes("comp.cur." + c, [p for p in pats if p not in weak]), sentence)
+                     for c, pats in lex["currency"].items())
+        if not strong:
+            return []
     out: List[Dict[str, Any]] = []
     sentence_india = bool(any_match(rx("india_band"), sentence))
     sentence_loc_adj = bool(any_match(rx("location_adjusted"), sentence))
@@ -48,6 +56,10 @@ def parse_clauses(sentence: str, policy) -> List[Dict[str, Any]]:
     labelled = lex.get("labelled_clause_split")
     if labelled:  # 0.2.2: "Base: ₹25 LPA | CTC: ₹31 LPA" is two clauses, so base can win
         split = policy.regex("comp.labelled_split", labelled)
+        clauses = [part.strip() for c in clauses for part in split.split(c) if part and part.strip()]
+    component = lex.get("component_split")
+    if component:  # 0.2.3: "₹27L fixed + 15% bonus", "US: $160k | India: ₹42–55 LPA" are separate components
+        split = policy.regex("comp.component_split", component)
         clauses = [part.strip() for c in clauses for part in split.split(c) if part and part.strip()]
     for clause in clauses:
         fact = _parse_clause(clause, policy, lex, rx)
@@ -72,7 +84,10 @@ def _parse_clause(clause: str, policy, lex, rx) -> Optional[Dict[str, Any]]:
             currency = code
             break
     numbers: List[Tuple[int, float]] = []
+    not_money = lex.get("non_money_number_suffix")  # 0.2.3: percentages and counts are never amounts
     for m in _number_regex(policy, lex).finditer(clause):
+        if not_money and policy.regex("comp.not_money", not_money).match(clause[m.end():]):
+            continue
         n = _to_number(m.group(1), m.group(2))
         if n is not None and n > 0:
             numbers.append((m.start(), n))
@@ -102,6 +117,14 @@ def _parse_clause(clause: str, policy, lex, rx) -> Optional[Dict[str, Any]]:
             basis = "CTC"
         elif any_match(rx("base"), clause):
             basis = "BASE"
+        variable = lex.get("variable_component")
+        head = policy.regex("comp.inclusive_tail", lex["inclusive_tail"]).sub("", clause) if variable else clause
+        if variable and basis != "CTC" and any_match(policy.regexes("comp.variable", variable), head) \
+                and not any_match(rx("base"), head):
+            # 0.2.3 (Owner Addendum E2): a variable / bonus / incentive figure is never base and is
+            # never added to base. It is kept as evidence but not selected as the salary figure.
+            return {**base, "kind": "VARIABLE_FIGURE", "currency": currency, "min": min(values),
+                    "max": max(values)}
         return {**base, "kind": "FIGURE", "currency": currency, "period": period,
                 "lakh_unit": lakh, "min": min(values), "max": max(values),
                 "is_range": is_range, "upper_only": upper_only, "lower_only": lower_only,
@@ -139,7 +162,7 @@ def summarize(clauses: List[Dict[str, Any]], policy, fx_lookup: FxLookup,
     figures = [c for c in clauses if c["kind"] == "FIGURE"]
     flags: List[str] = []
     if not figures:
-        if any(c["kind"] == "NON_BASE" for c in clauses):
+        if any(c["kind"] in ("NON_BASE", "VARIABLE_FIGURE") for c in clauses):
             return {"state": "NON_BASE_ONLY"}, flags, None
         if any(c["kind"] == "NON_NUMERIC" for c in clauses):
             return {"state": "NON_NUMERIC"}, flags, None
@@ -164,6 +187,16 @@ def summarize(clauses: List[Dict[str, Any]], policy, fx_lookup: FxLookup,
         return {**facts, "state": "LOCATION_ADJUSTED_NO_INDIA_BAND"}, flags, None
 
     period = chosen["period"] or ("annual" if chosen["lakh_unit"] else None)
+    if period is None and policy.section("lexicon")["compensation"].get("period_inheritance"):
+        # 0.2.3: a structurally clear compensation table ("Fixed base .... INR 26,00,000" /
+        # "Annual CTC .... INR 33,50,000") states the period once; an unlabelled line in the same
+        # field and currency inherits it. Never across currencies, never from a variable line.
+        stated = {c["period"] or ("annual" if c["lakh_unit"] else None)
+                  for c in figures if c is not chosen and c["currency"] == chosen["currency"]}
+        stated.discard(None)
+        if len(stated) == 1:
+            period = stated.pop()
+            facts["period_inherited"] = period
     lo, hi = chosen["min"], chosen["max"]
     if period is None:
         return {**facts, "state": "PERIOD_UNSTATED"}, flags, None

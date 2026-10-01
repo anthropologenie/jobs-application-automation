@@ -1,0 +1,4 @@
+# Owner-maintained FX table (OR-27 / OR-37). Copy to data/fx/fx_rates.csv and add one dated row per currency.
+# rate_to_inr = INR per 1 unit of the currency; snapshot_date = the date the owner read the rate (YYYY-MM-DD).
+# A snapshot older than 14 days at --as-of is stale (UNKNOWN + FX_STALE). Never guess a rate: leave a currency out instead.
+currency,rate_to_inr,snapshot_date,source

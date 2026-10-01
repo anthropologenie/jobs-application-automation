@@ -32,12 +32,15 @@ def test_migrations_apply_once_record_history_and_backup(tmp_path):
     db = tmp_path / "rt" / "jobops.db"
     first = migrate(str(db), backup_dir=str(tmp_path / "bk"))
     # 0102 (P3): nullable observation.raw_work_mode column.
-    assert first["applied"] == ["0100_v2_core.sql", "0101_legacy_archive.py", "0102_observation_work_mode.sql"]
+    # 0103 (P5, Owner Addendum E5): THIRD_PARTY_PAYROLL employer classification.
+    assert first["applied"] == ["0100_v2_core.sql", "0101_legacy_archive.py", "0102_observation_work_mode.sql",
+                                "0103_third_party_payroll_classification.sql"]
     again = migrate(str(db), backup_dir=str(tmp_path / "bk"))
     assert again["applied"] == []
     conn = sqlite3.connect(db)
-    assert conn.execute("PRAGMA user_version").fetchone()[0] == 102
-    assert [r[0] for r in conn.execute("SELECT version FROM schema_migrations ORDER BY version")] == ["0100", "0101", "0102"]
+    assert conn.execute("PRAGMA user_version").fetchone()[0] == 103
+    assert [r[0] for r in conn.execute("SELECT version FROM schema_migrations ORDER BY version")] == ["0100", "0101", "0102",
+                                                                                                    "0103"]
     assert conn.execute("PRAGMA integrity_check").fetchone()[0] == "ok"
 
 
@@ -147,4 +150,5 @@ def test_run_lock_is_exclusive(tmp_path):
 
 def test_discover_orders_numerically():
     assert [p.name for p in discover()] == ["0100_v2_core.sql", "0101_legacy_archive.py",
-                                            "0102_observation_work_mode.sql"]
+                                            "0102_observation_work_mode.sql",
+                                            "0103_third_party_payroll_classification.sql"]

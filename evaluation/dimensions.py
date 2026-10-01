@@ -125,6 +125,19 @@ def summarize_geography(rows: List[Dict[str, Any]], listing_rows: List[Dict[str,
     if mode == "REMOTE":
         remote_places = [p for s in statements if s["mode"] == "REMOTE" for p in _refs(s["places"])]
         facts["remote_scope"] = _remote_scope(remote_places, listing, index)
+        explicit = sorted({s["explicit_eligibility"] for s in statements if s.get("explicit_eligibility")})
+        if explicit:
+            # 0.2.4 (OR-79, F2): an explicit "candidates in India / worldwide are eligible" statement lifts a
+            # single-country lock and qualifies an unqualified or implicit remote scope (PASS). Against a
+            # multi-country region lock it is a contradiction -> UNKNOWN (OI-052, recall-safe reading).
+            facts["explicit_eligibility"] = explicit
+            scope = facts["remote_scope"]
+            if scope == "REGION_EXCLUDES_INDIA":
+                foreign = [p for p in remote_places if p.country != INDIA or p.kind == "REGION"]
+                single_country = bool(foreign) and all(p.kind == "COUNTRY" for p in foreign)
+                facts["remote_scope"] = "EXPLICIT_ELIGIBILITY" if single_country else "REGION_LOCK_CONTRADICTED"
+            elif scope in ("UNQUALIFIED_NO_LISTING", "UNQUALIFIED_FOREIGN_LISTING", "REGION_INCLUDES_INDIA_IMPLICIT"):
+                facts["remote_scope"] = "EXPLICIT_ELIGIBILITY"
     if mode in ("HYBRID", "ONSITE"):
         mode_places = [p for s in statements if s["mode"] == mode for p in _refs(s["places"])]
         facts["city_class"] = PlaceIndex.city_class(mode_places) or PlaceIndex.city_class(listing)
@@ -161,12 +174,27 @@ def summarize_compensation(rows: List[Dict[str, Any]], policy, fx_lookup, as_of:
 # ------------------------------------------------------------- employment etc.
 
 def summarize_employment(rows: List[Dict[str, Any]], policy) -> Dict[str, Any]:
-    order = list(policy.section("lexicon")["employment"].keys())
+    lex = policy.section("lexicon")
+    order = list(lex["employment"].keys())
     kinds = {k for r in rows for k in r["value"]["kinds"]}
     kind = next((k for k in order if k in kinds), None)
     months = next((r["value"]["contract_months"] for r in rows if r["value"]["contract_months"] is not None), None)
     direct = any(r["value"]["direct"] for r in rows)
-    return {"kind": kind, "contract_months": months, "direct": direct}
+    conflict_cfg = lex.get("employment_source_conflicts")
+    if conflict_cfg is None:
+        return {"kind": kind, "contract_months": months, "direct": direct}
+    # 0.2.3 (Owner Addendum E1): structured field evidence outranks free text; a genuine
+    # contradiction between them is CONFLICTING (UNKNOWN + EMPLOYMENT_SOURCE_CONFLICT), never FAIL.
+    structured = {k for r in rows if r["value"].get("source_field") == "raw_employment_type" for k in r["value"]["kinds"]}
+    free = {k for r in rows if r["value"].get("source_field") != "raw_employment_type" for k in r["value"]["kinds"]}
+    conflicting = sorted({f"{s}~{f}" for s in structured for f in free if f in conflict_cfg.get(s, [])})
+    if conflicting:
+        kind = "CONFLICTING"
+    source = None
+    if kind and kind != "CONFLICTING":
+        source = "STRUCTURED_FIELD" if kind in structured else "JD_FREE_TEXT"
+    return {"kind": kind, "contract_months": months, "direct": direct, "kind_source": source,
+            "source_conflicts": conflicting}
 
 
 def employment_comparable(facts: Dict[str, Any]) -> Optional[Tuple]:

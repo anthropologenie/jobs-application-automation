@@ -1,0 +1,1106 @@
+{
+  "artifact": {
+    "id": "jobops-policy-v024-golden-cases",
+    "phase": "P6",
+    "policy_version": "jobops-policy@0.2.4",
+    "authority": "OWNER_RULINGS_LOG.md OR-79 (F2), OR-80 (F3), OR-83 (OI-052 = YES); hand-written from the rulings, not from engine output.",
+    "default_evaluation_date": "2026-09-30"
+  },
+  "case_count": 35,
+  "cases": [
+    {
+      "case_id": "Q01",
+      "family": "queue",
+      "adversarial": true,
+      "description": "Consultancy employer (known) outranks an undisclosed salary (missing) under 0.2.4.",
+      "items": [
+        {
+          "key": "C",
+          "classification": "CONSULTANCY",
+          "observation": {
+            "raw_title": "AI Evaluation Engineer",
+            "raw_location": "Bengaluru",
+            "raw_work_mode": "Hybrid",
+            "raw_salary": "Base: ₹30 LPA",
+            "raw_employment_type": "Full-time, permanent",
+            "raw_text": "We build RAG assistants and run LLM-as-judge hallucination evals on golden datasets. Two office days a week at our Indiranagar office.",
+            "raw_company": "Consult Co"
+          }
+        },
+        {
+          "key": "U",
+          "classification": "PRODUCT",
+          "observation": {
+            "raw_title": "AI Evaluation Engineer",
+            "raw_location": "Remote - India",
+            "raw_work_mode": "Remote",
+            "raw_employment_type": "Full-time, permanent",
+            "raw_text": "We build RAG assistants and run LLM-as-judge hallucination evals on golden datasets.",
+            "raw_company": "Undisclosed U Co"
+          }
+        }
+      ],
+      "expected": {
+        "order_024": [
+          "C",
+          "U"
+        ],
+        "order_023": [
+          "U",
+          "C"
+        ],
+        "missing": {
+          "C": 0,
+          "U": 1
+        }
+      }
+    },
+    {
+      "case_id": "Q02",
+      "family": "queue",
+      "adversarial": true,
+      "description": "Staffing employer (known) is not incomplete evidence.",
+      "items": [
+        {
+          "key": "S",
+          "classification": "STAFFING",
+          "observation": {
+            "raw_title": "AI Evaluation Engineer",
+            "raw_location": "Bengaluru",
+            "raw_work_mode": "Hybrid",
+            "raw_salary": "Base: ₹30 LPA",
+            "raw_employment_type": "Full-time, permanent",
+            "raw_text": "We build RAG assistants and run LLM-as-judge hallucination evals on golden datasets. Two office days a week at our Indiranagar office.",
+            "raw_company": "Staff Co"
+          }
+        },
+        {
+          "key": "U",
+          "classification": "PRODUCT",
+          "observation": {
+            "raw_title": "AI Evaluation Engineer",
+            "raw_location": "Remote - India",
+            "raw_work_mode": "Remote",
+            "raw_employment_type": "Full-time, permanent",
+            "raw_text": "We build RAG assistants and run LLM-as-judge hallucination evals on golden datasets.",
+            "raw_company": "Undisclosed U Co"
+          }
+        }
+      ],
+      "expected": {
+        "order_024": [
+          "S",
+          "U"
+        ],
+        "order_023": [
+          "U",
+          "S"
+        ],
+        "missing": {
+          "S": 0,
+          "U": 1
+        }
+      }
+    },
+    {
+      "case_id": "Q03",
+      "family": "queue",
+      "adversarial": true,
+      "description": "EOR arrangement (known) is not incomplete evidence.",
+      "items": [
+        {
+          "key": "E",
+          "classification": "PRODUCT",
+          "observation": {
+            "raw_title": "AI Evaluation Engineer",
+            "raw_location": "Bengaluru",
+            "raw_work_mode": "Hybrid",
+            "raw_salary": "Base: ₹30 LPA",
+            "raw_employment_type": "Full-time via Employer of Record (Deel)",
+            "raw_text": "We build RAG assistants and run LLM-as-judge hallucination evals on golden datasets. Two office days a week at our Indiranagar office.",
+            "raw_company": "Eor Co"
+          }
+        },
+        {
+          "key": "U",
+          "classification": "PRODUCT",
+          "observation": {
+            "raw_title": "AI Evaluation Engineer",
+            "raw_location": "Remote - India",
+            "raw_work_mode": "Remote",
+            "raw_employment_type": "Full-time, permanent",
+            "raw_text": "We build RAG assistants and run LLM-as-judge hallucination evals on golden datasets.",
+            "raw_company": "Undisclosed U Co"
+          }
+        }
+      ],
+      "expected": {
+        "order_024": [
+          "E",
+          "U"
+        ],
+        "order_023": [
+          "U",
+          "E"
+        ],
+        "missing": {
+          "E": 0,
+          "U": 1
+        }
+      }
+    },
+    {
+      "case_id": "Q04",
+      "family": "queue",
+      "adversarial": true,
+      "description": "Two known UNKNOWNs (consultancy + EOR) still count zero missing.",
+      "items": [
+        {
+          "key": "K",
+          "classification": "CONSULTANCY",
+          "observation": {
+            "raw_title": "AI Evaluation Engineer",
+            "raw_location": "Bengaluru",
+            "raw_work_mode": "Hybrid",
+            "raw_salary": "Base: ₹30 LPA",
+            "raw_employment_type": "Full-time via Employer of Record (Deel)",
+            "raw_text": "We build RAG assistants and run LLM-as-judge hallucination evals on golden datasets. Two office days a week at our Indiranagar office.",
+            "raw_company": "Consult Eor Co"
+          }
+        },
+        {
+          "key": "U",
+          "classification": "PRODUCT",
+          "observation": {
+            "raw_title": "AI Evaluation Engineer",
+            "raw_location": "Remote - India",
+            "raw_work_mode": "Remote",
+            "raw_employment_type": "Full-time, permanent",
+            "raw_text": "We build RAG assistants and run LLM-as-judge hallucination evals on golden datasets.",
+            "raw_company": "Undisclosed U Co"
+          }
+        }
+      ],
+      "expected": {
+        "order_024": [
+          "K",
+          "U"
+        ],
+        "order_023": [
+          "U",
+          "K"
+        ],
+        "missing": {
+          "K": 0,
+          "U": 1
+        }
+      }
+    },
+    {
+      "case_id": "Q05",
+      "family": "queue",
+      "adversarial": true,
+      "description": "A salary range straddling the floor is a known compensation ambiguity, not missing evidence.",
+      "items": [
+        {
+          "key": "R",
+          "classification": "PRODUCT",
+          "observation": {
+            "raw_title": "AI Evaluation Engineer",
+            "raw_location": "Bengaluru",
+            "raw_work_mode": "Hybrid",
+            "raw_salary": "₹15–30 LPA base",
+            "raw_employment_type": "Full-time, permanent",
+            "raw_text": "We build RAG assistants and run LLM-as-judge hallucination evals on golden datasets. Two office days a week at our Indiranagar office.",
+            "raw_company": "Range Co"
+          }
+        },
+        {
+          "key": "U",
+          "classification": "PRODUCT",
+          "observation": {
+            "raw_title": "AI Evaluation Engineer",
+            "raw_location": "Remote - India",
+            "raw_work_mode": "Remote",
+            "raw_employment_type": "Full-time, permanent",
+            "raw_text": "We build RAG assistants and run LLM-as-judge hallucination evals on golden datasets.",
+            "raw_company": "Undisclosed U Co"
+          }
+        }
+      ],
+      "expected": {
+        "order_024": [
+          "R",
+          "U"
+        ],
+        "order_023": [
+          "U",
+          "R"
+        ],
+        "missing": {
+          "R": 0,
+          "U": 1
+        }
+      }
+    },
+    {
+      "case_id": "Q06",
+      "family": "queue",
+      "adversarial": true,
+      "description": "An ambiguous language requirement is known, not missing.",
+      "items": [
+        {
+          "key": "L",
+          "classification": "PRODUCT",
+          "observation": {
+            "raw_title": "AI Evaluation Engineer",
+            "raw_location": "Bengaluru",
+            "raw_work_mode": "Hybrid",
+            "raw_salary": "Base: ₹30 LPA",
+            "raw_employment_type": "Full-time, permanent",
+            "raw_text": "We build RAG assistants and run LLM-as-judge hallucination evals on golden datasets. Two office days a week at our Indiranagar office. Working knowledge of Dutch.",
+            "raw_company": "Lang Co"
+          }
+        },
+        {
+          "key": "U",
+          "classification": "PRODUCT",
+          "observation": {
+            "raw_title": "AI Evaluation Engineer",
+            "raw_location": "Remote - India",
+            "raw_work_mode": "Remote",
+            "raw_employment_type": "Full-time, permanent",
+            "raw_text": "We build RAG assistants and run LLM-as-judge hallucination evals on golden datasets.",
+            "raw_company": "Undisclosed U Co"
+          }
+        }
+      ],
+      "expected": {
+        "order_024": [
+          "L",
+          "U"
+        ],
+        "order_023": [
+          "U",
+          "L"
+        ],
+        "missing": {
+          "L": 0,
+          "U": 1
+        }
+      }
+    },
+    {
+      "case_id": "Q07",
+      "family": "queue",
+      "adversarial": false,
+      "description": "Two missing UNKNOWNs rank below one missing UNKNOWN (both versions).",
+      "items": [
+        {
+          "key": "TWO",
+          "classification": "PRODUCT",
+          "observation": {
+            "raw_title": "AI Evaluation Engineer",
+            "raw_location": "Remote - India",
+            "raw_work_mode": "Remote",
+            "raw_text": "We build RAG assistants and run LLM-as-judge hallucination evals on golden datasets.",
+            "raw_company": "Two Co"
+          }
+        },
+        {
+          "key": "ONE",
+          "classification": "PRODUCT",
+          "observation": {
+            "raw_title": "AI Evaluation Engineer",
+            "raw_location": "Bengaluru",
+            "raw_work_mode": "Hybrid",
+            "raw_employment_type": "Full-time, permanent",
+            "raw_text": "We build RAG assistants and run LLM-as-judge hallucination evals on golden datasets. Two office days a week at our Indiranagar office.",
+            "raw_company": "One Co"
+          }
+        }
+      ],
+      "expected": {
+        "order_024": [
+          "ONE",
+          "TWO"
+        ],
+        "order_023": [
+          "ONE",
+          "TWO"
+        ],
+        "missing": {
+          "TWO": 2,
+          "ONE": 1
+        }
+      }
+    },
+    {
+      "case_id": "Q08",
+      "family": "queue",
+      "adversarial": false,
+      "description": "Equal missing evidence: REMOTE outranks Bengaluru hybrid (both versions).",
+      "items": [
+        {
+          "key": "B",
+          "classification": "PRODUCT",
+          "observation": {
+            "raw_title": "AI Evaluation Engineer",
+            "raw_location": "Bengaluru",
+            "raw_work_mode": "Hybrid",
+            "raw_employment_type": "Full-time, permanent",
+            "raw_text": "We build RAG assistants and run LLM-as-judge hallucination evals on golden datasets. Two office days a week at our Indiranagar office.",
+            "raw_company": "Blr Co"
+          }
+        },
+        {
+          "key": "R",
+          "classification": "PRODUCT",
+          "observation": {
+            "raw_title": "AI Evaluation Engineer",
+            "raw_location": "Remote - India",
+            "raw_work_mode": "Remote",
+            "raw_employment_type": "Full-time, permanent",
+            "raw_text": "We build RAG assistants and run LLM-as-judge hallucination evals on golden datasets.",
+            "raw_company": "Undisclosed R Co"
+          }
+        }
+      ],
+      "expected": {
+        "order_024": [
+          "R",
+          "B"
+        ],
+        "order_023": [
+          "R",
+          "B"
+        ],
+        "missing": {
+          "B": 1,
+          "R": 1
+        }
+      }
+    },
+    {
+      "case_id": "Q09",
+      "family": "queue",
+      "adversarial": false,
+      "description": "Equal known evidence: REMOTE outranks Bengaluru hybrid (both versions).",
+      "items": [
+        {
+          "key": "B",
+          "classification": "CONSULTANCY",
+          "observation": {
+            "raw_title": "AI Evaluation Engineer",
+            "raw_location": "Bengaluru",
+            "raw_work_mode": "Hybrid",
+            "raw_salary": "Base: ₹30 LPA",
+            "raw_employment_type": "Full-time, permanent",
+            "raw_text": "We build RAG assistants and run LLM-as-judge hallucination evals on golden datasets. Two office days a week at our Indiranagar office.",
+            "raw_company": "Blr Consult"
+          }
+        },
+        {
+          "key": "R",
+          "classification": "CONSULTANCY",
+          "observation": {
+            "raw_title": "AI Evaluation Engineer",
+            "raw_location": "Remote - India",
+            "raw_work_mode": "Remote",
+            "raw_salary": "Base: ₹30 LPA",
+            "raw_employment_type": "Full-time, permanent",
+            "raw_text": "We build RAG assistants and run LLM-as-judge hallucination evals on golden datasets.",
+            "raw_company": "Rem Consult"
+          }
+        }
+      ],
+      "expected": {
+        "order_024": [
+          "R",
+          "B"
+        ],
+        "order_023": [
+          "R",
+          "B"
+        ],
+        "missing": {
+          "B": 0,
+          "R": 0
+        }
+      }
+    },
+    {
+      "case_id": "Q10",
+      "family": "queue",
+      "adversarial": false,
+      "description": "Absent work arrangement is missing evidence.",
+      "items": [
+        {
+          "key": "W",
+          "classification": "PRODUCT",
+          "observation": {
+            "raw_title": "AI Evaluation Engineer",
+            "raw_salary": "Base: ₹30 LPA",
+            "raw_employment_type": "Full-time, permanent",
+            "raw_text": "We build RAG assistants and run LLM-as-judge hallucination evals on golden datasets.",
+            "raw_company": "Nowhere Co"
+          }
+        },
+        {
+          "key": "C",
+          "classification": "CONSULTANCY",
+          "observation": {
+            "raw_title": "AI Evaluation Engineer",
+            "raw_location": "Remote - India",
+            "raw_work_mode": "Remote",
+            "raw_salary": "Base: ₹30 LPA",
+            "raw_employment_type": "Full-time, permanent",
+            "raw_text": "We build RAG assistants and run LLM-as-judge hallucination evals on golden datasets.",
+            "raw_company": "Consult Co"
+          }
+        }
+      ],
+      "expected": {
+        "order_024": [
+          "C",
+          "W"
+        ],
+        "order_023": [
+          "C",
+          "W"
+        ],
+        "missing": {
+          "W": 1,
+          "C": 0
+        }
+      }
+    },
+    {
+      "case_id": "Q11",
+      "family": "queue",
+      "adversarial": false,
+      "description": "Consultancy + undisclosed salary: one missing (compensation), one known (employer).",
+      "items": [
+        {
+          "key": "X",
+          "classification": "CONSULTANCY",
+          "observation": {
+            "raw_title": "AI Evaluation Engineer",
+            "raw_location": "Remote - India",
+            "raw_work_mode": "Remote",
+            "raw_employment_type": "Full-time, permanent",
+            "raw_text": "We build RAG assistants and run LLM-as-judge hallucination evals on golden datasets.",
+            "raw_company": "Mixed Co"
+          }
+        }
+      ],
+      "expected": {
+        "missing": {
+          "X": 1
+        }
+      }
+    },
+    {
+      "case_id": "Q12",
+      "family": "queue",
+      "adversarial": true,
+      "description": "Unspecified hybrid days (missing) rank below a consultancy with stated days (known) under 0.2.4.",
+      "items": [
+        {
+          "key": "H",
+          "classification": "PRODUCT",
+          "observation": {
+            "raw_title": "AI Evaluation Engineer",
+            "raw_location": "Bengaluru",
+            "raw_work_mode": "Hybrid",
+            "raw_salary": "Base: ₹30 LPA",
+            "raw_employment_type": "Full-time, permanent",
+            "raw_text": "We build RAG assistants and run LLM-as-judge hallucination evals on golden datasets.",
+            "raw_company": "Hybrid Co"
+          }
+        },
+        {
+          "key": "C",
+          "classification": "CONSULTANCY",
+          "observation": {
+            "raw_title": "AI Evaluation Engineer",
+            "raw_location": "Bengaluru",
+            "raw_work_mode": "Hybrid",
+            "raw_salary": "Base: ₹30 LPA",
+            "raw_employment_type": "Full-time, permanent",
+            "raw_text": "We build RAG assistants and run LLM-as-judge hallucination evals on golden datasets. Two office days a week at our Indiranagar office.",
+            "raw_company": "Consult Co"
+          }
+        }
+      ],
+      "expected": {
+        "order_024": [
+          "C",
+          "H"
+        ],
+        "order_023": [
+          "H",
+          "C"
+        ],
+        "missing": {
+          "H": 1,
+          "C": 0
+        }
+      }
+    },
+    {
+      "case_id": "G01",
+      "family": "geography",
+      "adversarial": false,
+      "description": "Single foreign country is a region lock.",
+      "items": [
+        {
+          "key": "G",
+          "classification": "PRODUCT",
+          "observation": {
+            "raw_title": "AI Evaluation Engineer",
+            "raw_location": "Remote — Canada",
+            "raw_salary": "Base: ₹30 LPA",
+            "raw_employment_type": "Full-time, permanent",
+            "raw_text": "We build RAG assistants and run LLM-as-judge hallucination evals on golden datasets.",
+            "raw_company": "Geo Co"
+          }
+        }
+      ],
+      "expected": {
+        "geography": "FAIL",
+        "rule": "GEO-R03"
+      }
+    },
+    {
+      "case_id": "G02",
+      "family": "geography",
+      "adversarial": false,
+      "description": "Single foreign country (comma form).",
+      "items": [
+        {
+          "key": "G",
+          "classification": "PRODUCT",
+          "observation": {
+            "raw_title": "AI Evaluation Engineer",
+            "raw_location": "Remote, Germany",
+            "raw_salary": "Base: ₹30 LPA",
+            "raw_employment_type": "Full-time, permanent",
+            "raw_text": "We build RAG assistants and run LLM-as-judge hallucination evals on golden datasets.",
+            "raw_company": "Geo Co"
+          }
+        }
+      ],
+      "expected": {
+        "geography": "FAIL",
+        "rule": "GEO-R03"
+      }
+    },
+    {
+      "case_id": "G03",
+      "family": "geography",
+      "adversarial": false,
+      "description": "Single foreign country (hyphen form).",
+      "items": [
+        {
+          "key": "G",
+          "classification": "PRODUCT",
+          "observation": {
+            "raw_title": "AI Evaluation Engineer",
+            "raw_location": "Remote - Japan",
+            "raw_salary": "Base: ₹30 LPA",
+            "raw_employment_type": "Full-time, permanent",
+            "raw_text": "We build RAG assistants and run LLM-as-judge hallucination evals on golden datasets.",
+            "raw_company": "Geo Co"
+          }
+        }
+      ],
+      "expected": {
+        "geography": "FAIL",
+        "rule": "GEO-R03"
+      }
+    },
+    {
+      "case_id": "G04",
+      "family": "geography",
+      "adversarial": true,
+      "description": "Explicit India eligibility lifts a single-country lock.",
+      "items": [
+        {
+          "key": "G",
+          "classification": "PRODUCT",
+          "observation": {
+            "raw_title": "AI Evaluation Engineer",
+            "raw_location": "Remote — Canada",
+            "raw_salary": "Base: ₹30 LPA",
+            "raw_employment_type": "Full-time, permanent",
+            "raw_text": "We build RAG assistants and run LLM-as-judge hallucination evals on golden datasets. Candidates in India are welcome.",
+            "raw_company": "Geo Co"
+          }
+        }
+      ],
+      "expected": {
+        "geography": "PASS",
+        "rule": "GEO-R26"
+      }
+    },
+    {
+      "case_id": "G05",
+      "family": "geography",
+      "adversarial": true,
+      "description": "Explicit worldwide eligibility lifts a single-country lock.",
+      "items": [
+        {
+          "key": "G",
+          "classification": "PRODUCT",
+          "observation": {
+            "raw_title": "AI Evaluation Engineer",
+            "raw_location": "Remote — Germany",
+            "raw_salary": "Base: ₹30 LPA",
+            "raw_employment_type": "Full-time, permanent",
+            "raw_text": "We build RAG assistants and run LLM-as-judge hallucination evals on golden datasets. Worldwide candidates are eligible.",
+            "raw_company": "Geo Co"
+          }
+        }
+      ],
+      "expected": {
+        "geography": "PASS",
+        "rule": "GEO-R26"
+      }
+    },
+    {
+      "case_id": "G06",
+      "family": "geography",
+      "adversarial": true,
+      "description": "'India candidates are welcome to apply'.",
+      "items": [
+        {
+          "key": "G",
+          "classification": "PRODUCT",
+          "observation": {
+            "raw_title": "AI Evaluation Engineer",
+            "raw_location": "Remote — Canada",
+            "raw_salary": "Base: ₹30 LPA",
+            "raw_employment_type": "Full-time, permanent",
+            "raw_text": "We build RAG assistants and run LLM-as-judge hallucination evals on golden datasets. India candidates are welcome to apply.",
+            "raw_company": "Geo Co"
+          }
+        }
+      ],
+      "expected": {
+        "geography": "PASS",
+        "rule": "GEO-R26"
+      }
+    },
+    {
+      "case_id": "G07",
+      "family": "geography",
+      "adversarial": false,
+      "description": "Plain Remote with no India listing and no region.",
+      "items": [
+        {
+          "key": "G",
+          "classification": "PRODUCT",
+          "observation": {
+            "raw_title": "AI Evaluation Engineer",
+            "raw_location": "Remote",
+            "raw_salary": "Base: ₹30 LPA",
+            "raw_employment_type": "Full-time, permanent",
+            "raw_text": "We build RAG assistants and run LLM-as-judge hallucination evals on golden datasets.",
+            "raw_company": "Geo Co"
+          }
+        }
+      ],
+      "expected": {
+        "geography": "UNKNOWN",
+        "rule": "GEO-R05"
+      }
+    },
+    {
+      "case_id": "G08",
+      "family": "geography",
+      "adversarial": true,
+      "description": "Plain Remote with explicit India eligibility.",
+      "items": [
+        {
+          "key": "G",
+          "classification": "PRODUCT",
+          "observation": {
+            "raw_title": "AI Evaluation Engineer",
+            "raw_location": "Remote",
+            "raw_salary": "Base: ₹30 LPA",
+            "raw_employment_type": "Full-time, permanent",
+            "raw_text": "We build RAG assistants and run LLM-as-judge hallucination evals on golden datasets. Candidates in India are eligible.",
+            "raw_company": "Geo Co"
+          }
+        }
+      ],
+      "expected": {
+        "geography": "PASS",
+        "rule": "GEO-R21"
+      }
+    },
+    {
+      "case_id": "G09",
+      "family": "geography",
+      "adversarial": false,
+      "description": "APAC names no India.",
+      "items": [
+        {
+          "key": "G",
+          "classification": "PRODUCT",
+          "observation": {
+            "raw_title": "AI Evaluation Engineer",
+            "raw_location": "Remote — APAC",
+            "raw_salary": "Base: ₹30 LPA",
+            "raw_employment_type": "Full-time, permanent",
+            "raw_text": "We build RAG assistants and run LLM-as-judge hallucination evals on golden datasets.",
+            "raw_company": "Geo Co"
+          }
+        }
+      ],
+      "expected": {
+        "geography": "UNKNOWN",
+        "rule": "GEO-R05"
+      }
+    },
+    {
+      "case_id": "G10",
+      "family": "geography",
+      "adversarial": false,
+      "description": "EMEA excludes India.",
+      "items": [
+        {
+          "key": "G",
+          "classification": "PRODUCT",
+          "observation": {
+            "raw_title": "AI Evaluation Engineer",
+            "raw_location": "Remote — EMEA",
+            "raw_salary": "Base: ₹30 LPA",
+            "raw_employment_type": "Full-time, permanent",
+            "raw_text": "We build RAG assistants and run LLM-as-judge hallucination evals on golden datasets.",
+            "raw_company": "Geo Co"
+          }
+        }
+      ],
+      "expected": {
+        "geography": "FAIL",
+        "rule": "GEO-R03"
+      }
+    },
+    {
+      "case_id": "G11",
+      "family": "geography",
+      "adversarial": true,
+      "description": "EMEA + explicit India eligibility -> PASS (OR-83, OI-052 = YES).",
+      "items": [
+        {
+          "key": "G",
+          "classification": "PRODUCT",
+          "observation": {
+            "raw_title": "AI Evaluation Engineer",
+            "raw_location": "Remote — EMEA",
+            "raw_salary": "Base: ₹30 LPA",
+            "raw_employment_type": "Full-time, permanent",
+            "raw_text": "We build RAG assistants and run LLM-as-judge hallucination evals on golden datasets. Candidates in India are eligible.",
+            "raw_company": "Geo Co"
+          }
+        }
+      ],
+      "expected": {
+        "geography": "PASS",
+        "rule": "GEO-R27"
+      }
+    },
+    {
+      "case_id": "G12",
+      "family": "geography",
+      "adversarial": false,
+      "description": "Bengaluru hybrid 3 days.",
+      "items": [
+        {
+          "key": "G",
+          "classification": "PRODUCT",
+          "observation": {
+            "raw_title": "AI Evaluation Engineer",
+            "raw_location": "Bengaluru",
+            "raw_work_mode": "Hybrid",
+            "raw_salary": "Base: ₹30 LPA",
+            "raw_employment_type": "Full-time, permanent",
+            "raw_text": "We build RAG assistants and run LLM-as-judge hallucination evals on golden datasets. 3 days a week in office.",
+            "raw_company": "Geo Co"
+          }
+        }
+      ],
+      "expected": {
+        "geography": "PASS",
+        "rule": "GEO-R06"
+      }
+    },
+    {
+      "case_id": "G13",
+      "family": "geography",
+      "adversarial": false,
+      "description": "Bengaluru hybrid 4 days.",
+      "items": [
+        {
+          "key": "G",
+          "classification": "PRODUCT",
+          "observation": {
+            "raw_title": "AI Evaluation Engineer",
+            "raw_location": "Bengaluru",
+            "raw_work_mode": "Hybrid",
+            "raw_salary": "Base: ₹30 LPA",
+            "raw_employment_type": "Full-time, permanent",
+            "raw_text": "We build RAG assistants and run LLM-as-judge hallucination evals on golden datasets. 4 days a week in office.",
+            "raw_company": "Geo Co"
+          }
+        }
+      ],
+      "expected": {
+        "geography": "FAIL",
+        "rule": "GEO-R07"
+      }
+    },
+    {
+      "case_id": "G14",
+      "family": "geography",
+      "adversarial": true,
+      "description": "Explicit India eligibility never overrides a work-authorization requirement.",
+      "items": [
+        {
+          "key": "G",
+          "classification": "PRODUCT",
+          "observation": {
+            "raw_title": "AI Evaluation Engineer",
+            "raw_location": "Remote — Canada",
+            "raw_salary": "Base: ₹30 LPA",
+            "raw_employment_type": "Full-time, permanent",
+            "raw_text": "We build RAG assistants and run LLM-as-judge hallucination evals on golden datasets. Candidates in India are welcome. You must be authorized to work in Canada.",
+            "raw_company": "Geo Co"
+          }
+        }
+      ],
+      "expected": {
+        "geography": "FAIL",
+        "rule": "GEO-R04"
+      }
+    },
+    {
+      "case_id": "G15",
+      "family": "geography",
+      "adversarial": true,
+      "description": "Mentioning an India office is not India eligibility.",
+      "items": [
+        {
+          "key": "G",
+          "classification": "PRODUCT",
+          "observation": {
+            "raw_title": "AI Evaluation Engineer",
+            "raw_location": "Remote — Canada",
+            "raw_salary": "Base: ₹30 LPA",
+            "raw_employment_type": "Full-time, permanent",
+            "raw_text": "We build RAG assistants and run LLM-as-judge hallucination evals on golden datasets. We also have an office in India.",
+            "raw_company": "Geo Co"
+          }
+        }
+      ],
+      "expected": {
+        "geography": "FAIL",
+        "rule": "GEO-R03"
+      }
+    },
+    {
+      "case_id": "G16",
+      "family": "geography",
+      "adversarial": true,
+      "description": "Another country's candidates being welcome is not India eligibility.",
+      "items": [
+        {
+          "key": "G",
+          "classification": "PRODUCT",
+          "observation": {
+            "raw_title": "AI Evaluation Engineer",
+            "raw_location": "Remote — Canada",
+            "raw_salary": "Base: ₹30 LPA",
+            "raw_employment_type": "Full-time, permanent",
+            "raw_text": "We build RAG assistants and run LLM-as-judge hallucination evals on golden datasets. Candidates in the US are welcome.",
+            "raw_company": "Geo Co"
+          }
+        }
+      ],
+      "expected": {
+        "geography": "FAIL",
+        "rule": "GEO-R03"
+      }
+    },
+    {
+      "case_id": "G17",
+      "family": "geography",
+      "adversarial": true,
+      "description": "EMEA + explicit worldwide eligibility -> PASS (OR-83).",
+      "items": [
+        {
+          "key": "G",
+          "classification": "PRODUCT",
+          "observation": {
+            "raw_title": "AI Evaluation Engineer",
+            "raw_location": "Remote — EMEA",
+            "raw_salary": "Base: ₹30 LPA",
+            "raw_employment_type": "Full-time, permanent",
+            "raw_text": "We build RAG assistants and run LLM-as-judge hallucination evals on golden datasets. Worldwide candidates are eligible.",
+            "raw_company": "Geo Co"
+          }
+        }
+      ],
+      "expected": {
+        "geography": "PASS",
+        "rule": "GEO-R27"
+      }
+    },
+    {
+      "case_id": "G18",
+      "family": "geography",
+      "adversarial": false,
+      "description": "LATAM excludes India.",
+      "items": [
+        {
+          "key": "G",
+          "classification": "PRODUCT",
+          "observation": {
+            "raw_title": "AI Evaluation Engineer",
+            "raw_location": "Remote — LATAM",
+            "raw_salary": "Base: ₹30 LPA",
+            "raw_employment_type": "Full-time, permanent",
+            "raw_text": "We build RAG assistants and run LLM-as-judge hallucination evals on golden datasets.",
+            "raw_company": "Geo Co"
+          }
+        }
+      ],
+      "expected": {
+        "geography": "FAIL",
+        "rule": "GEO-R03"
+      }
+    },
+    {
+      "case_id": "G19",
+      "family": "geography",
+      "adversarial": true,
+      "description": "LATAM + explicit India eligibility -> PASS (OR-83).",
+      "items": [
+        {
+          "key": "G",
+          "classification": "PRODUCT",
+          "observation": {
+            "raw_title": "AI Evaluation Engineer",
+            "raw_location": "Remote — LATAM",
+            "raw_salary": "Base: ₹30 LPA",
+            "raw_employment_type": "Full-time, permanent",
+            "raw_text": "We build RAG assistants and run LLM-as-judge hallucination evals on golden datasets. Candidates in India are eligible.",
+            "raw_company": "Geo Co"
+          }
+        }
+      ],
+      "expected": {
+        "geography": "PASS",
+        "rule": "GEO-R27"
+      }
+    },
+    {
+      "case_id": "G20",
+      "family": "geography",
+      "adversarial": false,
+      "description": "UK/Europe excludes India.",
+      "items": [
+        {
+          "key": "G",
+          "classification": "PRODUCT",
+          "observation": {
+            "raw_title": "AI Evaluation Engineer",
+            "raw_location": "Remote — UK/Europe",
+            "raw_salary": "Base: ₹30 LPA",
+            "raw_employment_type": "Full-time, permanent",
+            "raw_text": "We build RAG assistants and run LLM-as-judge hallucination evals on golden datasets.",
+            "raw_company": "Geo Co"
+          }
+        }
+      ],
+      "expected": {
+        "geography": "FAIL",
+        "rule": "GEO-R03"
+      }
+    },
+    {
+      "case_id": "G21",
+      "family": "geography",
+      "adversarial": true,
+      "description": "UK/Europe + explicit India eligibility -> PASS (OR-83).",
+      "items": [
+        {
+          "key": "G",
+          "classification": "PRODUCT",
+          "observation": {
+            "raw_title": "AI Evaluation Engineer",
+            "raw_location": "Remote — UK/Europe",
+            "raw_salary": "Base: ₹30 LPA",
+            "raw_employment_type": "Full-time, permanent",
+            "raw_text": "We build RAG assistants and run LLM-as-judge hallucination evals on golden datasets. Candidates in India are eligible.",
+            "raw_company": "Geo Co"
+          }
+        }
+      ],
+      "expected": {
+        "geography": "PASS",
+        "rule": "GEO-R27"
+      }
+    },
+    {
+      "case_id": "G22",
+      "family": "geography",
+      "adversarial": true,
+      "description": "APAC + explicit India eligibility -> PASS.",
+      "items": [
+        {
+          "key": "G",
+          "classification": "PRODUCT",
+          "observation": {
+            "raw_title": "AI Evaluation Engineer",
+            "raw_location": "Remote — APAC",
+            "raw_salary": "Base: ₹30 LPA",
+            "raw_employment_type": "Full-time, permanent",
+            "raw_text": "We build RAG assistants and run LLM-as-judge hallucination evals on golden datasets. Candidates in India are eligible.",
+            "raw_company": "Geo Co"
+          }
+        }
+      ],
+      "expected": {
+        "geography": "PASS",
+        "rule": "GEO-R26"
+      }
+    },
+    {
+      "case_id": "G23",
+      "family": "geography",
+      "adversarial": true,
+      "description": "EMEA + another region's candidates welcome is not India eligibility.",
+      "items": [
+        {
+          "key": "G",
+          "classification": "PRODUCT",
+          "observation": {
+            "raw_title": "AI Evaluation Engineer",
+            "raw_location": "Remote — EMEA",
+            "raw_salary": "Base: ₹30 LPA",
+            "raw_employment_type": "Full-time, permanent",
+            "raw_text": "We build RAG assistants and run LLM-as-judge hallucination evals on golden datasets. Candidates in the US are welcome.",
+            "raw_company": "Geo Co"
+          }
+        }
+      ],
+      "expected": {
+        "geography": "FAIL",
+        "rule": "GEO-R03"
+      }
+    }
+  ]
+}

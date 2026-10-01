@@ -26,7 +26,10 @@ POLICY_PATHS = {
     "jobops-policy@0.2.0": REPO_ROOT / "policy" / "jobops-policy-0.2.0.json",
     "jobops-policy@0.2.1": REPO_ROOT / "policy" / "jobops-policy-0.2.1.json",
     "jobops-policy@0.2.2": REPO_ROOT / "policy" / "jobops-policy-0.2.2.json",
+    "jobops-policy@0.2.3": REPO_ROOT / "policy" / "jobops-policy-0.2.3.json",
+    "jobops-policy@0.2.4": REPO_ROOT / "policy" / "jobops-policy-0.2.4.json",
 }
+EVIDENCE_GAPS = ("missing", "known")  # OR-80: exactly two classes, no third
 # The default for new evaluations. Switched to 0.2.1 on 2026-09-29 only after
 # the full scratch suite (888 tests, including every 0.2.1 acceptance test)
 # passed with 0.2.0 still the default (P1a §29). Switched to 0.2.2 on
@@ -34,7 +37,12 @@ POLICY_PATHS = {
 # the default (363 P0 tests, golden on 0.2.0 / 0.2.1 / 0.2.2, frozen blind
 # suite 144/144 and 12/12 sequences; P3 §50). 0.2.0 and 0.2.1 stay replayable
 # via load_policy_version().
-DEFAULT_VERSION = "jobops-policy@0.2.2"
+# Switched to 0.2.4 on 2026-09-30 (P6) only after Gate E passed on the frozen
+# Round-2 corpus (OR-82: every eligibility dimension >= 95 %, zero unexplained false
+# EXCLUDED / SHORTLIST, sequences passing) with the full suite green and 0.2.0-0.2.3
+# byte-identical. 0.2.3 was never the default. No ingestion is wired: the default
+# only selects the policy for local/replay tools and new evaluations.
+DEFAULT_VERSION = "jobops-policy@0.2.4"
 DEFAULT_POLICY_PATH = POLICY_PATHS[DEFAULT_VERSION]
 EXPECTED_VERSION = "ANY_SUPPORTED"
 VERDICTS = ("PASS", "FAIL", "UNKNOWN")
@@ -105,6 +113,12 @@ class PolicyV02:
                 for flag in rule.get("flags", []):
                     self.assert_flag(flag, rid)
                 self._check_params(rule["when"], rid)
+                if self.params.get("completeness_counts_missing_only"):
+                    gap = rule.get("evidence_gap")
+                    if rule["verdict"] == "UNKNOWN" and gap not in EVIDENCE_GAPS:
+                        raise PolicyDriftError(f"{rid}: UNKNOWN rule needs evidence_gap in {EVIDENCE_GAPS}")
+                    if rule["verdict"] != "UNKNOWN" and gap is not None:
+                        raise PolicyDriftError(f"{rid}: evidence_gap is only for UNKNOWN rules")
         for rule in self.doc["lanes"]["rules"]:
             if rule["lane"] not in self.doc["lanes"]["order"]:
                 raise PolicyDriftError(f"{rule['rule_id']}: unknown lane {rule['lane']}")

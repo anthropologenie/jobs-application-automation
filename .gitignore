@@ -74,3 +74,11 @@ data/jobs-tracker.db
 data/ingestion/
 data/review/
 data/application/
+
+# JobOps P6 real-JD replay: real job descriptions and owner labels are never committed
+data/replay/
+data/real_jds/
+data/jds/
+*owner_labels*.csv
+*.jd.txt
+scraped_jds/

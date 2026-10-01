@@ -1191,3 +1191,253 @@ The first overflow day counts as carry day 1. An item that overflows on D is eli
 ---
 
 **Addendum C status:** OR-62 … OR-65 recorded (4 entries). No earlier content of this log was modified by P3. `jobops-policy@0.2.2` implements OR-62, OR-63 and OR-64; OR-65 matches existing behaviour and is covered by a regression test. `jobops-policy@0.2.0` and `jobops-policy@0.2.1` are byte-identical and replayable. New owner questions from P3 are OI-050 and OI-051 (`docs/architecture/JOBOPS_V2_OPEN_ITEMS.md`, section P3).
+
+---
+
+# Addendum E — P5 Round-2 root-cause fix: owner rulings (appended 2026-09-30)
+
+**Source:** Owner P5 command "JobOps P5 — Round-2 Root-Cause Fix, 0.2.3, and Acceptance", §3 (Addendum E1–E8).
+**Recording rule:** each `RULING:` field below states only what the Owner stated in that command. No earlier content of this log is modified; numbering continues from OR-65. The letter D is not used here: the Addendum D items proposed in P4b (OI-050, OI-051) remain a separate recording task and are not entered by P5.
+
+| id | Owner item | Item | Status |
+|---|---|---|---|
+| OR-66 | E1 | Evidence precision | ☑ RULED |
+| OR-67 | E2 | Fixed/guaranteed base vs variable | ☑ RULED |
+| OR-68 | E3 | EXPERIENCE_STRETCH → REVIEW | ☑ RULED |
+| OR-69 | E4 | Built-in language detection | ☑ RULED |
+| OR-70 | E5 | THIRD_PARTY_PAYROLL employer classification | ☑ RULED |
+| OR-71 | E6 | Office-day normalization | ☑ RULED |
+| OR-72 | E7 | Tier 1 title prior | ☑ RULED |
+| OR-73 | E8 | AI relevance vocabulary | ☑ RULED |
+
+---
+
+## 63. OR-66 — Evidence precision (E1)
+**Date:** 2026-09-30
+### RULING:
+A hard FAIL may only be emitted from (a) structured field evidence or (b) explicit, unambiguous multi-word free-text evidence. Single-word or ambiguous cues ("contract", "hybrid", a bare number, isolated terminology) must not directly produce FAIL; they may at most produce UNKNOWN / a flag until context establishes their meaning. Structured field evidence outranks free text. If structured and free-text evidence conflict: UNKNOWN + conflict flag, never FAIL merely because the free text contains a hard-looking keyword.
+**BASIS:** P5 command §3 E1.
+**SUPERSEDES:** the JD-body use of the single-word employment vocabulary (e.g. `\bcontract(?:ual)?\b`) in `jobops-policy@0.2.2` and earlier, going forward, via `jobops-policy@0.2.3` (EMP-R15, `lexicon.employment_jd`).
+
+---
+
+## 64. OR-67 — Fixed/guaranteed base vs variable (E2)
+**Date:** 2026-09-30
+### RULING:
+A fixed/guaranteed annual component is base compensation. Variable compensation is not added to base ("₹15L fixed + ₹5L variable" means base = ₹15L, not ₹20L). Annual gross base is used for the compensation policy.
+**BASIS:** P5 command §3 E2 (answers the P4b owner question on R2-040).
+**SUPERSEDES:** nothing (confirms the reading already applied by `jobops-policy@0.2.2` to R2-040).
+
+---
+
+## 65. OR-68 — EXPERIENCE_STRETCH → REVIEW (E3)
+**Date:** 2026-09-30
+### RULING:
+If experience is classified STRETCH it routes to REVIEW. It must not automatically become EXCLUDED.
+**BASIS:** P5 command §3 E3, §12. The relevant AI experience of 3 years remains a policy input (parameter `relevant_ai_experience_years` in 0.2.3).
+**SUPERSEDES:** nothing (confirms the review-routing registration of EXPERIENCE_STRETCH in 0.2.x).
+
+---
+
+## 66. OR-69 — Built-in language detection (E4)
+**Date:** 2026-09-30
+### RULING:
+Language detection is built into the engine; no external language service. Overwhelmingly English JD, confidence ≥ .95 → PASS. Genuine non-English suspicion, confidence .50–.94 → UNKNOWN. Genuine non-English, confidence ≥ .95 → FAIL. An explicit required non-English language → FAIL. Normal English technical terminology must not be marked non-English. A confidence/evidence path is preserved for audit.
+**BASIS:** P5 command §3 E4, §7.
+**SUPERSEDES:** the stop-word ratio heuristic capped at 0.9 (`heuristic_language_max_confidence`) as the document-language detector, going forward, via `jobops-policy@0.2.3` (`lexicon.language.detector`).
+
+---
+
+## 67. OR-70 — THIRD_PARTY_PAYROLL employer classification (E5)
+**Date:** 2026-09-30
+### RULING:
+THIRD_PARTY_PAYROLL is an explicit employer classification. Third-party payroll / body-shop / client-placement → employer_type = FAIL. This is not represented merely as an employment_type failure; employer_type and employment_type stay conceptually separate.
+**BASIS:** P5 command §3 E5, §10. Schema: migration `0103_third_party_payroll_classification.sql`.
+**SUPERSEDES:** the employer_type verdict UNKNOWN for such postings in `jobops-policy@0.2.2` and earlier (golden G072 keeps its historical expectation for 0.2.0–0.2.2), going forward, via `jobops-policy@0.2.3` (EMPR-R08, EMPR-R09).
+
+---
+
+## 68. OR-71 — Office-day normalization (E6)
+**Date:** 2026-09-30
+### RULING:
+Office-day requirements are normalized across natural language (e.g. "Tuesdays and Thursdays", "3 days/week", "Mon/Wed/Thu", "alternate days", "one fixed anchor day", "8 days/month", "WFH Friday", weekday office requirements). For a normal 5-day week: office days/week ≤ 3 → acceptable Bengaluru hybrid; ≥ 4 → FAIL. Monthly: office days/month ÷ 4.33. Alternate-day language is normalized rather than treated as opaque. "Friday is WFH" implies the other four weekdays are office days when a standard Monday–Friday week is established. Negated hybrid language ("not a hybrid role", "this is not hybrid") must not produce HYBRID. Remote + an explicit 5-day onsite requirement elsewhere is a work-mode conflict: UNKNOWN + WORK_MODE_CONFLICT, never SHORTLIST.
+**BASIS:** P5 command §3 E6, §9.
+**SUPERSEDES:** nothing (extends OR-46 / P3 §13 parsing).
+
+---
+
+## 69. OR-72 — Tier 1 title prior (E7)
+**Date:** 2026-09-30
+### RULING:
+A Tier 1 title is a prior, not proof of relevance. Tier 1 title AND weak relevance AND at least one AI-specific term → REVIEW + RELEVANCE_TITLE_PRIOR. A rich Tier 1 JD with no AI-specific term → relevance WEAK, lane PARKED. Tier 1 without JD → REVIEW. The underlying relevance thresholds are not altered to improve the Round-2 result.
+**BASIS:** P5 command §3 E7, §8.
+**SUPERSEDES:** LANE-R05 (WEAK → PARKED) for the Tier 1 + AI-term case, going forward, via `jobops-policy@0.2.3` (LANE-R10).
+
+---
+
+## 70. OR-73 — AI relevance vocabulary (E8)
+**Date:** 2026-09-30
+### RULING:
+The deterministic relevance vocabulary is expanded to recognise legitimate AI/LLM evaluation, reliability and quality concepts (evals, evaluation harness, golden sets, guardrails, hallucination evaluation, faithfulness, groundedness, context precision/recall, LLM/agent evaluation and observability, AI-specific SLOs, prompt regression, RAG/retrieval evaluation, red teaming, safety evaluation, benchmark and regression evaluation, LLM test generation, AI defect prediction, GenAI/agentic testing, LLM validation, …). The list is illustrative, not permission to match keywords blindly: contextual evidence is required and no single keyword may cause STRONG relevance.
+**BASIS:** P5 command §3 E8, §8.
+**SUPERSEDES:** nothing (extends the OR-12 / OR-13 vocabulary; thresholds unchanged).
+
+---
+
+### Addendum E — implementation-level interpretations (recorded, not rulings)
+
+The following are how `jobops-policy@0.2.3` implements existing rulings or repairs extraction defects found in P5. They introduce no new policy semantics; each cites the ruling it serves.
+
+1. **Employment (OR-66):** PASS kinds (PERMANENT, FULL_TIME) keep single-word vocabulary in the JD because they can never produce FAIL; a labelled JD line ("Employment type: Contract") is explicit evidence and uses the structured vocabulary; direct-employment evidence ("employed directly by", "on our payroll") is posting-level, because it is often in a different sentence from the contract cue. A structured PERMANENT field contradicted by an explicit JD FAIL-kind (temporary, contract, internship …) is EMPLOYMENT_SOURCE_CONFLICT (EMP-R15).
+2. **Compensation (OR-67, OR-47, OR-48):** components separated by "+", "|" or "plus" are separate clauses; percentages and counts ("25 lakh users") are never amounts; a lakh word alone does not open a salary clause without a compensation keyword or currency marker; "21 L" after a compensation keyword is INR; a compensation table's single stated period is inherited by an unlabelled line in the same currency; SGD, CAD, AUD, AED, CHF and JPY are recognised currencies (the FX policy OR-27 / OR-37 is unchanged).
+3. **Office days (OR-71):** alternate days are normalised to 2.5 office days per week; weekday tokens are assigned to the nearest office or WFH cue; in the JD body an attendance cue is required for a day count to state a work mode; structured Hybrid contradicted by "every weekday in the office" is WORK_MODE_CONFLICT (precedence rule, P3 §8).
+4. **Language (OR-69):** function-word evidence per language; URLs, e-mails and domains are removed before detection; a single stray foreign token is noise; capitalised words with diacritics are proper nouns; scripts written without spaces are measured in characters.
+5. **Newness and conflicts (OR-55, OR-56, OR-64; owner resolution of R2-SEQ-09 recorded in P4b):** a detail absent in one sighting and present in another (office days, a JD) is neither UPDATED nor SOURCE_CONFLICT; two stated, different values still are.
+6. **Relevance (OR-73):** a contextual term counts only with an AI anchor elsewhere in the same sentence (never itself); overlapping matches within one capability cluster count once; thresholds unchanged.
+7. **Sentence boundaries:** dot leaders ("........") are not sentence ends and the capital-letter lookahead is case-sensitive, as the lexicon's intent always was.
+8. **Geography:** India-eligibility statements ("India-based freelancers welcome", "hiring in India") are listing evidence.
+
+**Addendum E status:** OR-66 … OR-73 recorded (8 entries). No earlier content of this log was modified by P5. `jobops-policy@0.2.3` implements OR-66 … OR-73 and is **EXPERIMENTAL**: it did not pass the P5 acceptance gate (frozen Round-2 replay 57/124 = 45.97 % posting mismatch > 20 %), so `jobops-policy@0.2.2` remains the default. See `docs/reports/JOBOPS_P5_FIX_REPORT_2026-09-30.md`.
+
+---
+
+# Addendum D (late) — P4b / Round-2 owner resolutions (appended 2026-09-30, in P6)
+
+**Source:** Owner P4b command §10 and §30 (Round-2 owner resolutions and proposed Addendum D), confirmed as authoritative in the Owner P6 command §17.
+**Recording rule:** append-only; numbering continues from OR-73. Resolutions already recorded are referenced, not duplicated.
+
+| id | OI / item | Item | Status |
+|---|---|---|---|
+| OR-74 | OI-050 | Same-run board/ATS contradiction on first observation | ☑ RULED (NO) |
+| OR-75 | OI-051 | Direct-company contract with no stated duration | ☑ RULED (YES) |
+| OR-76 | R2-075 / R2-076 | Permanent role through an Employer of Record | ☑ RULED |
+| OR-77 | R2-SEQ-09 | SEARCH_ONLY → FULL_JD on the same source | ☑ RULED |
+| (OR-63) | R2-046 / R2-051 | BELOW_TARGET and COMPENSATION_REVIEW are review flags | already recorded in OR-63 — referenced, not duplicated |
+
+---
+
+## 71. OR-74 — Same-run board/ATS contradiction (OI-050)
+**Date:** 2026-09-30 · **OI:** OI-050
+### RULING:
+NO. When a board sighting and a contradicting ATS/company-site sighting of the same requisition are first observed in the same run, newness is NEW (not UPDATED), with SOURCE_CONFLICT, and the lane is REVIEW.
+**BASIS:** Owner P4b command §30 (proposed Addendum D, OI-050 = NO); Owner P6 command §17.
+**SUPERSEDES:** nothing. Confirms `newness.cross_source_update.applies_after_first_run = true` (0.2.2 onward) and golden G111.
+
+---
+
+## 72. OR-75 — Direct-company contract with no stated duration (OI-051)
+**Date:** 2026-09-30 · **OI:** OI-051
+### RULING:
+YES. A direct-company contract with direct-employment evidence and no stated duration → UNKNOWN + CONTRACT_DURATION_UNSTATED. A plain "Contract" with neither direct-employment evidence nor a duration → FAIL.
+**BASIS:** Owner P4b command §30 (OI-051 = YES); Owner P6 command §17.
+**SUPERSEDES:** the `owner_confirmed: false` status of EMP-R14 (0.2.2 onward); 0.2.0 / 0.2.1 keep EMP-R03 FAIL for replay.
+
+---
+
+## 73. OR-76 — Permanent role through an Employer of Record
+**Date:** 2026-09-30 · **Item:** Round-2 R2-075 / R2-076
+### RULING:
+A genuine permanent role through an Employer of Record → employment UNKNOWN + EOR → REVIEW. An EOR signal in the JD body counts; a structured "Full-time" does not override it (the two are compatible). A genuine EOR is not third-party payroll / body-shop merely because an intermediary exists.
+**BASIS:** Owner P4b command §10 and §25; Owner P6 command §7, §17.
+**SUPERSEDES:** nothing (confirms EOR-R01 and the JD-body relationship reading of 0.2.2 onward).
+
+---
+
+## 74. OR-77 — SEARCH_ONLY → FULL_JD on the same source
+**Date:** 2026-09-30 · **Item:** Round-2 R2-SEQ-09
+### RULING:
+When the same source goes from SEARCH_ONLY to FULL_JD without changing title, location, compensation or employment type, the observation is enrichment of the same requisition: SEEN_BEFORE. A fuller JD may change relevance or eligibility, but that alone does not make the requisition UPDATED.
+**BASIS:** Owner P4b command §10 and §26; Owner P6 command §17.
+**SUPERSEDES:** nothing. Implemented in `jobops-policy@0.2.3` (`newness.absent_detail_is_enrichment`; Addendum E implementation note 5), which is hereby a ruling rather than an interpretation.
+
+---
+
+**Addendum D (late) status:** OR-74 … OR-77 recorded; BELOW_TARGET / COMPENSATION_REVIEW review routing is OR-63 (not duplicated). No earlier content of this log was modified.
+
+---
+
+# Addendum F — Split acceptance gates and relevance calibration (appended 2026-09-30)
+
+**Source:** Owner P6 command "JOBOPS P6 — Rulings catch-up, split acceptance gates, policy 0.2.4, offline real-JD replay", §5, §11–§16, §18. Resolves P5 owner questions Q1–Q4.
+
+| id | Owner item | Item | Status |
+|---|---|---|---|
+| OR-78 | F1 | STRONG is not redefined; relevance calibrated on owner-labelled real JDs | ☑ RULED |
+| OR-79 | F2 | Single foreign-country Remote is a region lock | ☑ RULED |
+| OR-80 | F3 | Evidence completeness has exactly two classes | ☑ RULED |
+| OR-81 | F4 | Informational flags never route to REVIEW alone | ☑ RULED |
+| OR-82 | F5 | Acceptance gates split into Gate E and Gate R | ☑ RULED |
+
+---
+
+## 75. OR-78 — STRONG is not redefined (F1)
+**Date:** 2026-09-30 · **Resolves:** P5 Q1
+### RULING:
+STRONG remains ≥ 3 distinct AI-specific terms across ≥ 2 capability clusters; MODERATE ≥ 2 terms; WEAK fewer; NOT_ASSESSED only when no JD was captured. There is no short-JD exception. Relevance is validated on real JDs labelled by the owner. A blind author may assert STRONG only when the JD plainly contains 3+ unmistakable AI terms across 2+ capability clusters, WEAK only when the role is plainly not about AI, NOT_ASSESSED only when no JD was captured; otherwise the relevance expectation is omitted.
+**BASIS:** Owner P6 command §11, §12, §18 F1.
+**SUPERSEDES:** nothing (confirms OR-12 / OR-13 and OR-73's unchanged thresholds). Round-2 relevance expectations authored without this rule are diagnostic only.
+
+---
+
+## 76. OR-79 — Single foreign-country Remote (F2)
+**Date:** 2026-09-30 · **Resolves:** P5 Q3
+### RULING:
+A remote posting naming a single foreign country ("Remote — Canada", "Remote, Germany", "Remote - Japan") is a region lock → FAIL, unless the JD explicitly states that candidates in India, or worldwide candidates, are eligible ("candidates in India are eligible", "India candidates are welcome", "worldwide candidates are eligible", "work from anywhere in the world") → PASS. Plain "Remote" with no India listing and no region → UNKNOWN. "Remote — APAC" → UNKNOWN.
+**BASIS:** Owner P6 command §5, §18 F2.
+**SUPERSEDES:** nothing for the lock itself (consistent with OR-50). Adds the explicit-eligibility exception, implemented in `jobops-policy@0.2.4`. The Round-2 expectation for R2-081 (PASS) is a case error under this rule.
+
+---
+
+## 77. OR-80 — Evidence completeness has exactly two classes (F3)
+**Date:** 2026-09-30 · **Resolves:** P5 Q2
+### RULING:
+Every UNKNOWN is either **missing** (caused by missing information: salary undisclosed, no JD, work arrangement absent …) or **known** (caused by a known fact the policy deliberately leaves unresolved: consultancy, staffing, EOR …). Only missing counts toward queue evidence completeness. No third class (e.g. policy_uncertainty, ambiguity, known_ambiguity) is introduced; if real-JD evidence shows two classes are insufficient, a new owner OI is raised.
+**BASIS:** Owner P6 command §14, §18 F3.
+**SUPERSEDES:** the queue ordering key "number of UNKNOWN dimensions" of 0.2.0–0.2.3, going forward, via `jobops-policy@0.2.4` (older versions keep their ordering for replay).
+
+---
+
+## 78. OR-81 — Informational flags (F4)
+**Date:** 2026-09-30
+### RULING:
+These flags are informational and never route to REVIEW by themselves: ABOVE_TARGET, IN_TARGET, CTC_BASIS_UNVERIFIED, MONTHLY_ASSUMED, COMP_BASIS_UNSTATED, LANGUAGE_PREFERENCE, TIMEZONE_OVERLAP_US / UK / EU / APAC, SENIORITY_*, EXPERIENCE_SUBSTANTIAL_MISMATCH. All other flags route to REVIEW.
+**BASIS:** Owner P6 command §18 F4.
+**SUPERSEDES:** nothing (matches the `flags.informational` registration of 0.2.2 and 0.2.3; locked by a 0.2.4 test).
+
+---
+
+## 79. OR-82 — Split acceptance gates (F5)
+**Date:** 2026-09-30
+### RULING:
+The single aggregate Round-2 posting-mismatch gate is retired. **Gate E** (eligibility and safety) measures geography, compensation, employment_type, employer_type and language: each scorable dimension ≥ 95 % accuracy, zero unexplained false EXCLUDED, zero unexplained false SHORTLIST, and sequences passing or explicitly classified. **Gate R** (relevance) is measured separately on owner-labelled real JDs and is never folded into Gate E or into a composite score. No "overall Round-2 pass/fail" percentage is used for acceptance.
+**BASIS:** Owner P6 command §15, §16, §18 F5.
+**SUPERSEDES:** the P5 §17 aggregate ≤ 20 % posting-mismatch acceptance rule.
+
+---
+
+**Addendum F status:** OR-78 … OR-82 recorded. No earlier content of this log was modified.
+
+---
+
+# Post-P6 ruling (appended 2026-09-30)
+
+| id | OI | Item | Status |
+|---|---|---|---|
+| OR-83 | OI-052 | Explicit India/worldwide eligibility overrides an India-excluding region | ☑ RULED (YES) |
+
+---
+
+## 80. OR-83 — Explicit India/worldwide eligibility overrides an India-excluding region (OI-052)
+**Date:** 2026-09-30 · **OI:** OI-052
+### RULING:
+YES. An explicit statement that candidates in India (or worldwide candidates) are eligible overrides a regional label that would otherwise exclude India.
+- "Remote — EMEA" + "candidates in India are eligible" → PASS.
+- "Remote — EMEA" + "worldwide candidates are eligible" → PASS.
+- "Remote — APAC" + "candidates in India are eligible" → PASS.
+- "Remote — EMEA" without India/worldwide eligibility → FAIL.
+- "Remote — APAC" without India eligibility → UNKNOWN.
+- Plain "Remote" with no India listing and no region → UNKNOWN.
+
+Precedence: (1) explicit India/worldwide eligibility statement; (2) explicit regional/country restriction; (3) plain Remote with insufficient eligibility evidence. The single foreign-country rule of OR-79 is unchanged ("Remote — Canada" → FAIL; + India/worldwide eligibility → PASS); the same evidence precedence now applies to multi-country regions (EMEA, LATAM, UK/Europe, …).
+**BASIS:** Owner post-P6 command resolving OI-052.
+**SUPERSEDES:** the temporary recall-safe reading of OI-052 (UNKNOWN + GEO_REGION_AMBIGUOUS, GEO-R27) in the P6 build of `jobops-policy@0.2.4`, going forward, via the updated `jobops-policy@0.2.4` (GEO-R27 → PASS). 0.2.0–0.2.3 are unchanged.

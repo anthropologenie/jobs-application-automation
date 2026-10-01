@@ -257,3 +257,30 @@ The three UNDETERMINED items of the P2 blind fixture are also ruled (Addendum C)
 | OI-051 | YES/NO — Should a direct-company contract whose duration is NOT stated (e.g. "Fixed-term contract, employed directly by X") be UNKNOWN (rather than FAIL)? | The rules fix plain contract → FAIL, short-term (< 6 months) → FAIL and long-term direct contract → UNKNOWN + LONG_TERM_DIRECT_CONTRACT. A direct contract of unknown length is none of these. | UNKNOWN + CONTRACT_DURATION_UNSTATED (EMP-R14, `owner_confirmed: false`), because uncertainty must not become FAIL (P3 §6, §37). Under 0.2.0 / 0.2.1 it is FAIL (EMP-R03), unchanged. |
 
 No other question is open.
+
+---
+
+# P6 — Rulings catch-up and split gates (appended 2026-09-30)
+
+## P6.1 Resolved
+
+| OI / question | Resolution | Ruling |
+|---|---|---|
+| OI-050 | NO — same-run board/ATS contradiction stays NEW + SOURCE_CONFLICT → REVIEW | OR-74 |
+| OI-051 | YES — direct contract, no duration → UNKNOWN + CONTRACT_DURATION_UNSTATED; plain Contract → FAIL | OR-75 |
+| P5 Q1 (short-JD STRONG) | NO — STRONG is not redefined; relevance calibrated on owner-labelled real JDs | OR-78 |
+| P5 Q2 (evidence completeness) | YES — only *missing* UNKNOWNs count; exactly two classes (missing / known) | OR-80 |
+| P5 Q3 (single foreign-country Remote) | Region lock → FAIL unless India/worldwide eligibility is explicit; plain Remote → UNKNOWN | OR-79 |
+| P5 Q4 (record Addendum D) | YES — recorded as Addendum D (late) | OR-74 … OR-77 |
+
+## P6.2 Open
+
+| OI | Question | Why it is open | Current (temporary) behaviour |
+|---|---|---|---|
+| OI-052 | YES/NO — When a remote posting names a multi-country region that excludes India (e.g. "Remote — EMEA") but the JD also states explicitly that candidates in India are eligible, should geography be PASS (rather than UNKNOWN)? | OR-79 (F2) defines the explicit-eligibility exception for a *single foreign country* only; OR-50 makes EMEA-type regions FAIL. The combination is not ruled. | UNKNOWN + GEO_REGION_AMBIGUOUS (GEO-R27, `evidence_gap: known`) → REVIEW: the recall-safe reading ("uncertainty → review"), never FAIL and never silently PASS. `jobops-policy@0.2.4` only. |
+
+## P6.3 Resolved after P6 (appended 2026-09-30)
+
+| OI | Status | Answer | Ruling |
+|---|---|---|---|
+| OI-052 | **RESOLVED** | **YES** — an explicit statement that candidates in India (or worldwide) are eligible overrides a regional label that would otherwise exclude India: "Remote — EMEA" + India eligibility → PASS; "Remote — APAC" + India eligibility → PASS; "Remote — EMEA" alone → FAIL; plain Remote with no India/region → UNKNOWN. | OR-83 (implemented in `jobops-policy@0.2.4`, GEO-R27 → PASS) |

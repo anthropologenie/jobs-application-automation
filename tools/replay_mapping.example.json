@@ -1,0 +1,18 @@
+{
+  "_doc": "Example mapping for tools/replay_real_jds.py. Keys under 'fields' are JobOps fields; values are the column (CSV) or key (JSON, dotted paths allowed) in your export. Only 'title' is required; omit any field your export does not have. 'id' names the source field used as posting_id (optional). 'records_key' is the JSON key holding the list when the file is an object, not a list. company_type values: product, ai_native, gcc, enterprise, staffing, consultancy, it_services, engineering_led, third_party_payroll.",
+  "id": "id",
+  "records_key": "items",
+  "fields": {
+    "title": "title",
+    "company": "companyName",
+    "location": "location",
+    "work_mode": "workType",
+    "employment_type": "employmentType",
+    "salary": "salary",
+    "description": "description",
+    "url": "link",
+    "source": "source",
+    "posted_date": "postedAt",
+    "company_type": "companyType"
+  }
+}

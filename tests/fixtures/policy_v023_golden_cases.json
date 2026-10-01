@@ -1,0 +1,2196 @@
+{
+  "artifact": {
+    "id": "jobops-policy-v023-golden-cases",
+    "phase": "P5",
+    "policy_version": "jobops-policy@0.2.3",
+    "authority": "OWNER_RULINGS_LOG.md Addendum E (OR-66..OR-73); expectations are hand-written from the rulings, not from engine output.",
+    "default_evaluation_date": "2026-09-30",
+    "areas": [
+      "E1",
+      "E1/Addendum D",
+      "E2",
+      "E3",
+      "E4",
+      "E5",
+      "E6",
+      "E7",
+      "E8"
+    ]
+  },
+  "case_count": 97,
+  "cases": [
+    {
+      "case_id": "EP01",
+      "area": "E1",
+      "description": "Technical/commercial 'contract' in the JD; structured field says permanent.",
+      "adversarial": true,
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_title": "AI Evaluation Engineer",
+        "raw_company": "Synthetic Product Co",
+        "raw_location": "Remote - India",
+        "raw_work_mode": "Remote",
+        "raw_salary": "Base: ₹30 LPA",
+        "raw_employment_type": "Permanent",
+        "raw_text": "We build an evaluation platform for enterprise RAG assistants. You will design golden datasets, calibrate LLM-as-judge graders and run hallucination and faithfulness regression evals in CI. Own consumer-driven contract testing with Pact between our LLM gateway and downstream services."
+      },
+      "expected": {
+        "dimensions": {
+          "employment_type": "PASS"
+        },
+        "flags_exclude": [
+          "EMPLOYMENT_SOURCE_CONFLICT"
+        ]
+      }
+    },
+    {
+      "case_id": "EP02",
+      "area": "E1",
+      "description": "Technical/commercial 'contract' in the JD; structured field says permanent.",
+      "adversarial": true,
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_title": "AI Evaluation Engineer",
+        "raw_company": "Synthetic Product Co",
+        "raw_location": "Remote - India",
+        "raw_work_mode": "Remote",
+        "raw_salary": "Base: ₹30 LPA",
+        "raw_employment_type": "Permanent",
+        "raw_text": "We build an evaluation platform for enterprise RAG assistants. You will design golden datasets, calibrate LLM-as-judge graders and run hallucination and faithfulness regression evals in CI. Build an agent that audits smart contract summaries produced by our model."
+      },
+      "expected": {
+        "dimensions": {
+          "employment_type": "PASS"
+        },
+        "flags_exclude": [
+          "EMPLOYMENT_SOURCE_CONFLICT"
+        ]
+      }
+    },
+    {
+      "case_id": "EP03",
+      "area": "E1",
+      "description": "Technical/commercial 'contract' in the JD; structured field says permanent.",
+      "adversarial": true,
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_title": "AI Evaluation Engineer",
+        "raw_company": "Synthetic Product Co",
+        "raw_location": "Remote - India",
+        "raw_work_mode": "Remote",
+        "raw_salary": "Base: ₹30 LPA",
+        "raw_employment_type": "Permanent",
+        "raw_text": "We build an evaluation platform for enterprise RAG assistants. You will design golden datasets, calibrate LLM-as-judge graders and run hallucination and faithfulness regression evals in CI. Help legal review vendor contracts with a RAG assistant and verify its extractions."
+      },
+      "expected": {
+        "dimensions": {
+          "employment_type": "PASS"
+        },
+        "flags_exclude": [
+          "EMPLOYMENT_SOURCE_CONFLICT"
+        ]
+      }
+    },
+    {
+      "case_id": "EP04",
+      "area": "E1",
+      "description": "Technical/commercial 'contract' in the JD; structured field says permanent.",
+      "adversarial": true,
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_title": "AI Evaluation Engineer",
+        "raw_company": "Synthetic Product Co",
+        "raw_location": "Remote - India",
+        "raw_work_mode": "Remote",
+        "raw_salary": "Base: ₹30 LPA",
+        "raw_employment_type": "Permanent",
+        "raw_text": "We build an evaluation platform for enterprise RAG assistants. You will design golden datasets, calibrate LLM-as-judge graders and run hallucination and faithfulness regression evals in CI. Ship our contract-review assistant to enterprise legal teams."
+      },
+      "expected": {
+        "dimensions": {
+          "employment_type": "PASS"
+        },
+        "flags_exclude": [
+          "EMPLOYMENT_SOURCE_CONFLICT"
+        ]
+      }
+    },
+    {
+      "case_id": "EP05",
+      "area": "E1",
+      "description": "Technical/commercial 'contract' in the JD; structured field says permanent.",
+      "adversarial": true,
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_title": "AI Evaluation Engineer",
+        "raw_company": "Synthetic Product Co",
+        "raw_location": "Remote - India",
+        "raw_work_mode": "Remote",
+        "raw_salary": "Base: ₹30 LPA",
+        "raw_employment_type": "Permanent",
+        "raw_text": "We build an evaluation platform for enterprise RAG assistants. You will design golden datasets, calibrate LLM-as-judge graders and run hallucination and faithfulness regression evals in CI. Extend the contract management copilot with clause extraction evals."
+      },
+      "expected": {
+        "dimensions": {
+          "employment_type": "PASS"
+        },
+        "flags_exclude": [
+          "EMPLOYMENT_SOURCE_CONFLICT"
+        ]
+      }
+    },
+    {
+      "case_id": "EP06",
+      "area": "E1",
+      "description": "Technical/commercial 'contract' in the JD; structured field says permanent.",
+      "adversarial": true,
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_title": "AI Evaluation Engineer",
+        "raw_company": "Synthetic Product Co",
+        "raw_location": "Remote - India",
+        "raw_work_mode": "Remote",
+        "raw_salary": "Base: ₹30 LPA",
+        "raw_employment_type": "Permanent",
+        "raw_text": "We build an evaluation platform for enterprise RAG assistants. You will design golden datasets, calibrate LLM-as-judge graders and run hallucination and faithfulness regression evals in CI. Maintain OpenAPI contracts for every tool the agent can call."
+      },
+      "expected": {
+        "dimensions": {
+          "employment_type": "PASS"
+        },
+        "flags_exclude": [
+          "EMPLOYMENT_SOURCE_CONFLICT"
+        ]
+      }
+    },
+    {
+      "case_id": "EP07",
+      "area": "E1",
+      "description": "Technical/commercial 'contract' in the JD; structured field says permanent.",
+      "adversarial": true,
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_title": "AI Evaluation Engineer",
+        "raw_company": "Synthetic Product Co",
+        "raw_location": "Remote - India",
+        "raw_work_mode": "Remote",
+        "raw_salary": "Base: ₹30 LPA",
+        "raw_employment_type": "Permanent",
+        "raw_text": "We build an evaluation platform for enterprise RAG assistants. You will design golden datasets, calibrate LLM-as-judge graders and run hallucination and faithfulness regression evals in CI. Report on contractual SLAs we hold with enterprise customers."
+      },
+      "expected": {
+        "dimensions": {
+          "employment_type": "PASS"
+        },
+        "flags_exclude": [
+          "EMPLOYMENT_SOURCE_CONFLICT"
+        ]
+      }
+    },
+    {
+      "case_id": "EP08",
+      "area": "E1",
+      "description": "Technical/commercial 'contract' in the JD; structured field says permanent.",
+      "adversarial": true,
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_title": "AI Evaluation Engineer",
+        "raw_company": "Synthetic Product Co",
+        "raw_location": "Remote - India",
+        "raw_work_mode": "Remote",
+        "raw_salary": "Base: ₹30 LPA",
+        "raw_employment_type": "Permanent",
+        "raw_text": "We build an evaluation platform for enterprise RAG assistants. You will design golden datasets, calibrate LLM-as-judge graders and run hallucination and faithfulness regression evals in CI. Define data contracts between the feature store and the LLM retrieval pipeline."
+      },
+      "expected": {
+        "dimensions": {
+          "employment_type": "PASS"
+        },
+        "flags_exclude": [
+          "EMPLOYMENT_SOURCE_CONFLICT"
+        ]
+      }
+    },
+    {
+      "case_id": "EP09",
+      "area": "E1",
+      "description": "Technical/commercial 'contract' in the JD; structured field says permanent.",
+      "adversarial": true,
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_title": "AI Evaluation Engineer",
+        "raw_company": "Synthetic Product Co",
+        "raw_location": "Remote - India",
+        "raw_work_mode": "Remote",
+        "raw_salary": "Base: ₹30 LPA",
+        "raw_employment_type": "Permanent",
+        "raw_text": "We build an evaluation platform for enterprise RAG assistants. You will design golden datasets, calibrate LLM-as-judge graders and run hallucination and faithfulness regression evals in CI. Our customers sign annual contracts and you will build the renewal-risk LLM features."
+      },
+      "expected": {
+        "dimensions": {
+          "employment_type": "PASS"
+        },
+        "flags_exclude": [
+          "EMPLOYMENT_SOURCE_CONFLICT"
+        ]
+      }
+    },
+    {
+      "case_id": "EP10",
+      "area": "E1",
+      "description": "Technical/commercial 'contract' in the JD; structured field says permanent.",
+      "adversarial": true,
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_title": "AI Evaluation Engineer",
+        "raw_company": "Synthetic Product Co",
+        "raw_location": "Remote - India",
+        "raw_work_mode": "Remote",
+        "raw_salary": "Base: ₹30 LPA",
+        "raw_employment_type": "Permanent",
+        "raw_text": "We build an evaluation platform for enterprise RAG assistants. You will design golden datasets, calibrate LLM-as-judge graders and run hallucination and faithfulness regression evals in CI. Contract lifecycle AI: extract obligations from contracts and evaluate extraction accuracy."
+      },
+      "expected": {
+        "dimensions": {
+          "employment_type": "PASS"
+        },
+        "flags_exclude": [
+          "EMPLOYMENT_SOURCE_CONFLICT"
+        ]
+      }
+    },
+    {
+      "case_id": "EP11",
+      "area": "E1",
+      "description": "Technical/commercial 'contract' in the JD; structured field says permanent.",
+      "adversarial": true,
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_title": "AI Evaluation Engineer",
+        "raw_company": "Synthetic Product Co",
+        "raw_location": "Remote - India",
+        "raw_work_mode": "Remote",
+        "raw_salary": "Base: ₹30 LPA",
+        "raw_employment_type": "Permanent",
+        "raw_text": "We build an evaluation platform for enterprise RAG assistants. You will design golden datasets, calibrate LLM-as-judge graders and run hallucination and faithfulness regression evals in CI. We contract with two cloud vendors for GPU capacity."
+      },
+      "expected": {
+        "dimensions": {
+          "employment_type": "PASS"
+        },
+        "flags_exclude": [
+          "EMPLOYMENT_SOURCE_CONFLICT"
+        ]
+      }
+    },
+    {
+      "case_id": "EP12",
+      "area": "E1",
+      "description": "Explicit multi-word JD statement of a contract role, no structured field, no direct evidence.",
+      "adversarial": false,
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_title": "AI Evaluation Engineer",
+        "raw_company": "Synthetic Product Co",
+        "raw_location": "Remote - India",
+        "raw_work_mode": "Remote",
+        "raw_salary": "Base: ₹30 LPA",
+        "raw_text": "We build an evaluation platform for enterprise RAG assistants. You will design golden datasets, calibrate LLM-as-judge graders and run hallucination and faithfulness regression evals in CI. This is a 12-month contract role."
+      },
+      "expected": {
+        "dimensions": {
+          "employment_type": "FAIL"
+        }
+      }
+    },
+    {
+      "case_id": "EP13",
+      "area": "E1",
+      "description": "Structured 'Contract' alone, no direct evidence, no duration -> plain contract FAIL.",
+      "adversarial": false,
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_title": "AI Evaluation Engineer",
+        "raw_company": "Synthetic Product Co",
+        "raw_location": "Remote - India",
+        "raw_work_mode": "Remote",
+        "raw_salary": "Base: ₹30 LPA",
+        "raw_employment_type": "Contract",
+        "raw_text": "We build an evaluation platform for enterprise RAG assistants. You will design golden datasets, calibrate LLM-as-judge graders and run hallucination and faithfulness regression evals in CI. Experience: 2-3 years."
+      },
+      "expected": {
+        "dimensions": {
+          "employment_type": "FAIL"
+        }
+      }
+    },
+    {
+      "case_id": "EP14",
+      "area": "E1/Addendum D",
+      "description": "Structured 'Contract' + direct employment stated in another sentence, no duration.",
+      "adversarial": false,
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_title": "AI Evaluation Engineer",
+        "raw_company": "Synthetic Product Co",
+        "raw_location": "Remote - India",
+        "raw_work_mode": "Remote",
+        "raw_salary": "Base: ₹30 LPA",
+        "raw_employment_type": "Contract",
+        "raw_text": "We build an evaluation platform for enterprise RAG assistants. You will design golden datasets, calibrate LLM-as-judge graders and run hallucination and faithfulness regression evals in CI. Engagement: fixed-term contract. You will be a direct employee of Synthetic Product Co, on our own payroll."
+      },
+      "expected": {
+        "dimensions": {
+          "employment_type": "UNKNOWN"
+        },
+        "flags_include": [
+          "CONTRACT_DURATION_UNSTATED"
+        ]
+      }
+    },
+    {
+      "case_id": "EP15",
+      "area": "E1",
+      "description": "Direct fixed-term 18 months (direct evidence in a separate sentence).",
+      "adversarial": false,
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_title": "AI Evaluation Engineer",
+        "raw_company": "Synthetic Product Co",
+        "raw_location": "Remote - India",
+        "raw_work_mode": "Remote",
+        "raw_salary": "Base: ₹30 LPA",
+        "raw_employment_type": "Fixed-term (18 months)",
+        "raw_text": "We build an evaluation platform for enterprise RAG assistants. You will design golden datasets, calibrate LLM-as-judge graders and run hallucination and faithfulness regression evals in CI. This is an 18-month fixed-term role; you will be employed directly by Synthetic Product Co."
+      },
+      "expected": {
+        "dimensions": {
+          "employment_type": "UNKNOWN"
+        },
+        "flags_include": [
+          "LONG_TERM_DIRECT_CONTRACT"
+        ]
+      }
+    },
+    {
+      "case_id": "EP16",
+      "area": "E1",
+      "description": "Direct fixed-term under 6 months -> FAIL even when direct.",
+      "adversarial": false,
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_title": "AI Evaluation Engineer",
+        "raw_company": "Synthetic Product Co",
+        "raw_location": "Remote - India",
+        "raw_work_mode": "Remote",
+        "raw_salary": "Base: ₹30 LPA",
+        "raw_employment_type": "Fixed-term, 4 months",
+        "raw_text": "We build an evaluation platform for enterprise RAG assistants. You will design golden datasets, calibrate LLM-as-judge graders and run hallucination and faithfulness regression evals in CI. You will be directly on our payroll."
+      },
+      "expected": {
+        "dimensions": {
+          "employment_type": "FAIL"
+        }
+      }
+    },
+    {
+      "case_id": "EP17",
+      "area": "E1",
+      "description": "Structured Permanent contradicted by explicit JD 'temporary position' -> UNKNOWN + conflict.",
+      "adversarial": false,
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_title": "AI Evaluation Engineer",
+        "raw_company": "Synthetic Product Co",
+        "raw_location": "Remote - India",
+        "raw_work_mode": "Remote",
+        "raw_salary": "Base: ₹30 LPA",
+        "raw_employment_type": "Permanent",
+        "raw_text": "We build an evaluation platform for enterprise RAG assistants. You will design golden datasets, calibrate LLM-as-judge graders and run hallucination and faithfulness regression evals in CI. This is a temporary position covering parental leave."
+      },
+      "expected": {
+        "dimensions": {
+          "employment_type": "UNKNOWN"
+        },
+        "flags_include": [
+          "EMPLOYMENT_SOURCE_CONFLICT"
+        ]
+      }
+    },
+    {
+      "case_id": "EP18",
+      "area": "E1",
+      "description": "Structured Full-time + explicit JD 'temporary position' (compatible) -> FAIL.",
+      "adversarial": false,
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_title": "AI Evaluation Engineer",
+        "raw_company": "Synthetic Product Co",
+        "raw_location": "Remote - India",
+        "raw_work_mode": "Remote",
+        "raw_salary": "Base: ₹30 LPA",
+        "raw_employment_type": "Full-time",
+        "raw_text": "We build an evaluation platform for enterprise RAG assistants. You will design golden datasets, calibrate LLM-as-judge graders and run hallucination and faithfulness regression evals in CI. This is a temporary position covering parental leave."
+      },
+      "expected": {
+        "dimensions": {
+          "employment_type": "FAIL"
+        }
+      }
+    },
+    {
+      "case_id": "EP19",
+      "area": "E1",
+      "description": "Labelled employment line in the JD ('Employment type: Contract') is explicit evidence.",
+      "adversarial": false,
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_title": "AI Evaluation Engineer",
+        "raw_company": "Synthetic Product Co",
+        "raw_location": "Remote - India",
+        "raw_work_mode": "Remote",
+        "raw_salary": "Base: ₹30 LPA",
+        "raw_text": "We build an evaluation platform for enterprise RAG assistants. You will design golden datasets, calibrate LLM-as-judge graders and run hallucination and faithfulness regression evals in CI.\nEmployment type: Contract"
+      },
+      "expected": {
+        "dimensions": {
+          "employment_type": "FAIL"
+        }
+      }
+    },
+    {
+      "case_id": "EP20",
+      "area": "E1",
+      "description": "Independent contractor stated in JD with invoicing; structured Full-time.",
+      "adversarial": false,
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_title": "AI Evaluation Engineer",
+        "raw_company": "Synthetic Product Co",
+        "raw_location": "Remote - India",
+        "raw_work_mode": "Remote",
+        "raw_salary": "Base: ₹30 LPA",
+        "raw_employment_type": "Full-time",
+        "raw_text": "We build an evaluation platform for enterprise RAG assistants. You will design golden datasets, calibrate LLM-as-judge graders and run hallucination and faithfulness regression evals in CI. You will be engaged as an independent contractor and invoice us monthly."
+      },
+      "expected": {
+        "dimensions": {
+          "employment_type": "FAIL",
+          "employment_relationship": "FAIL"
+        }
+      }
+    },
+    {
+      "case_id": "EP21",
+      "area": "E5",
+      "description": "Client placement stated in JD; owner classification PRODUCT -> employer_type FAIL (EMPR-R09).",
+      "adversarial": false,
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_title": "AI Evaluation Engineer",
+        "raw_company": "Synthetic Product Co",
+        "raw_location": "Remote - India",
+        "raw_work_mode": "Remote",
+        "raw_salary": "Base: ₹30 LPA",
+        "raw_employment_type": "Full-time, permanent",
+        "raw_text": "We build an evaluation platform for enterprise RAG assistants. You will design golden datasets, calibrate LLM-as-judge graders and run hallucination and faithfulness regression evals in CI. You will be on the rolls of our vendor and deployed at our client site in Mumbai."
+      },
+      "expected": {
+        "dimensions": {
+          "employer_type": "FAIL"
+        },
+        "rules": {
+          "employer_type": "EMPR-R09"
+        },
+        "lane": "EXCLUDED"
+      }
+    },
+    {
+      "case_id": "EP22",
+      "area": "E5",
+      "description": "THIRD_PARTY_PAYROLL owner classification -> employer_type FAIL (EMPR-R08).",
+      "adversarial": false,
+      "classification": "THIRD_PARTY_PAYROLL",
+      "observation": {
+        "raw_title": "AI Evaluation Engineer",
+        "raw_company": "Synthetic Product Co",
+        "raw_location": "Remote - India",
+        "raw_work_mode": "Remote",
+        "raw_salary": "Base: ₹30 LPA",
+        "raw_employment_type": "Full-time, permanent",
+        "raw_text": "We build an evaluation platform for enterprise RAG assistants. You will design golden datasets, calibrate LLM-as-judge graders and run hallucination and faithfulness regression evals in CI. Experience: 2-3 years."
+      },
+      "expected": {
+        "dimensions": {
+          "employer_type": "FAIL"
+        },
+        "rules": {
+          "employer_type": "EMPR-R08"
+        },
+        "lane": "EXCLUDED"
+      }
+    },
+    {
+      "case_id": "EP23",
+      "area": "E5",
+      "description": "EOR in the structured field -> relationship UNKNOWN + EOR -> REVIEW; employer unaffected.",
+      "adversarial": false,
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_title": "AI Evaluation Engineer",
+        "raw_company": "Synthetic Product Co",
+        "raw_location": "Remote - India",
+        "raw_work_mode": "Remote",
+        "raw_salary": "Base: ₹30 LPA",
+        "raw_employment_type": "Full-time via Employer of Record (Deel)",
+        "raw_text": "We build an evaluation platform for enterprise RAG assistants. You will design golden datasets, calibrate LLM-as-judge graders and run hallucination and faithfulness regression evals in CI. Experience: 2-3 years."
+      },
+      "expected": {
+        "dimensions": {
+          "employment_relationship": "UNKNOWN",
+          "employer_type": "PASS"
+        },
+        "flags_include": [
+          "EOR"
+        ],
+        "lane": "REVIEW"
+      }
+    },
+    {
+      "case_id": "EP24",
+      "area": "E1",
+      "description": "'hybrid' as a technical term only: never a work-mode conflict.",
+      "adversarial": true,
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_title": "AI Evaluation Engineer",
+        "raw_company": "Synthetic Product Co",
+        "raw_location": "Remote - India",
+        "raw_work_mode": "Remote",
+        "raw_salary": "Base: ₹30 LPA",
+        "raw_employment_type": "Full-time, permanent",
+        "raw_text": "We build an evaluation platform for enterprise RAG assistants. You will design golden datasets, calibrate LLM-as-judge graders and run hallucination and faithfulness regression evals in CI. You will tune our hybrid dense/sparse retrieval and hybrid-cloud inference fleet."
+      },
+      "expected": {
+        "dimensions": {
+          "geography": "PASS"
+        },
+        "flags_exclude": [
+          "WORK_MODE_CONFLICT"
+        ]
+      }
+    },
+    {
+      "case_id": "LA01",
+      "area": "E4",
+      "description": "Overwhelmingly English with heavy technical vocabulary.",
+      "adversarial": false,
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_title": "AI Evaluation Engineer",
+        "raw_company": "Synthetic Product Co",
+        "raw_location": "Remote - India",
+        "raw_work_mode": "Remote",
+        "raw_salary": "Base: ₹30 LPA",
+        "raw_employment_type": "Full-time, permanent",
+        "raw_text": "You will own the evaluation harness for our LangGraph agents running on vLLM and Kubernetes, write pytest suites, tune pgvector indexes and report groundedness to the product team every week. We care about clear writing and careful reasoning, and we review every change before it ships."
+      },
+      "expected": {
+        "dimensions": {
+          "language": "PASS"
+        },
+        "detected_language": "en",
+        "min_confidence": 0.95
+      }
+    },
+    {
+      "case_id": "LA02",
+      "area": "E4",
+      "description": "English with proper nouns carrying diacritics (Zürich, São Paulo, Nestlé).",
+      "adversarial": false,
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_title": "AI Evaluation Engineer",
+        "raw_company": "Synthetic Product Co",
+        "raw_location": "Remote - India",
+        "raw_work_mode": "Remote",
+        "raw_salary": "Base: ₹30 LPA",
+        "raw_employment_type": "Full-time, permanent",
+        "raw_text": "You will own the evaluation harness for our LangGraph agents running on vLLM and Kubernetes, write pytest suites, tune pgvector indexes and report groundedness to the product team every week. We care about clear writing and careful reasoning, and we review every change before it ships. Our clients include Nestlé, with teams in Zürich and São Paulo."
+      },
+      "expected": {
+        "dimensions": {
+          "language": "PASS"
+        },
+        "detected_language": "en"
+      }
+    },
+    {
+      "case_id": "LA03",
+      "area": "E4",
+      "description": "English with an e-mail address, a URL and a .com company name.",
+      "adversarial": false,
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_title": "AI Evaluation Engineer",
+        "raw_company": "Synthetic Product Co",
+        "raw_location": "Remote - India",
+        "raw_work_mode": "Remote",
+        "raw_salary": "Base: ₹30 LPA",
+        "raw_employment_type": "Full-time, permanent",
+        "raw_text": "You will own the evaluation harness for our LangGraph agents running on vLLM and Kubernetes, write pytest suites, tune pgvector indexes and report groundedness to the product team every week. We care about clear writing and careful reasoning, and we review every change before it ships. Apply at jobs@acme.com or https://acme.ai/careers; payroll is handled by Remote.com."
+      },
+      "expected": {
+        "dimensions": {
+          "language": "PASS"
+        },
+        "detected_language": "en"
+      }
+    },
+    {
+      "case_id": "LA04",
+      "area": "E4",
+      "description": "Very short English JD with no function words at all.",
+      "adversarial": false,
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_title": "AI Evaluation Engineer",
+        "raw_company": "Synthetic Product Co",
+        "raw_location": "Remote - India",
+        "raw_work_mode": "Remote",
+        "raw_salary": "Base: ₹30 LPA",
+        "raw_employment_type": "Full-time, permanent",
+        "raw_text": "Build RAG evals, LLM guardrails, golden datasets."
+      },
+      "expected": {
+        "dimensions": {
+          "language": "PASS"
+        },
+        "detected_language": "en"
+      }
+    },
+    {
+      "case_id": "LA05",
+      "area": "E4",
+      "description": "A single stray foreign token in an English JD is noise.",
+      "adversarial": false,
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_title": "AI Evaluation Engineer",
+        "raw_company": "Synthetic Product Co",
+        "raw_location": "Remote - India",
+        "raw_work_mode": "Remote",
+        "raw_salary": "Base: ₹30 LPA",
+        "raw_employment_type": "Full-time, permanent",
+        "raw_text": "You will own the evaluation harness for our LangGraph agents running on vLLM and Kubernetes, write pytest suites, tune pgvector indexes and report groundedness to the product team every week. We care about clear writing and careful reasoning, and we review every change before it ships. Our offsite is at Café del Mar."
+      },
+      "expected": {
+        "dimensions": {
+          "language": "PASS"
+        },
+        "detected_language": "en"
+      }
+    },
+    {
+      "case_id": "LA06",
+      "area": "E4",
+      "description": "Fully German JD.",
+      "adversarial": false,
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_title": "AI Evaluation Engineer",
+        "raw_company": "Synthetic Product Co",
+        "raw_location": "Remote - India",
+        "raw_work_mode": "Remote",
+        "raw_salary": "Base: ₹30 LPA",
+        "raw_employment_type": "Full-time, permanent",
+        "raw_text": "Ihre Aufgaben: Sie entwickeln RAG-basierte Assistenzsysteme für unseren Kundendienst und bauen Evaluationspipelines auf. Wir bieten ein kollegiales Team und flexible Arbeitszeiten, und Sie arbeiten eng mit unseren Technikern in Stuttgart zusammen."
+      },
+      "expected": {
+        "dimensions": {
+          "language": "FAIL"
+        },
+        "rules": {
+          "language": "LANG-R04"
+        }
+      }
+    },
+    {
+      "case_id": "LA07",
+      "area": "E4",
+      "description": "Fully French JD.",
+      "adversarial": false,
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_title": "AI Evaluation Engineer",
+        "raw_company": "Synthetic Product Co",
+        "raw_location": "Remote - India",
+        "raw_work_mode": "Remote",
+        "raw_salary": "Base: ₹30 LPA",
+        "raw_employment_type": "Full-time, permanent",
+        "raw_text": "Vous rejoindrez notre équipe pour construire des assistants RAG pour les clients de la banque. Nous cherchons une personne avec de l'expérience dans les évaluations et les tests des modèles, et vous travaillerez avec nos équipes dans une ambiance très agréable."
+      },
+      "expected": {
+        "dimensions": {
+          "language": "FAIL"
+        },
+        "rules": {
+          "language": "LANG-R04"
+        }
+      }
+    },
+    {
+      "case_id": "LA08",
+      "area": "E4",
+      "description": "Fully Spanish JD.",
+      "adversarial": false,
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_title": "AI Evaluation Engineer",
+        "raw_company": "Synthetic Product Co",
+        "raw_location": "Remote - India",
+        "raw_work_mode": "Remote",
+        "raw_salary": "Base: ₹30 LPA",
+        "raw_employment_type": "Full-time, permanent",
+        "raw_text": "Buscamos una persona para construir asistentes RAG para nuestros clientes. Trabajarás con el equipo de datos y con los ingenieros de la plataforma, y serás responsable de las evaluaciones de los modelos para nuestra empresa."
+      },
+      "expected": {
+        "dimensions": {
+          "language": "FAIL"
+        },
+        "rules": {
+          "language": "LANG-R04"
+        }
+      }
+    },
+    {
+      "case_id": "LA09",
+      "area": "E4",
+      "description": "Japanese-script JD.",
+      "adversarial": false,
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_title": "AI Evaluation Engineer",
+        "raw_company": "Synthetic Product Co",
+        "raw_location": "Remote - India",
+        "raw_work_mode": "Remote",
+        "raw_salary": "Base: ₹30 LPA",
+        "raw_employment_type": "Full-time, permanent",
+        "raw_text": "私たちは生成AIを活用した顧客サポートシステムを開発しています。評価パイプラインの構築と運用を担当していただきます。"
+      },
+      "expected": {
+        "dimensions": {
+          "language": "FAIL"
+        },
+        "rules": {
+          "language": "LANG-R04"
+        }
+      }
+    },
+    {
+      "case_id": "LA10",
+      "area": "E4",
+      "description": "Hindi (Devanagari) JD.",
+      "adversarial": false,
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_title": "AI Evaluation Engineer",
+        "raw_company": "Synthetic Product Co",
+        "raw_location": "Remote - India",
+        "raw_work_mode": "Remote",
+        "raw_salary": "Base: ₹30 LPA",
+        "raw_employment_type": "Full-time, permanent",
+        "raw_text": "हम ग्राहकों के लिए एआई सहायक बना रहे हैं। आप मूल्यांकन पाइपलाइन और गुणवत्ता जांच के लिए जिम्मेदार होंगे।"
+      },
+      "expected": {
+        "dimensions": {
+          "language": "FAIL"
+        },
+        "rules": {
+          "language": "LANG-R04"
+        }
+      }
+    },
+    {
+      "case_id": "LA11",
+      "area": "E4",
+      "description": "Genuinely mixed English/German JD -> UNKNOWN.",
+      "adversarial": false,
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_title": "AI Evaluation Engineer",
+        "raw_company": "Synthetic Product Co",
+        "raw_location": "Remote - India",
+        "raw_work_mode": "Remote",
+        "raw_salary": "Base: ₹30 LPA",
+        "raw_employment_type": "Full-time, permanent",
+        "raw_text": "You will build evaluation pipelines for our assistants and work with the product team on quality. Sie arbeiten eng mit unseren Teams in Stuttgart zusammen und entwickeln die Plattform für die Kunden weiter, mit einem Fokus auf die Qualität der Antworten."
+      },
+      "expected": {
+        "dimensions": {
+          "language": "UNKNOWN"
+        },
+        "rules": {
+          "language": "LANG-R05"
+        }
+      }
+    },
+    {
+      "case_id": "LA12",
+      "area": "E4",
+      "description": "Explicit 'German mandatory'.",
+      "adversarial": false,
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_title": "AI Evaluation Engineer",
+        "raw_company": "Synthetic Product Co",
+        "raw_location": "Remote - India",
+        "raw_work_mode": "Remote",
+        "raw_salary": "Base: ₹30 LPA",
+        "raw_employment_type": "Full-time, permanent",
+        "raw_text": "You will own the evaluation harness for our LangGraph agents running on vLLM and Kubernetes, write pytest suites, tune pgvector indexes and report groundedness to the product team every week. We care about clear writing and careful reasoning, and we review every change before it ships. German is mandatory for customer workshops."
+      },
+      "expected": {
+        "dimensions": {
+          "language": "FAIL"
+        },
+        "rules": {
+          "language": "LANG-R02"
+        }
+      }
+    },
+    {
+      "case_id": "LA13",
+      "area": "E4",
+      "description": "Explicit requirement with a parenthetical level.",
+      "adversarial": false,
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_title": "AI Evaluation Engineer",
+        "raw_company": "Synthetic Product Co",
+        "raw_location": "Remote - India",
+        "raw_work_mode": "Remote",
+        "raw_salary": "Base: ₹30 LPA",
+        "raw_employment_type": "Full-time, permanent",
+        "raw_text": "You will own the evaluation harness for our LangGraph agents running on vLLM and Kubernetes, write pytest suites, tune pgvector indexes and report groundedness to the product team every week. We care about clear writing and careful reasoning, and we review every change before it ships. Business-level Japanese (JLPT N2 or above) is mandatory."
+      },
+      "expected": {
+        "dimensions": {
+          "language": "FAIL"
+        },
+        "rules": {
+          "language": "LANG-R02"
+        }
+      }
+    },
+    {
+      "case_id": "LA14",
+      "area": "E4",
+      "description": "'Fluency in Mandarin required'.",
+      "adversarial": false,
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_title": "AI Evaluation Engineer",
+        "raw_company": "Synthetic Product Co",
+        "raw_location": "Remote - India",
+        "raw_work_mode": "Remote",
+        "raw_salary": "Base: ₹30 LPA",
+        "raw_employment_type": "Full-time, permanent",
+        "raw_text": "You will own the evaluation harness for our LangGraph agents running on vLLM and Kubernetes, write pytest suites, tune pgvector indexes and report groundedness to the product team every week. We care about clear writing and careful reasoning, and we review every change before it ships. Fluency in Mandarin required."
+      },
+      "expected": {
+        "dimensions": {
+          "language": "FAIL"
+        },
+        "rules": {
+          "language": "LANG-R02"
+        }
+      }
+    },
+    {
+      "case_id": "LA15",
+      "area": "E4",
+      "description": "Ambiguous 'working knowledge of Dutch'.",
+      "adversarial": false,
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_title": "AI Evaluation Engineer",
+        "raw_company": "Synthetic Product Co",
+        "raw_location": "Remote - India",
+        "raw_work_mode": "Remote",
+        "raw_salary": "Base: ₹30 LPA",
+        "raw_employment_type": "Full-time, permanent",
+        "raw_text": "You will own the evaluation harness for our LangGraph agents running on vLLM and Kubernetes, write pytest suites, tune pgvector indexes and report groundedness to the product team every week. We care about clear writing and careful reasoning, and we review every change before it ships. Working knowledge of Dutch."
+      },
+      "expected": {
+        "dimensions": {
+          "language": "UNKNOWN"
+        },
+        "rules": {
+          "language": "LANG-R06"
+        }
+      }
+    },
+    {
+      "case_id": "LA16",
+      "area": "E4",
+      "description": "Ambiguous 'Portuguese-speaking'.",
+      "adversarial": false,
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_title": "AI Evaluation Engineer",
+        "raw_company": "Synthetic Product Co",
+        "raw_location": "Remote - India",
+        "raw_work_mode": "Remote",
+        "raw_salary": "Base: ₹30 LPA",
+        "raw_employment_type": "Full-time, permanent",
+        "raw_text": "You will own the evaluation harness for our LangGraph agents running on vLLM and Kubernetes, write pytest suites, tune pgvector indexes and report groundedness to the product team every week. We care about clear writing and careful reasoning, and we review every change before it ships. We want a Portuguese-speaking engineer for our Brazil customers."
+      },
+      "expected": {
+        "dimensions": {
+          "language": "UNKNOWN"
+        },
+        "rules": {
+          "language": "LANG-R06"
+        }
+      }
+    },
+    {
+      "case_id": "LA17",
+      "area": "E4",
+      "description": "Preference only.",
+      "adversarial": false,
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_title": "AI Evaluation Engineer",
+        "raw_company": "Synthetic Product Co",
+        "raw_location": "Remote - India",
+        "raw_work_mode": "Remote",
+        "raw_salary": "Base: ₹30 LPA",
+        "raw_employment_type": "Full-time, permanent",
+        "raw_text": "You will own the evaluation harness for our LangGraph agents running on vLLM and Kubernetes, write pytest suites, tune pgvector indexes and report groundedness to the product team every week. We care about clear writing and careful reasoning, and we review every change before it ships. German is a plus."
+      },
+      "expected": {
+        "dimensions": {
+          "language": "PASS"
+        },
+        "flags_include": [
+          "LANGUAGE_PREFERENCE"
+        ]
+      }
+    },
+    {
+      "case_id": "RV01",
+      "area": "E8",
+      "description": "Misleading QA title, genuine AI quality JD.",
+      "adversarial": false,
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_title": "QA Engineer II",
+        "raw_company": "Synthetic Product Co",
+        "raw_location": "Remote - India",
+        "raw_work_mode": "Remote",
+        "raw_salary": "Base: ₹30 LPA",
+        "raw_employment_type": "Full-time, permanent",
+        "raw_text": "Build LLM-as-judge regression evals, golden datasets and hallucination checks for our RAG assistant."
+      },
+      "expected": {
+        "relevance_label": "STRONG"
+      }
+    },
+    {
+      "case_id": "RV02",
+      "area": "E8",
+      "description": "Traditional QA only.",
+      "adversarial": false,
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_title": "QA Engineer",
+        "raw_company": "Synthetic Product Co",
+        "raw_location": "Remote - India",
+        "raw_work_mode": "Remote",
+        "raw_salary": "Base: ₹30 LPA",
+        "raw_employment_type": "Full-time, permanent",
+        "raw_text": "Write manual test cases, maintain Selenium regression packs and log defects in JIRA for net-banking."
+      },
+      "expected": {
+        "relevance_label": "WEAK",
+        "lane": "PARKED"
+      }
+    },
+    {
+      "case_id": "RV03",
+      "area": "E8",
+      "description": "Reliability/SLO vocabulary with no AI anchor stays out.",
+      "adversarial": true,
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_title": "Site Reliability Engineer",
+        "raw_company": "Synthetic Product Co",
+        "raw_location": "Remote - India",
+        "raw_work_mode": "Remote",
+        "raw_salary": "Base: ₹30 LPA",
+        "raw_employment_type": "Full-time, permanent",
+        "raw_text": "Improve reliability and SLOs of our payments API, automate CI pipelines with Jenkins and write pytest suites."
+      },
+      "expected": {
+        "relevance_label": "WEAK"
+      }
+    },
+    {
+      "case_id": "RV04",
+      "area": "E8",
+      "description": "Generic 'evaluate' / 'benchmark' with no AI anchor.",
+      "adversarial": true,
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_title": "Platform Engineer",
+        "raw_company": "Synthetic Product Co",
+        "raw_location": "Remote - India",
+        "raw_work_mode": "Remote",
+        "raw_salary": "Base: ₹30 LPA",
+        "raw_employment_type": "Full-time, permanent",
+        "raw_text": "Evaluate vendor proposals and benchmark database performance."
+      },
+      "expected": {
+        "relevance_label": "WEAK"
+      }
+    },
+    {
+      "case_id": "RV05",
+      "area": "E8",
+      "description": "AI reliability with AI-specific SLOs.",
+      "adversarial": false,
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_title": "AI Reliability Engineer",
+        "raw_company": "Synthetic Product Co",
+        "raw_location": "Remote - India",
+        "raw_work_mode": "Remote",
+        "raw_salary": "Base: ₹30 LPA",
+        "raw_employment_type": "Full-time, permanent",
+        "raw_text": "Define SLOs for our LLM inference service, chaos-test model provider failover and run post-incident evals."
+      },
+      "expected": {
+        "relevance_label": "STRONG"
+      }
+    },
+    {
+      "case_id": "RV06",
+      "area": "E7",
+      "description": "Tier 1 title, rich JD with no AI term -> WEAK, PARKED, no title prior.",
+      "adversarial": false,
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_title": "AI Engineer",
+        "raw_company": "Synthetic Product Co",
+        "raw_location": "Remote - India",
+        "raw_work_mode": "Remote",
+        "raw_salary": "Base: ₹30 LPA",
+        "raw_employment_type": "Full-time, permanent",
+        "raw_text": "Build and maintain Power BI dashboards for the sales team, write SQL reports and automate Excel exports."
+      },
+      "expected": {
+        "relevance_label": "WEAK",
+        "lane": "PARKED",
+        "flags_exclude": [
+          "RELEVANCE_TITLE_PRIOR"
+        ]
+      }
+    },
+    {
+      "case_id": "RV07",
+      "area": "E7",
+      "description": "Tier 1 title + WEAK JD with one AI-specific term -> REVIEW + RELEVANCE_TITLE_PRIOR.",
+      "adversarial": false,
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_title": "AI Engineer",
+        "raw_company": "Synthetic Product Co",
+        "raw_location": "Remote - India",
+        "raw_work_mode": "Remote",
+        "raw_salary": "Base: ₹30 LPA",
+        "raw_employment_type": "Full-time, permanent",
+        "raw_text": "Build Power BI dashboards and SQL reports; occasionally call an LLM API."
+      },
+      "expected": {
+        "relevance_label": "WEAK",
+        "lane": "REVIEW",
+        "flags_include": [
+          "RELEVANCE_TITLE_PRIOR"
+        ]
+      }
+    },
+    {
+      "case_id": "RV08",
+      "area": "E7",
+      "description": "Tier 2 title + WEAK JD with one AI term -> PARKED (no title prior).",
+      "adversarial": false,
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_title": "Machine Learning Engineer",
+        "raw_company": "Synthetic Product Co",
+        "raw_location": "Remote - India",
+        "raw_work_mode": "Remote",
+        "raw_salary": "Base: ₹30 LPA",
+        "raw_employment_type": "Full-time, permanent",
+        "raw_text": "Build Power BI dashboards and SQL reports; occasionally call an LLM API."
+      },
+      "expected": {
+        "relevance_label": "WEAK",
+        "lane": "PARKED",
+        "flags_exclude": [
+          "RELEVANCE_TITLE_PRIOR"
+        ]
+      }
+    },
+    {
+      "case_id": "RV09",
+      "area": "E7",
+      "description": "Tier 1 title with no JD -> NOT_ASSESSED, REVIEW.",
+      "adversarial": false,
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_title": "LLM Evaluation Engineer",
+        "raw_company": "Synthetic Product Co",
+        "raw_location": "Remote - India",
+        "raw_work_mode": "Remote",
+        "raw_salary": "Base: ₹30 LPA",
+        "raw_employment_type": "Full-time, permanent"
+      },
+      "expected": {
+        "relevance_label": "NOT_ASSESSED",
+        "lane": "REVIEW"
+      }
+    },
+    {
+      "case_id": "RV10",
+      "area": "E8",
+      "description": "Red-teaming without an AI anchor does not count.",
+      "adversarial": true,
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_title": "Security Engineer",
+        "raw_company": "Synthetic Product Co",
+        "raw_location": "Remote - India",
+        "raw_work_mode": "Remote",
+        "raw_salary": "Base: ₹30 LPA",
+        "raw_employment_type": "Full-time, permanent",
+        "raw_text": "Run quarterly red-teaming exercises against our payment network."
+      },
+      "expected": {
+        "relevance_label": "WEAK"
+      }
+    },
+    {
+      "case_id": "RV11",
+      "area": "E8",
+      "description": "Golden sets without an AI anchor do not count.",
+      "adversarial": true,
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_title": "Test Engineer",
+        "raw_company": "Synthetic Product Co",
+        "raw_location": "Remote - India",
+        "raw_work_mode": "Remote",
+        "raw_salary": "Base: ₹30 LPA",
+        "raw_employment_type": "Full-time, permanent",
+        "raw_text": "Maintain golden sets of test fixtures for the payments API."
+      },
+      "expected": {
+        "relevance_label": "WEAK"
+      }
+    },
+    {
+      "case_id": "RV12",
+      "area": "E8",
+      "description": "Agent evaluation and trajectory tests.",
+      "adversarial": false,
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_title": "Software Engineer",
+        "raw_company": "Synthetic Product Co",
+        "raw_location": "Remote - India",
+        "raw_work_mode": "Remote",
+        "raw_salary": "Base: ₹30 LPA",
+        "raw_employment_type": "Full-time, permanent",
+        "raw_text": "Own agent evaluation and trajectory tests for our agentic customer-support system built with LangGraph."
+      },
+      "expected": {
+        "relevance_label": "STRONG"
+      }
+    },
+    {
+      "case_id": "RV13",
+      "area": "E8",
+      "description": "Prompt-regression suites and groundedness.",
+      "adversarial": false,
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_title": "Software Engineer",
+        "raw_company": "Synthetic Product Co",
+        "raw_location": "Remote - India",
+        "raw_work_mode": "Remote",
+        "raw_salary": "Base: ₹30 LPA",
+        "raw_employment_type": "Full-time, permanent",
+        "raw_text": "Build prompt-regression suites for our LLM chatbot and track groundedness."
+      },
+      "expected": {
+        "relevance_label": "STRONG"
+      }
+    },
+    {
+      "case_id": "RV14",
+      "area": "E8",
+      "description": "One phrase never counts as several terms of one capability.",
+      "adversarial": true,
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_title": "Software Engineer",
+        "raw_company": "Synthetic Product Co",
+        "raw_location": "Remote - India",
+        "raw_work_mode": "Remote",
+        "raw_salary": "Base: ₹30 LPA",
+        "raw_employment_type": "Full-time, permanent",
+        "raw_text": "Build LLM evaluation suites."
+      },
+      "expected": {
+        "relevance_label": "MODERATE"
+      }
+    },
+    {
+      "case_id": "RV15",
+      "area": "E8",
+      "description": "A contextual term never anchors itself ('retrieval quality').",
+      "adversarial": true,
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_title": "Search Engineer",
+        "raw_company": "Synthetic Product Co",
+        "raw_location": "Remote - India",
+        "raw_work_mode": "Remote",
+        "raw_salary": "Base: ₹30 LPA",
+        "raw_employment_type": "Full-time, permanent",
+        "raw_text": "Improve retrieval quality."
+      },
+      "expected": {
+        "relevance_label": "WEAK"
+      }
+    },
+    {
+      "case_id": "RV16",
+      "area": "E8",
+      "description": "ML defect prediction and LLM test generation.",
+      "adversarial": false,
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_title": "SDET",
+        "raw_company": "Synthetic Product Co",
+        "raw_location": "Remote - India",
+        "raw_work_mode": "Remote",
+        "raw_salary": "Base: ₹30 LPA",
+        "raw_employment_type": "Full-time, permanent",
+        "raw_text": "Build ML-based defect prediction and LLM test generation for our QA platform."
+      },
+      "expected": {
+        "relevance_label": "STRONG"
+      }
+    },
+    {
+      "case_id": "RV17",
+      "area": "E8",
+      "description": "GenAI testing and AI quality engineering.",
+      "adversarial": false,
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_title": "Quality Engineer",
+        "raw_company": "Synthetic Product Co",
+        "raw_location": "Remote - India",
+        "raw_work_mode": "Remote",
+        "raw_salary": "Base: ₹30 LPA",
+        "raw_employment_type": "Full-time, permanent",
+        "raw_text": "Lead GenAI testing and AI quality engineering for our copilot."
+      },
+      "expected": {
+        "relevance_label": "STRONG"
+      }
+    },
+    {
+      "case_id": "OD01",
+      "area": "E6",
+      "description": "Named weekdays with 'and'.",
+      "adversarial": false,
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_title": "AI Evaluation Engineer",
+        "raw_company": "Synthetic Product Co",
+        "raw_location": "Bengaluru",
+        "raw_work_mode": "Hybrid",
+        "raw_salary": "Base: ₹30 LPA",
+        "raw_employment_type": "Full-time, permanent",
+        "raw_text": "We build an evaluation platform for enterprise RAG assistants. You will design golden datasets, calibrate LLM-as-judge graders and run hallucination and faithfulness regression evals in CI. The pod is at our Koramangala office on Tuesdays and Thursdays."
+      },
+      "expected": {
+        "dimensions": {
+          "geography": "PASS"
+        },
+        "office_days": 2
+      }
+    },
+    {
+      "case_id": "OD02",
+      "area": "E6",
+      "description": "'3 days/week'.",
+      "adversarial": false,
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_title": "AI Evaluation Engineer",
+        "raw_company": "Synthetic Product Co",
+        "raw_location": "Bengaluru",
+        "raw_work_mode": "Hybrid",
+        "raw_salary": "Base: ₹30 LPA",
+        "raw_employment_type": "Full-time, permanent",
+        "raw_text": "We build an evaluation platform for enterprise RAG assistants. You will design golden datasets, calibrate LLM-as-judge graders and run hallucination and faithfulness regression evals in CI. Expect 3 days/week in the office."
+      },
+      "expected": {
+        "dimensions": {
+          "geography": "PASS"
+        },
+        "office_days": 3
+      }
+    },
+    {
+      "case_id": "OD03",
+      "area": "E6",
+      "description": "'three days a week'.",
+      "adversarial": false,
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_title": "AI Evaluation Engineer",
+        "raw_company": "Synthetic Product Co",
+        "raw_location": "Bengaluru",
+        "raw_work_mode": "Hybrid",
+        "raw_salary": "Base: ₹30 LPA",
+        "raw_employment_type": "Full-time, permanent",
+        "raw_text": "We build an evaluation platform for enterprise RAG assistants. You will design golden datasets, calibrate LLM-as-judge graders and run hallucination and faithfulness regression evals in CI. You will be at the campus three days a week."
+      },
+      "expected": {
+        "dimensions": {
+          "geography": "PASS"
+        },
+        "office_days": 3
+      }
+    },
+    {
+      "case_id": "OD04",
+      "area": "E6",
+      "description": "Slash weekday list.",
+      "adversarial": false,
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_title": "AI Evaluation Engineer",
+        "raw_company": "Synthetic Product Co",
+        "raw_location": "Bengaluru",
+        "raw_work_mode": "Hybrid",
+        "raw_salary": "Base: ₹30 LPA",
+        "raw_employment_type": "Full-time, permanent",
+        "raw_text": "We build an evaluation platform for enterprise RAG assistants. You will design golden datasets, calibrate LLM-as-judge graders and run hallucination and faithfulness regression evals in CI. Office rhythm: Mon/Wed/Thu at our HSR office."
+      },
+      "expected": {
+        "dimensions": {
+          "geography": "PASS"
+        },
+        "office_days": 3
+      }
+    },
+    {
+      "case_id": "OD05",
+      "area": "E6",
+      "description": "Weekday range -> 4 days.",
+      "adversarial": false,
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_title": "AI Evaluation Engineer",
+        "raw_company": "Synthetic Product Co",
+        "raw_location": "Bengaluru",
+        "raw_work_mode": "Hybrid",
+        "raw_salary": "Base: ₹30 LPA",
+        "raw_employment_type": "Full-time, permanent",
+        "raw_text": "We build an evaluation platform for enterprise RAG assistants. You will design golden datasets, calibrate LLM-as-judge graders and run hallucination and faithfulness regression evals in CI. Monday through Thursday on-site at Manyata Tech Park, Fridays remote."
+      },
+      "expected": {
+        "dimensions": {
+          "geography": "FAIL"
+        },
+        "office_days": 4
+      }
+    },
+    {
+      "case_id": "OD06",
+      "area": "E6",
+      "description": "'Friday is our WFH day' -> 4 office days.",
+      "adversarial": false,
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_title": "AI Evaluation Engineer",
+        "raw_company": "Synthetic Product Co",
+        "raw_location": "Bengaluru",
+        "raw_work_mode": "Hybrid",
+        "raw_salary": "Base: ₹30 LPA",
+        "raw_employment_type": "Full-time, permanent",
+        "raw_text": "We build an evaluation platform for enterprise RAG assistants. You will design golden datasets, calibrate LLM-as-judge graders and run hallucination and faithfulness regression evals in CI. Friday is our WFH day."
+      },
+      "expected": {
+        "dimensions": {
+          "geography": "FAIL"
+        },
+        "office_days": 4
+      }
+    },
+    {
+      "case_id": "OD07",
+      "area": "E6",
+      "description": "'WFO Tue/Thu'.",
+      "adversarial": false,
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_title": "AI Evaluation Engineer",
+        "raw_company": "Synthetic Product Co",
+        "raw_location": "Bengaluru",
+        "raw_work_mode": "Hybrid",
+        "raw_salary": "Base: ₹30 LPA",
+        "raw_employment_type": "Full-time, permanent",
+        "raw_text": "We build an evaluation platform for enterprise RAG assistants. You will design golden datasets, calibrate LLM-as-judge graders and run hallucination and faithfulness regression evals in CI. WFO Tue/Thu."
+      },
+      "expected": {
+        "dimensions": {
+          "geography": "PASS"
+        },
+        "office_days": 2
+      }
+    },
+    {
+      "case_id": "OD08",
+      "area": "E6",
+      "description": "Every weekday (no structured work mode) -> 5 office days -> FAIL.",
+      "adversarial": false,
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_title": "AI Evaluation Engineer",
+        "raw_company": "Synthetic Product Co",
+        "raw_location": "Bengaluru",
+        "raw_salary": "Base: ₹30 LPA",
+        "raw_employment_type": "Full-time, permanent",
+        "raw_text": "We build an evaluation platform for enterprise RAG assistants. You will design golden datasets, calibrate LLM-as-judge graders and run hallucination and faithfulness regression evals in CI. Office every weekday at our Whitefield campus."
+      },
+      "expected": {
+        "dimensions": {
+          "geography": "FAIL"
+        },
+        "office_days": 5
+      }
+    },
+    {
+      "case_id": "OD25",
+      "area": "E6",
+      "description": "Structured Hybrid contradicted by 'every weekday' in the office -> UNKNOWN + WORK_MODE_CONFLICT.",
+      "adversarial": false,
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_title": "AI Evaluation Engineer",
+        "raw_company": "Synthetic Product Co",
+        "raw_location": "Bengaluru",
+        "raw_work_mode": "Hybrid",
+        "raw_salary": "Base: ₹30 LPA",
+        "raw_employment_type": "Full-time, permanent",
+        "raw_text": "We build an evaluation platform for enterprise RAG assistants. You will design golden datasets, calibrate LLM-as-judge graders and run hallucination and faithfulness regression evals in CI. Office every weekday at our Whitefield campus."
+      },
+      "expected": {
+        "dimensions": {
+          "geography": "UNKNOWN"
+        },
+        "flags_include": [
+          "WORK_MODE_CONFLICT"
+        ]
+      }
+    },
+    {
+      "case_id": "OD09",
+      "area": "E6",
+      "description": "'4 days in office'.",
+      "adversarial": false,
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_title": "AI Evaluation Engineer",
+        "raw_company": "Synthetic Product Co",
+        "raw_location": "Bengaluru",
+        "raw_work_mode": "Hybrid",
+        "raw_salary": "Base: ₹30 LPA",
+        "raw_employment_type": "Full-time, permanent",
+        "raw_text": "We build an evaluation platform for enterprise RAG assistants. You will design golden datasets, calibrate LLM-as-judge graders and run hallucination and faithfulness regression evals in CI. 4 days in office each week."
+      },
+      "expected": {
+        "dimensions": {
+          "geography": "FAIL"
+        },
+        "office_days": 4
+      }
+    },
+    {
+      "case_id": "OD10",
+      "area": "E6",
+      "description": "'5 days onsite' (structured On-site).",
+      "adversarial": false,
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_title": "AI Evaluation Engineer",
+        "raw_company": "Synthetic Product Co",
+        "raw_location": "Bengaluru",
+        "raw_work_mode": "On-site",
+        "raw_salary": "Base: ₹30 LPA",
+        "raw_employment_type": "Full-time, permanent",
+        "raw_text": "We build an evaluation platform for enterprise RAG assistants. You will design golden datasets, calibrate LLM-as-judge graders and run hallucination and faithfulness regression evals in CI. 5 days onsite at our Bellandur office."
+      },
+      "expected": {
+        "dimensions": {
+          "geography": "FAIL"
+        },
+        "office_days": 5
+      }
+    },
+    {
+      "case_id": "OD11",
+      "area": "E6",
+      "description": "Alternate days.",
+      "adversarial": false,
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_title": "AI Evaluation Engineer",
+        "raw_company": "Synthetic Product Co",
+        "raw_location": "Bengaluru",
+        "raw_work_mode": "Hybrid",
+        "raw_salary": "Base: ₹30 LPA",
+        "raw_employment_type": "Full-time, permanent",
+        "raw_text": "We build an evaluation platform for enterprise RAG assistants. You will design golden datasets, calibrate LLM-as-judge graders and run hallucination and faithfulness regression evals in CI. We sit in the office on alternate days."
+      },
+      "expected": {
+        "dimensions": {
+          "geography": "PASS"
+        },
+        "office_days": 2.5
+      }
+    },
+    {
+      "case_id": "OD12",
+      "area": "E6",
+      "description": "One fixed anchor day.",
+      "adversarial": false,
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_title": "AI Evaluation Engineer",
+        "raw_company": "Synthetic Product Co",
+        "raw_location": "Bengaluru",
+        "raw_work_mode": "Hybrid",
+        "raw_salary": "Base: ₹30 LPA",
+        "raw_employment_type": "Full-time, permanent",
+        "raw_text": "We build an evaluation platform for enterprise RAG assistants. You will design golden datasets, calibrate LLM-as-judge graders and run hallucination and faithfulness regression evals in CI. One fixed anchor day per week at our Indiranagar studio."
+      },
+      "expected": {
+        "dimensions": {
+          "geography": "PASS"
+        },
+        "office_days": 1
+      }
+    },
+    {
+      "case_id": "OD13",
+      "area": "E6",
+      "description": "'8 days per month'.",
+      "adversarial": false,
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_title": "AI Evaluation Engineer",
+        "raw_company": "Synthetic Product Co",
+        "raw_location": "Bengaluru",
+        "raw_work_mode": "Hybrid",
+        "raw_salary": "Base: ₹30 LPA",
+        "raw_employment_type": "Full-time, permanent",
+        "raw_text": "We build an evaluation platform for enterprise RAG assistants. You will design golden datasets, calibrate LLM-as-judge graders and run hallucination and faithfulness regression evals in CI. A minimum of 8 days per month in our office."
+      },
+      "expected": {
+        "dimensions": {
+          "geography": "PASS"
+        },
+        "office_days": 1.85
+      }
+    },
+    {
+      "case_id": "OD14",
+      "area": "E6",
+      "description": "'18 days a month'.",
+      "adversarial": false,
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_title": "AI Evaluation Engineer",
+        "raw_company": "Synthetic Product Co",
+        "raw_location": "Bengaluru",
+        "raw_work_mode": "Hybrid",
+        "raw_salary": "Base: ₹30 LPA",
+        "raw_employment_type": "Full-time, permanent",
+        "raw_text": "We build an evaluation platform for enterprise RAG assistants. You will design golden datasets, calibrate LLM-as-judge graders and run hallucination and faithfulness regression evals in CI. At least 18 days a month from the Whitefield office."
+      },
+      "expected": {
+        "dimensions": {
+          "geography": "FAIL"
+        },
+        "office_days": 4.16
+      }
+    },
+    {
+      "case_id": "OD15",
+      "area": "E6",
+      "description": "'twice a week'.",
+      "adversarial": false,
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_title": "AI Evaluation Engineer",
+        "raw_company": "Synthetic Product Co",
+        "raw_location": "Bengaluru",
+        "raw_work_mode": "Hybrid",
+        "raw_salary": "Base: ₹30 LPA",
+        "raw_employment_type": "Full-time, permanent",
+        "raw_text": "We build an evaluation platform for enterprise RAG assistants. You will design golden datasets, calibrate LLM-as-judge graders and run hallucination and faithfulness regression evals in CI. Office twice a week at our Domlur office."
+      },
+      "expected": {
+        "dimensions": {
+          "geography": "PASS"
+        },
+        "office_days": 2
+      }
+    },
+    {
+      "case_id": "OD16",
+      "area": "E6",
+      "description": "WFH-day count.",
+      "adversarial": false,
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_title": "AI Evaluation Engineer",
+        "raw_company": "Synthetic Product Co",
+        "raw_location": "Bengaluru",
+        "raw_work_mode": "Hybrid",
+        "raw_salary": "Base: ₹30 LPA",
+        "raw_employment_type": "Full-time, permanent",
+        "raw_text": "We build an evaluation platform for enterprise RAG assistants. You will design golden datasets, calibrate LLM-as-judge graders and run hallucination and faithfulness regression evals in CI. 2 WFH days a week; the rest at our JP Nagar office."
+      },
+      "expected": {
+        "dimensions": {
+          "geography": "PASS"
+        },
+        "office_days": 3
+      }
+    },
+    {
+      "case_id": "OD17",
+      "area": "E6",
+      "description": "WFH weekdays only.",
+      "adversarial": false,
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_title": "AI Evaluation Engineer",
+        "raw_company": "Synthetic Product Co",
+        "raw_location": "Bengaluru",
+        "raw_work_mode": "Hybrid",
+        "raw_salary": "Base: ₹30 LPA",
+        "raw_employment_type": "Full-time, permanent",
+        "raw_text": "We build an evaluation platform for enterprise RAG assistants. You will design golden datasets, calibrate LLM-as-judge graders and run hallucination and faithfulness regression evals in CI. Tue/Fri from home."
+      },
+      "expected": {
+        "dimensions": {
+          "geography": "PASS"
+        },
+        "office_days": 3
+      }
+    },
+    {
+      "case_id": "OD18",
+      "area": "E6",
+      "description": "Weekday plus a floating day.",
+      "adversarial": false,
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_title": "AI Evaluation Engineer",
+        "raw_company": "Synthetic Product Co",
+        "raw_location": "Bengaluru",
+        "raw_work_mode": "Hybrid",
+        "raw_salary": "Base: ₹30 LPA",
+        "raw_employment_type": "Full-time, permanent",
+        "raw_text": "We build an evaluation platform for enterprise RAG assistants. You will design golden datasets, calibrate LLM-as-judge graders and run hallucination and faithfulness regression evals in CI. In-office Tuesdays plus one floating day at our Domlur office."
+      },
+      "expected": {
+        "dimensions": {
+          "geography": "PASS"
+        },
+        "office_days": 2
+      }
+    },
+    {
+      "case_id": "OD19",
+      "area": "E6",
+      "description": "Hybrid with no day count -> UNKNOWN.",
+      "adversarial": false,
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_title": "AI Evaluation Engineer",
+        "raw_company": "Synthetic Product Co",
+        "raw_location": "Bengaluru",
+        "raw_work_mode": "Hybrid",
+        "raw_salary": "Base: ₹30 LPA",
+        "raw_employment_type": "Full-time, permanent",
+        "raw_text": "We build an evaluation platform for enterprise RAG assistants. You will design golden datasets, calibrate LLM-as-judge graders and run hallucination and faithfulness regression evals in CI. We are hybrid and flexible about it."
+      },
+      "expected": {
+        "dimensions": {
+          "geography": "UNKNOWN"
+        },
+        "flags_include": [
+          "HYBRID_DAYS_UNSPECIFIED"
+        ]
+      }
+    },
+    {
+      "case_id": "OD20",
+      "area": "E6",
+      "description": "Hybrid outside Bengaluru with named weekdays -> FAIL.",
+      "adversarial": false,
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_title": "AI Evaluation Engineer",
+        "raw_company": "Synthetic Product Co",
+        "raw_location": "Pune",
+        "raw_work_mode": "Hybrid",
+        "raw_salary": "Base: ₹30 LPA",
+        "raw_employment_type": "Full-time, permanent",
+        "raw_text": "We build an evaluation platform for enterprise RAG assistants. You will design golden datasets, calibrate LLM-as-judge graders and run hallucination and faithfulness regression evals in CI. Tuesdays and Thursdays at our Pune office."
+      },
+      "expected": {
+        "dimensions": {
+          "geography": "FAIL"
+        }
+      }
+    },
+    {
+      "case_id": "OD21",
+      "area": "E6",
+      "description": "Negated hybrid with structured Remote -> PASS, no conflict.",
+      "adversarial": true,
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_title": "AI Evaluation Engineer",
+        "raw_company": "Synthetic Product Co",
+        "raw_location": "Remote - India",
+        "raw_work_mode": "Remote",
+        "raw_salary": "Base: ₹30 LPA",
+        "raw_employment_type": "Full-time, permanent",
+        "raw_text": "We build an evaluation platform for enterprise RAG assistants. You will design golden datasets, calibrate LLM-as-judge graders and run hallucination and faithfulness regression evals in CI. Work arrangement: fully remote within India; this is not a hybrid role."
+      },
+      "expected": {
+        "dimensions": {
+          "geography": "PASS"
+        },
+        "flags_exclude": [
+          "WORK_MODE_CONFLICT"
+        ]
+      }
+    },
+    {
+      "case_id": "OD22",
+      "area": "E6",
+      "description": "Remote India listing + five office days in Chennai -> UNKNOWN + WORK_MODE_CONFLICT.",
+      "adversarial": false,
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_title": "AI Evaluation Engineer",
+        "raw_company": "Synthetic Product Co",
+        "raw_location": "Remote, India",
+        "raw_salary": "Base: ₹30 LPA",
+        "raw_employment_type": "Full-time, permanent",
+        "raw_text": "We build an evaluation platform for enterprise RAG assistants. You will design golden datasets, calibrate LLM-as-judge graders and run hallucination and faithfulness regression evals in CI. The team operates from our Chennai delivery centre five days a week."
+      },
+      "expected": {
+        "dimensions": {
+          "geography": "UNKNOWN"
+        },
+        "flags_include": [
+          "WORK_MODE_CONFLICT"
+        ],
+        "lane": "REVIEW"
+      }
+    },
+    {
+      "case_id": "OD23",
+      "area": "E6",
+      "description": "A weekly count with no attendance cue is not a work mode.",
+      "adversarial": true,
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_title": "AI Evaluation Engineer",
+        "raw_company": "Synthetic Product Co",
+        "raw_location": "Remote - India",
+        "raw_work_mode": "Remote",
+        "raw_salary": "Base: ₹30 LPA",
+        "raw_employment_type": "Full-time, permanent",
+        "raw_text": "We build an evaluation platform for enterprise RAG assistants. You will design golden datasets, calibrate LLM-as-judge graders and run hallucination and faithfulness regression evals in CI. Customer support is available 5 days a week."
+      },
+      "expected": {
+        "dimensions": {
+          "geography": "PASS"
+        },
+        "flags_exclude": [
+          "WORK_MODE_CONFLICT"
+        ]
+      }
+    },
+    {
+      "case_id": "OD24",
+      "area": "E6",
+      "description": "Technical 'hybrid search' + structured Remote.",
+      "adversarial": true,
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_title": "AI Evaluation Engineer",
+        "raw_company": "Synthetic Product Co",
+        "raw_location": "Remote - India",
+        "raw_work_mode": "Remote",
+        "raw_salary": "Base: ₹30 LPA",
+        "raw_employment_type": "Full-time, permanent",
+        "raw_text": "We build an evaluation platform for enterprise RAG assistants. You will design golden datasets, calibrate LLM-as-judge graders and run hallucination and faithfulness regression evals in CI. You will own hybrid search (BM25 + dense) relevance."
+      },
+      "expected": {
+        "dimensions": {
+          "geography": "PASS"
+        },
+        "flags_exclude": [
+          "WORK_MODE_CONFLICT"
+        ]
+      }
+    },
+    {
+      "case_id": "CP01",
+      "area": "E2",
+      "description": "Fixed + variable: fixed is base.",
+      "adversarial": false,
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_title": "AI Evaluation Engineer",
+        "raw_company": "Synthetic Product Co",
+        "raw_location": "Remote - India",
+        "raw_work_mode": "Remote",
+        "raw_salary": "Fixed: ₹15 LPA + Variable: ₹5 LPA (Total CTC ₹20 LPA)",
+        "raw_employment_type": "Full-time, permanent",
+        "raw_text": "We build an evaluation platform for enterprise RAG assistants. You will design golden datasets, calibrate LLM-as-judge graders and run hallucination and faithfulness regression evals in CI. Experience: 2-3 years."
+      },
+      "expected": {
+        "dimensions": {
+          "compensation": "FAIL"
+        }
+      }
+    },
+    {
+      "case_id": "CP02",
+      "area": "E2",
+      "description": "'up to' belongs to the bonus, not the base.",
+      "adversarial": false,
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_title": "AI Evaluation Engineer",
+        "raw_company": "Synthetic Product Co",
+        "raw_location": "Remote - India",
+        "raw_work_mode": "Remote",
+        "raw_salary": "₹27L fixed + up to 15% annual performance bonus",
+        "raw_employment_type": "Full-time, permanent",
+        "raw_text": "We build an evaluation platform for enterprise RAG assistants. You will design golden datasets, calibrate LLM-as-judge graders and run hallucination and faithfulness regression evals in CI. Experience: 2-3 years."
+      },
+      "expected": {
+        "dimensions": {
+          "compensation": "PASS"
+        },
+        "flags_include": [
+          "IN_TARGET"
+        ]
+      }
+    },
+    {
+      "case_id": "CP03",
+      "area": "E2",
+      "description": "'25 lakh users' is a count, not money.",
+      "adversarial": true,
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_title": "AI Evaluation Engineer",
+        "raw_company": "Synthetic Product Co",
+        "raw_location": "Remote - India",
+        "raw_work_mode": "Remote",
+        "raw_employment_type": "Full-time, permanent",
+        "raw_text": "We build an evaluation platform for enterprise RAG assistants. You will design golden datasets, calibrate LLM-as-judge graders and run hallucination and faithfulness regression evals in CI. Our assistant already serves 25 lakh users."
+      },
+      "expected": {
+        "dimensions": {
+          "compensation": "UNKNOWN"
+        },
+        "flags_include": [
+          "COMP_UNDISCLOSED"
+        ]
+      }
+    },
+    {
+      "case_id": "CP04",
+      "area": "E2",
+      "description": "Compensation table: base line inherits the stated annual period.",
+      "adversarial": false,
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_title": "AI Evaluation Engineer",
+        "raw_company": "Synthetic Product Co",
+        "raw_location": "Remote - India",
+        "raw_work_mode": "Remote",
+        "raw_salary": "Compensation\n  Fixed base ........ INR 26,00,000\n  Annual CTC ........ INR 33,50,000",
+        "raw_employment_type": "Full-time, permanent",
+        "raw_text": "We build an evaluation platform for enterprise RAG assistants. You will design golden datasets, calibrate LLM-as-judge graders and run hallucination and faithfulness regression evals in CI. Experience: 2-3 years."
+      },
+      "expected": {
+        "dimensions": {
+          "compensation": "PASS"
+        },
+        "flags_include": [
+          "IN_TARGET"
+        ],
+        "flags_exclude": [
+          "CTC_BASIS_UNVERIFIED"
+        ]
+      }
+    },
+    {
+      "case_id": "CP05",
+      "area": "E2",
+      "description": "India band wins over a US band.",
+      "adversarial": false,
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_title": "AI Evaluation Engineer",
+        "raw_company": "Synthetic Product Co",
+        "raw_location": "Remote - India",
+        "raw_work_mode": "Remote",
+        "raw_salary": "Pay ranges — US: $160,000–$200,000 | India: ₹42–55 LPA base",
+        "raw_employment_type": "Full-time, permanent",
+        "raw_text": "We build an evaluation platform for enterprise RAG assistants. You will design golden datasets, calibrate LLM-as-judge graders and run hallucination and faithfulness regression evals in CI. Experience: 2-3 years."
+      },
+      "expected": {
+        "dimensions": {
+          "compensation": "PASS"
+        },
+        "flags_include": [
+          "ABOVE_TARGET"
+        ]
+      }
+    },
+    {
+      "case_id": "CP06",
+      "area": "E2",
+      "description": "Foreign figure with no FX row -> UNKNOWN, never FAIL.",
+      "adversarial": false,
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_title": "AI Evaluation Engineer",
+        "raw_company": "Synthetic Product Co",
+        "raw_location": "Remote - India",
+        "raw_work_mode": "Remote",
+        "raw_salary": "SGD 9,000 per year",
+        "raw_employment_type": "Full-time, permanent",
+        "raw_text": "We build an evaluation platform for enterprise RAG assistants. You will design golden datasets, calibrate LLM-as-judge graders and run hallucination and faithfulness regression evals in CI. Experience: 2-3 years."
+      },
+      "expected": {
+        "dimensions": {
+          "compensation": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "case_id": "CP07",
+      "area": "E2",
+      "description": "'21 L' after a CTC keyword is INR.",
+      "adversarial": false,
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_title": "AI Evaluation Engineer",
+        "raw_company": "Synthetic Product Co",
+        "raw_location": "Remote - India",
+        "raw_work_mode": "Remote",
+        "raw_salary": "Offered CTC: 21 L",
+        "raw_employment_type": "Full-time, permanent",
+        "raw_text": "We build an evaluation platform for enterprise RAG assistants. You will design golden datasets, calibrate LLM-as-judge graders and run hallucination and faithfulness regression evals in CI. Experience: 2-3 years."
+      },
+      "expected": {
+        "dimensions": {
+          "compensation": "PASS"
+        },
+        "flags_include": [
+          "BELOW_TARGET",
+          "CTC_BASIS_UNVERIFIED"
+        ]
+      }
+    },
+    {
+      "case_id": "CP08",
+      "area": "E2",
+      "description": "'inclusive of bonus' does not make the figure variable.",
+      "adversarial": false,
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_title": "AI Evaluation Engineer",
+        "raw_company": "Synthetic Product Co",
+        "raw_location": "Remote - India",
+        "raw_work_mode": "Remote",
+        "raw_salary": "₹26 LPA, inclusive of 10% target bonus",
+        "raw_employment_type": "Full-time, permanent",
+        "raw_text": "We build an evaluation platform for enterprise RAG assistants. You will design golden datasets, calibrate LLM-as-judge graders and run hallucination and faithfulness regression evals in CI. Experience: 2-3 years."
+      },
+      "expected": {
+        "dimensions": {
+          "compensation": "PASS"
+        }
+      }
+    },
+    {
+      "case_id": "CP09",
+      "area": "E2",
+      "description": "Variable figure only -> non-base.",
+      "adversarial": false,
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_title": "AI Evaluation Engineer",
+        "raw_company": "Synthetic Product Co",
+        "raw_location": "Remote - India",
+        "raw_work_mode": "Remote",
+        "raw_salary": "Variable: ₹5 LPA",
+        "raw_employment_type": "Full-time, permanent",
+        "raw_text": "We build an evaluation platform for enterprise RAG assistants. You will design golden datasets, calibrate LLM-as-judge graders and run hallucination and faithfulness regression evals in CI. Experience: 2-3 years."
+      },
+      "expected": {
+        "dimensions": {
+          "compensation": "UNKNOWN"
+        },
+        "flags_include": [
+          "COMP_NON_BASE_ONLY"
+        ]
+      }
+    },
+    {
+      "case_id": "CP10",
+      "area": "E2",
+      "description": "Monthly INR.",
+      "adversarial": false,
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_title": "AI Evaluation Engineer",
+        "raw_company": "Synthetic Product Co",
+        "raw_location": "Remote - India",
+        "raw_work_mode": "Remote",
+        "raw_salary": "₹2.25 lakh/month",
+        "raw_employment_type": "Full-time, permanent",
+        "raw_text": "We build an evaluation platform for enterprise RAG assistants. You will design golden datasets, calibrate LLM-as-judge graders and run hallucination and faithfulness regression evals in CI. Experience: 2-3 years."
+      },
+      "expected": {
+        "dimensions": {
+          "compensation": "PASS"
+        },
+        "flags_include": [
+          "MONTHLY_ASSUMED"
+        ]
+      }
+    },
+    {
+      "case_id": "XP01",
+      "area": "E3",
+      "description": "STRONG relevance + 8+ years -> STRETCH -> REVIEW, never EXCLUDED.",
+      "adversarial": false,
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_title": "AI Evaluation Engineer",
+        "raw_company": "Synthetic Product Co",
+        "raw_location": "Remote - India",
+        "raw_work_mode": "Remote",
+        "raw_salary": "Base: ₹30 LPA",
+        "raw_employment_type": "Full-time, permanent",
+        "raw_text": "We build an evaluation platform for enterprise RAG assistants. You will design golden datasets, calibrate LLM-as-judge graders and run hallucination and faithfulness regression evals in CI. Experience: 8+ years."
+      },
+      "expected": {
+        "experience_signal": "STRETCH",
+        "flags_include": [
+          "EXPERIENCE_STRETCH"
+        ],
+        "lane": "REVIEW"
+      }
+    },
+    {
+      "case_id": "XP02",
+      "area": "E3",
+      "description": "MODERATE relevance + 8+ years -> PARKED (existing rule).",
+      "adversarial": false,
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_title": "ML Platform Engineer",
+        "raw_company": "Synthetic Product Co",
+        "raw_location": "Remote - India",
+        "raw_work_mode": "Remote",
+        "raw_salary": "Base: ₹30 LPA",
+        "raw_employment_type": "Full-time, permanent",
+        "raw_text": "Run our feature store and model serving for gradient-boosted fraud models. Experience: 8+ years."
+      },
+      "expected": {
+        "relevance_label": "MODERATE",
+        "lane": "PARKED"
+      }
+    },
+    {
+      "case_id": "XP03",
+      "area": "E3",
+      "description": "2-5 years -> REASONABLE.",
+      "adversarial": false,
+      "classification": "PRODUCT",
+      "observation": {
+        "raw_title": "AI Evaluation Engineer",
+        "raw_company": "Synthetic Product Co",
+        "raw_location": "Remote - India",
+        "raw_work_mode": "Remote",
+        "raw_salary": "Base: ₹30 LPA",
+        "raw_employment_type": "Full-time, permanent",
+        "raw_text": "We build an evaluation platform for enterprise RAG assistants. You will design golden datasets, calibrate LLM-as-judge graders and run hallucination and faithfulness regression evals in CI. Experience: 2-5 years."
+      },
+      "expected": {
+        "experience_signal": "REASONABLE"
+      }
+    },
+    {
+      "case_id": "G072@0.2.3",
+      "area": "E5",
+      "description": "Golden G072 posting under 0.2.3: client deployment -> employer_type FAIL.",
+      "adversarial": false,
+      "classification": "STAFFING",
+      "observation": {
+        "raw_title": "AI Engineer",
+        "raw_company": "Synthetic Staffing Pvt Ltd",
+        "raw_text": "Synthetic Staffing Pvt Ltd is hiring on its payroll for deployment at our client, a leading bank.\nLocation: Remote - India.\nSalary: ₹26 LPA fixed base.\nEmployment type: Full-time, permanent.\nWorking language: English.\nExperience: 3 years building AI applications.\nYou will build a RAG pipeline using embeddings, vector retrieval with BM25 hybrid search, reranking and LLM evaluation (groundedness, faithfulness) in Python and FastAPI, deployed with Docker and CI/CD."
+      },
+      "expected": {
+        "dimensions": {
+          "employer_type": "FAIL"
+        },
+        "rules": {
+          "employer_type": "EMPR-R09"
+        },
+        "lane": "EXCLUDED"
+      }
+    }
+  ]
+}

@@ -40,12 +40,13 @@ def test_no_source_adapter_implementations_exist():
     assert files == ["__init__.py", "base.py"]
 
 
-def test_v01_engine_stays_pinned_and_default_v2_policy_is_022():
-    # Default switched from 0.2.0 to 0.2.1 in P1a, and from 0.2.1 to 0.2.2 in P3,
+def test_v01_engine_stays_pinned_and_default_v2_policy_is_024():
+    # Default switched from 0.2.0 to 0.2.1 in P1a, from 0.2.1 to 0.2.2 in P3, and
+    # from 0.2.2 to 0.2.4 in P6 (Gate E, OR-82; 0.2.3 was never the default),
     # each time only after that version's acceptance conditions passed.
     assert EXPECTED_RULESET_VERSION == "jobops-policy@0.1.0"
     doc = json.loads(DEFAULT_POLICY_PATH.read_text(encoding="utf-8"))
-    assert doc["artifact"]["ruleset_version"] == "jobops-policy@0.2.2"
+    assert doc["artifact"]["ruleset_version"] == "jobops-policy@0.2.4"
 
 
 def test_020_remains_loadable_for_replay():

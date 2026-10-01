@@ -1,0 +1,11 @@
+{
+  "overlay": "Round-2 owner resolutions (P4b). Applied AFTER raw measurement; alters neither the frozen fixture, the policy, nor the engine.",
+  "raw_results_sha256": "e11c9f76335e11c0e6b5c6e62c66807084b1214b73223eed8066ed2d0f8280b5",
+  "resolutions": {
+    "R2-046": {"resolution": "BELOW_TARGET is a review flag", "expected_lane": "REVIEW", "expected_must_have_flags": ["BELOW_TARGET"]},
+    "R2-051": {"resolution": "COMPENSATION_REVIEW is a review flag", "expected_lane": "REVIEW", "expected_must_have_flags": ["COMPENSATION_REVIEW"]},
+    "R2-075": {"resolution": "genuine permanent role via EOR -> employment_type UNKNOWN + EOR -> REVIEW", "expected_employment_type": "UNKNOWN", "expected_must_have_flags": ["EOR"], "expected_lane": "REVIEW"},
+    "R2-076": {"resolution": "EOR signal in JD counts; structured Full-time does not override -> UNKNOWN + EOR -> REVIEW", "expected_employment_type": "UNKNOWN", "expected_must_have_flags": ["EOR"], "expected_lane": "REVIEW"},
+    "R2-SEQ-09/S9-R2": {"resolution": "same-source SEARCH_ONLY -> FULL_JD without title/location/compensation/employment change is enrichment", "expected_newness": "SEEN_BEFORE"}
+  }
+}

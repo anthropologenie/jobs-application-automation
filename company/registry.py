@@ -6,7 +6,7 @@ _BASIS_RANK = {"OWNER_CONFIRMED": 0, "REGISTRY_LIST": 1, "INFERRED_FROM_EVIDENCE
 
 # Deterministic resolution when text signals name more than one class: the more
 # cautious reading first, so a staffing signal is never hidden by a product one.
-_SIGNAL_ORDER = ["STAFFING", "CONSULTANCY", "IT_SERVICES", "GCC", "AI_NATIVE",
+_SIGNAL_ORDER = ["THIRD_PARTY_PAYROLL", "STAFFING", "CONSULTANCY", "IT_SERVICES", "GCC", "AI_NATIVE",
                  "ENGINEERING_LED", "PRODUCT"]
 
 

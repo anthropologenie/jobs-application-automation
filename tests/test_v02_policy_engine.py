@@ -200,9 +200,13 @@ def test_unclassified_employer_inferred_from_text_signal():
 # ------------------------------------------------------------------- language
 
 def test_heuristic_detection_never_reaches_fail_confidence():
+    # Describes the 0.2.0-0.2.2 stop-word heuristic (capped below the 0.95 threshold). OR-69 (Addendum E4)
+    # replaced that detector from 0.2.3 on, so this test is pinned to 0.2.2, the default when it was written
+    # (P6). The 0.2.4 behaviour is tests/test_p6_policy_024.py::test_german_jd_fails_under_024_detector.
+    from evaluation.policy_loader import load_policy_version
     german = ("Wir suchen eine erfahrene Person für unser Team in Berlin und bieten spannende Aufgaben "
               "mit modernen Werkzeugen sowie flexible Arbeitszeiten für alle Mitarbeitenden in der Firma heute.")
-    svc = fresh_service()
+    svc = fresh_service(load_policy_version("jobops-policy@0.2.2"))
     r = svc.ingest(observation(raw_text=german))["evaluation"]["result"]
     assert r["eligibility_dimensions"]["language"]["verdict"] == "UNKNOWN"
 

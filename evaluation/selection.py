@@ -50,8 +50,15 @@ def select(observations: List[Dict[str, Any]], evidence: List[Dict[str, Any]],
             "candidates": [(c[1], c[2]) for c in candidates]}
 
 
-def conflicts(selected: Optional[Dict[str, Any]], dimension: str, comparable_fn) -> List[Dict[str, Any]]:
-    """Disagreements between the selected observation and other-source PRIMARY evidence."""
+def conflicts(selected: Optional[Dict[str, Any]], dimension: str, comparable_fn,
+              differs=None) -> List[Dict[str, Any]]:
+    """
+    Disagreements between the selected observation and other-source PRIMARY evidence.
+    `differs` (0.2.3) decides disagreement; by default any inequality. Under 0.2.3 a detail
+    absent on one side (a search card saying "Hybrid, Bengaluru" next to an ATS JD stating two
+    office days) is not a contradiction (F4 / owner resolution of R2-SEQ-09).
+    """
+    differs = differs or (lambda a, b: a != b)
     if not selected:
         return []
     chosen_obs = selected["observation"]
@@ -65,7 +72,7 @@ def conflicts(selected: Optional[Dict[str, Any]], dimension: str, comparable_fn)
         if not any(r["strength"] == "PRIMARY" for r in rows):
             continue
         other = comparable_fn(rows)
-        if other is not None and other != chosen_value:
+        if other is not None and differs(other, chosen_value):
             found.append({"dimension": dimension,
                           "selected_observation": chosen_obs["observation_id"],
                           "selected_source": chosen_obs["source"],

@@ -42,13 +42,25 @@ def order_key(item: Dict[str, Any], policy) -> tuple:
     return tuple(key)
 
 
-def _item(req: Dict[str, Any], evaluation: Dict[str, Any]) -> Dict[str, Any]:
+def _completeness(r: Dict[str, Any], policy) -> int:
+    """
+    Queue key "evidence completeness". 0.2.0-0.2.3: every UNKNOWN dimension counts. 0.2.4 (OR-80, F3):
+    only UNKNOWNs caused by missing information count; a known fact the policy leaves unresolved
+    (consultancy, staffing, EOR ...) is not incomplete evidence.
+    """
+    ec = r.get("evidence_completeness", {})
+    if policy is not None and policy.params.get("completeness_counts_missing_only") and "missing_evidence_count" in ec:
+        return ec["missing_evidence_count"]
+    return ec.get("unknown_dimension_count", 0)
+
+
+def _item(req: Dict[str, Any], evaluation: Dict[str, Any], policy=None) -> Dict[str, Any]:
     r = evaluation["result"]
     pref = r.get("preference_attributes", {})
     return {"requisition_id": req["requisition_id"],
             "relevance": r["relevance"]["relevance_label"],
             "newness": req["newness_state"],
-            "evidence_completeness": r.get("evidence_completeness", {}).get("unknown_dimension_count", 0),
+            "evidence_completeness": _completeness(r, policy),
             "work_arrangement": pref.get("work_arrangement", "UNKNOWN"),
             "compensation_band": pref.get("compensation_band", "UNKNOWN"),
             "employer_preference": pref.get("employer_preference", "UNKNOWN"),
@@ -129,7 +141,7 @@ def plan_day(service, day: str) -> Dict[str, Any]:
     all_items: List[Dict[str, Any]] = []
     for req in repo.requisitions(service.conn):
         ev = service.current_evaluation(req["requisition_id"])
-        item = _item(req, ev)
+        item = _item(req, ev, policy)
         all_items.append(item)
         state = repo.queue_state(service.conn, req["requisition_id"])
         if item["lane"] == "REVIEW":
