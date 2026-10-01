@@ -1,0 +1,9 @@
+Title: QA Engineer (ML)
+Company: Thornfield
+Location: Remote, India
+Application URL: https://jobs.example-board.test/view/thornfield-019
+Policy: jobops-policy@0.2.6
+Flags: COMP_UNDISCLOSED
+
+------------------------------------------------------------
+Thornfield builds and sells its own AI product for school timetables. You will write automated tests for our machine learning services and help the team run LLM evaluation reviews each sprint.

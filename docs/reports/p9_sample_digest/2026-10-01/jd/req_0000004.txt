@@ -1,0 +1,9 @@
+Title: GenAI QA Engineer
+Company: Orchid Relay
+Location: Remote, India
+Application URL: https://jobs.example-board.test/view/orchid-relay-004
+Policy: jobops-policy@0.2.6
+Flags: COMP_BASIS_UNSTATED, IN_TARGET
+
+------------------------------------------------------------
+Orchid Relay builds and sells its own AI product for legal research. You will design evaluation harnesses and golden datasets for our LLM assistants, measure groundedness and faithfulness of RAG answers, and add guardrails that catch hallucinations before release. Python, pytest and CI are part of the daily work. Experience: 3 to 5 years in software testing or ML engineering.

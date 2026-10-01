@@ -1,0 +1,9 @@
+Title: AI Quality Engineer II
+Company: Larkspur Tech
+Location: Remote, India
+Application URL: https://jobs.example-board.test/view/larkspur-tech-023
+Policy: jobops-policy@0.2.6
+Flags: EMPLOYER_UNCLASSIFIED, COMP_BASIS_UNSTATED, IN_TARGET
+
+------------------------------------------------------------
+You will design evaluation harnesses and golden datasets for LLM assistants used in museum archives, measure groundedness and faithfulness of RAG answers, and add guardrails that catch hallucinations before release.

@@ -1,0 +1,80 @@
+{
+  "EXCLUDED": 0,
+  "PARKED": 0,
+  "REVIEW": 8,
+  "SHORTLIST": 6,
+  "SUPPRESSED_DUPLICATE": 0,
+  "ambiguous_identity": 0,
+  "apply_url_missing": 0,
+  "below_25": true,
+  "bottleneck": {
+    "cause": "compensation UNKNOWN",
+    "count": 8,
+    "top": [
+      {
+        "cause": "compensation UNKNOWN",
+        "count": 8
+      }
+    ]
+  },
+  "date": "2026-10-02",
+  "duplicate_records_collapsed": 0,
+  "duplicates": 0,
+  "estimated_source_jobs_for_25": 25,
+  "estimated_source_jobs_for_30": 30,
+  "gap_to_25": 11,
+  "gap_to_30": 16,
+  "gate_e": "pending (Round 4 not yet measured)",
+  "input": "day2_export.csv",
+  "input_sha256": "ef6d1fd907e24d6076eddaa95221ed5b8535fb1227502cedd1899d4954edc7f8",
+  "jd_missing": 0,
+  "jd_truncated": 0,
+  "jobs_in": 14,
+  "observed_conversion_rate": 1.0,
+  "per_dimension": {
+    "compensation": {
+      "FAIL": 0,
+      "PASS": 6,
+      "UNKNOWN": 8
+    },
+    "employer": {
+      "FAIL": 0,
+      "PASS": 14,
+      "UNKNOWN": 0
+    },
+    "employment": {
+      "FAIL": 0,
+      "PASS": 14,
+      "UNKNOWN": 0
+    },
+    "geography": {
+      "FAIL": 0,
+      "PASS": 14,
+      "UNKNOWN": 0
+    },
+    "language": {
+      "FAIL": 0,
+      "PASS": 14,
+      "UNKNOWN": 0
+    },
+    "relationship": {
+      "FAIL": 0,
+      "PASS": 14,
+      "UNKNOWN": 0
+    }
+  },
+  "policy_sha256": "de527c5d1dceb400913ec42e5aa527f19cd809e5054fcef5c61337d7fb890455",
+  "policy_version": "jobops-policy@0.2.6",
+  "queue_today": {
+    "overflow_parked_today": 0,
+    "review_cap": 10,
+    "review_held_incomplete_jd": 2,
+    "review_overflow": 17,
+    "review_shown": 11,
+    "shortlist_pending": 7
+  },
+  "rejected_records": 0,
+  "shortlist_plus_review": 14,
+  "suppressed_duplicate_requisitions": 0,
+  "unique_jobs": 14
+}

@@ -1,0 +1,9 @@
+Title: Automation Engineer, ML
+Company: Ivory Gate
+Location: Remote, India
+Application URL: https://jobs.example-board.test/view/ivory-gate-022
+Policy: jobops-policy@0.2.6
+Flags: COMP_UNDISCLOSED
+
+------------------------------------------------------------
+Ivory Gate builds and sells its own AI product for payroll queries. You will write automated tests for our machine learning services and help the team run LLM evaluation reviews each sprint.

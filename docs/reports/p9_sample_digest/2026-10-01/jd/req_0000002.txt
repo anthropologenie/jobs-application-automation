@@ -1,0 +1,9 @@
+Title: LLM Evaluation Engineer
+Company: Tidewell Labs
+Location: Remote, India
+Application URL: https://jobs.example-board.test/view/tidewell-labs-002
+Policy: jobops-policy@0.2.6
+Flags: COMP_BASIS_UNSTATED, IN_TARGET
+
+------------------------------------------------------------
+Tidewell Labs builds and sells its own AI product for retail search. You will design evaluation harnesses and golden datasets for our LLM assistants, measure groundedness and faithfulness of RAG answers, and add guardrails that catch hallucinations before release. Python, pytest and CI are part of the daily work. Experience: 3 to 5 years in software testing or ML engineering.

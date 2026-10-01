@@ -1,0 +1,9 @@
+Title: AI Evaluation Engineer
+Company: Saltmarsh AI
+Location: Remote, India
+Application URL: https://jobs.example-board.test/view/saltmarsh-ai-007
+Policy: jobops-policy@0.2.6
+Flags: COMP_UNDISCLOSED
+
+------------------------------------------------------------
+Saltmarsh AI builds and sells its own AI product for school timetables. You will design evaluation harnesses and golden datasets for our LLM assistants, measure groundedness and faithfulness of RAG answers, and add guardrails that catch hallucinations before release. Python, pytest and CI are part of the daily work. Experience: 3 to 5 years in software testing or ML engineering.

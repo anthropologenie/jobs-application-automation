@@ -1,0 +1,96 @@
+{
+  "EXCLUDED": 11,
+  "PARKED": 9,
+  "REVIEW": 26,
+  "SHORTLIST": 7,
+  "SUPPRESSED_DUPLICATE": 0,
+  "ambiguous_identity": 2,
+  "apply_url_missing": 5,
+  "below_25": false,
+  "bottleneck": {
+    "cause": "compensation UNKNOWN",
+    "count": 19,
+    "top": [
+      {
+        "cause": "compensation UNKNOWN",
+        "count": 19
+      },
+      {
+        "cause": "relevance WEAK (parked)",
+        "count": 8
+      },
+      {
+        "cause": "geography FAIL",
+        "count": 6
+      },
+      {
+        "cause": "duplicate suppression",
+        "count": 4
+      },
+      {
+        "cause": "employer UNKNOWN",
+        "count": 4
+      }
+    ]
+  },
+  "date": "2026-10-01",
+  "duplicate_records_collapsed": 4,
+  "duplicates": 4,
+  "estimated_source_jobs_for_25": 44,
+  "estimated_source_jobs_for_30": 52,
+  "gap_to_25": 0,
+  "gap_to_30": 0,
+  "gate_e": "pending (Round 4 not yet measured)",
+  "input": "day1_export.json",
+  "input_sha256": "3b6f378457c140ac0d44c9f791c2193dcb19fbbc75b6bfe8a8606eb3b63dd7a5",
+  "jd_missing": 4,
+  "jd_truncated": 2,
+  "jobs_in": 57,
+  "observed_conversion_rate": 0.5789,
+  "per_dimension": {
+    "compensation": {
+      "FAIL": 1,
+      "PASS": 33,
+      "UNKNOWN": 19
+    },
+    "employer": {
+      "FAIL": 1,
+      "PASS": 46,
+      "UNKNOWN": 6
+    },
+    "employment": {
+      "FAIL": 2,
+      "PASS": 51,
+      "UNKNOWN": 0
+    },
+    "geography": {
+      "FAIL": 6,
+      "PASS": 47,
+      "UNKNOWN": 0
+    },
+    "language": {
+      "FAIL": 1,
+      "PASS": 48,
+      "UNKNOWN": 4
+    },
+    "relationship": {
+      "FAIL": 1,
+      "PASS": 52,
+      "UNKNOWN": 0
+    }
+  },
+  "policy_sha256": "de527c5d1dceb400913ec42e5aa527f19cd809e5054fcef5c61337d7fb890455",
+  "policy_version": "jobops-policy@0.2.6",
+  "queue_today": {
+    "overflow_parked_today": 0,
+    "review_cap": 10,
+    "review_held_incomplete_jd": 2,
+    "review_overflow": 13,
+    "review_shown": 11,
+    "shortlist_pending": 7
+  },
+  "rejected_records": 0,
+  "shortlist_plus_review": 33,
+  "suppressed_duplicate_requisitions": 0,
+  "unique_jobs": 53
+}

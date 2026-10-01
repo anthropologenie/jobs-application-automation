@@ -82,3 +82,8 @@ data/jds/
 *owner_labels*.csv
 *.jd.txt
 scraped_jds/
+
+# P9 sourcing pilot: your downloaded exports and local run state/digests (personal data; never committed).
+# The committed sample is docs/reports/p9_sample_digest/ (synthetic).
+/exports/
+/runs/
