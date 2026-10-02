@@ -1,0 +1,113 @@
+{
+  "_source": "P11 brief (owner statement, 2026-10-02): 'Candidate capability profile'. Cross-checked against docs/Career_Strategy_and_Search_Preferences.md §7 (DeepEval / Ragas = Developing). Edit this file, not the tool, to correct the profile.",
+  "_levels": {
+    "CORE": "primary demonstrated area named in the profile",
+    "WORKING": "hands-on / in-progress familiarity named in the profile; not production depth",
+    "SUPPORTING": "not itself named in the profile, but a sub-topic of a named CORE area (listed under 'supporting_basis'); NOT a claim of experience",
+    "LIMITED": "named in the profile as limited / non-core",
+    "NOT_ESTABLISHED": "anything not listed here"
+  },
+  "CORE": [
+    "Python",
+    "LLM APIs",
+    "Generative AI",
+    "Prompt engineering",
+    "Tool / function calling",
+    "RAG",
+    "Hybrid search",
+    "BM25",
+    "Embeddings",
+    "FAISS",
+    "RRF",
+    "Grounding / hallucination",
+    "LLM evaluation",
+    "LLM-as-judge",
+    "Evaluation datasets",
+    "AI quality / reliability",
+    "FastAPI",
+    "Pydantic",
+    "REST / APIs",
+    "pytest",
+    "Test automation",
+    "Quality engineering",
+    "AI agents / agentic",
+    "Multi-agent",
+    "CrewAI",
+    "AWS",
+    "AWS Bedrock",
+    "Databricks",
+    "SQL",
+    "Docker",
+    "CI/CD",
+    "Git / GitHub",
+    "Root-cause analysis"
+  ],
+  "WORKING": [
+    "LangChain",
+    "LangGraph",
+    "Ragas",
+    "DeepEval",
+    "MCP",
+    "Chroma"
+  ],
+  "SUPPORTING": {
+    "Vector DB": "RAG / FAISS",
+    "Vector / semantic search": "RAG / hybrid retrieval",
+    "Reranking": "RAG / RRF",
+    "Context management": "LLM application engineering",
+    "Guardrails": "AI quality / reliability",
+    "Agent orchestration": "agentic systems / CrewAI",
+    "Evaluation pipeline / harness": "LLM evaluation",
+    "Benchmarks": "LLM evaluation",
+    "SDET": "Python + quality engineering",
+    "Test generation (AI)": "AI quality engineering",
+    "AI-powered testing": "AI quality engineering",
+    "Structured output": "LLM application engineering / Pydantic",
+    "Pandas / NumPy": "docs/Career_Strategy_and_Search_Preferences.md §7: 'Python Automation (Pytest, Pandas, SQLAlchemy)' (Strong)",
+    "Snowflake": "docs/Career_Strategy_and_Search_Preferences.md §7: 'Cloud Data Platforms (Redshift, Databricks, Snowflake)' (Strong)"
+  },
+  "LIMITED": [
+    "Traditional ML (generic)",
+    "scikit-learn",
+    "Gradient boosting family",
+    "Model training",
+    "Hyperparameter tuning",
+    "Feature engineering",
+    "Classical ML tasks",
+    "Statistical modeling"
+  ],
+  "_expansions": {
+    "LLM application engineering": [
+      "LLM APIs",
+      "Generative AI",
+      "Prompt engineering"
+    ],
+    "tool integration": [
+      "Tool / function calling"
+    ],
+    "grounding": [
+      "Grounding / hallucination"
+    ],
+    "AI quality/reliability": [
+      "AI quality / reliability"
+    ],
+    "pytest/test automation + Quality Engineering positioning": [
+      "pytest",
+      "Test automation",
+      "Quality engineering"
+    ],
+    "REST/API integration": [
+      "REST / APIs"
+    ],
+    "Docker/CI/CD/GitHub": [
+      "Docker",
+      "CI/CD",
+      "Git / GitHub"
+    ],
+    "AWS/Bedrock": [
+      "AWS",
+      "AWS Bedrock"
+    ],
+    "Root-cause analysis": "docs/Career_Strategy_and_Search_Preferences.md §7: 'AAVA multi-agent RCA pipeline' (Strong)"
+  }
+}
