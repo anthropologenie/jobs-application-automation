@@ -52,6 +52,17 @@ def section(text, title):
     return text.split(f"## {title}", 1)[1].split("\n## ", 1)[0]
 
 
+# P10: the P9 "REVIEW (shown today)" section is now four tier sections, and "REVIEW overflow (carried to
+# tomorrow)" is "REVIEW — Overflow". The assertions below are P9's; only the section lookup follows the headings.
+REVIEW_TIER_SECTIONS = ("REVIEW — T1 Nearly Ready", "REVIEW — T2 Stretch Experience Only",
+                        "REVIEW — T3 Location / Work Mode Unclear", "REVIEW — T4 Other")
+OVERFLOW = "REVIEW — Overflow"
+
+
+def review_shown(text):
+    return "".join(section(text, t) for t in REVIEW_TIER_SECTIONS)
+
+
 def ids_in(text):
     return set(re.findall(r"`(req_\d+)`", text))
 
@@ -186,14 +197,17 @@ def test_bridging_sighting_becomes_suppressed_duplicate(tmp_path):
     m = metrics_of(tmp_path / "o", DAYS[0])
     assert m["SUPPRESSED_DUPLICATE"] == 1 and m["duplicates"] >= 1
     text = digest_of(tmp_path / "o", DAYS[0])
-    shown = ids_in(section(text, "SHORTLIST") + section(text, "REVIEW (shown today)"))
+    shown = ids_in(section(text, "SHORTLIST") + review_shown(text))
     assert len(shown) == 1  # the suppressed duplicate is never presented as a candidate
 
 
 def test_ambiguous_identity_is_review_not_excluded(day1):
     text = digest_of(day1, DAYS[0])
-    review = section(text, "REVIEW (shown today)")
-    assert review.count("IDENTITY_UNCERTAIN: may be the same job") == 2
+    # P10: the identity-uncertain pair is tier T4, so with the default cap it is listed in the overflow (still
+    # REVIEW) rather than as shown cards. The P9 property is unchanged: both members are REVIEW, never EXCLUDED.
+    review = review_shown(text) + section(text, OVERFLOW)
+    assert {"req_0000025", "req_0000026"} <= ids_in(review)
+    assert section(text, OVERFLOW).count("identity uncertain") == 2
     excluded = {r["job_id"] for r in csv.DictReader(open(Path(day1) / DAYS[0] / "excluded.csv"))}
     assert not (ids_in(review) & excluded)
 
@@ -277,7 +291,8 @@ def test_or88_d3_non_strong_parked_whatever_the_queue(tmp_path, d4_cap):
     parked = section(text, "PARKED (1 from this export, 2 by overflow today)")
     assert parked, text.split("## PARKED", 1)[1][:300]
     assert {"req_0000027", "req_0000028"} <= ids_in(parked)  # NOT_ASSESSED items carried D, D+1, D+2
-    shown = ids_in(section(text, "REVIEW (shown today)") + section(text, "REVIEW overflow (carried to tomorrow)"))
+    shown = ids_in(review_shown(text) + section(text, OVERFLOW))
+    assert shown  # the D4 queue is not empty, so the check below is not vacuous
     assert not ({"req_0000027", "req_0000028"} & shown)
 
 
@@ -293,9 +308,10 @@ def test_or88_default_cap_four_days(four_days):
 def test_excluded_never_shortlist_or_review(four_days, day):
     excluded = {r["job_id"] for r in csv.DictReader(open(Path(four_days) / day / "excluded.csv"))}
     text = digest_of(four_days, day)
-    candidates = ids_in(section(text, "SHORTLIST") + section(text, "REVIEW (shown today)")
+    candidates = ids_in(section(text, "SHORTLIST") + review_shown(text)
                         + section(text, "REVIEW — held from SHORTLIST (incomplete JD; outside the daily cap)")
-                        + section(text, "REVIEW overflow (carried to tomorrow)"))
+                        + section(text, OVERFLOW))
+    assert candidates  # not vacuous
     assert not (excluded & candidates)
     decisions = {r["job_id"] for r in csv.DictReader(open(Path(four_days) / day / "decisions.csv"))}
     assert not (excluded & decisions) and candidates <= decisions

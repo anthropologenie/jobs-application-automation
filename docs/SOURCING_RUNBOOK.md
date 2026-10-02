@@ -1,4 +1,4 @@
-# Sourcing runbook (P9, manual pilot)
+# Sourcing runbook (P9 manual pilot, P10 digest tiers)
 
 JobOps reads a job export **you** downloaded and writes a daily digest. It never fetches, applies, submits, writes to recruiters or tailors your resume. You decide and apply yourself.
 
@@ -30,6 +30,7 @@ python3 -m jobops source \
 - Run the dates **in order**. An earlier date after a later one is refused.
 - Re-running the same file on the same date changes nothing and re-renders identical output.
 - `--review-cap N` only changes how many REVIEW cards are shown today (the default is 10). Verdicts and the policy are unchanged.
+- There is no `--companies` option: a company-classification input is open item OI-056 (see §4a).
 
 **Accepted field names.** The first non-empty key wins; matching ignores case, `_`, `-` and spaces. You need a title, plus at least one of company, URL or id.
 
@@ -58,22 +59,58 @@ A top-level JSON object is accepted if it holds the list under `items`, `jobs`, 
 - the policy (0.2.6) and its SHA;
 - "Gate E: pending". Round 4 has not been measured, so treat verdicts as assistance, not proof.
 
-**Metrics:**
-- counts and SHORTLIST + REVIEW;
-- the gap to 25 and to 30;
-- the largest bottleneck.
+**Tier table (top).** How this export's REVIEW jobs split into the four tiers below.
 
-**Sections:**
+**Metrics:**
+- counts: jobs in, unique, duplicates, ambiguous identity, SHORTLIST / REVIEW / PARKED / EXCLUDED;
+- SHORTLIST, T1, T2, T3, T4 and READY-ISH;
+- eligibility by dimension (PASS / UNKNOWN / FAIL);
+- the illustrative source-jobs estimate, and the largest blocker when READY-ISH is below 25;
+- the bottleneck (diagnostic only; no policy change is implied).
+
+**Sections, in order:**
 - **SHORTLIST:** every eligibility dimension passes, the JD is complete and relevance is high enough. Read these first.
-- **REVIEW (shown today):** something is UNKNOWN or flagged; the "Why" line says what. Up to the cap. A grouped pair (IDENTITY_UNCERTAIN) may be one job listed twice.
-- **REVIEW held from SHORTLIST:** would shortlist, but the JD was missing or cut off. Check the full posting before applying.
-- **REVIEW overflow:** carried to tomorrow. A non-STRONG item carried three days is PARKED (OR-88).
+- **REVIEW — T1 / T2 / T3 / T4:** today's shown REVIEW cards, up to the cap, grouped by tier (below).
+- **REVIEW — held from SHORTLIST:** would shortlist, but the JD was missing or cut off (tier T4, outside the cap). Check the full posting before applying.
+- **REVIEW — Overflow:** still REVIEW, carried to tomorrow, with a count per tier. A non-STRONG item carried three days is PARKED (OR-88).
 - **PARKED:** weak relevance, or overflow parked. Skim weekly.
-- **EXCLUDED:** see `excluded.csv`.
+- **EXCLUDED** and **EXCLUDED by Dimension:** counts per failing dimension and rule; details in `excluded.csv`.
 
 **Card fields:**
+- **Pay: not stated** and **Mode: not stated** mean the export had no value. These are display statements; the eligibility line shows the engine's actual verdict.
+- **Tier** and **Blockers** say why the job is in REVIEW. Every blocker comes from the stored verdicts, flags and JD status, e.g. "employer unclassified", "pay not stated", "work mode conflict", "JD truncated".
 - Every quote (`> …`) is copied verbatim from the export.
 - **Apply** is the URL exactly as exported. `apply_url_missing` means the export had none, or only a search-results link. Find the posting yourself.
+
+## 4a. REVIEW tiers (P10, presentation only)
+
+A tier never changes a verdict, flag, relevance label, experience label, lane or the policy. It only decides the order in which REVIEW is shown. The first matching tier applies:
+
+| Tier | Meaning |
+|---|---|
+| **T1 — Nearly Ready** | Every dimension passes, except possibly *employer unclassified* and/or *pay not stated*. No other flag, no identity or source conflict, the JD is complete, and experience is not STRETCH. |
+| **T2 — Stretch Experience Only** | As T1, but experience is STRETCH. |
+| **T3 — Location / Work Mode Unclear** | Geography is UNKNOWN, or the work mode conflicts. |
+| **T4 — Other** | Everything else, e.g. identity uncertain, source conflict, language / relationship / employment unknown, pay below target, missing or truncated JD. |
+
+**Order within a tier:**
+1. STRONG before MODERATE (then other relevance);
+2. NEW, then UPDATED, then SEEN_BEFORE;
+3. stated pay in or above target before any other pay state (a disclosed below-target salary never ranks above undisclosed pay);
+4. job id.
+
+**The cap.** The daily cap (10, or `--review-cap N`) is filled T1 → T2 → T3 → T4 from today's pending REVIEW pool, and the rest is listed in Overflow. Overflow jobs stay REVIEW.
+
+The engine's own queue (`plan_day`: carry days, OR-88 parking) is unchanged and still uses the policy's ordering, so a shown card can be "carried" in the engine's count and an overflow line can be "surfaced". Each card and overflow line says which. A non-STRONG job carried three engine days is parked by OR-88 even if it was shown (open item OI-057).
+
+**READY-ISH = SHORTLIST + T1 + T2.**
+- **SHORTLIST:** actionable under the current policy without resolving an UNKNOWN.
+- **T1:** potentially actionable after resolving only employer / pay uncertainty.
+- **T2:** as T1, plus a STRETCH experience consideration.
+
+READY-ISH is a diagnostic presentation metric. It is not SHORTLIST and never means "ready to apply". It means the remaining uncertainty is narrow and named on the card.
+
+**Company classification (`--companies`): not available.** The engine can store an owner classification, but an owner "direct" entry would outrank a staffing / consultancy statement in the JD, so it cannot be added without an owner ruling (OI-056). Until then an unclassified employer stays UNKNOWN → REVIEW (T1 when it is the only blocker).
 
 ## 5. JD files for resume tailoring
 
@@ -103,15 +140,20 @@ python3 -m jobops decisions --import runs/2026-10-01/decisions.csv --out runs
 
 | Metric | Meaning |
 |---|---|
-| `shortlist_plus_review` | Today's viable candidates. |
-| `gap_to_25`, `gap_to_30` | How far short of 25 or 30 candidates today is. |
-| `estimated_source_jobs_for_25` | Today's conversion rate applied to 25; an estimate from one day, not a promise. |
-| `bottleneck` | The single largest reason jobs did not reach SHORTLIST. Diagnostic only: the policy does not change because of one day. |
+| `SHORTLIST`, `review_tiers` (T1–T4) | Lane count and REVIEW split by tier; T1 + T2 + T3 + T4 = REVIEW. |
+| `READY_ISH` | SHORTLIST + T1 + T2. Diagnostic; not "ready to apply". |
+| `illustrative_source_jobs_for_25_ready_ish` / `_30_` | Illustrative one-day estimate, not an application-supply forecast: 25 (or 30) ÷ (READY-ISH ÷ jobs in). Empty when READY-ISH is 0. |
+| `ready_ish_below_25`, `largest_blocker_outside_ready_ish` | When READY-ISH is below 25, the most frequent blocker among T3 / T4 jobs. More source volume alone does not remove a blocker. |
+| `shortlist_plus_review`, `gap_to_25`, `gap_to_30` | P9 counts kept for continuity. **Not** an estimate of actionable supply. |
+| `bottleneck` | The single largest reason jobs did not reach SHORTLIST. Diagnostic only; no policy change is implied. |
+| `excluded_by_dimension`, `excluded_by_rule` | Rows of `excluded.csv` per failing dimension / rule (a job failing two dimensions counts twice). |
+| `review_queue_tiers` | Shown and overflow per tier, and how far the shown set differs from the engine's surfaced set (OI-057). |
 
-Common bottlenecks:
-- **compensation UNKNOWN:** pay was not stated.
-- **employer UNKNOWN:** the JD does not say what kind of company it is.
-- **geography FAIL:** the role is not remote-from-India or Bengaluru hybrid.
+Common blockers:
+- **pay not stated:** compensation UNKNOWN (COMP_UNDISCLOSED).
+- **employer unclassified:** the JD does not say what kind of company it is (EMPLOYER_UNCLASSIFIED).
+- **geography unclear / work mode conflict:** the work arrangement is missing, hybrid days are not stated, or the sources disagree.
+- **geography FAIL** (EXCLUDED): the role is not remote-from-India or Bengaluru hybrid.
 
 ## 9. Audit `excluded.csv`
 

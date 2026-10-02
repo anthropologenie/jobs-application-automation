@@ -1,0 +1,199 @@
+{
+  "EXCLUDED": 11,
+  "PARKED": 9,
+  "READY_ISH": 27,
+  "REVIEW": 26,
+  "SHORTLIST": 7,
+  "SUPPRESSED_DUPLICATE": 0,
+  "ambiguous_identity": 2,
+  "apply_url_missing": 5,
+  "below_25": false,
+  "bottleneck": {
+    "cause": "compensation UNKNOWN",
+    "count": 19,
+    "top": [
+      {
+        "cause": "compensation UNKNOWN",
+        "count": 19
+      },
+      {
+        "cause": "relevance WEAK (parked)",
+        "count": 8
+      },
+      {
+        "cause": "geography FAIL",
+        "count": 6
+      },
+      {
+        "cause": "duplicate suppression",
+        "count": 4
+      },
+      {
+        "cause": "employer UNKNOWN",
+        "count": 4
+      }
+    ]
+  },
+  "date": "2026-10-01",
+  "duplicate_records_collapsed": 4,
+  "duplicates": 4,
+  "excluded_by_dimension": {
+    "compensation": 1,
+    "employer": 1,
+    "employment": 2,
+    "geography": 6,
+    "language": 1,
+    "relationship": 1
+  },
+  "excluded_by_rule": {
+    "COMP-R01": 1,
+    "EMP-R08": 1,
+    "EMP-R09": 1,
+    "EMPR-R09": 1,
+    "GEO-R03": 1,
+    "GEO-R07": 1,
+    "GEO-R12": 2,
+    "GEO-R14": 1,
+    "GEO-R18": 1,
+    "LANG-R02": 1,
+    "REL-R06": 1
+  },
+  "gap_to_25": 0,
+  "gap_to_30": 0,
+  "gate_e": "pending (Round 4 not yet measured)",
+  "illustrative_source_jobs_for_25_ready_ish": 53,
+  "illustrative_source_jobs_for_30_ready_ish": 64,
+  "input": "day1_export.json",
+  "input_sha256": "3b6f378457c140ac0d44c9f791c2193dcb19fbbc75b6bfe8a8606eb3b63dd7a5",
+  "jd_missing": 4,
+  "jd_truncated": 2,
+  "jobs_in": 57,
+  "largest_blocker_in_review": {
+    "blocker": "pay not stated",
+    "count": 19,
+    "top": [
+      {
+        "blocker": "pay not stated",
+        "count": 19
+      },
+      {
+        "blocker": "employer unclassified",
+        "count": 4
+      },
+      {
+        "blocker": "JD missing",
+        "count": 2
+      },
+      {
+        "blocker": "JD truncated",
+        "count": 2
+      },
+      {
+        "blocker": "identity uncertain",
+        "count": 2
+      }
+    ]
+  },
+  "largest_blocker_outside_ready_ish": {
+    "blocker": "JD missing",
+    "count": 2,
+    "top": [
+      {
+        "blocker": "JD missing",
+        "count": 2
+      },
+      {
+        "blocker": "JD truncated",
+        "count": 2
+      },
+      {
+        "blocker": "employer unclassified",
+        "count": 2
+      },
+      {
+        "blocker": "identity uncertain",
+        "count": 2
+      },
+      {
+        "blocker": "language unknown",
+        "count": 2
+      }
+    ]
+  },
+  "per_dimension": {
+    "compensation": {
+      "FAIL": 1,
+      "PASS": 33,
+      "UNKNOWN": 19
+    },
+    "employer": {
+      "FAIL": 1,
+      "PASS": 46,
+      "UNKNOWN": 6
+    },
+    "employment": {
+      "FAIL": 2,
+      "PASS": 51,
+      "UNKNOWN": 0
+    },
+    "geography": {
+      "FAIL": 6,
+      "PASS": 47,
+      "UNKNOWN": 0
+    },
+    "language": {
+      "FAIL": 1,
+      "PASS": 48,
+      "UNKNOWN": 4
+    },
+    "relationship": {
+      "FAIL": 1,
+      "PASS": 52,
+      "UNKNOWN": 0
+    }
+  },
+  "policy_sha256": "de527c5d1dceb400913ec42e5aa527f19cd809e5054fcef5c61337d7fb890455",
+  "policy_version": "jobops-policy@0.2.6",
+  "queue_today": {
+    "overflow_parked_today": 0,
+    "review_cap": 10,
+    "review_held_incomplete_jd": 2,
+    "review_overflow": 14,
+    "review_shown": 10,
+    "shortlist_pending": 7
+  },
+  "ready_ish_below_25": false,
+  "ready_ish_conversion_rate": 0.4737,
+  "ready_ish_definition": "SHORTLIST + T1 + T2 (diagnostic presentation metric; not SHORTLIST, not 'ready to apply')",
+  "ready_ish_gap_to_25": 0,
+  "ready_ish_gap_to_30": 3,
+  "rejected_records": 0,
+  "review_queue_tiers": {
+    "engine_carried_but_shown": 1,
+    "engine_surfaced_not_shown": 2,
+    "overflow_by_tier": {
+      "T1": 10,
+      "T2": 0,
+      "T3": 0,
+      "T4": 4
+    },
+    "overflow_units": 13,
+    "shown_by_tier": {
+      "T1": 10,
+      "T2": 0,
+      "T3": 0,
+      "T4": 0
+    },
+    "shown_units": 10
+  },
+  "review_tiers": {
+    "T1": 20,
+    "T2": 0,
+    "T3": 0,
+    "T4": 6
+  },
+  "shortlist_plus_review": 33,
+  "shortlist_plus_review_note": "P9 count only; not an estimate of immediately actionable supply",
+  "suppressed_duplicate_requisitions": 0,
+  "unique_jobs": 53
+}

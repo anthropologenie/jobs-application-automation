@@ -255,8 +255,26 @@ def collect(service, policy, records, mapping, day: str, cap: Optional[int]) -> 
         v = view(item["requisition_id"])
         (held if v["jd_status"] != "JD_COMPLETE" else shortlist).append(v)
     unit_ids = lambda units: [m for u in units for m in u["member_requisition_ids"]]  # noqa: E731
-    review_shown = [view(m) for m in unit_ids(planned["review_today"])]
-    review_overflow = [view(m) for m in unit_ids(planned["review_carried"])]
+    # P10 tiering (presentation only). plan_day above has already run unchanged and persisted carry / OR-88
+    # state for its own surfaced set; here today's pending REVIEW pool (its surfaced + carried units, never its
+    # parked ones) is re-ordered T1 -> T2 -> T3 -> T4 and the first `cap` units are shown. Lanes, verdicts and
+    # queue state are not touched; each unit records what plan_day did with it so the digest can say so.
+    from .tiers import annotate, order_units
+    for rid in run_rids:
+        v = view(rid)
+        if v["lane"] == "REVIEW" or (v["lane"] == "SHORTLIST" and v["jd_status"] != "JD_COMPLETE"):
+            annotate(v)
+    for v in held:
+        annotate(v)
+    pool = [{"unit_id": u["requisition_id"], "engine": "surfaced", "carry_days": None,
+             "members": [annotate(view(m)) for m in u["member_requisition_ids"]]} for u in planned["review_today"]]
+    pool += [{"unit_id": u["requisition_id"], "engine": "carried", "carry_days": u.get("carry_days"),
+              "members": [annotate(view(m)) for m in u["member_requisition_ids"]]} for u in planned["review_carried"]]
+    units = order_units(pool)
+    cap_n = planned["cap"]
+    units_shown, units_overflow = units[:cap_n], units[cap_n:]
+    review_shown = [m for u in units_shown for m in u["members"]]
+    review_overflow = [m for u in units_overflow for m in u["members"]]
     parked_today = [view(m) for m in unit_ids([u for u in planned["lanes"]["PARKED"]
                                                if u.get("parked_by") == "overflow" and u.get("parked_on") == day])]
     parked_today += [view(m) for m in unit_ids(planned["overflow_parked_today"])
@@ -265,4 +283,7 @@ def collect(service, policy, records, mapping, day: str, cap: Optional[int]) -> 
     return {"records": records, "mapping": mapping, "run_jobs": run_jobs, "duplicate_records": duplicate_records,
             "shortlist": _sort(shortlist), "review_held": _sort(held), "review_shown": review_shown,
             "review_overflow": review_overflow, "overflow_parked_today": parked_today,
+            "review_units_shown": units_shown, "review_units_overflow": units_overflow,
+            "engine_review_today": unit_ids(planned["review_today"]),
+            "engine_review_carried": unit_ids(planned["review_carried"]),
             "plan_cap": planned["cap"]}

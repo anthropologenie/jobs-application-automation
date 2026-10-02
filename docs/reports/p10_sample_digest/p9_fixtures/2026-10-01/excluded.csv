@@ -1,0 +1,13 @@
+job_id,title,company,url,failing_dimension,verdict,reason,evidence
+req_0000030,AI Engineer,Moss Harbor,https://jobs.example-board.test/view/moss-harbor-030,geography,FAIL,"GEO-R12: mode=ONSITE, city_class=OTHER_INDIA","Mumbai, Maharashtra | On-site"
+req_0000041,AI QA Engineer (US),Numa Grove,https://jobs.example-board.test/view/numa-grove-041,geography,FAIL,GEO-R18: residence_requirement=ABROAD,You must live in the United States. | Remote — United States
+req_0000042,AI Quality Engineer,Pebblecraft,https://jobs.example-board.test/view/pebblecraft-042,geography,FAIL,"GEO-R12: mode=ONSITE, city_class=OTHER_INDIA","Mumbai, Maharashtra | On-site"
+req_0000043,LLM Test Engineer,Saltmarsh AI,https://jobs.example-board.test/view/saltmarsh-ai-043,employment,FAIL,"EMP-R09: kind=CONTRACT, contract_months lt $short_term_contract_months",This is a 3-month contract. | Contract
+req_0000044,AI Test Engineer,Kestrel Yard,https://jobs.example-board.test/view/kestrel-yard-044,compensation,FAIL,"COMP-R01: state=FIGURE, max_inr lt $floor",₹10 LPA – ₹14 LPA
+req_0000045,AI Evaluation Engineer,Fernhollow,https://jobs.example-board.test/view/fernhollow-045,language,FAIL,"LANG-R02: required_non_english=True, required_confidence gte $language_confidence_threshold",Fluent German is required for this role.
+req_0000046,GenAI QA Engineer,Lattice Moor,https://jobs.example-board.test/view/lattice-moor-046,geography,FAIL,GEO-R07: Office days above the maximum.,You will be in the office five days a week. | Bengaluru
+req_0000047,AI Test Consultant,Cobalt Wren,https://jobs.example-board.test/view/cobalt-wren-047,employer,FAIL,EMPR-R09: Third-party payroll / client placement stated in the posting.,Cobalt Wren builds and sells its own AI product for logistics planning. | You will be employed by our staffing partner and placed at one of our clients.
+req_0000047,AI Test Consultant,Cobalt Wren,https://jobs.example-board.test/view/cobalt-wren-047,relationship,FAIL,REL-R06: placement=True,You will be employed by our staffing partner and placed at one of our clients.
+req_0000048,AI Quality Engineer,Driftmere,https://jobs.example-board.test/view/driftmere-048,geography,FAIL,"GEO-R03: mode=REMOTE, remote_scope=REGION_EXCLUDES_INDIA",Remote — EMEA | Remote
+req_0000049,AI QA Intern,Hollyoak Data,https://jobs.example-board.test/view/hollyoak-data-049,employment,FAIL,EMP-R08: kind=INTERNSHIP,Internship
+req_0000050,AI Reliability Engineer,Marigold Systems,https://jobs.example-board.test/view/marigold-systems-050,geography,FAIL,GEO-R14: relocation_abroad=True,Relocation to Singapore is required. | Singapore

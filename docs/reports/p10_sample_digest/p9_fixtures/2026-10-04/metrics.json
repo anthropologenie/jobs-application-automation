@@ -1,0 +1,121 @@
+{
+  "EXCLUDED": 0,
+  "PARKED": 1,
+  "READY_ISH": 0,
+  "REVIEW": 0,
+  "SHORTLIST": 0,
+  "SUPPRESSED_DUPLICATE": 0,
+  "ambiguous_identity": 0,
+  "apply_url_missing": 0,
+  "below_25": true,
+  "bottleneck": {
+    "cause": "relevance WEAK (parked)",
+    "count": 1,
+    "top": [
+      {
+        "cause": "relevance WEAK (parked)",
+        "count": 1
+      }
+    ]
+  },
+  "date": "2026-10-04",
+  "duplicate_records_collapsed": 0,
+  "duplicates": 0,
+  "excluded_by_dimension": {
+    "compensation": 0,
+    "employer": 0,
+    "employment": 0,
+    "geography": 0,
+    "language": 0,
+    "relationship": 0
+  },
+  "excluded_by_rule": {},
+  "gap_to_25": 25,
+  "gap_to_30": 30,
+  "gate_e": "pending (Round 4 not yet measured)",
+  "illustrative_source_jobs_for_25_ready_ish": null,
+  "illustrative_source_jobs_for_30_ready_ish": null,
+  "input": "day4_export.json",
+  "input_sha256": "67596f5dae97de8fbcade183cbb28cc83ee3ab580067c207b05b6ce6a127c1b7",
+  "jd_missing": 0,
+  "jd_truncated": 0,
+  "jobs_in": 1,
+  "largest_blocker_in_review": null,
+  "largest_blocker_outside_ready_ish": null,
+  "per_dimension": {
+    "compensation": {
+      "FAIL": 0,
+      "PASS": 1,
+      "UNKNOWN": 0
+    },
+    "employer": {
+      "FAIL": 0,
+      "PASS": 1,
+      "UNKNOWN": 0
+    },
+    "employment": {
+      "FAIL": 0,
+      "PASS": 1,
+      "UNKNOWN": 0
+    },
+    "geography": {
+      "FAIL": 0,
+      "PASS": 1,
+      "UNKNOWN": 0
+    },
+    "language": {
+      "FAIL": 0,
+      "PASS": 1,
+      "UNKNOWN": 0
+    },
+    "relationship": {
+      "FAIL": 0,
+      "PASS": 1,
+      "UNKNOWN": 0
+    }
+  },
+  "policy_sha256": "de527c5d1dceb400913ec42e5aa527f19cd809e5054fcef5c61337d7fb890455",
+  "policy_version": "jobops-policy@0.2.6",
+  "queue_today": {
+    "overflow_parked_today": 2,
+    "review_cap": 10,
+    "review_held_incomplete_jd": 2,
+    "review_overflow": 16,
+    "review_shown": 10,
+    "shortlist_pending": 7
+  },
+  "ready_ish_below_25": true,
+  "ready_ish_conversion_rate": 0.0,
+  "ready_ish_definition": "SHORTLIST + T1 + T2 (diagnostic presentation metric; not SHORTLIST, not 'ready to apply')",
+  "ready_ish_gap_to_25": 25,
+  "ready_ish_gap_to_30": 30,
+  "rejected_records": 0,
+  "review_queue_tiers": {
+    "engine_carried_but_shown": 1,
+    "engine_surfaced_not_shown": 2,
+    "overflow_by_tier": {
+      "T1": 14,
+      "T2": 0,
+      "T3": 0,
+      "T4": 2
+    },
+    "overflow_units": 15,
+    "shown_by_tier": {
+      "T1": 10,
+      "T2": 0,
+      "T3": 0,
+      "T4": 0
+    },
+    "shown_units": 10
+  },
+  "review_tiers": {
+    "T1": 0,
+    "T2": 0,
+    "T3": 0,
+    "T4": 0
+  },
+  "shortlist_plus_review": 0,
+  "shortlist_plus_review_note": "P9 count only; not an estimate of immediately actionable supply",
+  "suppressed_duplicate_requisitions": 0,
+  "unique_jobs": 1
+}

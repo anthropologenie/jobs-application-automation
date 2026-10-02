@@ -1,0 +1,3 @@
+job_id,title,company,url,failing_dimension,verdict,reason,evidence
+req_0000019,AI Test Engineer,Tollbridge,https://jobs.example-board.test/view/p10-018,geography,FAIL,"GEO-R12: mode=ONSITE, city_class=OTHER_INDIA","Mumbai, Maharashtra, India | On-site"
+req_0000020,AI Quality Intern,Umberleigh,https://jobs.example-board.test/view/p10-019,employment,FAIL,EMP-R08: kind=INTERNSHIP,Internship

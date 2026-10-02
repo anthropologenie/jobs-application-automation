@@ -1,5 +1,5 @@
 """
-Command line for P9 (Phase C-lite). Manually triggered, offline, deterministic.
+Command line for P9 (Phase C-lite) with P10 REVIEW tiering (presentation only). Manually triggered, offline, deterministic.
 
     python3 -m jobops source --input <file> --policy 0.2.6 --out <dir> [--review-cap N] [--date YYYY-MM-DD]
     python3 -m jobops decisions --import <decisions.csv> --out <dir> [--date YYYY-MM-DD]
@@ -64,7 +64,7 @@ def main(argv=None) -> int:
             print(f"Policy SHA: {res['policy_sha256']}")
             print("Gate E: pending")
             print(json.dumps({k: m[k] for k in ("jobs_in", "unique_jobs", "duplicates", "SHORTLIST", "REVIEW",
-                                                "PARKED", "EXCLUDED", "shortlist_plus_review")}, sort_keys=True))
+                                                "PARKED", "EXCLUDED", "READY_ISH", "review_tiers")}, sort_keys=True))
             if res["reran"]:
                 print("Note: this input was already processed for this date; outputs were re-rendered, nothing re-ingested.")
             print(f"Digest: {day_dir / 'digest.md'}")
